@@ -55,13 +55,6 @@ export default async function HostHubPage() {
                                             </CardHeader>
                                             <CardContent>
                                                 <p>
-                                                    Queue Length:{" "}
-                                                    {
-                                                        (room.queue as Song[])
-                                                            .length
-                                                    }
-                                                </p>
-                                                <p>
                                                     Expires:{" "}
                                                     <span
                                                         // If the room expires in less than 6 hours, make the text red

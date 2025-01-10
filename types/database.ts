@@ -17,6 +17,7 @@ export type Database = {
           expires_at: string
           host: string
           id: number
+          max_songs_per_user: number
         }
         Insert: {
           code?: string | null
@@ -25,6 +26,7 @@ export type Database = {
           expires_at?: string
           host: string
           id?: number
+          max_songs_per_user?: number
         }
         Update: {
           code?: string | null
@@ -33,6 +35,7 @@ export type Database = {
           expires_at?: string
           host?: string
           id?: number
+          max_songs_per_user?: number
         }
         Relationships: [
           {

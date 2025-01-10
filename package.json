@@ -17,7 +17,6 @@
         "@radix-ui/react-slot": "^1.1.1",
         "@radix-ui/react-toast": "^1.2.4",
         "@supabase-cache-helpers/postgrest-react-query": "^1.11.4",
-        "@supabase-cache-helpers/postgrest-swr": "^1.10.5",
         "@supabase/postgrest-js": "^1.17.7",
         "@supabase/ssr": "^0.5.2",
         "@supabase/supabase-js": "^2.47.10",
@@ -38,7 +37,7 @@
         "youtube-search-api": "^1.2.2"
     },
     "devDependencies": {
-        "@types/node": "^22.10.5",
+        "@types/node": "20",
         "@types/react": "^19.0.4",
         "@types/react-dom": "^19.0.2",
         "@types/youtube-player": "^5.5.11",
