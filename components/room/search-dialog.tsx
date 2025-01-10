@@ -95,10 +95,6 @@ export function SearchSongDialog({
                                                 <p className="text-sm font-semibold">
                                                     {song.title}
                                                 </p>
-                                                <p className="text-xs text-gray-600">
-                                                    Added by{" "}
-                                                    {song.added_by_name}
-                                                </p>
                                             </div>
                                         </div>
                                         <Button

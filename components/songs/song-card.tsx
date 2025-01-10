@@ -16,7 +16,7 @@ export function SongCard({
     return (
         <div
             className={cn(
-                "flex items-center space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg",
+                "flex items-center space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg transition-all",
                 {
                     "bg-white/30": active,
                     "hover:cursor-pointer": onClick,
@@ -33,7 +33,9 @@ export function SongCard({
             />
             <div>
                 <h4 className="text-xl font-semibold">{song.title}</h4>
-                <p className="text-lg text-gray-300">{song.added_by_name}</p>
+                <p className="text-lg text-gray-300">
+                    Added by {song.added_by_name}
+                </p>
             </div>
         </div>
     )
