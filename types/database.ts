@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
+          current_song: number | null
           expires_at: string
           host: string
           id: number
@@ -20,6 +21,7 @@ export type Database = {
         Insert: {
           code?: string | null
           created_at?: string
+          current_song?: number | null
           expires_at?: string
           host: string
           id?: number
@@ -27,11 +29,20 @@ export type Database = {
         Update: {
           code?: string | null
           created_at?: string
+          current_song?: number | null
           expires_at?: string
           host?: string
           id?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "rooms_current_song_fkey"
+            columns: ["current_song"]
+            isOneToOne: false
+            referencedRelation: "songs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       songs: {
         Row: {

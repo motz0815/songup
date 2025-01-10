@@ -298,13 +298,6 @@ export function RoomPage({
                                                                                 )
                                                                             }
                                                                             size="sm"
-                                                                            data-umami-event="add-song"
-                                                                            data-umami-event-song-title={
-                                                                                song.title
-                                                                            }
-                                                                            data-umami-event-song-artist={
-                                                                                song.artist
-                                                                            }
                                                                         >
                                                                             <PlusCircleIcon className="h-4 w-4" />
                                                                         </Button>

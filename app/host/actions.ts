@@ -1,10 +1,11 @@
+"use server"
+
 import { getSession } from "@/lib/session"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { getErrorRedirect, getStatusRedirect } from "@/lib/utils"
 import { redirect } from "next/navigation"
 
 export async function createRoom() {
-    "use server"
     const session = await getSession()
     session.isLoggedIn = true
 

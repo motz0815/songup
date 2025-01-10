@@ -1,20 +1,20 @@
-import { HostPage } from "@/components/host/host-page"
 import { createClient } from "@/lib/supabase/client"
 import { notFound } from "next/navigation"
+import Host from "./host"
 
-export async function generateMetadata(
-    props: {
-        params: Promise<{ code: string }>
-    }
-) {
-    const params = await props.params;
+export async function generateMetadata(props: {
+    params: Promise<{ code: string }>
+}) {
+    const params = await props.params
     return {
         title: "Host - " + params.code,
     }
 }
 
-export default async function Page(props: { params: Promise<{ code: string }> }) {
-    const params = await props.params;
+export default async function Page(props: {
+    params: Promise<{ code: string }>
+}) {
+    const params = await props.params
     const supabase = createClient()
 
     const { data: room, error } = await supabase
@@ -27,5 +27,5 @@ export default async function Page(props: { params: Promise<{ code: string }> })
         notFound()
     }
 
-    return <HostPage room={room} />
+    return <Host room={room} />
 }

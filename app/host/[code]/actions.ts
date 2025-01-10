@@ -2,9 +2,8 @@
 
 import { getSession } from "@/lib/session"
 import { createAdminClient } from "@/lib/supabase/admin"
-import { revalidatePath } from "next/cache"
 
-export async function updateCurrentIndex(code: string, index: number) {
+export async function updateCurrentSong(code: string, song_id: number) {
     // check if the user is the host
     const session = await getSession()
     if (!session.isLoggedIn) {
@@ -16,13 +15,13 @@ export async function updateCurrentIndex(code: string, index: number) {
 
     const supabase = createAdminClient()
 
-    const { data: room, error } = await supabase
+    const { data: room, error: roomError } = await supabase
         .from("rooms")
         .select()
         .eq("code", code ?? "")
         .single()
 
-    if (error || !room) {
+    if (roomError || !room) {
         return {
             ok: false,
             message: "Room not found",
@@ -36,14 +35,18 @@ export async function updateCurrentIndex(code: string, index: number) {
         }
     }
 
-    // update the current index
-    await supabase
+    // update the current song
+    const { error: songError } = await supabase
         .from("rooms")
-        .update({ current_index: index })
+        .update({ current_song: song_id })
         .eq("code", code ?? "")
 
-    revalidatePath(`/host/${code}`)
-    revalidatePath(`/room/${code}`)
+    if (songError) {
+        return {
+            ok: false,
+            message: "Failed to update current song",
+        }
+    }
 
     return {
         ok: true,

@@ -3,7 +3,6 @@ import { SubmitButton } from "@/components/ui/submit-button"
 import { getSession } from "@/lib/session"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { Room } from "@/types/global"
-import { Song } from "@/types/song"
 import { formatDistance } from "date-fns"
 import { Plus } from "lucide-react"
 import { Metadata } from "next"
@@ -104,10 +103,7 @@ export default async function HostHubPage() {
                 </CardHeader>
                 <CardContent>
                     <form action={createRoom}>
-                        <SubmitButton
-                            prefix={<Plus className="size-4" />}
-                            data-umami-event="create-room"
-                        >
+                        <SubmitButton prefix={<Plus className="size-4" />}>
                             Create Room
                         </SubmitButton>
                     </form>
