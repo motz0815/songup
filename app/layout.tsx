@@ -1,10 +1,10 @@
+import Providers from "@/components/providers"
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils"
 import "@/styles/globals.css"
 import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
 import type { Metadata, Viewport } from "next"
-import Script from "next/script"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
@@ -35,15 +35,12 @@ export default function RootLayout({
                     GeistMono.variable,
                 )}
             >
-                {children}
-                <Suspense>
-                    <Toaster />
-                </Suspense>
-                <Script
-                    defer
-                    src="https://cloud.umami.is/script.js"
-                    data-website-id="af8e4e61-143d-493c-9649-bdde314c2b52"
-                />
+                <Providers>
+                    {children}
+                    <Suspense>
+                        <Toaster />
+                    </Suspense>
+                </Providers>
             </body>
         </html>
     )
