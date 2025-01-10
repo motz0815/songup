@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import { NextConfig } from "next"
+
+export const nextConfig: NextConfig = {
     images: {
         remotePatterns: [
             {
@@ -7,9 +8,7 @@ const nextConfig = {
             },
             {
                 hostname: "is2-ssl.mzstatic.com",
-            }
+            },
         ],
     },
 }
-
-export default nextConfig
