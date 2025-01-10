@@ -8,10 +8,10 @@ import type { Metadata, Viewport } from "next"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
-    title: { default: "PartyQ", template: "%s | PartyQ" },
+    title: { default: "SongUp", template: "%s | SongUp" },
     description:
-        "PartyQ makes collaborative party music queueing easy. Open source, no login required, just create a room and let the party begin!",
-    keywords: ["party", "music", "queue"],
+        "SongUp makes collaborative party music queueing easy. Open source, no login required, just create a room and let the party begin!",
+    keywords: ["party", "music", "queue", "songup"],
 }
 
 export const viewport: Viewport = {

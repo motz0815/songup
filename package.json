@@ -8,7 +8,7 @@
         "start": "next start",
         "lint": "next lint",
         "supabase:types": "supabase gen types --lang typescript --project-id xmloxebrmbezotphpbdp > types/database.ts",
-        "vercel:env": "vercel env pull .env.development.local"
+        "env:pull": "vercel env pull"
     },
     "dependencies": {
         "@radix-ui/react-dialog": "^1.1.4",

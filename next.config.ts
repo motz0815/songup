@@ -1,6 +1,6 @@
 import { NextConfig } from "next"
 
-export const nextConfig: NextConfig = {
+export default {
     images: {
         remotePatterns: [
             {
@@ -11,4 +11,4 @@ export const nextConfig: NextConfig = {
             },
         ],
     },
-}
+} satisfies NextConfig
