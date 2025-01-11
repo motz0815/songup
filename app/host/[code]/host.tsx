@@ -90,11 +90,11 @@ export default function Host({ room }: { room: Room }) {
 
     // TODO make layout mobile friendly
     return (
-        <div className="relative h-screen w-screen text-white">
+        <div className="relative min-h-screen w-screen text-white lg:h-screen">
             <HostBackground
                 image={`https://i.ytimg.com/vi_webp/${songs[0]?.video_id}/mqdefault.webp`}
             />
-            <div className="grid h-screen w-screen grid-cols-1 gap-4 p-4 lg:grid-cols-3 lg:grid-rows-2">
+            <div className="grid min-h-screen w-screen grid-cols-1 gap-4 p-4 lg:h-screen lg:grid-cols-3 lg:grid-rows-2">
                 <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-1 outline-white/20 backdrop-blur-lg lg:col-span-2 lg:row-span-2">
                     {songs[0] && (
                         <YouTube
