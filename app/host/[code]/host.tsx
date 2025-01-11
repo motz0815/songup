@@ -71,7 +71,7 @@ export default function Host({ room }: { room: Room }) {
             updateCurrentSong(room.code!, songs[0].id)
             setEnded(false)
         }
-    }, [songs])
+    }, [songs, room.code, ended])
 
     const opts: YouTubeProps["opts"] = {
         width: "100%",
