@@ -29,6 +29,7 @@
     "iron-session": "^8.0.4",
     "lucide-react": "^0.427.0",
     "next": "^15.1.4",
+    "posthog-js": "^1.205.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
