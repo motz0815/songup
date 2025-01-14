@@ -21,11 +21,6 @@ export default function Host({ room }: { room: Room }) {
     STATE
      */
 
-    // if the current song is null, set it to the first song
-    const [currentSong, setCurrentSong] = useState<number>(
-        room.current_song ?? 0,
-    )
-
     const [ended, setEnded] = useState(false)
 
     const [animationParent] = useAutoAnimate()
@@ -35,6 +30,29 @@ export default function Host({ room }: { room: Room }) {
      */
 
     const supabase = createClient()
+
+    // query the current song from the rooms table
+    const { data } = useQuery(
+        supabase
+            .from("rooms")
+            .select("current_song")
+            .eq("code", room.code!)
+            .single(),
+    )
+    const currentSong = data?.current_song ?? 0
+
+    // subscribe to changes to the room to update the current song
+    useSubscription(
+        supabase,
+        "postgres_rooms_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "rooms",
+            filter: `id=eq.${room.id}`,
+        },
+        ["id"],
+    )
 
     // query the current song and the songs after it
     // (the ids of the songs are not guaranteed to be sequential (e.g. song 4 is current, the next ones are 6, 9, 10, 11, 15))
@@ -53,7 +71,7 @@ export default function Host({ room }: { room: Room }) {
     // subscribe to changes in the songs
     useSubscription(
         supabase,
-        "postgres_changes",
+        "postgres_songs_changes",
         {
             event: "*",
             schema: "public",
@@ -64,11 +82,9 @@ export default function Host({ room }: { room: Room }) {
     )
 
     // if the queue has ended and a new song comes in, set the current song to the next song in the queue
-    // this is so that the server always has the current song, otherwise clients in the room maybe won't have the right song if an index is skipped
     useEffect(() => {
-        if (ended && songs.length > 0) {
-            setCurrentSong(songs[0].id)
-            updateCurrentSong(room.code!, songs[0].id)
+        if (ended && songs.length > 1) {
+            updateCurrentSong(room.code!, songs[1].id)
             setEnded(false)
         }
     }, [songs, room.code, ended])
@@ -103,9 +119,8 @@ export default function Host({ room }: { room: Room }) {
                             opts={opts}
                             onStateChange={onPlayerStateChange}
                             onEnd={() => {
-                                // if the current song is the last one, set just the state to one index after the current song, so if another song is added, it will play
+                                // if the current song is the last one, set the ended state to true
                                 if (songs.length === 1) {
-                                    setCurrentSong(songs[0].id + 1)
                                     setEnded(true)
                                     return
                                 }
@@ -113,10 +128,8 @@ export default function Host({ room }: { room: Room }) {
                                 // update the current song server side
                                 updateCurrentSong(room.code!, songs[1].id).then(
                                     (response) => {
-                                        // if that worked, update the current song state
-                                        if (response.ok) {
-                                            setCurrentSong(songs[1].id)
-                                        } else {
+                                        // if that didn't work, show an error
+                                        if (!response.ok) {
                                             toast({
                                                 title: "Error",
                                                 description: response.message,
