@@ -1,7 +1,7 @@
 "use client"
 
-import { Loader2Icon, PlusCircleIcon, SearchIcon } from "lucide-react"
-import { SetStateAction, useState } from "react"
+import { PlusCircleIcon, SearchIcon } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "../ui/button"
 import {
     Dialog,
@@ -12,6 +12,7 @@ import {
 } from "../ui/dialog"
 import { ImageWithFallback } from "../ui/image-with-fallback"
 import { Input } from "../ui/input"
+import { SubmitButton } from "../ui/submit-button"
 import { searchSong, SongResult } from "./actions"
 
 export function SearchSongDialog({
@@ -25,19 +26,48 @@ export function SearchSongDialog({
     disableTrigger?: boolean
     addSong: (song: SongResult) => void
 }) {
-    const [isSearching, setIsSearching] = useState(false)
+    const formRef = useRef<HTMLFormElement>(null)
     const [searchResults, setSearchResults] = useState<SongResult[]>([])
-    const [searchQuery, setSearchQuery] = useState("")
+    const [error, setError] = useState<string | null>(null)
+    const [pendingAdds, setPendingAdds] = useState<Set<string>>(new Set())
 
-    async function handleSearch() {
-        setIsSearching(true)
-        // API call
-        const results = await searchSong(searchQuery)
+    async function handleSearch(formData: FormData) {
+        setError(null)
+        try {
+            const query = formData.get("query") as string
+            if (!query?.trim()) return
 
-        setSearchResults(results)
-
-        setIsSearching(false)
+            const results = await searchSong(query)
+            setSearchResults(results)
+        } catch (err) {
+            setError("Failed to search songs. Please try again.")
+            console.error(err)
+        }
     }
+
+    async function handleAddSong(song: SongResult) {
+        try {
+            setPendingAdds((prev) => new Set(prev).add(song.video_id))
+            await addSong(song)
+        } catch (error) {
+            setError("Failed to add song. Please try again.")
+        } finally {
+            setPendingAdds((prev) => {
+                const next = new Set(prev)
+                next.delete(song.video_id)
+                return next
+            })
+        }
+    }
+
+    // Reset form and results when dialog closes
+    useEffect(() => {
+        if (!open) {
+            formRef.current?.reset()
+            setSearchResults([])
+            setError(null)
+        }
+    }, [open])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -53,30 +83,32 @@ export function SearchSongDialog({
                 </DialogHeader>
                 <div className="flex-1 overflow-y-auto">
                     <div className="grid gap-4 py-4">
-                        <div className="mx-4 flex flex-col items-center gap-2 space-y-2 sm:flex-row sm:space-y-0">
-                            <Input
-                                placeholder="Search for songs or artists..."
-                                value={searchQuery}
-                                onChange={(e: {
-                                    target: {
-                                        value: SetStateAction<string>
-                                    }
-                                }) => setSearchQuery(e.target.value)}
-                                className="w-full"
-                            />
-                            <Button
-                                onClick={handleSearch}
-                                className="w-full sm:w-auto"
-                                size="lg"
-                            >
-                                <SearchIcon className="h-4 w-4" />
-                            </Button>
-                        </div>
-                        {isSearching ? (
-                            <div className="flex justify-center">
-                                <Loader2Icon className="h-8 w-8 animate-spin" />
+                        <form
+                            ref={formRef}
+                            action={handleSearch}
+                            className="mx-4"
+                        >
+                            <div className="flex flex-col items-center gap-2 space-y-2 sm:flex-row sm:space-y-0">
+                                <Input
+                                    name="query"
+                                    placeholder="Search for songs or artists..."
+                                    className="w-full"
+                                    required
+                                    minLength={2}
+                                />
+                                <SubmitButton>
+                                    <SearchIcon className="h-4 w-4" />
+                                </SubmitButton>
                             </div>
-                        ) : searchResults.length > 0 ? (
+                        </form>
+
+                        {error && (
+                            <p className="text-center text-sm text-red-500">
+                                {error}
+                            </p>
+                        )}
+
+                        {searchResults.length > 0 ? (
                             <ul className="space-y-2">
                                 {searchResults.map((song) => (
                                     <li
@@ -98,18 +130,17 @@ export function SearchSongDialog({
                                             </div>
                                         </div>
                                         <Button
-                                            onClick={() => addSong(song)}
+                                            onClick={() => handleAddSong(song)}
                                             size="sm"
+                                            loading={pendingAdds.has(
+                                                song.video_id,
+                                            )}
                                         >
                                             <PlusCircleIcon className="h-4 w-4" />
                                         </Button>
                                     </li>
                                 ))}
                             </ul>
-                        ) : searchQuery && !isSearching ? (
-                            <p className="text-sm">
-                                No songs found. Please try a different search.
-                            </p>
                         ) : null}
                     </div>
                 </div>

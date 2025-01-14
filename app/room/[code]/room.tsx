@@ -39,8 +39,10 @@ export function RoomPage({
             toast({ title: "Song added to queue!" })
             // close dialog
             setDialogOpen(false)
+            return true
         } else {
             toast({ title: "Error adding song", description: response.message })
+            return false
         }
     }
 
