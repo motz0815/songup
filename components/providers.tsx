@@ -8,6 +8,9 @@ import { PostHogProvider } from "posthog-js/react"
 import { useState } from "react"
 
 function CSPostHogProvider({ children }: { children: React.ReactNode }) {
+    // disable posthog for now
+    return <>{children}</>
+
     if (typeof window !== "undefined") {
         posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
             api_host: "/ingest",

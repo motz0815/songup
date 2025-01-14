@@ -12,9 +12,10 @@ import {
     useQuery,
     useSubscription,
 } from "@supabase-cache-helpers/postgrest-react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
-import { updateCurrentSong } from "./actions"
+import { deleteSong, updateCurrentSong } from "./actions"
 
 export default function Host({ room }: { room: Room }) {
     /* 
@@ -24,6 +25,8 @@ export default function Host({ room }: { room: Room }) {
     const [ended, setEnded] = useState(false)
 
     const [animationParent] = useAutoAnimate()
+
+    const queryClient = useQueryClient()
 
     /* 
     DATABASE QUERIES
@@ -104,70 +107,139 @@ export default function Host({ room }: { room: Room }) {
         }
     }
 
-    // TODO make layout mobile friendly
     return (
         <div className="relative min-h-screen w-screen text-white lg:h-screen">
             <HostBackground
                 image={`https://i.ytimg.com/vi_webp/${songs[0]?.video_id}/mqdefault.webp`}
             />
-            <div className="grid min-h-screen w-screen grid-cols-1 gap-4 p-4 lg:h-screen lg:grid-cols-3 lg:grid-rows-2">
-                <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-1 outline-white/20 backdrop-blur-lg lg:col-span-2 lg:row-span-2">
-                    {songs[0] && (
-                        <YouTube
-                            className="z-10 aspect-video w-full"
-                            videoId={songs[0].video_id ?? ""}
-                            opts={opts}
-                            onStateChange={onPlayerStateChange}
-                            onEnd={() => {
-                                // if the current song is the last one, set the ended state to true
-                                if (songs.length === 1) {
-                                    setEnded(true)
-                                    return
-                                }
-
-                                // update the current song server side
-                                updateCurrentSong(room.code!, songs[1].id).then(
-                                    (response) => {
-                                        // if that didn't work, show an error
-                                        if (!response.ok) {
-                                            toast({
-                                                title: "Error",
-                                                description: response.message,
-                                            })
+            <div className="flex h-full flex-col gap-4 p-4 lg:h-screen">
+                <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
+                    <div className="flex w-full flex-col gap-4 lg:col-span-2 lg:row-span-2">
+                        <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-1 outline-white/20 backdrop-blur-lg">
+                            {songs[0] && (
+                                <YouTube
+                                    className="z-10 aspect-video w-full"
+                                    videoId={songs[0].video_id ?? ""}
+                                    opts={opts}
+                                    onStateChange={onPlayerStateChange}
+                                    onEnd={() => {
+                                        // if the current song is the last one, set the ended state to true
+                                        if (songs.length === 1) {
+                                            setEnded(true)
+                                            return
                                         }
-                                    },
-                                )
-                            }}
-                        />
-                    )}
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                        <h2 className="text-6xl font-bold">songup.tv</h2>
-                        <p className="text-4xl">
-                            Enter code{" "}
-                            <span className="font-extrabold">{room.code}</span>
-                        </p>
+
+                                        // update the current song server side
+                                        updateCurrentSong(
+                                            room.code!,
+                                            songs[1].id,
+                                        ).then((response) => {
+                                            // if that didn't work, show an error
+                                            if (!response.ok) {
+                                                toast({
+                                                    title: "Error",
+                                                    description:
+                                                        response.message,
+                                                })
+                                            }
+                                        })
+                                    }}
+                                />
+                            )}
+                            <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+                                <h2 className="text-6xl font-bold">
+                                    songup.tv
+                                </h2>
+                                <p className="text-4xl">
+                                    Enter code{" "}
+                                    <span className="font-extrabold">
+                                        {room.code}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col items-center gap-2">
+                            <h2 className="text-3xl font-bold">
+                                {songs[0]?.title || "No song playing"}
+                            </h2>
+                        </div>
                     </div>
+                    <ScrollArea className="rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
+                        <ul ref={animationParent} className="space-y-4">
+                            {songs.length > 0 ? (
+                                songs.map((song) => (
+                                    <li key={song.id}>
+                                        {song.id === currentSong ? (
+                                            <SongCard song={song} active />
+                                        ) : (
+                                            <SongCard
+                                                song={song}
+                                                onClick={async () => {
+                                                    const response =
+                                                        await updateCurrentSong(
+                                                            room.code!,
+                                                            song.id,
+                                                        )
+                                                    if (!response.ok) {
+                                                        toast({
+                                                            title: "Error",
+                                                            description:
+                                                                response.message,
+                                                        })
+                                                        console.error(
+                                                            "Error updating current song",
+                                                            response.message,
+                                                        )
+                                                    }
+                                                }}
+                                                onDelete={async () => {
+                                                    const response =
+                                                        await deleteSong(
+                                                            room.code!,
+                                                            song.id,
+                                                        )
+                                                    if (response.ok) {
+                                                        // if the song was deleted, invalidate the songs query
+                                                        // why? because the subscription has a filter on the room, which will not trigger when a song is deleted
+                                                        queryClient.invalidateQueries(
+                                                            {
+                                                                queryKey: [
+                                                                    "postgrest",
+                                                                    "null",
+                                                                    "public",
+                                                                    "songs",
+                                                                ],
+                                                            },
+                                                        )
+                                                    } else {
+                                                        toast({
+                                                            title: "Error",
+                                                            description:
+                                                                response.message,
+                                                        })
+                                                        console.error(
+                                                            "Error deleting song",
+                                                            response.message,
+                                                        )
+                                                    }
+                                                }}
+                                            />
+                                        )}
+                                    </li>
+                                ))
+                            ) : (
+                                <p className="text-center text-lg">
+                                    No songs in queue. Visit the room page to
+                                    add songs.
+                                </p>
+                            )}
+                        </ul>
+                    </ScrollArea>
+                    <QRCodeCard roomCode={room.code!} />
                 </div>
-                <ScrollArea className="rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
-                    <ul ref={animationParent} className="space-y-4">
-                        {songs.length > 0 ? (
-                            songs.map((song) => (
-                                <li key={song.id}>
-                                    <SongCard
-                                        song={song}
-                                        active={song.id === currentSong}
-                                    />
-                                </li>
-                            ))
-                        ) : (
-                            <p className="text-center text-lg">
-                                No songs in queue. Visit the room page to add
-                                songs.
-                            </p>
-                        )}
-                    </ul>
-                </ScrollArea>
-                <QRCodeCard roomCode={room.code!} />
+                <footer className="flex w-full items-center justify-center">
+                    <h2 className="text-3xl font-bold text-white/60">SongUp</h2>
+                </footer>
             </div>
         </div>
     )
