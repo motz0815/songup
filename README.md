@@ -62,11 +62,14 @@ Your guests can join the room and start adding their favorite tracks. Enjoy the 
 
 SongUp is open source and thrives on community contributions. Here’s how you can help:
 
+- Look through existing issues, issues that are easy for first-time-contributors are labeled [`good-first-issue`](https://github.com/motz0815/songup/labels/good%20first%20issue)
+
+Then:
+
 1. Fork the repository
-2. Create a branch: `git checkout -b feature/new-cool-thing`
-3. Commit your changes: `git commit -m 'Add cool thing'`
-4. Push to the branch: `git push origin feature/new-cool-thing`
-5. Open a pull request
+2. Create a branch from `develop` e.g. `feature/new-cool-thing`
+3. Commit & Push changes to your branch
+4. Open a pull request
 
 
 ## 📜 License
