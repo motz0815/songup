@@ -1,21 +1,23 @@
-import { RoomPage } from "@/components/room/room-page"
 import { getSession } from "@/lib/session"
 import { createClient } from "@/lib/supabase/client"
-import { Song } from "@/types/song"
+import { notFound } from "next/navigation"
+import { RoomPage } from "./room"
 
-export async function generateMetadata(
-    props: {
-        params: Promise<{ code: string }>
-    }
-) {
-    const params = await props.params;
+export async function generateMetadata(props: {
+    params: Promise<{ code: string }>
+}) {
+    const params = await props.params
     return {
         title: "Room - " + params.code,
     }
 }
 
-export default async function Page(props: { params: Promise<{ code: string }> }) {
-    const params = await props.params;
+export default async function Page(props: {
+    params: Promise<{ code: string }>
+}) {
+    const params = await props.params
+    const session = await getSession()
+
     const supabase = createClient()
 
     const { data: room } = await supabase
@@ -24,22 +26,28 @@ export default async function Page(props: { params: Promise<{ code: string }> })
         .eq("code", params.code)
         .single()
 
-    if (!room) {
-        throw new Error("Room not found")
-    }
+    if (!room) notFound()
 
-    const session = await getSession()
+    const { data: songs } = await supabase
+        .from("songs")
+        .select()
+        .eq("room", room.id)
+        .order("id")
+        .gte("id", room.current_song)
+
+    if (!songs) {
+        console.error("Songs couldn't be fetched for room", room.id)
+        return
+    }
 
     return (
         <RoomPage
-            roomCode={room.code!}
-            currentIndex={room.current_index ?? 0}
-            maxSongsPerUser={2}
-            queue={(room.queue as Song[]) ?? []}
+            room={room}
+            songs={songs}
             user={{
                 isLoggedIn: session.isLoggedIn,
-                uuid: session.uuid,
                 username: session.username,
+                uuid: session.uuid,
             }}
         />
     )

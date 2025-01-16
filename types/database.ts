@@ -13,31 +13,77 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
-          current_index: number
+          current_song: number | null
           expires_at: string
           host: string
           id: number
-          queue: Json
+          max_songs_per_user: number
         }
         Insert: {
           code?: string | null
           created_at?: string
-          current_index?: number
+          current_song?: number | null
           expires_at?: string
           host: string
           id?: number
-          queue?: Json
+          max_songs_per_user?: number
         }
         Update: {
           code?: string | null
           created_at?: string
-          current_index?: number
+          current_song?: number | null
           expires_at?: string
           host?: string
           id?: number
-          queue?: Json
+          max_songs_per_user?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "rooms_current_song_fkey"
+            columns: ["current_song"]
+            isOneToOne: false
+            referencedRelation: "songs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      songs: {
+        Row: {
+          added_by: string
+          added_by_name: string
+          created_at: string
+          id: number
+          room: number
+          title: string
+          video_id: string
+        }
+        Insert: {
+          added_by: string
+          added_by_name: string
+          created_at?: string
+          id?: number
+          room: number
+          title: string
+          video_id: string
+        }
+        Update: {
+          added_by?: string
+          added_by_name?: string
+          created_at?: string
+          id?: number
+          room?: number
+          title?: string
+          video_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "songs_room_fkey"
+            columns: ["room"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -138,4 +184,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never

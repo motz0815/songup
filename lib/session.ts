@@ -8,17 +8,11 @@ export interface SessionData {
     isLoggedIn: boolean
 }
 
-export const defaultSession: SessionData = {
-    uuid: randomUUID(),
-    username: "",
-    isLoggedIn: false,
-}
-
 export const sessionOptions: SessionOptions = {
     password:
         process.env.SESSION_SECRET ??
         "default-very-secure-session-secret-that-is-32-characters-long",
-    cookieName: "partyq-session",
+    cookieName: "songup-session",
     cookieOptions: {
         secure:
             process.env.VERCEL_ENV === "production" ||
@@ -27,12 +21,15 @@ export const sessionOptions: SessionOptions = {
 }
 
 export async function getSession() {
-    const session = await getIronSession<SessionData>(await cookies(), sessionOptions)
+    const session = await getIronSession<SessionData>(
+        await cookies(),
+        sessionOptions,
+    )
 
     if (!session.isLoggedIn) {
-        session.isLoggedIn = defaultSession.isLoggedIn
-        session.username = defaultSession.username
-        session.uuid = defaultSession.uuid
+        session.isLoggedIn = false
+        session.username = ""
+        session.uuid = randomUUID()
     }
 
     return session
