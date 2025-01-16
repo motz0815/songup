@@ -28,14 +28,14 @@ export default async function Page(props: {
 
     if (!room) notFound()
 
-    let { data: songs = [] } = await supabase
+    let { data: songs } = await supabase
         .from("songs")
         .select()
         .eq("room", room.id)
         .order("id")
-        .gte("id", room.current_song)
+        .gte("id", room.current_song ?? 0)
 
-    songs = songs ?? []
+    if (!songs) songs = []
 
     return (
         <RoomPage
