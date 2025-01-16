@@ -1,6 +1,6 @@
 "use client"
 
-import { PlusCircleIcon, SearchIcon } from "lucide-react"
+import { PlusCircle, PlusCircleIcon, SearchIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Button } from "../ui/button"
 import {
@@ -73,7 +73,7 @@ export function SearchSongDialog({
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button disabled={disableTrigger} className="w-full sm:w-auto">
-                    <PlusCircleIcon className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    <PlusCircle />
                     Add a Song
                 </Button>
             </DialogTrigger>

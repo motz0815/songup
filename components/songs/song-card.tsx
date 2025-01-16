@@ -36,8 +36,10 @@ export function SongCard({
                 className="aspect-video h-20 rounded-md object-cover"
             />
             <div>
-                <h4 className="text-xl font-semibold">{song.title}</h4>
-                <p className="text-lg text-gray-300">
+                <h4 className="text-lg font-semibold md:text-xl">
+                    {song.title}
+                </h4>
+                <p className="text-sm text-gray-300 md:text-lg">
                     Added by {song.added_by_name}
                 </p>
             </div>

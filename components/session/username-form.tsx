@@ -5,8 +5,10 @@ import { setUsername } from "./actions"
 export function UsernameForm() {
     return (
         <form action={setUsername}>
-            <Input type="text" name="username" />
-            <SubmitButton>Set Username</SubmitButton>
+            <div className="flex flex-col gap-2">
+                <Input type="text" name="username" />
+                <SubmitButton>Set Username</SubmitButton>
+            </div>
         </form>
     )
 }
