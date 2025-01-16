@@ -43,19 +43,32 @@ export async function addSongToQueue(
         }
     }
 
-    const { error: songInsertError } = await supabase.from("songs").insert({
-        room: room.id,
-        title: song.title,
-        video_id: song.video_id,
-        added_by: session.uuid,
-        added_by_name: session.username,
-    })
+    const { data: songInsertData, error: songInsertError } = await supabase
+        .from("songs")
+        .insert({
+            room: room.id,
+            title: song.title,
+            video_id: song.video_id,
+            added_by: session.uuid,
+            added_by_name: session.username,
+        })
+        .select()
+        .single()
 
     if (songInsertError) {
+        console.error(songInsertError)
         return {
             ok: false,
             message: "Error adding song to queue",
         }
+    }
+
+    // if the song is the first song in the queue, set the current song to the new song
+    if (!room.current_song) {
+        await supabase
+            .from("rooms")
+            .update({ current_song: songInsertData.id })
+            .eq("id", room.id)
     }
 
     revalidatePath(`/room/${code}`)
