@@ -67,6 +67,9 @@ export default function Host({ room }: { room: Room }) {
             .eq("room", room.id)
             .gte("id", currentSong)
             .order("id"),
+        {
+            placeholderData: (prev) => prev,
+        },
     )
 
     if (!songs) songs = []
