@@ -108,12 +108,12 @@ export default function Host({ room }: { room: Room }) {
     }
 
     return (
-        <div className="relative min-h-screen w-screen text-white lg:h-screen">
+        <div className="relative min-h-screen w-full text-white lg:h-screen">
             <HostBackground
                 image={`https://i.ytimg.com/vi_webp/${songs[0]?.video_id}/mqdefault.webp`}
             />
-            <div className="flex h-full flex-col gap-4 p-4 lg:h-screen">
-                <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
+            <main className="flex h-full flex-col gap-4 p-4">
+                <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
                     <div className="flex w-full flex-col gap-4 lg:col-span-2 lg:row-span-2">
                         <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-1 outline-white/20 backdrop-blur-lg">
                             {songs[0] && (
@@ -240,7 +240,7 @@ export default function Host({ room }: { room: Room }) {
                 <footer className="flex w-full items-center justify-center">
                     <h2 className="text-3xl font-bold text-white/60">SongUp</h2>
                 </footer>
-            </div>
+            </main>
         </div>
     )
 }
