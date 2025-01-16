@@ -105,7 +105,7 @@ export function RoomPage({
                                     </p>
                                 ) : (
                                     <p>
-                                        You can't add any more songs at the
+                                        You can&apos;t add any more songs at the
                                         moment.
                                     </p>
                                 )}
