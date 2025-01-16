@@ -28,17 +28,14 @@ export default async function Page(props: {
 
     if (!room) notFound()
 
-    const { data: songs } = await supabase
+    let { data: songs = [] } = await supabase
         .from("songs")
         .select()
         .eq("room", room.id)
         .order("id")
         .gte("id", room.current_song)
 
-    if (!songs) {
-        console.error("Songs couldn't be fetched for room", room.id)
-        return
-    }
+    songs = songs ?? []
 
     return (
         <RoomPage

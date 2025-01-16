@@ -13,6 +13,7 @@ import {
     useSubscription,
 } from "@supabase-cache-helpers/postgrest-react-query"
 import { useQueryClient } from "@tanstack/react-query"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { deleteSong, updateCurrentSong } from "./actions"
@@ -241,7 +242,11 @@ export default function Host({ room }: { room: Room }) {
                     <QRCodeCard roomCode={room.code!} />
                 </div>
                 <footer className="flex w-full items-center justify-center">
-                    <h2 className="text-3xl font-bold text-white/60">SongUp</h2>
+                    <Link href="/">
+                        <h2 className="text-3xl font-bold text-white/60">
+                            SongUp
+                        </h2>
+                    </Link>
                 </footer>
             </main>
         </div>

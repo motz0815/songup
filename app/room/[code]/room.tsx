@@ -66,7 +66,15 @@ export function RoomPage({
             <main className="flex flex-col gap-4">
                 <section className="flex flex-col gap-2">
                     <h2 className="text-xl font-bold">Now Playing</h2>
-                    <SongCard song={songs[0]} active />
+                    {songs.length > 0 ? (
+                        <SongCard song={songs[0]} active />
+                    ) : (
+                        <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
+                            <p className="text-md text-gray-300">
+                                No songs in queue. Add some!
+                            </p>
+                        </div>
+                    )}
                 </section>
                 <section className="flex flex-col gap-2">
                     <h2 className="text-xl font-bold">Up Next</h2>
