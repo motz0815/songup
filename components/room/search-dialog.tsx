@@ -77,7 +77,7 @@ export function SearchSongDialog({
                     Add a Song
                 </Button>
             </DialogTrigger>
-            <DialogContent className="flex max-h-[80vh] w-full max-w-[95vw] flex-col sm:max-w-3xl">
+            <DialogContent className="flex max-h-[80vh] flex-col sm:max-w-3xl">
                 <DialogHeader className="flex-shrink-0">
                     <DialogTitle>Add a Song</DialogTitle>
                 </DialogHeader>
@@ -88,7 +88,7 @@ export function SearchSongDialog({
                             action={handleSearch}
                             className="mx-4"
                         >
-                            <div className="flex flex-col items-center gap-2 space-y-2 sm:flex-row sm:space-y-0">
+                            <div className="flex items-center gap-2">
                                 <Input
                                     name="query"
                                     placeholder="Search for songs or artists..."
@@ -97,7 +97,7 @@ export function SearchSongDialog({
                                     minLength={2}
                                 />
                                 <SubmitButton>
-                                    <SearchIcon className="h-4 w-4" />
+                                    <SearchIcon />
                                 </SubmitButton>
                             </div>
                         </form>
