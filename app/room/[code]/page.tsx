@@ -1,5 +1,6 @@
 import { getSession } from "@/lib/session"
 import { createClient } from "@/lib/supabase/client"
+import { notFound } from "next/navigation"
 import { RoomPage } from "./room"
 
 export async function generateMetadata(props: {
@@ -25,14 +26,19 @@ export default async function Page(props: {
         .eq("code", params.code)
         .single()
 
+    if (!room) notFound()
+
     const { data: songs } = await supabase
         .from("songs")
         .select()
-        .eq("room", room?.id ?? 0)
-        .order("id", { ascending: true })
-        .gte("id", room?.current_song ?? 0)
+        .eq("room", room.id)
+        .order("id")
+        .gte("id", room.current_song)
 
-    if (!room || !songs) return null
+    if (!songs) {
+        console.error("Songs couldn't be fetched for room", room.id)
+        return
+    }
 
     return (
         <RoomPage
