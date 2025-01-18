@@ -2,6 +2,7 @@ import Providers from "@/components/providers"
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils"
 import "@/styles/globals.css"
+import { Analytics } from "@vercel/analytics/next"
 import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
 import type { Metadata, Viewport } from "next"
@@ -40,6 +41,7 @@ export default function RootLayout({
                     <Suspense>
                         <Toaster />
                     </Suspense>
+                    <Analytics />
                 </body>
             </Providers>
         </html>
