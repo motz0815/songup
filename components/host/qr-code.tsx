@@ -8,7 +8,12 @@ export function RoomQRCode({ roomCode }: { roomCode: string }) {
 
     return (
         <div className="flex items-center justify-center">
-            <QRCodeSVG className="h-full w-full" value={url} marginSize={1} />
+            <QRCodeSVG
+                className="h-full w-full"
+                size={64}
+                value={url}
+                marginSize={1}
+            />
         </div>
     )
 }
