@@ -3,6 +3,7 @@
 import { HostBackground } from "@/components/host/background"
 import { QRCodeCard } from "@/components/host/qr-code-card"
 import { SongCard } from "@/components/songs/song-card"
+import { Progress } from "@/components/ui/progress"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { toast } from "@/hooks/use-toast"
 import { createClient } from "@/lib/supabase/client"
@@ -14,7 +15,7 @@ import {
 } from "@supabase-cache-helpers/postgrest-react-query"
 import { useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { deleteSong, updateCurrentSong } from "./actions"
 
@@ -27,7 +28,36 @@ export default function Host({ room }: { room: Room }) {
 
     const [animationParent] = useAutoAnimate()
 
+    const [progress, setProgress] = useState(0)
+
+    const playerRef = useRef<YouTube>(null)
+
     const queryClient = useQueryClient()
+
+    /*
+    EFFECTS
+     */
+
+    // track the current song progress
+    useEffect(() => {
+        const intervalId = setInterval(async () => {
+            if (ended) return
+            if (playerRef.current) {
+                const duration = await playerRef.current
+                    .getInternalPlayer()
+                    ?.getDuration()
+                const currentTime = await playerRef.current
+                    .getInternalPlayer()
+                    ?.getCurrentTime()
+                if (duration && currentTime) {
+                    setProgress(currentTime / duration)
+                }
+            }
+        }, 1000)
+
+        // Cleanup function to clear the interval when component unmounts
+        return () => clearInterval(intervalId)
+    }, [])
 
     /* 
     DATABASE QUERIES
@@ -122,6 +152,7 @@ export default function Host({ room }: { room: Room }) {
                         <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-1 outline-white/20 backdrop-blur-lg">
                             {songs[0] && (
                                 <YouTube
+                                    ref={playerRef}
                                     className="z-10 aspect-video w-full"
                                     videoId={songs[0].video_id ?? ""}
                                     opts={opts}
@@ -162,8 +193,14 @@ export default function Host({ room }: { room: Room }) {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex w-full flex-col items-center gap-2">
-                            <h2 className="text-3xl font-bold">
+                        <div className="flex w-full flex-col items-center gap-3">
+                            <Progress
+                                value={progress * 100}
+                                max={100}
+                                className="dark w-2/3"
+                                indicatorClassName="duration-1000 ease-linear"
+                            />
+                            <h2 className="text-center text-3xl font-bold">
                                 {songs[0]?.title || "No song playing"}
                             </h2>
                         </div>
