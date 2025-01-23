@@ -12,7 +12,7 @@ Host a room for free at [songup.tv](https://songup.tv)!
 SongUp is an open-source, privacy-friendly music queue system. Hosts can control a central screen while everyone else contributes to the playlist simply by scanning a QR code. No logins, no hassle, just music.
 
 
-## 🚀 Features
+## Features
 
 - **🔓 No Logins Required**
   Host and users can use SongUp without creating an account.
@@ -24,26 +24,11 @@ SongUp is an open-source, privacy-friendly music queue system. Hosts can control
   A dedicated host mode designed for TV or laptop screens.
   (Works flawlessly on mobile too.)
 
-- **🧭 Unique Room Codes**
-  Every room generates a unique code for users to join easily.
-
-- **🥳 User-Friendly Queuing**
-  Everyone can join the party and queue their favorite songs using a QR code.
-
 - **2️⃣ Queue Management**
   Users can add up to two songs at a time, ensuring fairness for everyone.
 
 - **⏩ Queue Control**
   Hosts can skip or delete songs to keep the party going smoothly.
-
-- **♾️ Unlimited Users**
-  Your room, your crowd. Invite as many friends as you like!
-
-
-## 🔧 To-Do Features
-
-- **🎶 Fallback Playlist**: Ensure there’s always music playing, even if the queue is empty.
-- **⚙️ Host Settings Page**: Customize your SongUp experience as a host.
 
 
 ## 🎯 Get Started
