@@ -36,9 +36,9 @@ export default function Home() {
                                 alt="SongUp Host"
                             />
                             <p className="mx-auto max-w-[700px] md:text-xl">
-                                Shared party music queueing made easy. <br />{" "}
-                                Open source, no login required, just create a
-                                room and let the party begin!
+                                SongUp makes shared party music queueing easy.
+                                <br /> Open source, no login required, just
+                                create a room and let the party begin!
                             </p>
                             <div className="flex flex-col items-center justify-center gap-2">
                                 <Link href="/host">
