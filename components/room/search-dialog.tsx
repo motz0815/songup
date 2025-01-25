@@ -122,6 +122,7 @@ export function SearchSongDialog({
                                                 width={40}
                                                 height={40}
                                                 className="rounded-md object-cover"
+                                                unoptimized
                                             />
                                             <div className="text-left">
                                                 <p className="text-sm font-semibold">

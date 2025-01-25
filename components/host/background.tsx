@@ -11,6 +11,7 @@ export function HostBackground({ image }: { image?: string }) {
                         width={600}
                         height={600}
                         alt="PartyQ background"
+                        unoptimized
                     />
                     <Image
                         src={image}
@@ -18,6 +19,7 @@ export function HostBackground({ image }: { image?: string }) {
                         height={600}
                         className="absolute -top-[50%] aspect-square w-[200%] animate-rotate blur-3xl delay-10000 direction-reverse"
                         alt="PartyQ background"
+                        unoptimized
                     />
                 </>
             )}

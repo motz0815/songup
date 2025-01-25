@@ -34,6 +34,7 @@ export function SongCard({
                 height={128}
                 alt={`${song.title}`}
                 className="aspect-video h-20 rounded-md object-cover"
+                unoptimized
             />
             <div>
                 <h4 className="text-lg font-semibold md:text-xl">
