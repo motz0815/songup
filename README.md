@@ -2,6 +2,8 @@
 
 SongUp makes queuing songs from everyone easier and fairer than ever. 🎵
 
+<a href="https://www.producthunt.com/posts/songup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-songup" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=815261&theme=light&t=1737793983325" alt="SongUp - Open&#0032;Source&#0032;shared&#0032;music&#0032;queue&#0032;for&#0032;parties | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 Host a room for free at [songup.tv](https://songup.tv)!
 
 ![image](https://songup.tv/songup-host.png)
