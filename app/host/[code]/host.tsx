@@ -143,9 +143,7 @@ export default function Host({ room }: { room: Room }) {
 
     return (
         <div className="relative min-h-screen w-full text-white lg:h-screen">
-            <HostBackground
-                image={`https://i.ytimg.com/vi_webp/${songs[0]?.video_id}/mqdefault.webp`}
-            />
+            <HostBackground videoId={songs[0]?.video_id} />
             <main className="flex h-full flex-col gap-4 p-4">
                 <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
                     <div className="flex w-full flex-col gap-4 lg:col-span-2 lg:row-span-2">
