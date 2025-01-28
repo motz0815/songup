@@ -29,21 +29,21 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <Providers>
-                <body
-                    className={cn(
-                        "min-h-screen bg-background font-sans antialiased",
-                        GeistSans.variable,
-                        GeistMono.variable,
-                    )}
-                >
+            <body
+                className={cn(
+                    "min-h-screen bg-background font-sans antialiased",
+                    GeistSans.variable,
+                    GeistMono.variable,
+                )}
+            >
+                <Providers>
                     {children}
                     <Suspense>
                         <Toaster />
                     </Suspense>
                     <Analytics />
-                </body>
-            </Providers>
+                </Providers>
+            </body>
         </html>
     )
 }
