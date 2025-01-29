@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import posthog from "posthog-js"
 import { PostHogProvider as PHProvider } from "posthog-js/react"
 import { useEffect, useState } from "react"
+import { cookieConsentGiven } from "./cookies"
 import PostHogPageView from "./posthog-pageview"
 
 function PostHogProvider({ children }: { children: React.ReactNode }) {
@@ -19,6 +20,10 @@ function PostHogProvider({ children }: { children: React.ReactNode }) {
             capture_pageview: false, // Disable automatic pageview capture, as we capture manually
             capture_pageleave: true, // Enable pageleave capture
             person_profiles: "identified_only",
+            persistence:
+                cookieConsentGiven() === "yes"
+                    ? "localStorage+cookie"
+                    : "memory",
         })
     }, [])
 
