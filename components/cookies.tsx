@@ -4,6 +4,21 @@ import { usePostHog } from "posthog-js/react"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 
+function KeyboardHandler({ onEnter }: { onEnter: () => void }) {
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                onEnter()
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyPress)
+        return () => window.removeEventListener("keydown", handleKeyPress)
+    }, [onEnter])
+
+    return null
+}
+
 type CookieConsent = "undecided" | "yes" | "no"
 
 export function cookieConsentGiven(): CookieConsent {
@@ -19,15 +34,6 @@ export default function Cookies() {
         // We want this to only run once the client loads
         // or else it causes a hydration error
         setConsentGiven(cookieConsentGiven())
-
-        const handleKeyPress = (event: KeyboardEvent) => {
-            if (event.key === "Enter" && cookieConsentGiven() === "undecided") {
-                handleAcceptCookies()
-            }
-        }
-
-        window.addEventListener("keydown", handleKeyPress)
-        return () => window.removeEventListener("keydown", handleKeyPress)
     }, [])
 
     useEffect(() => {
@@ -43,23 +49,13 @@ export default function Cookies() {
         }
     }, [consentGiven])
 
-    const handleAcceptCookies = () => {
-        localStorage.setItem("cookie_consent", "yes")
-        setConsentGiven("yes")
+    const handleCookieConsent = (consent: "yes" | "no") => {
+        localStorage.setItem("cookie_consent", consent)
+        setConsentGiven(consent)
 
         // capture the event
         posthog.capture("cookie consent", {
-            cookie_consent: "yes",
-        })
-    }
-
-    const handleDeclineCookies = () => {
-        localStorage.setItem("cookie_consent", "no")
-        setConsentGiven("no")
-
-        // capture the event
-        posthog.capture("cookie consent", {
-            cookie_consent: "no",
+            cookie_consent: consent,
         })
     }
 
@@ -67,6 +63,9 @@ export default function Cookies() {
         <>
             {consentGiven === "undecided" && (
                 <div className="fixed bottom-0 right-0 z-50 w-full max-w-md p-6">
+                    <KeyboardHandler
+                        onEnter={() => handleCookieConsent("yes")}
+                    />
                     <div className="dark rounded-lg border border-white/20 bg-black/50 p-3 shadow-md backdrop-blur-xl">
                         <div className="flex flex-col gap-2">
                             <p className="text-white">
@@ -79,11 +78,13 @@ export default function Cookies() {
                                 <Button
                                     variant="ghost"
                                     className="text-white"
-                                    onClick={handleDeclineCookies}
+                                    onClick={() => handleCookieConsent("no")}
                                 >
                                     Decline
                                 </Button>
-                                <Button onClick={handleAcceptCookies}>
+                                <Button
+                                    onClick={() => handleCookieConsent("yes")}
+                                >
                                     Accept
                                     <CornerDownLeft />
                                 </Button>
