@@ -46,11 +46,17 @@ export default function Cookies() {
     const handleAcceptCookies = () => {
         localStorage.setItem("cookie_consent", "yes")
         setConsentGiven("yes")
+
+        // capture the event
+        posthog.capture("cookies accepted")
     }
 
     const handleDeclineCookies = () => {
         localStorage.setItem("cookie_consent", "no")
         setConsentGiven("no")
+
+        // capture the event
+        posthog.capture("cookies declined")
     }
 
     return (
