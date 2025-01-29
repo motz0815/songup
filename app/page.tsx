@@ -14,18 +14,6 @@ export default function Home() {
                 <section className="w-full py-12 lg:py-24">
                     <div className="container px-4 md:px-6">
                         <div className="flex flex-col items-center gap-4 text-center">
-                            <a
-                                href="https://www.producthunt.com/posts/songup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-songup"
-                                target="_blank"
-                            >
-                                <Image
-                                    src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=815261&theme=light&t=1737710612129"
-                                    alt="SongUp - Open&#0032;Source&#0032;shared&#0032;music&#0032;queue&#0032;for&#0032;parties&#0046; | Product Hunt"
-                                    style={{ width: "250px", height: "54px" }}
-                                    width="250"
-                                    height="54"
-                                />
-                            </a>
                             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
                                 Never fight over the aux again.
                             </h1>
