@@ -60,7 +60,7 @@ export default function Cookies() {
                     <div className="dark rounded-lg border border-white/20 bg-black/50 p-3 shadow-md backdrop-blur-xl">
                         <div className="flex flex-col gap-2">
                             <p className="text-white">
-                                SongUp doesn't use third-party cookies{" "}
+                                SongUp doesn&apos;t use third-party cookies{" "}
                                 <span className="text-white/50">
                                     - only a single first-party cookie.
                                 </span>

@@ -10,11 +10,6 @@ import { cookieConsentGiven } from "./cookies"
 import PostHogPageView from "./posthog-pageview"
 
 function PostHogProvider({ children }: { children: React.ReactNode }) {
-    // disable posthog if not in production
-    if (process.env.VERCEL_ENV !== "production") {
-        return children
-    }
-
     useEffect(() => {
         posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
             api_host: "/ingest",
@@ -42,7 +37,12 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <PostHogProvider>{children}</PostHogProvider>
+            {process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? (
+                // only enable posthog in production
+                <PostHogProvider>{children}</PostHogProvider>
+            ) : (
+                children
+            )}
         </QueryClientProvider>
     )
 }
