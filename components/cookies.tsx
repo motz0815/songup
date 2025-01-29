@@ -48,7 +48,7 @@ export default function Cookies() {
         setConsentGiven("yes")
 
         // capture the event
-        posthog.capture("Cookie consent", {
+        posthog.capture("cookie consent", {
             cookie_consent: "yes",
         })
     }
@@ -58,7 +58,7 @@ export default function Cookies() {
         setConsentGiven("no")
 
         // capture the event
-        posthog.capture("Cookie consent", {
+        posthog.capture("cookie consent", {
             cookie_consent: "no",
         })
     }
