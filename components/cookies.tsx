@@ -48,7 +48,9 @@ export default function Cookies() {
         setConsentGiven("yes")
 
         // capture the event
-        posthog.capture("cookies accepted")
+        posthog.capture("Cookie consent", {
+            cookie_consent: "yes",
+        })
     }
 
     const handleDeclineCookies = () => {
@@ -56,7 +58,9 @@ export default function Cookies() {
         setConsentGiven("no")
 
         // capture the event
-        posthog.capture("cookies declined")
+        posthog.capture("Cookie consent", {
+            cookie_consent: "no",
+        })
     }
 
     return (
