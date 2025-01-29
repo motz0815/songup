@@ -57,18 +57,21 @@ export default function Cookies() {
         <>
             {consentGiven === "undecided" && (
                 <div className="fixed bottom-0 right-0 z-50 w-full max-w-md p-6">
-                    <div className="rounded-lg border border-white/20 bg-black/50 p-3 shadow-md backdrop-blur-xl">
+                    <div className="dark rounded-lg border border-white/20 bg-black/50 p-3 shadow-md backdrop-blur-xl">
                         <div className="flex flex-col gap-2">
-                            <p>
-                                We use a single first-party cookie for product
-                                analytics.
+                            <p className="text-white">
+                                SongUp doesn't use third-party cookies{" "}
+                                <span className="text-white/50">
+                                    - only a single first-party cookie.
+                                </span>
                             </p>
                             <div className="flex justify-end gap-2">
                                 <Button
                                     variant="ghost"
+                                    className="text-white"
                                     onClick={handleDeclineCookies}
                                 >
-                                    I don't want a cookie
+                                    Decline
                                 </Button>
                                 <Button onClick={handleAcceptCookies}>
                                     Accept
