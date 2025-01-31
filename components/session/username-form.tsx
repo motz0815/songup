@@ -9,10 +9,10 @@ export function UsernameForm() {
                 <Input
                     type="text"
                     name="username"
-                    placeholder="Enter username..."
+                    placeholder="Enter nickname..."
                     className="bg-background text-foreground"
                 />
-                <SubmitButton>Set Username</SubmitButton>
+                <SubmitButton>Set nickname</SubmitButton>
             </div>
         </form>
     )
