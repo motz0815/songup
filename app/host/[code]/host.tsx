@@ -276,12 +276,16 @@ export default function Host({ room }: { room: Room }) {
                     </ScrollArea>
                     <QRCodeCard roomCode={room.code!} />
                 </div>
-                <footer className="flex w-full items-center justify-center">
+                <footer className="flex w-full items-center justify-between px-1">
                     <Link href="/">
                         <h2 className="text-3xl font-bold text-white/60">
                             SongUp
+                            <span className="text-sm text-white/60">.tv</span>
                         </h2>
                     </Link>
+                    <p className="text-3xl font-bold text-white/60">
+                        {room.code}
+                    </p>
                 </footer>
             </main>
         </div>
