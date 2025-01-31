@@ -30,6 +30,7 @@
     "lucide-react": "^0.474.0",
     "next": "^15.1.6",
     "next-themes": "^0.4.4",
+    "node-vibrant": "^4.0.3",
     "posthog-js": "^1.211.2",
     "posthog-node": "^4.4.1",
     "qrcode.react": "^4.2.0",
@@ -38,6 +39,7 @@
     "react-youtube": "^10.1.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "whatamesh": "^0.2.0",
     "youtube-search-api": "^1.2.2"
   },
   "devDependencies": {
