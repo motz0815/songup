@@ -130,22 +130,4 @@ export function RoomPage({
             </main>
         </div>
     )
-
-    return (
-        <div>
-            {!user.isLoggedIn || !user.username ? (
-                <UsernameForm />
-            ) : (
-                <>
-                    <SearchSongDialog
-                        addSong={addSong}
-                        open={dialogOpen}
-                        setOpen={setDialogOpen}
-                        disableTrigger={songsLeftToAdd <= 0}
-                    />
-                    <p>{songsLeftToAdd} songs left to add.</p>
-                </>
-            )}
-        </div>
-    )
 }
