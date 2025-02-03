@@ -11,8 +11,8 @@ import { Suspense } from "react"
 export const metadata: Metadata = {
     title: { default: "SongUp", template: "%s | SongUp" },
     description:
-        "SongUp makes collaborative party music queueing easy. Open source, no login required, just create a room and let the party begin!",
-    keywords: ["party", "music", "queue", "songup"],
+        "SongUp makes collaborative party music queueing easy. Open source, no login required. Get started - free.",
+    keywords: ["songup", "party", "music", "queue", "open source"],
 }
 
 export const viewport: Viewport = {

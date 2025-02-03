@@ -131,6 +131,13 @@ export default function Host({ room }: { room: Room }) {
         height: "100%",
         playerVars: {
             autoplay: 1,
+            // Disable cookies and tracking
+            enablejsapi: 0,
+            disablekb: 1,
+            fs: 0,
+            rel: 0,
+            modestbranding: 1,
+            controls: 1,
         },
         host: "https://www.youtube-nocookie.com",
     }
@@ -276,12 +283,16 @@ export default function Host({ room }: { room: Room }) {
                     </ScrollArea>
                     <QRCodeCard roomCode={room.code!} />
                 </div>
-                <footer className="flex w-full items-center justify-center">
+                <footer className="flex w-full items-center justify-between px-1">
                     <Link href="/">
                         <h2 className="text-3xl font-bold text-white/60">
                             SongUp
+                            <span className="text-sm text-white/60">.tv</span>
                         </h2>
                     </Link>
+                    <p className="text-3xl font-bold text-white/60">
+                        {room.code}
+                    </p>
                 </footer>
             </main>
         </div>

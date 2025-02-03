@@ -2,15 +2,21 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/submit-button"
-import { Github, Music, Tv, Users } from "lucide-react"
+import { Music, Tv, Users } from "lucide-react"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import { FaDiscord, FaGithub } from "react-icons/fa"
 import { joinRoom } from "./actions"
+
+export const metadata: Metadata = {
+    title: "SongUp - Open Source shared music queue for parties.",
+}
 
 export default function Home() {
     return (
-        <div className="flex min-h-screen flex-col bg-gradient-to-br from-purple-500 via-pink-500 to-red-500">
-            <main className="flex-1 text-white">
+        <div className="flex min-h-screen flex-col bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 text-white">
+            <main className="flex-1">
                 <section className="w-full py-12 lg:py-24">
                     <div className="container px-4 md:px-6">
                         <div className="flex flex-col items-center gap-4 text-center">
@@ -44,15 +50,26 @@ export default function Home() {
                                     </div>
                                 </form>
                             </div>
-                            <a
-                                href="https://github.com/motz0815/songup"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center space-x-2 text-white hover:text-gray-200"
-                            >
-                                <Github className="h-5 w-5" />
-                                <span>View on GitHub</span>
-                            </a>
+                            <div className="flex gap-4">
+                                <a
+                                    href="https://github.com/motz0815/songup"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center space-x-2 text-white hover:text-gray-200"
+                                >
+                                    <FaGithub className="size-5" />
+                                    <span>View on GitHub</span>
+                                </a>
+                                <a
+                                    href="/discord"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center space-x-2 text-white hover:text-gray-200"
+                                >
+                                    <FaDiscord className="size-5" />
+                                    <span>Join Discord</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -119,33 +136,23 @@ export default function Home() {
                             rel="noopener noreferrer"
                             className="flex items-center space-x-2 text-white hover:text-gray-200"
                         >
-                            <Github className="h-5 w-5" />
+                            <FaGithub className="size-5" />
                             <span className="text-sm">
                                 Open Source on GitHub
                             </span>
                         </a>
+                        <a
+                            href="/discord"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center space-x-2 text-white hover:text-gray-200"
+                        >
+                            <FaDiscord className="size-5" />
+                            <span className="text-sm">Join Discord</span>
+                        </a>
                     </div>
                 </div>
             </footer>
-        </div>
-    )
-    return (
-        <div className="flex h-screen flex-col items-center justify-center gap-4 font-mono">
-            <h1>Welcome to SongUp! (Rewrite of PartyQ)</h1>
-            <Link href="/host">
-                <Button>Host a room</Button>
-            </Link>
-            <form action={joinRoom}>
-                <div className="flex gap-2">
-                    <Input
-                        name="code"
-                        placeholder="Enter room code"
-                        className="text-primary"
-                        required
-                    />
-                    <SubmitButton>Join room</SubmitButton>
-                </div>
-            </form>
         </div>
     )
 }
