@@ -3,14 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { Github, Music, Tv, Users } from "lucide-react"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { joinRoom } from "./actions"
 
+export const metadata: Metadata = {
+    title: "SongUp - Open Source shared music queue for parties.",
+}
+
 export default function Home() {
     return (
-        <div className="flex min-h-screen flex-col bg-gradient-to-br from-purple-500 via-pink-500 to-red-500">
-            <main className="flex-1 text-white">
+        <div className="flex min-h-screen flex-col bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 text-white">
+            <main className="flex-1">
                 <section className="w-full py-12 lg:py-24">
                     <div className="container px-4 md:px-6">
                         <div className="flex flex-col items-center gap-4 text-center">
