@@ -131,6 +131,13 @@ export default function Host({ room }: { room: Room }) {
         height: "100%",
         playerVars: {
             autoplay: 1,
+            // Disable cookies and tracking
+            enablejsapi: 0,
+            disablekb: 1,
+            fs: 0,
+            rel: 0,
+            modestbranding: 1,
+            controls: 1,
         },
         host: "https://www.youtube-nocookie.com",
     }
