@@ -1,5 +1,7 @@
 # SongUp
 
+[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://songup.tv/discord)
+
 SongUp makes queuing songs from everyone easier and fairer than ever. 🎵
 
 Host a room for free at [songup.tv](https://songup.tv)!
