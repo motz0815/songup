@@ -37,12 +37,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <QueryClientProvider client={queryClient}>
-            {process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? (
-                // only enable posthog in production
-                <PostHogProvider>{children}</PostHogProvider>
-            ) : (
-                children
-            )}
+            <PostHogProvider>{children}</PostHogProvider>
         </QueryClientProvider>
     )
 }
