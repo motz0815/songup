@@ -5,7 +5,7 @@ import { getErrorRedirect, getStatusRedirect } from "@/lib/utils"
 import { redirect } from "next/navigation"
 
 export async function joinRoom(formData: FormData) {
-    const code = (formData.get("code") as string).toUpperCase()
+    const code = (formData.get("code") as string).toUpperCase().trim()
 
     const supabase = createClient()
 
