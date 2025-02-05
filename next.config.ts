@@ -9,9 +9,6 @@ export default {
             {
                 hostname: "is2-ssl.mzstatic.com",
             },
-            {
-                hostname: "api.producthunt.com",
-            },
         ],
     },
     async rewrites() {
