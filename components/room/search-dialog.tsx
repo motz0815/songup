@@ -13,7 +13,11 @@ import {
 import { ImageWithFallback } from "../ui/image-with-fallback"
 import { Input } from "../ui/input"
 import { SubmitButton } from "../ui/submit-button"
-import { searchSong, SongResult } from "./actions"
+
+type SongResult = {
+    video_id: string
+    title: string
+}
 
 export function SearchSongDialog({
     open,
@@ -37,8 +41,14 @@ export function SearchSongDialog({
             const query = formData.get("query") as string
             if (!query?.trim()) return
 
-            const results = await searchSong(query)
-            setSearchResults(results)
+            const response = await fetch(
+                `/api/search?q=${encodeURIComponent(query)}`,
+            )
+            if (!response.ok) {
+                throw new Error("Search failed")
+            }
+            const songResults = await response.json()
+            setSearchResults(songResults)
         } catch (err) {
             setError("Failed to search songs. Please try again.")
             console.error(err)

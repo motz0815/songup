@@ -1,6 +1,5 @@
 "use client"
 
-import { SongResult } from "@/components/room/actions"
 import { SearchSongDialog } from "@/components/room/search-dialog"
 import { UsernameForm } from "@/components/session/username-form"
 import { SongCard } from "@/components/songs/song-card"
@@ -11,7 +10,7 @@ import { UUID } from "crypto"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { addSongToQueue } from "./actions"
+import { addSongToQueue, SongResult } from "./actions"
 
 export function RoomPage({
     room,

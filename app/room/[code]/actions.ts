@@ -5,10 +5,12 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { SongInsert } from "@/types/global"
 import { revalidatePath } from "next/cache"
 
-export async function addSongToQueue(
-    code: string,
-    song: Omit<SongInsert, "room">,
-) {
+export type SongResult = Omit<
+    SongInsert,
+    "room" | "added_by" | "added_by_name" | "id" | "created_at"
+>
+
+export async function addSongToQueue(code: string, song: SongResult) {
     const session = await getSession()
 
     const supabase = createAdminClient()
