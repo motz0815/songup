@@ -134,9 +134,6 @@ export const WithIcon: Story = {
             <Mail /> Login with Email Button
         </Button>
     ),
-    args: {
-        ...Secondary.args,
-    },
 }
 
 /**
