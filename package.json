@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "supabase:types": "supabase gen types --lang typescript --project-id xmloxebrmbezotphpbdp > types/database.ts",
-    "env:pull": "vercel env pull"
+    "env:pull": "vercel env pull",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
@@ -42,16 +44,26 @@
     "ytmusic-api": "^5.3.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.4",
+    "@storybook/addon-essentials": "^8.5.3",
+    "@storybook/addon-interactions": "^8.5.3",
+    "@storybook/addon-onboarding": "^8.5.3",
+    "@storybook/blocks": "^8.5.3",
+    "@storybook/nextjs": "^8.5.3",
+    "@storybook/react": "^8.5.3",
+    "@storybook/test": "^8.5.3",
     "@types/node": "^20.17.17",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@types/youtube-player": "^5.5.11",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.1.6",
+    "eslint-plugin-storybook": "^0.11.2",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "storybook": "^8.5.3",
     "supabase": "^2.9.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
