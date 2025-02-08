@@ -115,8 +115,8 @@ export const Link: Story = {
 }
 
 /**
- * Add the `disabled` prop to a button to prevent interactions and add a
- * loading indicator, such as a spinner, to signify an in-progress action.
+ * Add the `loading` prop to a button to show a loading indicator,
+ * such as a spinner, to signify an in-progress action.
  */
 export const Loading: Story = {
     args: {
