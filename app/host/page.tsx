@@ -1,13 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { SubmitButton } from "@/components/ui/submit-button"
 import { getSession } from "@/lib/session"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { Room } from "@/types/global"
 import { formatDistance } from "date-fns"
-import { Plus } from "lucide-react"
 import { Metadata } from "next"
 import Link from "next/link"
-import { createRoom } from "./actions"
+import { CreateRoomDialog } from "./create-dialog"
 
 export const metadata: Metadata = {
     title: "Host",
@@ -91,16 +89,11 @@ export default async function HostHubPage() {
             <Card className="flex flex-col items-center justify-center">
                 <CardHeader>
                     <CardTitle className="text-purple-600">
-                        Create a Room
+                        Host a new room
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <form action={createRoom}>
-                        <SubmitButton>
-                            <Plus />
-                            Create Room
-                        </SubmitButton>
-                    </form>
+                    <CreateRoomDialog />
                 </CardContent>
             </Card>
         </div>
