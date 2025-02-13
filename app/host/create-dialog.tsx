@@ -1,12 +1,11 @@
 import { RoomSettingsForm } from "@/components/host/room-settings"
 import { Button } from "@/components/ui/button"
 import {
+    Dialog,
     DialogContent,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-
-import { Dialog } from "@/components/ui/dialog"
 import { Plus } from "lucide-react"
 import { createRoom } from "./actions"
 
