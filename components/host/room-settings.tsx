@@ -22,6 +22,7 @@ export function RoomSettingsForm({ action }: RoomSettingsFormProps) {
                     name="max_songs_per_user"
                     type="number"
                     defaultValue={2}
+                    min={1}
                 />
                 <p className="text-sm text-gray-500">
                     {roomSettingsSchema.shape.max_songs_per_user.description}
