@@ -9,6 +9,12 @@ export const roomSettingsSchema = z.object({
         .describe(
             "The maximum number of songs a single user can add to the queue at once.",
         ),
+    fallback_playlist_id: z
+        .string()
+        .optional()
+        .describe(
+            "The ID of the playlist to use as a fallback if the primary playlist is empty.",
+        ),
 })
 
 export type RoomSettings = z.infer<typeof roomSettingsSchema>
