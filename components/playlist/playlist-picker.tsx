@@ -10,8 +10,9 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { SubmitButton } from "@/components/ui/submit-button"
 import { Music, Search } from "lucide-react"
-import { useRef, useState, type FormEvent } from "react"
+import { useRef, useState } from "react"
 
 export interface Playlist {
     id: string
@@ -37,26 +38,26 @@ export function PlaylistPicker({
     const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(
         defaultValue,
     )
-    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [hasSearched, setHasSearched] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const handleSearch = async (e: FormEvent) => {
-        e.preventDefault()
-        if (!query.trim()) {
+    // Client-side action for searching playlists
+    async function searchPlaylists(formData: FormData) {
+        const searchQuery = formData.get("query") as string
+
+        if (!searchQuery.trim()) {
             setResults([])
             setHasSearched(false)
             return
         }
 
-        setIsLoading(true)
         setError(null)
         setHasSearched(true)
 
         try {
             const response = await fetch(
-                `/api/search/playlist?q=${encodeURIComponent(query.trim())}`,
+                `/api/search/playlist?q=${encodeURIComponent(searchQuery.trim())}`,
             )
 
             if (!response.ok) {
@@ -68,8 +69,6 @@ export function PlaylistPicker({
         } catch (err) {
             setError("An error occurred while searching for playlists")
             console.error(err)
-        } finally {
-            setIsLoading(false)
         }
     }
 
@@ -96,11 +95,12 @@ export function PlaylistPicker({
         <div className={`space-y-4 ${className}`}>
             {!selectedPlaylist ? (
                 <div className="space-y-4">
-                    <form onSubmit={handleSearch} className="flex gap-2">
+                    <form action={searchPlaylists} className="flex gap-2">
                         <div className="relative flex-grow">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
                                 type="text"
+                                name="query"
                                 placeholder={placeholder}
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
@@ -109,9 +109,7 @@ export function PlaylistPicker({
                                 ref={inputRef}
                             />
                         </div>
-                        <Button type="submit" disabled={isLoading}>
-                            {isLoading ? "Searching..." : "Search"}
-                        </Button>
+                        <SubmitButton>Search</SubmitButton>
                     </form>
 
                     {error && (
@@ -152,7 +150,7 @@ export function PlaylistPicker({
                         </div>
                     )}
 
-                    {hasSearched && !isLoading && results.length === 0 && (
+                    {hasSearched && results.length === 0 && (
                         <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
                             No playlists found for "{query}"
                         </div>
