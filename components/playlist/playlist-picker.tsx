@@ -1,5 +1,6 @@
 "use client"
 
+import { PlaylistResult as Playlist } from "@/app/api/search/playlist/route"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -13,12 +14,6 @@ import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { Music, Search } from "lucide-react"
 import { useRef, useState } from "react"
-
-export interface Playlist {
-    id: string
-    title: string
-    author: string
-}
 
 export interface PlaylistPickerProps {
     onSelect: (playlist: Playlist | null) => void

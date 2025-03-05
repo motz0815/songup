@@ -2,8 +2,9 @@ import { NextResponse } from "next/server"
 import YTMusic from "ytmusic-api"
 
 export type PlaylistResult = {
-    playlist_id: string
+    id: string
     title: string
+    author: string
 }
 
 export async function GET(request: Request) {
@@ -23,8 +24,9 @@ export async function GET(request: Request) {
 
         const results = await ytmusic.searchPlaylists(query)
         const playlistResults: PlaylistResult[] = results.map((result) => ({
-            playlist_id: result.playlistId,
+            id: result.playlistId,
             title: result.name,
+            author: result.artist.name,
         }))
 
         return NextResponse.json(playlistResults)
