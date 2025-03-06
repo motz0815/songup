@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { roomSettingsSchema } from "@/lib/schema/room-settings"
 import { ActionState, initialState } from "@/types/action-state"
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
+import { PlaylistPicker } from "../playlist/playlist-picker"
 import { Label } from "../ui/label"
 
 interface RoomSettingsFormProps {
@@ -13,6 +14,7 @@ interface RoomSettingsFormProps {
 
 export function RoomSettingsForm({ action }: RoomSettingsFormProps) {
     const [state, formAction] = useActionState(action, initialState)
+    const [playlistId, setPlaylistId] = useState<string | null>(null)
 
     return (
         <form action={formAction} className="flex flex-col gap-4">
@@ -26,6 +28,23 @@ export function RoomSettingsForm({ action }: RoomSettingsFormProps) {
                 />
                 <p className="text-sm text-gray-500">
                     {roomSettingsSchema.shape.max_songs_per_user.description}
+                </p>
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="playlist_id">Base playlist</Label>
+                <input
+                    type="hidden"
+                    name="playlist_id"
+                    value={playlistId || ""}
+                />
+                <PlaylistPicker
+                    onSelect={(playlist) => {
+                        setPlaylistId(playlist?.id || null)
+                    }}
+                />
+                <p className="text-sm text-gray-500">
+                    The playlist that will play while there are no songs in the
+                    queue.
                 </p>
             </div>
             {state?.error && (

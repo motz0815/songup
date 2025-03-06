@@ -1,6 +1,5 @@
 "use client"
 
-import { PlaylistResult as Playlist } from "@/app/api/search/playlist/route"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -11,9 +10,14 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { SubmitButton } from "@/components/ui/submit-button"
 import { Music, Search } from "lucide-react"
-import { useRef, useState } from "react"
+import { useRef, useState, type KeyboardEvent } from "react"
+
+export interface Playlist {
+    id: string
+    title: string
+    author: string
+}
 
 export interface PlaylistPickerProps {
     onSelect: (playlist: Playlist | null) => void
@@ -33,37 +37,47 @@ export function PlaylistPicker({
     const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(
         defaultValue,
     )
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [hasSearched, setHasSearched] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    // Client-side action for searching playlists
-    async function searchPlaylists(formData: FormData) {
-        const searchQuery = formData.get("query") as string
-
-        if (!searchQuery.trim()) {
+    const handleSearch = async () => {
+        if (!query.trim()) {
             setResults([])
             setHasSearched(false)
             return
         }
 
+        setIsLoading(true)
         setError(null)
         setHasSearched(true)
 
         try {
             const response = await fetch(
-                `/api/search/playlist?q=${encodeURIComponent(searchQuery.trim())}`,
+                `/api/search/playlist?q=${encodeURIComponent(query.trim())}`,
             )
 
             if (!response.ok) {
                 throw new Error("Failed to fetch playlists")
             }
-
             const data = await response.json()
+
+            console.log(data)
+
             setResults(data.playlists || [])
         } catch (err) {
             setError("An error occurred while searching for playlists")
             console.error(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault()
+            handleSearch()
         }
     }
 
@@ -90,22 +104,28 @@ export function PlaylistPicker({
         <div className={`space-y-4 ${className}`}>
             {!selectedPlaylist ? (
                 <div className="space-y-4">
-                    <form action={searchPlaylists} className="flex gap-2">
+                    <div className="flex gap-2">
                         <div className="relative flex-grow">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
                                 type="text"
-                                name="query"
                                 placeholder={placeholder}
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
+                                onKeyDown={handleKeyDown}
                                 className="pl-9 pr-4"
                                 aria-label="Search for a playlist"
                                 ref={inputRef}
                             />
                         </div>
-                        <SubmitButton>Search</SubmitButton>
-                    </form>
+                        <Button
+                            type="button"
+                            onClick={handleSearch}
+                            loading={isLoading}
+                        >
+                            Search
+                        </Button>
+                    </div>
 
                     {error && (
                         <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
@@ -122,6 +142,7 @@ export function PlaylistPicker({
                                         className="p-2 hover:bg-muted"
                                     >
                                         <button
+                                            type="button"
                                             onClick={() =>
                                                 handleSelect(playlist)
                                             }
@@ -145,7 +166,7 @@ export function PlaylistPicker({
                         </div>
                     )}
 
-                    {hasSearched && results.length === 0 && (
+                    {hasSearched && !isLoading && results.length === 0 && (
                         <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
                             No playlists found for "{query}"
                         </div>
@@ -178,6 +199,7 @@ export function PlaylistPicker({
                     </CardContent>
                     <CardFooter>
                         <Button
+                            type="button"
                             variant="outline"
                             size="sm"
                             onClick={handleClear}
