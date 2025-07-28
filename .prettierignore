@@ -1,3 +1,5 @@
 package.json
 tsconfig.json
 .eslintrc.json
+convex.json
+src/convex/_generated
