@@ -1,7 +1,10 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { authClient } from "@/lib/auth-client"
 
-export default async function Home() {
+export default function Home() {
     return (
         <div className="flex h-screen items-center justify-center">
             <Card className="w-full max-w-md">
@@ -11,7 +14,13 @@ export default async function Home() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Button>Click me</Button>
+                    <Button
+                        onClick={() => {
+                            authClient.signIn.anonymous()
+                        }}
+                    >
+                        Click me
+                    </Button>
                 </CardContent>
             </Card>
         </div>
