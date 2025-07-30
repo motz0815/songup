@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { authClient } from "@/lib/auth-client"
 
 export default function Home() {
     return (
@@ -14,13 +13,7 @@ export default function Home() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Button
-                        onClick={() => {
-                            authClient.signIn.anonymous()
-                        }}
-                    >
-                        Click me
-                    </Button>
+                    <Button>Click me</Button>
                 </CardContent>
             </Card>
         </div>
