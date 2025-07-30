@@ -3,13 +3,12 @@ import { v } from "convex/values"
 
 export default defineSchema({
     users: defineTable({
-        // Fields are optional
+        nickname: v.optional(v.string()),
     }),
     rooms: defineTable({
         host: v.id("users"),
         code: v.string(),
         expiresAt: v.number(),
-        currentSong: v.optional(v.id("songs")),
         settings: v.object({
             maxSongsPerUser: v.number(),
         }),
@@ -18,14 +17,17 @@ export default defineSchema({
         .index("by_host", ["host"]),
     queuedSongs: defineTable({
         room: v.id("rooms"),
-        addedBy: v.id("users"),
+        addedBy: v.optional(v.id("users")),
         videoId: v.string(),
-        type: v.union(v.literal("user"), v.literal("fallback")),
+        // These exact names of types are important
+        // because the queue query will use them to sort the songs.
+        // Calling user added songs "addedByUser" places them in front of fallback songs.
+        type: v.union(v.literal("addedByUser"), v.literal("fallback")),
 
         title: v.string(),
         artist: v.string(),
         thumbnail: v.string(),
     })
-        .index("by_room", ["room"])
-        .index("by_type", ["type"]),
+        .index("by_room_type", ["room", "type"])
+        .index("by_added_by_room", ["addedBy", "room"]),
 })
