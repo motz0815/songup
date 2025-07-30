@@ -1,6 +1,6 @@
 import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
-import { query } from "./_generated/server"
+import { query, QueryCtx } from "./_generated/server"
 import { betterAuthComponent } from "./auth"
 import { mutation } from "./functions"
 
@@ -9,11 +9,7 @@ export const getCurrentSong = query({
         roomId: v.id("rooms"),
     },
     handler: async (ctx, args) => {
-        return await ctx.db
-            .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
-            .order("asc")
-            .first()
+        return await getCurrentSongInRoom(ctx, args.roomId)
     },
 })
 
@@ -98,6 +94,36 @@ export const addSong = mutation({
     },
 })
 
+export const popSong = mutation({
+    args: {
+        roomId: v.id("rooms"),
+    },
+    handler: async (ctx, args) => {
+        const room = await ctx.db.get(args.roomId)
+        if (!room) {
+            throw new Error("Room not found")
+        }
+
+        // Check if the user is the host of the room
+        const userId = await betterAuthComponent.getAuthUserId(ctx)
+        if (!userId) {
+            throw new Error("User not found")
+        }
+        if (room.host !== (userId as Id<"users">)) {
+            throw new Error("User is not the host of the room")
+        }
+
+        // Get the topmost song in the queue (the current song)
+        const currentSong = await getCurrentSongInRoom(ctx, args.roomId)
+
+        if (!currentSong) {
+            throw new Error("No song to pop")
+        }
+
+        await ctx.db.delete(currentSong._id)
+    },
+})
+
 export const createRoom = mutation({
     args: {
         maxSongsPerUser: v.number(),
@@ -141,4 +167,12 @@ function generateRoomCode(length: number) {
         )
     }
     return result
+}
+
+async function getCurrentSongInRoom(ctx: QueryCtx, roomId: Id<"rooms">) {
+    return await ctx.db
+        .query("queuedSongs")
+        .withIndex("by_room_type", (q) => q.eq("room", roomId))
+        .order("asc")
+        .first()
 }
