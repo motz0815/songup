@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
     rewrites: async () => {
         return [
             {
-                source: "/api/flask/:path*",
+                source: "/flask/:path*",
                 destination:
                     process.env.NODE_ENV === "development"
-                        ? "http://127.0.0.1:5328/api/flask/:path*"
-                        : "/api/flask/",
+                        ? "http://127.0.0.1:5328/flask/:path*"
+                        : "/api/flask/index",
             },
         ]
     },
