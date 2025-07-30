@@ -8,7 +8,7 @@
   "packageManager": "bun@1.2.19",
   "scripts": {
     "next-dev": "next dev --turbopack",
-    "flask-dev": "FLASK_DEBUG=1 pip3 install --break-system-packages -r requirements.txt && python3 -m flask --app api/index run -p 5328",
+    "flask-dev": "FLASK_DEBUG=1 pip3 install --break-system-packages -r requirements.txt && python3 -m flask --app flask/index run -p 5328",
     "dev": "concurrently \"bun run next-dev\" \"bun run flask-dev\"",
     "build": "next build",
     "start": "next start",
