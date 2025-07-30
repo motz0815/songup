@@ -2,8 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { api } from "@/convex/_generated/api"
+import { authClient } from "@/lib/auth-client"
+import { useQuery } from "convex/react"
 
 export default function Home() {
+    const user = useQuery(api.auth.getCurrentUser)
+
     return (
         <div className="flex h-screen items-center justify-center">
             <Card className="w-full max-w-md">
@@ -13,7 +18,10 @@ export default function Home() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Button>Click me</Button>
+                    <pre>{JSON.stringify(user, null, 2)}</pre>
+                    <Button onClick={() => authClient.signIn.anonymous()}>
+                        Click me
+                    </Button>
                 </CardContent>
             </Card>
         </div>
