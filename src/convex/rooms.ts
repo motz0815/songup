@@ -48,6 +48,34 @@ export const getRoomByCode = query({
     },
 })
 
+export const getRoom = query({
+    args: {
+        roomId: v.id("rooms"),
+    },
+    handler: async (ctx, args) => {
+        return await ctx.db.get(args.roomId)
+    },
+})
+
+export const isHost = query({
+    args: {
+        roomId: v.id("rooms"),
+    },
+    handler: async (ctx, args) => {
+        const userId = await betterAuthComponent.getAuthUserId(ctx)
+        if (!userId) {
+            throw new Error("User not found")
+        }
+
+        const room = await ctx.db.get(args.roomId)
+        if (!room) {
+            throw new Error("Room not found")
+        }
+
+        return room.host === (userId as Id<"users">)
+    },
+})
+
 export const addSong = mutation({
     args: {
         roomId: v.id("rooms"),
