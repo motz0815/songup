@@ -26,7 +26,7 @@ export default defineSchema({
 
         title: v.string(),
         artist: v.string(),
-        thumbnail: v.string(),
+        duration: v.number(),
     })
         .index("by_room_type", ["room", "type"])
         .index("by_added_by_room", ["addedBy", "room"]),

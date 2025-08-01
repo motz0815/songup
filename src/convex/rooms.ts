@@ -82,7 +82,7 @@ export const addSong = mutation({
         videoId: v.string(),
         title: v.string(),
         artist: v.string(),
-        thumbnail: v.string(),
+        duration: v.number(),
     },
     handler: async (ctx, args) => {
         const userId = await betterAuthComponent.getAuthUserId(ctx)
@@ -115,7 +115,7 @@ export const addSong = mutation({
             addedBy: userId as Id<"users">,
             title: args.title,
             artist: args.artist,
-            thumbnail: args.thumbnail,
+            duration: args.duration,
         })
 
         return song
