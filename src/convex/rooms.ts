@@ -64,7 +64,7 @@ export const isHost = query({
     handler: async (ctx, args) => {
         const userId = await betterAuthComponent.getAuthUserId(ctx)
         if (!userId) {
-            throw new Error("User not found")
+            return false
         }
 
         const room = await ctx.db.get(args.roomId)
