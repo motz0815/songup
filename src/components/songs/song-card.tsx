@@ -23,11 +23,11 @@ export function SongCard({ song }: { song: Doc<"queuedSongs"> }) {
                 unoptimized
             />
             <div>
-                <h4 className="text-lg font-semibold md:text-xl">
+                <h4 className="text-lg font-semibold text-shadow-md md:text-xl">
                     {song.title}
                 </h4>
-                <p className="text-sm text-gray-300 md:text-lg">
-                    Added by {song.addedBy?.toString()}
+                <p className="text-sm text-gray-100 text-shadow-sm md:text-lg">
+                    {song.artist}
                 </p>
             </div>
             {/* {onDelete && (
