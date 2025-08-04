@@ -1,11 +1,13 @@
 "use client"
 
 import { HostBackground } from "@/components/host/background"
+import { RoomQRCode } from "@/components/host/qr-code"
 import { Queue } from "@/components/host/queue"
 import { Progress } from "@/components/ui/progress"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useMutation, useQuery } from "convex/react"
+import { ArrowDown } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
@@ -135,7 +137,20 @@ export default function Host({ roomId }: { roomId: Id<"rooms"> }) {
                         </div>
                     </div>
                     <Queue roomId={roomId} />
-                    {/* <QRCodeCard roomCode={room?.code} /> */}
+                    <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
+                        <h3 className="inline-flex items-center gap-2 text-center text-2xl font-bold">
+                            <ArrowDown className="size-6" />
+                            Scan to add songs
+                            <ArrowDown className="size-6" />
+                        </h3>
+                        <RoomQRCode roomCode={room?.code ?? ""} />
+                        <p className="text-center text-lg text-white/80">
+                            ...or visit{" "}
+                            <span className="font-bold">songup.tv</span> and
+                            enter code{" "}
+                            <span className="font-bold">{room?.code}</span>
+                        </p>
+                    </div>
                 </div>
                 <footer className="flex w-full items-center justify-between px-1">
                     <Link href="/">
