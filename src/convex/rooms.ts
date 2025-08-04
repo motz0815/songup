@@ -76,6 +76,32 @@ export const isHost = query({
     },
 })
 
+export const getSongsLeftToAdd = query({
+    args: {
+        roomId: v.id("rooms"),
+    },
+    handler: async (ctx, args) => {
+        const room = await ctx.db.get(args.roomId)
+        if (!room) {
+            throw new Error("Room not found")
+        }
+
+        const userId = await betterAuthComponent.getAuthUserId(ctx)
+        if (!userId) {
+            throw new Error("User not found")
+        }
+
+        const userSongs = await ctx.db
+            .query("queuedSongs")
+            .withIndex("by_added_by_room", (q) =>
+                q.eq("addedBy", userId as Id<"users">).eq("room", args.roomId),
+            )
+            .collect()
+
+        return room.settings.maxSongsPerUser - userSongs.length
+    },
+})
+
 export const addSong = mutation({
     args: {
         roomId: v.id("rooms"),
