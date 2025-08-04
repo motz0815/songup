@@ -1,6 +1,20 @@
 import { defineSchema, defineTable } from "convex/server"
 import { v } from "convex/values"
 
+// This is a shared object defining the fields for a song.
+const song = {
+    addedBy: v.optional(v.id("users")),
+    videoId: v.string(),
+    // These exact names of types are important
+    // because the queue query will use them to sort the songs.
+    // Calling user added songs "addedByUser" places them in front of fallback songs.
+    type: v.union(v.literal("addedByUser"), v.literal("fallback")),
+
+    title: v.string(),
+    artist: v.string(),
+    duration: v.number(),
+}
+
 export default defineSchema({
     users: defineTable({
         nickname: v.optional(v.string()),
@@ -9,6 +23,7 @@ export default defineSchema({
         host: v.id("users"),
         code: v.string(),
         expiresAt: v.number(),
+        currentSong: v.optional(v.object(song)),
         settings: v.object({
             maxSongsPerUser: v.number(),
         }),
@@ -17,16 +32,7 @@ export default defineSchema({
         .index("by_host", ["host"]),
     queuedSongs: defineTable({
         room: v.id("rooms"),
-        addedBy: v.optional(v.id("users")),
-        videoId: v.string(),
-        // These exact names of types are important
-        // because the queue query will use them to sort the songs.
-        // Calling user added songs "addedByUser" places them in front of fallback songs.
-        type: v.union(v.literal("addedByUser"), v.literal("fallback")),
-
-        title: v.string(),
-        artist: v.string(),
-        duration: v.number(),
+        ...song,
     })
         .index("by_room_type", ["room", "type"])
         .index("by_added_by_room", ["addedBy", "room"]),

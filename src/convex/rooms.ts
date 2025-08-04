@@ -16,7 +16,7 @@ export const getCurrentSong = query({
 /**
  * This query returns the queue of songs for a room.
  *
- * It also includes the current song, because that is always the first song in the queue.
+ * It does not include the current song. That is stored in the room object and can be retreived with the getCurrentSong query.
  */
 export const getQueue = query({
     args: {
@@ -107,21 +107,39 @@ export const addSong = mutation({
             throw new Error("User has reached the maximum number of songs")
         }
 
-        // Add song to queue
-        const song = await ctx.db.insert("queuedSongs", {
-            room: args.roomId,
-            videoId: args.videoId,
-            type: "addedByUser",
-            addedBy: userId as Id<"users">,
-            title: args.title,
-            artist: args.artist,
-            duration: args.duration,
-        })
-
-        return song
+        // Decide whether this song should become the current song or to queue it
+        if (!room.currentSong) {
+            // room currently has no song playing, so this song should become the current song
+            await ctx.db.patch(args.roomId, {
+                currentSong: {
+                    addedBy: userId as Id<"users">,
+                    videoId: args.videoId,
+                    title: args.title,
+                    artist: args.artist,
+                    duration: args.duration,
+                    type: "addedByUser",
+                },
+            })
+        } else {
+            // room currently has a song playing, so this song should be queued
+            await ctx.db.insert("queuedSongs", {
+                room: args.roomId,
+                videoId: args.videoId,
+                type: "addedByUser",
+                addedBy: userId as Id<"users">,
+                title: args.title,
+                artist: args.artist,
+                duration: args.duration,
+            })
+        }
     },
 })
 
+/**
+ * This mutation pops the current song from the queue and makes the next song the current song.
+ *
+ * It should be called by the host when the current song finished playing.
+ */
 export const popSong = mutation({
     args: {
         roomId: v.id("rooms"),
@@ -141,14 +159,34 @@ export const popSong = mutation({
             throw new Error("User is not the host of the room")
         }
 
-        // Get the topmost song in the queue (the current song)
-        const currentSong = await getCurrentSongInRoom(ctx, args.roomId)
+        // Check if there is a song in the queue
+        const nextSong = await ctx.db
+            .query("queuedSongs")
+            .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
+            .order("asc")
+            .first()
 
-        if (!currentSong) {
-            throw new Error("No song to pop")
+        // If there is no next song, just remove the current song
+        // But if there is a next song, make it the current song and remove that song from the queue
+        if (nextSong) {
+            // Extract only the song fields, excluding Convex metadata and room field
+            const { addedBy, type, videoId, title, artist, duration } = nextSong
+            await ctx.db.patch(args.roomId, {
+                currentSong: {
+                    addedBy,
+                    type,
+                    videoId,
+                    title,
+                    artist,
+                    duration,
+                },
+            })
+            await ctx.db.delete(nextSong._id)
+        } else {
+            await ctx.db.patch(args.roomId, {
+                currentSong: undefined,
+            })
         }
-
-        await ctx.db.delete(currentSong._id)
     },
 })
 
@@ -170,7 +208,7 @@ export const createRoom = mutation({
             await ctx.db
                 .query("rooms")
                 .withIndex("by_code", (q) => q.eq("code", code))
-                .first()
+                .unique()
         )
 
         const room = await ctx.db.insert("rooms", {
@@ -198,9 +236,9 @@ function generateRoomCode(length: number) {
 }
 
 async function getCurrentSongInRoom(ctx: QueryCtx, roomId: Id<"rooms">) {
-    return await ctx.db
-        .query("queuedSongs")
-        .withIndex("by_room_type", (q) => q.eq("room", roomId))
-        .order("asc")
-        .first()
+    const room = await ctx.db.get(roomId)
+    if (!room) {
+        throw new Error("Room not found")
+    }
+    return room.currentSong
 }
