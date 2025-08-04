@@ -6,21 +6,30 @@ import { Queue } from "@/components/host/queue"
 import { Progress } from "@/components/ui/progress"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import { useMutation, useQuery } from "convex/react"
+import {
+    Preloaded,
+    useMutation,
+    usePreloadedQuery,
+    useQuery,
+} from "convex/react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
 
-export default function Host({ roomId }: { roomId: Id<"rooms"> }) {
+export default function Host({
+    roomId,
+    preloadedRoom,
+}: {
+    roomId: Id<"rooms">
+    preloadedRoom: Preloaded<typeof api.rooms.getRoomByCode>
+}) {
     /*
      * QUERIES
      */
 
-    const currentSong = useQuery(api.rooms.getCurrentSong, {
-        roomId,
-    })
+    const room = usePreloadedQuery(preloadedRoom)
 
-    const room = useQuery(api.rooms.getRoom, {
+    const currentSong = useQuery(api.rooms.getCurrentSong, {
         roomId,
     })
 
