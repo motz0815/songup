@@ -88,7 +88,7 @@ export const getSongsLeftToAdd = query({
 
         const userId = await betterAuthComponent.getAuthUserId(ctx)
         if (!userId) {
-            throw new Error("User not found")
+            return null
         }
 
         const userSongs = await ctx.db
