@@ -30,9 +30,7 @@ export default function Room({
 
     const room = usePreloadedQuery(preloadedRoom)
 
-    const currentSong = useQuery(api.rooms.getCurrentSong, {
-        roomId,
-    })
+    const currentSong = room?.currentSong
 
     const songsLeftToAdd = useQuery(api.rooms.getSongsLeftToAdd, {
         roomId,

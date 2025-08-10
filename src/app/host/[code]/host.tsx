@@ -6,12 +6,7 @@ import { Queue } from "@/components/host/queue"
 import { Progress } from "@/components/ui/progress"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import {
-    Preloaded,
-    useMutation,
-    usePreloadedQuery,
-    useQuery,
-} from "convex/react"
+import { Preloaded, useMutation, usePreloadedQuery } from "convex/react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
@@ -29,9 +24,7 @@ export default function Host({
 
     const room = usePreloadedQuery(preloadedRoom)
 
-    const currentSong = useQuery(api.rooms.getCurrentSong, {
-        roomId,
-    })
+    const currentSong = room?.currentSong
 
     /*
      * MUTATIONS
@@ -140,7 +133,11 @@ export default function Host({
                                 indicatorClassName="duration-1000 ease-linear"
                             />
                             <h2 className="text-center text-3xl font-bold">
-                                {currentSong?.title || "No song playing"}
+                                {currentSong
+                                    ? currentSong.artist +
+                                      " - " +
+                                      currentSong.title
+                                    : "No song playing"}
                             </h2>
                         </div>
                     </div>

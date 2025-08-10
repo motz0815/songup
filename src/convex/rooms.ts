@@ -4,15 +4,6 @@ import { query, QueryCtx } from "./_generated/server"
 import { betterAuthComponent } from "./auth"
 import { mutation } from "./functions"
 
-export const getCurrentSong = query({
-    args: {
-        roomId: v.id("rooms"),
-    },
-    handler: async (ctx, args) => {
-        return await getCurrentSongInRoom(ctx, args.roomId)
-    },
-})
-
 /**
  * This query returns the queue of songs for a room.
  *
