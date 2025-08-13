@@ -2,12 +2,12 @@ import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { betterAuthComponent } from "./auth"
-import { mutation } from "./functions"
+import { internalMutation, mutation } from "./functions"
 
 /**
  * This query returns the queue of songs for a room.
  *
- * It does not include the current song. That is stored in the room object and can be retreived with the getCurrentSong query.
+ * It does not include the current song. That is stored in the room object.
  */
 export const getQueue = query({
     args: {
@@ -237,6 +237,19 @@ export const createRoom = mutation({
             },
         })
         return room
+    },
+})
+
+export const cleanExpiredRooms = internalMutation({
+    handler: async (ctx) => {
+        const expiredRooms = await ctx.db
+            .query("rooms")
+            .withIndex("by_expires_at", (q) => q.lt("expiresAt", Date.now()))
+            .collect()
+
+        for (const room of expiredRooms) {
+            await ctx.db.delete(room._id)
+        }
     },
 })
 
