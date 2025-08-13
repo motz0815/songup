@@ -13,6 +13,8 @@ export function RoomQRCode({ roomCode }: { roomCode: string }) {
                 size={64}
                 value={url}
                 marginSize={1}
+                bgColor="#ffffff00"
+                fgColor="#ffffffe5"
             />
         </div>
     )

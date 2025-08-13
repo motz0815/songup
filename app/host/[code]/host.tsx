@@ -18,6 +18,7 @@ import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { deleteSong, updateCurrentSong } from "./actions"
+import { EyeIcon, EyeClosed } from "lucide-react"
 
 export default function Host({ room }: { room: Room }) {
     /* 
@@ -25,7 +26,7 @@ export default function Host({ room }: { room: Room }) {
      */
 
     const [ended, setEnded] = useState(false)
-
+    const [isBlurred, setIsBlurred] = useState(false)
     const [animationParent] = useAutoAnimate()
 
     const [progress, setProgress] = useState(0)
@@ -156,39 +157,63 @@ export default function Host({ room }: { room: Room }) {
                     <div className="flex w-full flex-col gap-4 lg:col-span-2 lg:row-span-2">
                         <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-1 outline-white/20 backdrop-blur-lg">
                             {songs[0] && (
-                                <YouTube
-                                    ref={playerRef}
-                                    className="z-10 aspect-video w-full"
-                                    videoId={songs[0].video_id ?? ""}
-                                    opts={opts}
-                                    onStateChange={onPlayerStateChange}
-                                    onEnd={() => {
-                                        // if the current song is the last one, set the ended state to true
-                                        if (songs.length === 1) {
-                                            setEnded(true)
-                                            return
-                                        }
-
-                                        // update the current song server side
-                                        updateCurrentSong(
-                                            room.code!,
-                                            songs[1].id,
-                                        ).then((response) => {
-                                            // if that didn't work, show an error
-                                            if (!response.ok) {
-                                                toast({
-                                                    title: "Error",
-                                                    description:
-                                                        response.message,
-                                                })
+                                <div className="h-full">
+                                    <YouTube
+                                        ref={playerRef}
+                                        className="z-10 aspect-video w-full"
+                                        videoId={songs[0].video_id ?? ""}
+                                        opts={opts}
+                                        onStateChange={onPlayerStateChange}
+                                        onEnd={() => {
+                                            // if the current song is the last one, set the ended state to true
+                                            if (songs.length === 1) {
+                                                setEnded(true)
+                                                return
                                             }
-                                        })
-                                    }}
-                                />
+
+                                            // update the current song server side
+                                            updateCurrentSong(
+                                                room.code!,
+                                                songs[1].id,
+                                            ).then((response) => {
+                                                // if that didn't work, show an error
+                                                if (!response.ok) {
+                                                    toast({
+                                                        title: "Error",
+                                                        description:
+                                                            response.message,
+                                                    })
+                                                }
+                                            })
+                                        }}
+                                    />
+
+                                    {isBlurred && (
+                                        <div className="absolute inset-0 z-20 bg-black/30 backdrop-blur-2xl flex items-center justify-center">
+                                            <div className="text-white text-center">
+                                                <div className="text-6xl mb-4">🎵</div>
+                                                <p className="text-xl font-semibold">Content Hidden</p>
+                                                <p className="text-sm opacity-75">Audio continues playing</p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={() => setIsBlurred(!isBlurred)}
+                                        className="absolute top-4 right-4 z-30 border-white/20 bg-white/10 hover:bg-white/20 text-gray-800 hover:text-black border p-3 rounded-xl backdrop-blur-sm transition-all duration-200 shadow-lg hover:shadow-xl"
+                                        title={isBlurred ? "Show video" : "Hide video"}
+                                    >
+                                        {isBlurred ? (
+                                            <EyeIcon color="#ffffff99" className="w-6 h-6 filter " />
+                                        ) : (
+                                            <EyeClosed color="#ffffff99" className="w-6 h-6 filter" />
+                                        )}
+                                    </button>
+                                </div>
                             )}
                             <div className="flex h-full w-full flex-col items-center justify-center gap-2">
                                 <h2 className="text-6xl font-bold">
-                                    songup.tv
+                                    songup.stevedecoder.tech
                                 </h2>
                                 <p className="text-4xl">
                                     Enter code{" "}
@@ -282,18 +307,19 @@ export default function Host({ room }: { room: Room }) {
                         </ul>
                     </ScrollArea>
                     <QRCodeCard roomCode={room.code!} />
-                </div>
-                <footer className="flex w-full items-center justify-between px-1">
-                    <Link href="/">
+                    <footer className="flex w-full items-center justify-between px-1">
+                        {/* <Link href="/">
                         <h2 className="text-3xl font-bold text-white/60">
                             SongUp
                             <span className="text-sm text-white/60">.tv</span>
                         </h2>
-                    </Link>
-                    <p className="text-3xl font-bold text-white/60">
-                        {room.code}
-                    </p>
-                </footer>
+                    </Link> */}
+                        <p className="text-3xl font-bold text-white/60">
+                            {room.code}
+                        </p>
+                    </footer>
+                </div>
+
             </main>
         </div>
     )

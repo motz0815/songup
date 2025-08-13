@@ -55,7 +55,7 @@ export function RoomPage({
                 <Link href="/">
                     <div className="flex items-center gap-2">
                         <ArrowLeft className="size-6" />
-                        <h1 className="text-xl font-bold">Room</h1>
+                        <h1 className="text-xl font-bold"> {!user.username ? "" : (user.username)}</h1>
                     </div>
                 </Link>
                 <h2 className="text-xl">
