@@ -1,6 +1,6 @@
 import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
-import { query, QueryCtx } from "./_generated/server"
+import { query } from "./_generated/server"
 import { betterAuthComponent } from "./auth"
 import { mutation } from "./functions"
 
@@ -250,12 +250,4 @@ function generateRoomCode(length: number) {
         )
     }
     return result
-}
-
-async function getCurrentSongInRoom(ctx: QueryCtx, roomId: Id<"rooms">) {
-    const room = await ctx.db.get(roomId)
-    if (!room) {
-        throw new Error("Room not found")
-    }
-    return room.currentSong
 }
