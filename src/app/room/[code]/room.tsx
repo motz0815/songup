@@ -36,6 +36,8 @@ export default function Room({
         roomId,
     })
 
+    const nickname = useQuery(api.nickname.getNickname)
+
     /*
      * OTHER STATE
      */

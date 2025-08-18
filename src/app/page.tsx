@@ -5,9 +5,33 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { api } from "@/convex/_generated/api"
 import { authClient } from "@/lib/auth-client"
 import { useQuery } from "convex/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { toast } from "sonner"
 
 export default function Home() {
     const user = useQuery(api.auth.getCurrentUser)
+    const [anonymousLoading, setAnonymousLoading] = useState(false)
+    const router = useRouter()
+
+    const handleAnonymousSignIn = async () => {
+        await authClient.signIn.anonymous(
+            {},
+            {
+                onRequest: () => {
+                    setAnonymousLoading(true)
+                },
+                onSuccess: () => {
+                    setAnonymousLoading(false)
+                    router.push("/")
+                },
+                onError: (ctx) => {
+                    setAnonymousLoading(false)
+                    toast.error(ctx.error.message)
+                },
+            },
+        )
+    }
 
     return (
         <div className="flex h-screen items-center justify-center">
@@ -19,7 +43,10 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                     <pre>{JSON.stringify(user, null, 2)}</pre>
-                    <Button onClick={() => authClient.signIn.anonymous()}>
+                    <Button
+                        loading={anonymousLoading}
+                        onClick={handleAnonymousSignIn}
+                    >
                         Click me
                     </Button>
                 </CardContent>

@@ -3,9 +3,10 @@ import {
     type AuthFunctions,
     type PublicAuthFunctions,
 } from "@convex-dev/better-auth"
+import { createAuth } from "../lib/auth"
 import { api, components, internal } from "./_generated/api"
 import type { DataModel, Id } from "./_generated/dataModel"
-import { query } from "./_generated/server"
+import { MutationCtx, query } from "./_generated/server"
 
 // Typesafe way to pass Convex functions defined in this file
 const authFunctions: AuthFunctions = internal.auth
@@ -52,3 +53,12 @@ export const getCurrentUser = query({
         return { ...user, ...userMetadata }
     },
 })
+
+export async function ensureAuthOrAnonymous(ctx: MutationCtx) {
+    // Ensure user is authenticated, if not log the user in anonymously
+    const auth = createAuth(ctx)
+    let user = await ctx.auth.getUserIdentity()
+    if (!user) {
+        await auth.api.signInAnonymous()
+    }
+}
