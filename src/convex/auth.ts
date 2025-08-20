@@ -57,7 +57,7 @@ export const getCurrentUser = query({
 export async function ensureAuthOrAnonymous(ctx: MutationCtx) {
     // Ensure user is authenticated, if not log the user in anonymously
     const auth = createAuth(ctx)
-    let user = await ctx.auth.getUserIdentity()
+    const user = await ctx.auth.getUserIdentity()
     if (!user) {
         await auth.api.signInAnonymous()
     }
