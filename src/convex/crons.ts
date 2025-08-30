@@ -6,7 +6,7 @@ const crons = cronJobs()
 crons.hourly(
     "clean expired rooms",
     { minuteUTC: 0 },
-    internal.rooms.cleanExpiredRooms,
+    internal.rooms.manage.cleanExpiredRooms,
 )
 
 export default crons

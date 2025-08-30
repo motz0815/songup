@@ -2,7 +2,7 @@ import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { betterAuthComponent } from "./auth"
-import { internalMutation, mutation } from "./functions"
+import { mutation } from "./functions"
 
 /**
  * This query returns the queue of songs for a room.
@@ -206,61 +206,3 @@ export const popSong = mutation({
         }
     },
 })
-
-export const createRoom = mutation({
-    args: {
-        maxSongsPerUser: v.number(),
-    },
-    handler: async (ctx, args) => {
-        const userId = await betterAuthComponent.getAuthUserId(ctx)
-        if (!userId) {
-            throw new Error("User not found")
-        }
-
-        let code: string
-        // Generate a unique room code
-        do {
-            code = generateRoomCode(4)
-        } while (
-            await ctx.db
-                .query("rooms")
-                .withIndex("by_code", (q) => q.eq("code", code))
-                .unique()
-        )
-
-        const room = await ctx.db.insert("rooms", {
-            host: userId as Id<"users">,
-            code,
-            expiresAt: Date.now() + 1000 * 60 * 60 * 48, // 48 hours
-            settings: {
-                maxSongsPerUser: args.maxSongsPerUser,
-            },
-        })
-        return room
-    },
-})
-
-export const cleanExpiredRooms = internalMutation({
-    handler: async (ctx) => {
-        const expiredRooms = await ctx.db
-            .query("rooms")
-            .withIndex("by_expires_at", (q) => q.lt("expiresAt", Date.now()))
-            .collect()
-
-        for (const room of expiredRooms) {
-            await ctx.db.delete(room._id)
-        }
-    },
-})
-
-function generateRoomCode(length: number) {
-    let result = ""
-    const characters = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789" // Uppercase characters and numbers (minus O and 0 to avoid confusion)
-    const charactersLength = characters.length
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(
-            Math.floor(Math.random() * charactersLength),
-        )
-    }
-    return result
-}
