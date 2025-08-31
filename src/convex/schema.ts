@@ -16,9 +16,6 @@ const song = {
 }
 
 export default defineSchema({
-    users: defineTable({
-        nickname: v.optional(v.string()),
-    }),
     rooms: defineTable({
         host: v.id("users"),
         code: v.string(),
