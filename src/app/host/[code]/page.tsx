@@ -1,6 +1,5 @@
 import { api } from "@/convex/_generated/api"
-import { createAuth } from "@/lib/auth"
-import { getToken } from "@convex-dev/better-auth/nextjs"
+import { convexAuthNextjsToken } from "@convex-dev/auth/nextjs/server"
 import { fetchQuery, preloadedQueryResult, preloadQuery } from "convex/nextjs"
 import { notFound } from "next/navigation"
 import Host from "./host"
@@ -44,7 +43,7 @@ export default async function HostPage({
             roomId: room._id,
         },
         {
-            token: await getToken(createAuth),
+            token: await convexAuthNextjsToken(),
         },
     )
 

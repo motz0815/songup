@@ -5,12 +5,11 @@ import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Queue } from "@/components/room/queue"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
+import { UnauthenticatedOrNoNickname } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 import {
-    Authenticated,
     AuthLoading,
     Preloaded,
-    Unauthenticated,
     usePreloadedQuery,
     useQuery,
 } from "convex/react"
@@ -99,31 +98,36 @@ export default function Room({
                                 <AuthLoading>
                                     <p>Loading...</p>
                                 </AuthLoading>
-                                <Unauthenticated>
+                                <UnauthenticatedOrNoNickname>
                                     <NicknameForm />
-                                </Unauthenticated>
-                                <Authenticated>
-                                    {songsLeftToAdd ? (
+                                </UnauthenticatedOrNoNickname>
+                                {nickname && (
+                                    <>
                                         <p>
-                                            You can add up to{" "}
-                                            <span className="font-bold">
-                                                {songsLeftToAdd}
-                                            </span>{" "}
-                                            more songs.
+                                            Logged in as <b>{nickname}</b>
                                         </p>
-                                    ) : (
-                                        <p>
-                                            You can&apos;t add any more songs at
-                                            the moment.
-                                        </p>
-                                    )}
-                                    {/* <SearchSongDialog
-                                    addSong={addSong}
-                                    open={dialogOpen}
-                                    setOpen={setDialogOpen}
-                                    disableTrigger={songsLeftToAdd <= 0}
-                                /> */}
-                                </Authenticated>
+                                        {songsLeftToAdd ? (
+                                            <p>
+                                                You can add up to{" "}
+                                                <span className="font-bold">
+                                                    {songsLeftToAdd}
+                                                </span>{" "}
+                                                more songs.
+                                            </p>
+                                        ) : (
+                                            <p>
+                                                You can&apos;t add any more
+                                                songs at the moment.
+                                            </p>
+                                        )}
+                                        {/* <SearchSongDialog
+                                            addSong={addSong}
+                                            open={dialogOpen}
+                                            setOpen={setDialogOpen}
+                                            disableTrigger={songsLeftToAdd <= 0}
+                                        /> */}
+                                    </>
+                                )}
                             </div>
                         </div>
                     </section>

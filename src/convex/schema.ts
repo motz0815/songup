@@ -1,3 +1,4 @@
+import { authTables } from "@convex-dev/auth/server"
 import { defineSchema, defineTable } from "convex/server"
 import { v } from "convex/values"
 
@@ -16,6 +17,20 @@ const song = {
 }
 
 export default defineSchema({
+    ...authTables,
+    users: defineTable({
+        // Default fields
+        name: v.optional(v.string()),
+        image: v.optional(v.string()),
+        email: v.optional(v.string()),
+        emailVerificationTime: v.optional(v.number()),
+        phone: v.optional(v.string()),
+        phoneVerificationTime: v.optional(v.number()),
+        isAnonymous: v.optional(v.boolean()),
+
+        // Custom fields
+        nickname: v.optional(v.string()),
+    }),
     rooms: defineTable({
         host: v.id("users"),
         code: v.string(),
