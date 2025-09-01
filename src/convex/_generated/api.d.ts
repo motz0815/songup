@@ -12,7 +12,7 @@ import type * as auth from "../auth.js";
 import type * as crons from "../crons.js";
 import type * as functions from "../functions.js";
 import type * as http from "../http.js";
-import type * as nickname from "../nickname.js";
+import type * as nicknames from "../nicknames.js";
 import type * as rooms_manage from "../rooms/manage.js";
 import type * as rooms from "../rooms.js";
 
@@ -35,7 +35,7 @@ declare const fullApi: ApiFromModules<{
   crons: typeof crons;
   functions: typeof functions;
   http: typeof http;
-  nickname: typeof nickname;
+  nicknames: typeof nicknames;
   "rooms/manage": typeof rooms_manage;
   rooms: typeof rooms;
 }>;

@@ -4,7 +4,7 @@ import { Input } from "../ui/input"
 import { SubmitButton } from "../ui/submit-button"
 
 export function NicknameForm() {
-    const setNickname = useMutation(api.nickname.setNickname)
+    const setNickname = useMutation(api.nicknames.setNickname)
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
