@@ -5,7 +5,6 @@ import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Queue } from "@/components/room/queue"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import { UnauthenticatedOrNoNickname } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 import {
     AuthLoading,
@@ -35,7 +34,7 @@ export default function Room({
         roomId,
     })
 
-    const nickname = useQuery(api.nickname.getNickname)
+    const nickname = useQuery(api.nicknames.getNickname)
 
     /*
      * OTHER STATE
@@ -98,10 +97,7 @@ export default function Room({
                                 <AuthLoading>
                                     <p>Loading...</p>
                                 </AuthLoading>
-                                <UnauthenticatedOrNoNickname>
-                                    <NicknameForm />
-                                </UnauthenticatedOrNoNickname>
-                                {nickname && (
+                                {nickname ? (
                                     <>
                                         <p>
                                             Logged in as <b>{nickname}</b>
@@ -127,6 +123,8 @@ export default function Room({
                                             disableTrigger={songsLeftToAdd <= 0}
                                         /> */}
                                     </>
+                                ) : (
+                                    <NicknameForm />
                                 )}
                             </div>
                         </div>

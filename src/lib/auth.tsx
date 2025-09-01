@@ -13,7 +13,7 @@ export function UnauthenticatedOrNoNickname({
     children: ReactNode
 }) {
     const { isLoading, isAuthenticated } = useConvexAuth()
-    const nickname = useQuery(api.nickname.getNickname)
+    const nickname = useQuery(api.nicknames.getNickname)
     if ((isLoading || isAuthenticated) && nickname) {
         return null
     }
