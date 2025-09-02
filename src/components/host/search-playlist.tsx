@@ -15,12 +15,10 @@ import { Input } from "../ui/input"
 import { SubmitButton } from "../ui/submit-button"
 
 export function SearchPlaylist({
-    selected,
     onSelect,
     disabled = false,
     buttonVariant,
 }: {
-    selected: string
     onSelect: (playlist: {
         browseId: string
         title: string
