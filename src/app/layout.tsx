@@ -2,7 +2,6 @@ import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/sonner"
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Suspense } from "react"
 import "./globals.css"
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] })
@@ -35,9 +34,7 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 <Providers>{children}</Providers>
-                <Suspense>
-                    <Toaster />
-                </Suspense>
+                <Toaster richColors theme="light" />
             </body>
         </html>
     )
