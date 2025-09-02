@@ -2,13 +2,14 @@
 
 import { NicknameForm } from "@/components/auth/nickname-form"
 import { ImageWithFallback } from "@/components/image-with-fallback"
+import { AddSong } from "@/components/room/add-song"
 import { Queue } from "@/components/room/queue"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
 import {
-    AuthLoading,
     Preloaded,
+    useConvexAuth,
     usePreloadedQuery,
     useQuery,
 } from "convex/react"
@@ -27,6 +28,7 @@ export default function Room({
      */
 
     const room = usePreloadedQuery(preloadedRoom)
+    const { isLoading } = useConvexAuth()
 
     const currentSong = room?.currentSong
 
@@ -94,9 +96,7 @@ export default function Room({
                         <h2 className="text-xl font-bold">Add songs</h2>
                         <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
                             <div className="flex flex-col gap-2">
-                                <AuthLoading>
-                                    <p>Loading...</p>
-                                </AuthLoading>
+                                {isLoading && <p>Loading...</p>}
                                 {nickname ? (
                                     <>
                                         <p>
@@ -122,9 +122,14 @@ export default function Room({
                                             setOpen={setDialogOpen}
                                             disableTrigger={songsLeftToAdd <= 0}
                                         /> */}
+                                        <AddSong
+                                            disabled={
+                                                (songsLeftToAdd ?? 0) <= 0
+                                            }
+                                        />
                                     </>
                                 ) : (
-                                    <NicknameForm />
+                                    <>{!isLoading && <NicknameForm />}</>
                                 )}
                             </div>
                         </div>
