@@ -42,7 +42,7 @@ export function SearchSong({
         }
     }
 
-    async function handleAddSong(formData: FormData) {
+    async function handleSelectSong(formData: FormData) {
         const song = {
             videoId: formData.get("videoId") as string,
             title: formData.get("title") as string,
@@ -53,7 +53,7 @@ export function SearchSong({
         try {
             await onSelect(song)
         } catch (error) {
-            setError("Failed to add song. Please try again.")
+            setError("Failed to select song. Please try again.")
         }
     }
 
@@ -76,7 +76,7 @@ export function SearchSong({
                 {results.map((song) => (
                     <li key={song.videoId}>
                         <form
-                            action={handleAddSong}
+                            action={handleSelectSong}
                             className="flex items-center justify-between rounded-lg bg-gray-100 p-2"
                         >
                             <div className="flex items-center space-x-2">
@@ -122,7 +122,7 @@ export function SearchSong({
                                 value={song.duration_seconds}
                             />
                             <SubmitButton size="sm">
-                                <PlusCircleIcon className="h-4 w-4" />
+                                <PlusCircleIcon className="size-4" />
                             </SubmitButton>
                         </form>
                     </li>

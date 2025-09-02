@@ -33,3 +33,32 @@ def search():
     # But on the other hand, we kind of *need* to check this, because otherwise we'll get songs that are not embeddable and will fail in the last second.
     results = [result for result in results if yt.get_song(result["videoId"])["playabilityStatus"].get("playableInEmbed", False)]
     return jsonify(results)
+
+@app.route("/flask/search-playlist", methods=["GET"])
+def search_playlist():
+    query = request.args.get("query")
+    if not query:
+        return jsonify({"error": "Query is required"}), 400
+    yt = YTMusic()
+    results = yt.search(query, filter="playlists")
+    # Limit to 5 results
+    results = results[:5]
+    return jsonify(results)
+
+@app.route("/flask/get-playlist", methods=["GET"])
+def get_playlist():
+    browseId = request.args.get("browseId")
+    if not browseId:
+        return jsonify({"error": "Browse ID is required"}), 400
+    yt = YTMusic()
+    playlist = yt.get_playlist(browseId)
+    return jsonify(playlist)
+
+@app.route("/flask/get-playlist-info", methods=["GET"])
+def get_playlist_info():
+    browseId = request.args.get("browseId")
+    if not browseId:
+        return jsonify({"error": "Browse ID is required"}), 400
+    yt = YTMusic()
+    playlist = yt.get_playlist(browseId, 0)
+    return jsonify(playlist)

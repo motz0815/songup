@@ -20,7 +20,7 @@ export function AddSong({
     disabled = false,
     roomId,
 }: {
-    disabled: boolean
+    disabled?: boolean
     roomId: Id<"rooms">
 }) {
     const addSong = useMutation(api.rooms.addSong)

@@ -1,12 +1,22 @@
 import { getAuthUserId } from "@convex-dev/auth/server"
 import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
-import { query } from "../_generated/server"
+import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
 
 export const createRoom = mutation({
     args: {
         maxSongsPerUser: v.number(),
+        fallbackSongs: v.optional(
+            v.array(
+                v.object({
+                    videoId: v.string(),
+                    title: v.string(),
+                    artist: v.string(),
+                    duration: v.number(),
+                }),
+            ),
+        ),
     },
     handler: async (ctx, args) => {
         const userId = await getAuthUserId(ctx)
@@ -33,6 +43,10 @@ export const createRoom = mutation({
                 maxSongsPerUser: args.maxSongsPerUser,
             },
         })
+
+        if (args.fallbackSongs) {
+            await addFallbackSongs(ctx, roomId, args.fallbackSongs)
+        }
         return { roomId, code }
     },
 })
@@ -50,6 +64,31 @@ export const listOwnRooms = query({
             .collect()
     },
 })
+
+async function addFallbackSongs(
+    ctx: MutationCtx,
+    roomId: Id<"rooms">,
+    songs: {
+        videoId: string
+        title: string
+        artist: string
+        duration: number
+    }[],
+) {
+    // Deliberately don't add the fallback songs directly into the current song in the room object
+    // to make users add songs themselves and see that they get added in front of fallback songs
+    // Limit to 100 songs
+    for (const song of songs.slice(0, 100)) {
+        await ctx.db.insert("queuedSongs", {
+            room: roomId,
+            type: "fallback",
+            videoId: song.videoId,
+            title: song.title,
+            artist: song.artist,
+            duration: song.duration,
+        })
+    }
+}
 
 export const cleanExpiredRooms = internalMutation({
     handler: async (ctx) => {
