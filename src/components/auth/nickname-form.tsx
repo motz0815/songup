@@ -1,12 +1,12 @@
 "use client"
 
 import { api } from "@/convex/_generated/api"
-import { useMutation } from "convex/react"
+import { useAuthedMutation } from "@/lib/auth"
 import { Input } from "../ui/input"
 import { SubmitButton } from "../ui/submit-button"
 
 export function NicknameForm() {
-    const setNickname = useMutation(api.nicknames.setNickname)
+    const setNickname = useAuthedMutation(api.nicknames.setNickname)
 
     return (
         <form

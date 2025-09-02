@@ -2,12 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { api } from "@/convex/_generated/api"
-import {
-    Preloaded,
-    useConvexAuth,
-    useMutation,
-    usePreloadedQuery,
-} from "convex/react"
+import { useAuthedMutation } from "@/lib/auth"
+import { Preloaded, usePreloadedQuery } from "convex/react"
 import { redirect } from "next/navigation"
 import { toast } from "sonner"
 
@@ -18,9 +14,7 @@ export default function ManageRooms({
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
 
-    const createRoom = useMutation(api.rooms.manage.createRoom)
-
-    const { isAuthenticated } = useConvexAuth()
+    const createRoom = useAuthedMutation(api.rooms.manage.createRoom)
 
     async function handleCreateRoom() {
         createRoom({ maxSongsPerUser: 2 }).then((data) => {
@@ -33,9 +27,7 @@ export default function ManageRooms({
         <div>
             <h1>Host</h1>
             <pre>{JSON.stringify(rooms, null, 2)}</pre>
-            <Button disabled={!isAuthenticated} onClick={handleCreateRoom}>
-                Create Room
-            </Button>
+            <Button onClick={handleCreateRoom}>Create Room</Button>
         </div>
     )
 }
