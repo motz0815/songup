@@ -16,7 +16,14 @@ export function SearchSong({
         duration: number
     }) => Promise<void>
 }) {
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState<
+        {
+            videoId: string
+            title: string
+            artists: { name: string }[]
+            duration_seconds: number
+        }[]
+    >([])
     const [error, setError] = useState<string | null>(null)
 
     async function handleSearch(formData: FormData) {
@@ -66,7 +73,7 @@ export function SearchSong({
                 <p className="text-center text-sm text-red-500">{error}</p>
             )}
             <ul className="flex flex-col gap-2">
-                {results.map((song: any) => (
+                {results.map((song) => (
                     <li key={song.videoId}>
                         <form
                             action={handleAddSong}
@@ -87,7 +94,7 @@ export function SearchSong({
                                     </p>
                                     <p className="text-xs text-gray-500">
                                         {song.artists
-                                            .map((artist: any) => artist.name)
+                                            .map((artist) => artist.name)
                                             .join(", ")}
                                     </p>
                                 </div>
@@ -106,7 +113,7 @@ export function SearchSong({
                                 type="hidden"
                                 name="artist"
                                 value={song.artists
-                                    .map((artist: any) => artist.name)
+                                    .map((artist) => artist.name)
                                     .join(", ")}
                             />
                             <input
