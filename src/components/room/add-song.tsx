@@ -1,6 +1,11 @@
 "use client"
 
+import { api } from "@/convex/_generated/api"
+import { Id } from "@/convex/_generated/dataModel"
+import { useMutation } from "convex/react"
 import { PlusIcon } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
 import { Button } from "../ui/button"
 import {
     Dialog,
@@ -9,10 +14,39 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "../ui/dialog"
+import { SearchSong } from "./search-song"
 
-export function AddSong({ disabled = false }: { disabled: boolean }) {
+export function AddSong({
+    disabled = false,
+    roomId,
+}: {
+    disabled: boolean
+    roomId: Id<"rooms">
+}) {
+    const addSong = useMutation(api.rooms.addSong)
+    const [open, setOpen] = useState(false)
+
+    async function handleSelect(song: {
+        videoId: string
+        title: string
+        artist: string
+        duration: number
+    }) {
+        await addSong({
+            roomId,
+            videoId: song.videoId,
+            title: song.title,
+            artist: song.artist,
+            duration: song.duration,
+        })
+        setOpen(false)
+        toast.success("Song added", {
+            description: `${song.title} by ${song.artist}`,
+        })
+    }
+
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button disabled={disabled}>
                     <PlusIcon /> Add Song
@@ -22,6 +56,7 @@ export function AddSong({ disabled = false }: { disabled: boolean }) {
                 <DialogHeader>
                     <DialogTitle>Add Song</DialogTitle>
                 </DialogHeader>
+                <SearchSong onSelect={handleSelect} />
             </DialogContent>
         </Dialog>
     )
