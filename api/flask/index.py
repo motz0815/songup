@@ -34,31 +34,32 @@ def search():
     results = [result for result in results if yt.get_song(result["videoId"])["playabilityStatus"].get("playableInEmbed", False)]
     return jsonify(results)
 
-@app.route("/flask/search-playlist", methods=["GET"])
-def search_playlist():
-    query = request.args.get("query")
-    if not query:
-        return jsonify({"error": "Query is required"}), 400
+@app.route("/flask/get-mood-categories", methods=["GET"])
+def get_mood_categories():
     yt = YTMusic()
-    results = yt.search(query, filter="playlists")
-    # Limit to 5 results
-    results = results[:5]
-    return jsonify(results)
+    mood_categories = yt.get_mood_categories()
+    return jsonify(mood_categories)
+
+@app.route("/flask/get-mood-playlists", methods=["GET"])
+def get_mood_playlists():
+    mood_category = request.args.get("mood_category")
+    if not mood_category:
+        return jsonify({"error": "Mood category is required"}), 400
+    yt = YTMusic()
+    playlists = yt.get_mood_playlists(mood_category)
+
+    # Limit to 15 results
+    playlists = playlists[:15]
+    return jsonify(playlists)
 
 @app.route("/flask/get-playlist", methods=["GET"])
 def get_playlist():
-    browseId = request.args.get("browseId")
-    if not browseId:
-        return jsonify({"error": "Browse ID is required"}), 400
+    playlistId = request.args.get("playlistId")
+    if not playlistId:
+        return jsonify({"error": "Playlist ID is required"}), 400
     yt = YTMusic()
-    playlist = yt.get_playlist(browseId)
-    return jsonify(playlist)
+    playlist = yt.get_playlist(playlistId)
 
-@app.route("/flask/get-playlist-info", methods=["GET"])
-def get_playlist_info():
-    browseId = request.args.get("browseId")
-    if not browseId:
-        return jsonify({"error": "Browse ID is required"}), 400
-    yt = YTMusic()
-    playlist = yt.get_playlist(browseId, 0)
+    if playlist is None:
+        return jsonify({"error": "Playlist not found"}), 404
     return jsonify(playlist)

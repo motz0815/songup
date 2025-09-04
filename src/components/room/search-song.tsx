@@ -85,7 +85,7 @@ export function SearchSong({
                                     alt={`${song.title}`}
                                     width={40}
                                     height={40}
-                                    className="rounded-md object-cover"
+                                    className="rounded-sm object-cover"
                                     unoptimized
                                 />
                                 <div className="text-left">

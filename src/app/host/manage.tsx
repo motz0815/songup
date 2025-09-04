@@ -1,6 +1,5 @@
 "use client"
 
-import { SearchPlaylist } from "@/components/host/search-playlist"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -44,7 +43,7 @@ export default function ManageRooms({
                     <DialogHeader>
                         <DialogTitle>Create Room</DialogTitle>
                     </DialogHeader>
-                    <SearchPlaylist onSelect={handleCreateRoom} />
+                    {/* <SearchPlaylist onChange={handleCreateRoom} /> */}
                 </DialogContent>
             </Dialog>
         </div>
