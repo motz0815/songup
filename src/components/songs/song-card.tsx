@@ -1,20 +1,14 @@
 "use client"
 
-import { api } from "@/convex/_generated/api"
 import { Doc } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
-import { useQuery } from "convex/react"
 import { ImageWithFallback } from "../image-with-fallback"
 
-export function SongCard({ song }: { song: Doc<"queuedSongs"> }) {
-    // Fetch the nickname of the user who added the song
-    let nickname = null
-    if (song.addedBy) {
-        nickname = useQuery(api.nicknames.getNicknameByUserId, {
-            userId: song.addedBy,
-        })
-    }
-
+export function SongCard({
+    song,
+}: {
+    song: Doc<"queuedSongs"> & { addedByNickname: string | null }
+}) {
     return (
         <div
             className={cn(
@@ -39,9 +33,9 @@ export function SongCard({ song }: { song: Doc<"queuedSongs"> }) {
                 </p>
             </div>
             <div>
-                {nickname && (
+                {song.addedByNickname && (
                     <p className="text-right text-sm text-nowrap text-gray-100 text-shadow-sm md:text-lg">
-                        by {nickname}
+                        by {song.addedByNickname}
                     </p>
                 )}
             </div>

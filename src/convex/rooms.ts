@@ -16,11 +16,27 @@ export const getQueue = query({
         numItems: v.optional(v.number()),
     },
     handler: async (ctx, args) => {
-        return await ctx.db
+        const queue = await ctx.db
             .query("queuedSongs")
             .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
             .order("asc")
             .take(args.numItems ?? 5)
+
+        return await Promise.all(
+            queue.map(async (song) => {
+                if (!song.addedBy) {
+                    return {
+                        ...song,
+                        addedByNickname: null,
+                    }
+                }
+                const user = await ctx.db.get(song.addedBy as Id<"users">)
+                return {
+                    ...song,
+                    addedByNickname: user?.nickname ?? null,
+                }
+            }),
+        )
     },
 })
 
