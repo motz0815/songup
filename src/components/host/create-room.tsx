@@ -28,7 +28,7 @@ export function CreateRoom() {
 
     async function handleCreateRoom(formData: FormData) {
         await createRoom({
-            maxSongsPerUser: 2,
+            maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
             fallbackSongs: playlist
                 ? playlist.tracks.map((track) => ({
                       videoId: track.videoId,
@@ -65,6 +65,7 @@ export function CreateRoom() {
                             name="maxSongsPerUser"
                             defaultValue="2"
                             min="1"
+                            required
                             type="number"
                         />
                     </div>
