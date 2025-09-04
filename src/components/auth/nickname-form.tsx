@@ -20,6 +20,9 @@ export function NicknameForm() {
                 <Input
                     type="text"
                     name="nickname"
+                    minLength={3}
+                    maxLength={16}
+                    required
                     placeholder="Enter nickname..."
                     className="bg-background text-foreground"
                 />
