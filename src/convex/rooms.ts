@@ -20,10 +20,7 @@ export const getQueue = query({
             .query("queuedSongs")
             .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
             .order("asc")
-            .paginate({
-                cursor: args.cursor ?? null,
-                numItems: args.numItems ?? 5,
-            })
+            .take(args.numItems ?? 5)
     },
 })
 

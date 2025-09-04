@@ -3,6 +3,7 @@
 import { HostBackground } from "@/components/host/background"
 import { RoomQRCode } from "@/components/host/qr-code"
 import { Queue } from "@/components/host/queue"
+import { Fullscreen } from "@/components/ui/fullscreen"
 import { Progress } from "@/components/ui/progress"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
@@ -132,7 +133,7 @@ export default function Host({
                                 className="dark w-2/3"
                                 indicatorClassName="duration-1000 ease-linear"
                             />
-                            <h2 className="text-center text-3xl font-bold">
+                            <h2 className="text-center text-3xl font-bold text-shadow-md">
                                 {currentSong
                                     ? currentSong.artist +
                                       " - " +
@@ -143,11 +144,11 @@ export default function Host({
                     </div>
                     <Queue roomId={roomId} />
                     <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
-                        <h3 className="text-center text-2xl font-bold">
+                        <h3 className="text-center text-2xl font-bold text-shadow-md">
                             Scan to add songs...
                         </h3>
                         <RoomQRCode roomCode={room?.code ?? ""} />
-                        <p className="text-center text-lg text-white/80">
+                        <p className="text-center text-lg text-white/80 text-shadow-sm">
                             ...or visit{" "}
                             <span className="font-bold">songup.tv</span> and
                             enter code{" "}
@@ -167,6 +168,8 @@ export default function Host({
                     </p>
                 </footer>
             </main>
+            {/* This is a hidden component that enables toggling fullscreen by hitting F */}
+            <Fullscreen />
         </div>
     )
 }

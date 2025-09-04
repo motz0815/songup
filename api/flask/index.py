@@ -38,7 +38,13 @@ def search():
 def get_mood_categories():
     yt = YTMusic()
     mood_categories = yt.get_mood_categories()
-    return jsonify(mood_categories)
+    
+    # Only show the "Moods & moments" category
+    mood_categories = mood_categories["Moods & moments"]
+
+    response = jsonify(mood_categories)
+    response.cache_control.max_age = 60 * 60 * 24 # 24 hours
+    return response
 
 @app.route("/flask/get-mood-playlists", methods=["GET"])
 def get_mood_playlists():
@@ -50,7 +56,9 @@ def get_mood_playlists():
 
     # Limit to 15 results
     playlists = playlists[:15]
-    return jsonify(playlists)
+    response = jsonify(playlists)
+    response.cache_control.max_age = 60 * 60 * 24 # 24 hours
+    return response
 
 @app.route("/flask/get-playlist", methods=["GET"])
 def get_playlist():

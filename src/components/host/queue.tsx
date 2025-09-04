@@ -17,8 +17,8 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
     return (
         <ScrollArea className="rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
             <ul ref={animationParent} className="space-y-4">
-                {queue && queue.page.length > 0 ? (
-                    queue.page.map((song) => (
+                {queue && queue.length > 0 ? (
+                    queue.map((song) => (
                         <li key={song._id}>
                             <SongCard song={song} />
                         </li>
