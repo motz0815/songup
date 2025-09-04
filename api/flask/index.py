@@ -31,7 +31,7 @@ def search():
     # Maybe streaming the results back?
     # In my rudimentary test a request took 1.17s without the filter, while it took 2.93s with filtering enabled.
     # But on the other hand, we kind of *need* to check this, because otherwise we'll get songs that are not embeddable and will fail in the last second.
-    results = [result for result in results if yt.get_song(result["videoId"])["playabilityStatus"].get("playableInEmbed", False)]
+    #results = [result for result in results if yt.get_song(result["videoId"])["playabilityStatus"].get("playableInEmbed", False)]
     return jsonify(results)
 
 @app.route("/flask/get-mood-categories", methods=["GET"])
