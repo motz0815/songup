@@ -46,7 +46,11 @@ export default function Host({
                     },
                     {
                         ...room,
-                        currentSong: nextSong,
+                        currentSong: {
+                            ...nextSong,
+                            addedByNickname:
+                                nextSong.addedByNickname ?? undefined,
+                        },
                     },
                 )
 
@@ -167,13 +171,20 @@ export default function Host({
                                 className="dark w-2/3"
                                 indicatorClassName="duration-1000 ease-linear"
                             />
-                            <h2 className="text-center text-3xl font-bold text-shadow-md">
-                                {currentSong
-                                    ? currentSong.artist +
-                                      " - " +
-                                      currentSong.title
-                                    : "No song playing"}
-                            </h2>
+                            <div>
+                                <h2 className="text-center text-3xl font-bold text-shadow-md">
+                                    {currentSong
+                                        ? currentSong.artist +
+                                          " - " +
+                                          currentSong.title
+                                        : "No song playing"}
+                                </h2>
+                                {currentSong?.addedByNickname && (
+                                    <p className="text-center text-lg text-white/80 text-shadow-sm">
+                                        by {currentSong.addedByNickname}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <Queue roomId={roomId} />

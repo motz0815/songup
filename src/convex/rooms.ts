@@ -45,19 +45,29 @@ export const getRoomByCode = query({
         code: v.string(),
     },
     handler: async (ctx, args) => {
-        return await ctx.db
+        const room = await ctx.db
             .query("rooms")
             .withIndex("by_code", (q) => q.eq("code", args.code))
             .unique()
-    },
-})
 
-export const getRoom = query({
-    args: {
-        roomId: v.id("rooms"),
-    },
-    handler: async (ctx, args) => {
-        return await ctx.db.get(args.roomId)
+        if (!room) {
+            return null
+        }
+
+        const currentSongUser = room?.currentSong?.addedBy
+            ? await ctx.db.get(room.currentSong.addedBy as Id<"users">)
+            : null
+
+        // Enrich the query result with the nickname of the user who added the current song
+        return {
+            ...room,
+            currentSong: room.currentSong
+                ? {
+                      ...room.currentSong,
+                      addedByNickname: currentSongUser?.nickname,
+                  }
+                : null,
+        }
     },
 })
 
