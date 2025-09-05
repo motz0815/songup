@@ -31,7 +31,34 @@ export default function Host({
      * MUTATIONS
      */
 
-    const popSong = useMutation(api.rooms.popSong)
+    const popSong = useMutation(api.rooms.popSong).withOptimisticUpdate(
+        (localStore, args) => {
+            const queue = localStore.getQuery(api.rooms.getQueue, {
+                roomId: args.roomId,
+            })
+            const nextSong = queue?.[0]
+            if (nextSong && room) {
+                // Set the next song as the current song
+                localStore.setQuery(
+                    api.rooms.getRoomByCode,
+                    {
+                        code: room.code,
+                    },
+                    {
+                        ...room,
+                        currentSong: nextSong,
+                    },
+                )
+
+                // Remove the next song from the queue
+                localStore.setQuery(
+                    api.rooms.getQueue,
+                    { roomId: args.roomId },
+                    queue.slice(1),
+                )
+            }
+        },
+    )
 
     /*
      * OTHER STATE
