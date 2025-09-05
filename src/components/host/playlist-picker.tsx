@@ -92,7 +92,19 @@ export function PlaylistPicker({
     }
 
     function handleCustomPlaylistSubmit(formData: FormData) {
-        const playlistId = formData.get("playlist-id") as string
+        let playlistId = (formData.get("playlistId") as string).trim()
+        console.log("Submitted playlistId", playlistId)
+
+        // Trim away URL parts, if it's a URL
+        try {
+            const url = new URL(playlistId)
+            playlistId = url.searchParams.get("list") ?? playlistId
+        } catch (error) {
+            // Ignore
+        }
+
+        console.log("Using playlistId", playlistId)
+
         handleSelectPlaylist(playlistId)
     }
 
@@ -218,7 +230,7 @@ export function PlaylistPicker({
                                         </Label>
                                         <Input
                                             id="custom-playlist-id"
-                                            name="playlist-id"
+                                            name="playlistId"
                                             type="text"
                                             placeholder="Paste YouTube playlist ID or URL here..."
                                             className="mt-1"
