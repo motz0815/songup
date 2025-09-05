@@ -139,6 +139,13 @@ export default function Host({
                                             roomId,
                                         })
                                     }}
+                                    onError={() => {
+                                        // Song probably isn't playable in embeds. To prevent SongUp from going silent, pop this song.
+                                        // TODO there shouldn't actually ever be non-embeddable songs in the queue
+                                        popSong({
+                                            roomId,
+                                        })
+                                    }}
                                 />
                             )}
                             <div className="flex h-full w-full flex-col items-center justify-center gap-2">
