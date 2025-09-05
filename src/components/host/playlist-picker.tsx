@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { ArrowLeftIcon, Loader2 } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ImageWithFallback } from "../image-with-fallback"
 import { Button } from "../ui/button"
@@ -139,8 +139,8 @@ export function PlaylistPicker({
             <DialogTrigger disabled={loading} id={id}>
                 <PlaylistCard playlist={value} loading={loading} />
             </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
+            <DialogContent className="p-0">
+                <DialogHeader className="p-6 pb-0">
                     <DialogTitle>Select a fallback playlist</DialogTitle>
                     <DialogDescription>
                         Songs added by users will always have priority over
@@ -148,101 +148,109 @@ export function PlaylistPicker({
                     </DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="max-h-[80vh]">
-                    {selectedMood ? (
-                        <div className="flex flex-col gap-4">
-                            <div className="flex items-baseline gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={() => setSelectedMood(null)}
-                                >
-                                    <ArrowLeftIcon className="h-4 w-4" />
-                                </Button>
-                                <h3 className="text-lg font-semibold">
-                                    {selectedMood.title}
-                                </h3>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                {moodPlaylists &&
-                                    moodPlaylists.map((playlist) => (
-                                        <span key={playlist.playlistId}>
-                                            <MoodPlaylistCard
-                                                playlist={playlist}
-                                                onClick={() =>
-                                                    handleSelectPlaylist(
-                                                        playlist.playlistId,
-                                                    )
-                                                }
-                                            />
-                                        </span>
-                                    ))}
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            {moods && (
-                                <div className="flex flex-col gap-4">
-                                    <div>
-                                        <h3 className="text-lg font-semibold">
-                                            Moods & moments
-                                        </h3>
-
-                                        <div className="flex flex-col gap-2">
-                                            {(isExpanded
-                                                ? moods
-                                                : moods.slice(0, 5)
-                                            ).map((mood) => (
-                                                <div
-                                                    key={mood.params}
-                                                    className="hover:bg-secondary rounded-lg border p-3 shadow-sm transition-all hover:cursor-pointer"
+                    <div className="p-6 pt-1">
+                        {selectedMood ? (
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-baseline gap-2">
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() => setSelectedMood(null)}
+                                    >
+                                        <ArrowLeftIcon className="h-4 w-4" />
+                                    </Button>
+                                    <h3 className="text-lg font-semibold">
+                                        {selectedMood.title}
+                                    </h3>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    {moodPlaylists &&
+                                        moodPlaylists.map((playlist) => (
+                                            <span key={playlist.playlistId}>
+                                                <MoodPlaylistCard
+                                                    playlist={playlist}
                                                     onClick={() =>
-                                                        setSelectedMood(mood)
+                                                        handleSelectPlaylist(
+                                                            playlist.playlistId,
+                                                        )
                                                     }
-                                                >
-                                                    {mood.title}
-                                                </div>
-                                            ))}
-                                            {moods.length > 5 && (
-                                                <button
-                                                    onClick={toggleExpansion}
-                                                    className="hover:bg-secondary text-muted-foreground hover:text-foreground rounded-lg border border-dashed p-2 text-sm transition-all hover:cursor-pointer"
-                                                >
-                                                    {isExpanded
-                                                        ? `Show less (${moods.length - 5} hidden)`
-                                                        : `More (${moods.length - 5} more)`}
-                                                </button>
-                                            )}
+                                                />
+                                            </span>
+                                        ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                {moods && (
+                                    <div className="flex flex-col gap-4">
+                                        <div>
+                                            <h3 className="text-lg font-semibold">
+                                                Moods & moments
+                                            </h3>
+
+                                            <div className="flex flex-col gap-2">
+                                                {(isExpanded
+                                                    ? moods
+                                                    : moods.slice(0, 5)
+                                                ).map((mood) => (
+                                                    <button
+                                                        key={mood.params}
+                                                        className="hover:bg-secondary flex items-center justify-between rounded-lg border p-3 shadow-sm transition-all hover:cursor-pointer"
+                                                        onClick={() =>
+                                                            setSelectedMood(
+                                                                mood,
+                                                            )
+                                                        }
+                                                    >
+                                                        {mood.title}
+                                                        <ArrowRightIcon className="size-4" />
+                                                    </button>
+                                                ))}
+                                                {moods.length > 5 && (
+                                                    <button
+                                                        onClick={
+                                                            toggleExpansion
+                                                        }
+                                                        className="hover:bg-secondary text-muted-foreground hover:text-foreground rounded-lg border border-dashed p-2 text-sm transition-all hover:cursor-pointer"
+                                                    >
+                                                        {isExpanded
+                                                            ? `Show less (${moods.length - 5} hidden)`
+                                                            : `More (${moods.length - 5} more)`}
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
+                                )}
+                                <div className="mt-6">
+                                    <h3 className="mb-4 text-lg font-semibold">
+                                        Or use your own playlist
+                                    </h3>
+                                    <form
+                                        action={handleCustomPlaylistSubmit}
+                                        className="flex flex-col gap-3"
+                                    >
+                                        <div>
+                                            <Label htmlFor="custom-playlist-id">
+                                                Playlist ID or URL
+                                            </Label>
+                                            <Input
+                                                id="custom-playlist-id"
+                                                name="playlistId"
+                                                type="text"
+                                                required
+                                                placeholder="Paste YouTube playlist ID or URL here..."
+                                                className="mt-1"
+                                            />
+                                        </div>
+                                        <SubmitButton>
+                                            Use This Playlist
+                                        </SubmitButton>
+                                    </form>
                                 </div>
-                            )}
-                            <div className="mt-6">
-                                <h3 className="mb-4 text-lg font-semibold">
-                                    Or use your own playlist
-                                </h3>
-                                <form
-                                    action={handleCustomPlaylistSubmit}
-                                    className="flex flex-col gap-3"
-                                >
-                                    <div>
-                                        <Label htmlFor="custom-playlist-id">
-                                            Playlist ID or URL
-                                        </Label>
-                                        <Input
-                                            id="custom-playlist-id"
-                                            name="playlistId"
-                                            type="text"
-                                            placeholder="Paste YouTube playlist ID or URL here..."
-                                            className="mt-1"
-                                        />
-                                    </div>
-                                    <SubmitButton>
-                                        Use This Playlist
-                                    </SubmitButton>
-                                </form>
-                            </div>
-                        </>
-                    )}
+                            </>
+                        )}
+                    </div>
                 </ScrollArea>
             </DialogContent>
         </Dialog>
@@ -311,8 +319,8 @@ function MoodPlaylistCard({
     onClick: () => void
 }) {
     return (
-        <div
-            className="hover:bg-secondary flex items-center gap-2 rounded-lg border p-2 shadow-sm transition-all hover:cursor-pointer"
+        <button
+            className="hover:bg-secondary flex w-full items-center gap-2 rounded-lg border p-2 shadow-sm transition-all hover:cursor-pointer"
             onClick={onClick}
         >
             <ImageWithFallback
@@ -322,12 +330,12 @@ function MoodPlaylistCard({
                 alt={playlist.title}
                 className="size-16 rounded-lg border border-white/20 object-cover"
             />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 text-left">
                 <p className="text-lg font-semibold">{playlist.title}</p>
                 <p className="text-muted-foreground text-sm">
                     {playlist.description}
                 </p>
             </div>
-        </div>
+        </button>
     )
 }
