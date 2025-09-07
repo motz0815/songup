@@ -8,12 +8,12 @@ export function RoomQRCode({ roomCode }: { roomCode: string }) {
         <div className="h-full max-h-full rounded-lg bg-white p-3">
             <QRCode
                 value={url}
-                size={256}
+                size={128}
                 className="h-full max-h-full w-full"
                 style={{
                     imageRendering: "pixelated",
                 }}
-                viewBox="0 0 256 256"
+                viewBox="0 0 128 128"
             />
         </div>
     )
