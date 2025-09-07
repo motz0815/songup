@@ -15,7 +15,7 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
     const [animationParent] = useAutoAnimate()
 
     return (
-        <ScrollArea className="h-full max-h-[40vh] grow overflow-y-auto rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
+        <ScrollArea className="h-full max-h-[40vh] grow overflow-y-auto rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg">
             <ul ref={animationParent} className="space-y-4">
                 {queue && queue.length > 0 ? (
                     queue.map((song) => (
