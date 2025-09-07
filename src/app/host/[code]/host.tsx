@@ -202,7 +202,7 @@ export default function Host({
                     </div>
                 </div>
                 <footer className="flex w-full items-center justify-between px-1">
-                    <Link href="/">
+                    <Link href="/host">
                         <h2 className="text-3xl font-bold text-white/80">
                             SongUp
                             <span className="text-sm text-white/80">.tv</span>
