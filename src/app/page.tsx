@@ -3,13 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { Music, Tv, Users } from "lucide-react"
-import { Metadata } from "next"
+import { Metadata, Viewport } from "next"
 import Link from "next/link"
 import { FaDiscord, FaGithub } from "react-icons/fa"
 import { LandingBackground } from "./background"
 
 export const metadata: Metadata = {
     title: "SongUp - Open source shared music queue for parties",
+}
+
+export const viewport: Viewport = {
+    themeColor: "#000000",
+    colorScheme: "dark",
 }
 
 export default function Home() {
