@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Music, Tv, Users } from "lucide-react"
 import { Metadata, Viewport } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 import { FaDiscord, FaGithub } from "react-icons/fa"
 import { LandingBackground } from "./background"
 
@@ -18,15 +17,6 @@ export const viewport: Viewport = {
 }
 
 export default function Home() {
-    async function handleJoinRoom(formData: FormData) {
-        const code = (formData.get("code") as string).trim().toUpperCase()
-        if (!code) {
-            return
-        }
-
-        redirect(`/room/${code}`)
-    }
-
     return (
         <>
             <LandingBackground />
