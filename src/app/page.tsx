@@ -97,9 +97,11 @@ export default function Home() {
                                 <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
                                     <CardHeader>
                                         <Tv className="mb-2 h-8 w-8" />
-                                        <CardTitle>Central Display</CardTitle>
+                                        <CardTitle className="text-shadow-md">
+                                            Central Display
+                                        </CardTitle>
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="text-shadow-sm">
                                         Host page designed for a central TV,
                                         showing the YouTube player, queue, and
                                         room QR code.
@@ -108,11 +110,11 @@ export default function Home() {
                                 <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
                                     <CardHeader>
                                         <Users className="mb-2 h-8 w-8" />
-                                        <CardTitle>
+                                        <CardTitle className="text-shadow-md">
                                             Collaborative Queuing
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="text-shadow-sm">
                                         Party members can add up to 2 songs at
                                         once to the main queue using their
                                         devices.
@@ -121,9 +123,11 @@ export default function Home() {
                                 <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
                                     <CardHeader>
                                         <Music className="mb-2 h-8 w-8" />
-                                        <CardTitle>No Login Required</CardTitle>
+                                        <CardTitle className="text-shadow-md">
+                                            No Login Required
+                                        </CardTitle>
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="text-shadow-sm">
                                         Create a room instantly without the need
                                         for user accounts or logins.
                                     </CardContent>
