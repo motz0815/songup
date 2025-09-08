@@ -1,10 +1,10 @@
+import { JoinRoomForm } from "@/components/room/join-room"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { SubmitButton } from "@/components/ui/submit-button"
 import { Music, Tv, Users } from "lucide-react"
 import { Metadata, Viewport } from "next"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import { FaDiscord, FaGithub } from "react-icons/fa"
 import { LandingBackground } from "./background"
 
@@ -18,6 +18,15 @@ export const viewport: Viewport = {
 }
 
 export default function Home() {
+    async function handleJoinRoom(formData: FormData) {
+        const code = (formData.get("code") as string).trim().toUpperCase()
+        if (!code) {
+            return
+        }
+
+        redirect(`/room/${code}`)
+    }
+
     return (
         <>
             <LandingBackground />
@@ -53,19 +62,7 @@ export default function Home() {
                                         </Link>
                                         or
                                     </div>
-                                    <form>
-                                        <div className="flex gap-2">
-                                            <Input
-                                                name="code"
-                                                placeholder="Enter room code"
-                                                className="bg-background text-foreground max-w-3xs"
-                                                required
-                                            />
-                                            <SubmitButton className="border border-white/20">
-                                                Join room
-                                            </SubmitButton>
-                                        </div>
-                                    </form>
+                                    <JoinRoomForm />
                                 </div>
                                 <div className="mt-4 flex justify-center gap-4 md:justify-end">
                                     <a
