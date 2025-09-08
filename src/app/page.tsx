@@ -40,7 +40,7 @@ export default function Home() {
                                     easy.
                                     <br /> Open source, no login required.
                                 </p>
-                                <div className="flex flex-col gap-4">
+                                <div className="flex flex-col items-center gap-4 md:items-stretch">
                                     <div className="flex items-baseline gap-2">
                                         <Link href="/host">
                                             <Button
