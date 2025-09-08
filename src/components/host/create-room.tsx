@@ -4,6 +4,7 @@ import { api } from "@/convex/_generated/api"
 import { useAuthedMutation } from "@/lib/auth"
 import { PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
+import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Button } from "../ui/button"
@@ -40,6 +41,18 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                 : undefined,
         }).then((data) => {
             toast.success("Room created")
+            posthog.capture("room_created", {
+                id: data.roomId,
+                code: data.code,
+                maxSongsPerUser: formData.get("maxSongsPerUser"),
+                fallbackPlaylist: playlist && {
+                    id: playlist.id,
+                    title: playlist.title,
+                    author: playlist.author.name,
+                    description: playlist?.description,
+                    trackCount: playlist.trackCount,
+                },
+            })
             router.push(`/host/${data.code}`)
         })
     }

@@ -4,6 +4,7 @@ import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useMutation } from "convex/react"
 import { PlusIcon } from "lucide-react"
+import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Button } from "../ui/button"
@@ -42,6 +43,13 @@ export function AddSong({
         setOpen(false)
         toast.success("Song added", {
             description: `${song.title} by ${song.artist}`,
+        })
+        posthog.capture("song_added", {
+            roomId,
+            songId: song.videoId,
+            songTitle: song.title,
+            songArtist: song.artist,
+            songDuration: song.duration,
         })
     }
 
