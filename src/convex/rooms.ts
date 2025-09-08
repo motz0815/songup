@@ -27,13 +27,13 @@ export const getQueue = query({
                 if (!song.addedBy) {
                     return {
                         ...song,
-                        addedByNickname: null,
+                        addedByNickname: undefined,
                     }
                 }
                 const user = await ctx.db.get(song.addedBy as Id<"users">)
                 return {
                     ...song,
-                    addedByNickname: user?.nickname ?? null,
+                    addedByNickname: user?.nickname,
                 }
             }),
         )

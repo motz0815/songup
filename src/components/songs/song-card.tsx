@@ -7,7 +7,7 @@ import { ImageWithFallback } from "../image-with-fallback"
 export function SongCard({
     song,
 }: {
-    song: Doc<"queuedSongs"> & { addedByNickname: string | null }
+    song: Doc<"queuedSongs"> & { addedByNickname?: string }
 }) {
     return (
         <div

@@ -46,11 +46,7 @@ export default function Host({
                     },
                     {
                         ...room,
-                        currentSong: {
-                            ...nextSong,
-                            addedByNickname:
-                                nextSong.addedByNickname ?? undefined,
-                        },
+                        currentSong: nextSong,
                     },
                 )
 

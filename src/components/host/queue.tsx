@@ -11,6 +11,7 @@ import { Separator } from "../ui/separator"
 export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
     const queue = useQuery(api.rooms.getQueue, {
         roomId,
+        numItems: 10,
     })
 
     const [animationParent] = useAutoAnimate()
