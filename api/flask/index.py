@@ -3,16 +3,6 @@ from ytmusicapi import YTMusic
 
 app = Flask(__name__)
 
-@app.route("/flask/python")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-@app.route("/flask/search-example")
-def search_example():
-    yt = YTMusic()
-    results = yt.search("The Weeknd blinding lights", filter="songs", limit=10)
-    return jsonify(results)
-
 @app.route("/flask/search", methods=["GET"])
 def search():
     query = request.args.get("query")
