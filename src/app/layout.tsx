@@ -1,6 +1,6 @@
 import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/sonner"
-import type { Metadata, Viewport } from "next"
+import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 
@@ -16,13 +16,6 @@ export const metadata: Metadata = {
     description:
         "SongUp makes collaborative party music queueing easy. Open source, no login required. Get started - free.",
     keywords: ["songup", "party", "music", "queue", "open source"],
-}
-
-export const viewport: Viewport = {
-    initialScale: 1,
-    width: "device-width",
-    maximumScale: 1,
-    viewportFit: "cover",
 }
 
 export default function RootLayout({
