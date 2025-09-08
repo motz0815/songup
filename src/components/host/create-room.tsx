@@ -2,6 +2,7 @@
 
 import { api } from "@/convex/_generated/api"
 import { useAuthedMutation } from "@/lib/auth"
+import { PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -18,7 +19,7 @@ import { Label } from "../ui/label"
 import { SubmitButton } from "../ui/submit-button"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
 
-export function CreateRoom() {
+export function CreateRoom({ children }: { children?: React.ReactNode }) {
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
     const [loading, setLoading] = useState(false)
 
@@ -46,7 +47,11 @@ export function CreateRoom() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>Create Room</Button>
+                {children || (
+                    <Button>
+                        <PlusIcon className="size-4" /> Create Room
+                    </Button>
+                )}
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
