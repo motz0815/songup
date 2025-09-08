@@ -1,32 +1,33 @@
-import { NextConfig } from "next"
+import type { NextConfig } from "next"
 
-export default {
-    images: {
-        remotePatterns: [
-            {
-                hostname: "i.ytimg.com",
-            },
-            {
-                hostname: "is2-ssl.mzstatic.com",
-            },
-        ],
-    },
-    async rewrites() {
+const nextConfig: NextConfig = {
+    rewrites: async () => {
         return [
             {
-                source: "/ingest/static/:path*",
+                source: "/flask/:path*",
+                destination:
+                    process.env.NODE_ENV === "development"
+                        ? "http://127.0.0.1:5328/flask/:path*"
+                        : "/api/flask/index",
+            },
+            {
+                source: "/relay-iljT/static/:path*",
                 destination: "https://eu-assets.i.posthog.com/static/:path*",
             },
             {
-                source: "/ingest/:path*",
+                source: "/relay-iljT/:path*",
                 destination: "https://eu.i.posthog.com/:path*",
-            },
-            {
-                source: "/ingest/decide",
-                destination: "https://eu.i.posthog.com/decide",
             },
         ]
     },
-    // This is required to support PostHog trailing slash API requests
+    images: {
+        remotePatterns: [
+            {
+                hostname: "*.googleusercontent.com",
+            },
+        ],
+    },
     skipTrailingSlashRedirect: true,
-} satisfies NextConfig
+}
+
+export default nextConfig

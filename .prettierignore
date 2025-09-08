@@ -1,4 +1,5 @@
 package.json
 tsconfig.json
 .eslintrc.json
-types/database.ts
+convex.json
+src/convex/_generated

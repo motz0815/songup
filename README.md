@@ -6,7 +6,8 @@ SongUp makes queuing songs from everyone easier and fairer than ever. 🎵
 
 Host a room for free at [songup.tv](https://songup.tv)!
 
-![image](https://songup.tv/songup-host.png)
+<img width="2656" height="1511" alt="songup-host" src="https://github.com/user-attachments/assets/fabd4b36-887e-4406-9cc9-47c7c1b5b122" />
+
 
 ## 🎉 What is SongUp?
 
@@ -25,16 +26,17 @@ SongUp is an open-source, privacy-friendly music queue system. Hosts can control
   (Works flawlessly on mobile too.)
 
 - **2️⃣ Queue Management**
-  Users can add up to two songs at a time, ensuring fairness for everyone.
-
-- **⏩ Queue Control**
-  Hosts can skip or delete songs to keep the party going smoothly.
+  Hosts can choose how many songs people can add to the queue at once.
+  
+- **🎶 Never Silence**
+  When creating a room, hosts can choose a fallback playlist that will play when no one has added a song to the queue, while
+  songs that users add will always have priority over fallback songs.
 
 ## 🎯 Get Started
 
 ### 1. Create a Room
 
-Head over to [songup.tv](https://songup.tv) and click **Create Room** to host your own SongUp room. It’s quick, easy, and free.
+Head over to [songup.tv](https://songup.tv) and click **Host your own room** to host your own SongUp room. It’s quick, easy, and free.
 
 ### 2. Share the Code
 
