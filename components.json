@@ -3,11 +3,10 @@
     "style": "new-york",
     "rsc": true,
     "tsx": true,
-    "iconLibrary": "lucide",
     "tailwind": {
-        "config": "tailwind.config.ts",
-        "css": "app/globals.css",
-        "baseColor": "slate",
+        "config": "",
+        "css": "src/app/globals.css",
+        "baseColor": "neutral",
         "cssVariables": true,
         "prefix": ""
     },
@@ -17,5 +16,6 @@
         "ui": "@/components/ui",
         "lib": "@/lib",
         "hooks": "@/hooks"
-    }
+    },
+    "iconLibrary": "lucide"
 }
