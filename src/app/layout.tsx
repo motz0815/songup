@@ -1,5 +1,6 @@
 import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/sonner"
+import { getURL } from "@/lib/utils"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
@@ -12,6 +13,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+    metadataBase: new URL(getURL()),
     title: { default: "SongUp", template: "%s | SongUp" },
     description:
         "SongUp makes collaborative party music queueing easy. Open source, no login required. Get started - free.",

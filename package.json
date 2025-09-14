@@ -12,7 +12,8 @@
     "dev": "concurrently \"bun run next-dev\" \"bun run flask-dev\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then bunx convex deploy --cmd 'bun run build'; else bun run build; fi"
   },
   "dependencies": {
     "@auth/core": "0.37.0",
