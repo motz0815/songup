@@ -11,8 +11,8 @@ def search():
     yt = YTMusic()
     results = yt.search(query, filter="videos")
 
-    # Filter out UGC videos (User Generated Content)
-    results = [result for result in results if not "UGC" in result["videoType"]]
+    # Sort results so that official videos appear first, UGC videos last
+    results = sorted(results, key=lambda x: "UGC" in x.get("videoType", ""))
 
     # Limit to 5 results
     results = results[:5]
