@@ -33,11 +33,11 @@
     "convex-helpers": "^0.1.104",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.553.0",
-    "next": "^15.5.6",
+    "next": "16.0.1",
     "next-themes": "^0.4.6",
     "posthog-js": "^1.290.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
     "react-icons": "^5.5.0",
     "react-qr-code": "^2.0.18",
     "react-youtube": "^10.1.0",
@@ -49,11 +49,11 @@
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^22.19.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^15.5.6",
+    "eslint-config-next": "16.0.1",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.7.1",
@@ -63,5 +63,9 @@
   },
   "trustedDependencies": [
     "@tailwindcss/oxide"
-  ]
+  ],
+  "overrides": {
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
+  }
 }
