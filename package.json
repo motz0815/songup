@@ -1,5 +1,5 @@
 {
-  "name": "songup",
+  "name": "democratune",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -16,7 +16,7 @@
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then bunx convex deploy --cmd 'bun run build'; else bun run build; fi"
   },
   "dependencies": {
-    "@auth/core": "0.37.0",
+    "@auth/core": "^0.37.0",
     "@convex-dev/auth": "^0.0.90",
     "@formkit/auto-animate": "^0.9.0",
     "@paper-design/shaders-react": "^0.0.62",
@@ -29,7 +29,7 @@
     "@radix-ui/react-separator": "^1.1.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "convex": "^1.29.0",
+    "convex": "^1.29.2",
     "convex-helpers": "^0.1.104",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.553.0",

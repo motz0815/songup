@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "songup",
+      "name": "democratune",
       "dependencies": {
         "@auth/core": "0.37.0",
         "@convex-dev/auth": "^0.0.90",
