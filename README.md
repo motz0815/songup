@@ -2,9 +2,9 @@
 
 DemocraTune makes queuing songs from everyone easy and fair. 🎵
 
-## 🎉 What is SongUp?
+## 🎉 What is DemocraTune?
 
-SongUp is an open-source, privacy-friendly music queue system. Hosts can control a central screen while everyone else contributes to the playlist simply by scanning a QR code. No logins, no hassle, just music.
+DemocraTune is an open-source, privacy-friendly music queue system. Hosts can control a central screen while everyone else contributes to the playlist simply by scanning a QR code. No logins, no hassle, just music.
 
 ## Features
 
@@ -31,6 +31,11 @@ SongUp is an open-source, privacy-friendly music queue system. Hosts can control
 - **✅️❌ User Rating**
   Users can vote songs up or down, with this affecting a user's rating. Higher rated users get more priority to keep
   adding songs (depending on scheduling algorithm!).
+
+- **📜 Queue History**
+  Ever liked a song but forgot what the song's name was? With queue history, you can see which songs have been played,
+  and never have to Shazam again! Really like the songs that have been played? Save the whole history to your own
+  YouTube playlist!
 
 ## 📜 License
 
