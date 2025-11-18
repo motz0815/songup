@@ -1,13 +1,6 @@
-# SongUp
+# DemocraTune
 
-[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://songup.tv/discord)
-
-SongUp makes queuing songs from everyone easier and fairer than ever. 🎵
-
-Host a room for free at [songup.tv](https://songup.tv)!
-
-<img width="2656" height="1511" alt="songup-host" src="https://github.com/user-attachments/assets/fabd4b36-887e-4406-9cc9-47c7c1b5b122" />
-
+DemocraTune makes queuing songs from everyone easy and fair. 🎵
 
 ## 🎉 What is SongUp?
 
@@ -26,43 +19,19 @@ SongUp is an open-source, privacy-friendly music queue system. Hosts can control
   (Works flawlessly on mobile too.)
 
 - **2️⃣ Queue Management**
-  Hosts can choose how many songs people can add to the queue at once.
+  Hosts can choose one of several queueing algorithms, to fairly selects songs from the recommendations.
   
 - **🎶 Never Silence**
   When creating a room, hosts can choose a fallback playlist that will play when no one has added a song to the queue, while
   songs that users add will always have priority over fallback songs.
 
-## 🎯 Get Started
+- **⏭️ Voting**
+  Hosts can set a threshold for users to vote to skip the current song.
 
-### 1. Create a Room
-
-Head over to [songup.tv](https://songup.tv) and click **Host your own room** to host your own SongUp room. It’s quick, easy, and free.
-
-### 2. Share the Code
-
-Share the unique room code with your friends or display the QR code on the host screen.
-
-### 3. Queue Songs
-
-Your guests can join the room and start adding their favorite tracks. Enjoy the party!
-
-## 🤝 Contributing
-
-SongUp is open source and thrives on community contributions. Here’s how you can help:
-
-- Look through existing issues, issues that are easy for first-time-contributors are labeled [`good-first-issue`](https://github.com/motz0815/songup/labels/good%20first%20issue)
-
-Then:
-
-1. Fork the repository
-2. Create a branch from `develop` e.g. `feature/new-cool-thing`
-3. Commit & Push changes to your branch
-4. Open a pull request
+- **✅️❌ User Rating**
+  Users can vote songs up or down, with this affecting a user's rating. Higher rated users get more priority to keep
+  adding songs (depending on scheduling algorithm!).
 
 ## 📜 License
 
 This project is licensed under the [AGPL-3.0 License](https://www.gnu.org/licenses/agpl-3.0.html).
-
-## ❤️ Support
-
-If you love SongUp, consider starring the repository or sharing it with your friends! Feedback and suggestions are always welcome.
