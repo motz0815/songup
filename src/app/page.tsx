@@ -8,7 +8,7 @@ import { FaDiscord, FaGithub } from "react-icons/fa"
 import { LandingBackground } from "./background"
 
 export const metadata: Metadata = {
-    title: "SongUp - Open source shared music queue for parties",
+    title: "DemocraTune - Open source shared music queue for parties",
 }
 
 export const viewport: Viewport = {
@@ -24,7 +24,7 @@ export default function Home() {
                 <header className="w-full border-b border-white/20 px-4 py-6 text-center md:px-6">
                     <Link href="/">
                         <h1 className="text-2xl font-bold tracking-tighter text-shadow-md sm:text-3xl md:text-4xl">
-                            SongUp
+                            DemocraTune
                         </h1>
                     </Link>
                 </header>
@@ -36,7 +36,7 @@ export default function Home() {
                                     Never fight over the aux again.
                                 </h1>
                                 <p className="text-center text-shadow-sm md:text-right md:text-xl">
-                                    SongUp makes shared party music queueing
+                                    DemocraTune makes shared party music queueing
                                     easy.
                                     <br /> Open source, no login required.
                                 </p>
@@ -56,22 +56,13 @@ export default function Home() {
                                 </div>
                                 <div className="mt-4 flex justify-center gap-4 md:justify-end">
                                     <a
-                                        href="https://github.com/motz0815/songup"
+                                        href="https://github.com/KOLESNiii/DemocraTune/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center space-x-2 text-white hover:text-gray-200"
                                     >
                                         <FaGithub className="size-5" />
                                         <span>View on GitHub</span>
-                                    </a>
-                                    <a
-                                        href="/discord"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center space-x-2 text-white hover:text-gray-200"
-                                    >
-                                        <FaDiscord className="size-5" />
-                                        <span>Join Discord</span>
                                     </a>
                                 </div>
                             </div>
@@ -139,11 +130,22 @@ export default function Home() {
                                 href="https://github.com/motz0815"
                             >
                                 matthias
-                            </a>
+                            </a>{" "}
+                            (original SongUp) and{" "}
+                            <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline"
+                                href="https://github.com/KOLESNiii"
+                            >
+                            Tim
+                            </a>{" "}
+                            (DemocraTune)
+
                         </p>
                         <div className="mt-4 flex items-center space-x-4 sm:mt-0">
                             <a
-                                href="https://github.com/motz0815/songup"
+                                href="https://github.com/KOLESNiii/DemocraTune/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center space-x-2 text-white hover:text-gray-200"
@@ -152,15 +154,6 @@ export default function Home() {
                                 <span className="text-sm">
                                     Open Source on GitHub
                                 </span>
-                            </a>
-                            <a
-                                href="/discord"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center space-x-2 text-white hover:text-gray-200"
-                            >
-                                <FaDiscord className="size-5" />
-                                <span className="text-sm">Join Discord</span>
                             </a>
                         </div>
                     </div>

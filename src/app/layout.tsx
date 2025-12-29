@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
     metadataBase: new URL(getURL()),
-    title: { default: "SongUp", template: "%s | SongUp" },
+    title: { default: "DemocraTune", template: "%s | DemocraTune" },
     description:
-        "SongUp makes collaborative party music queueing easy. Open source, no login required. Get started - free.",
-    keywords: ["songup", "party", "music", "queue", "open source"],
+        "DemocraTune makes collaborative party music queueing easy. Open source, no login required. Get started - free.",
+    keywords: ["democratune", "party", "music", "queue", "open source"],
 }
 
 export default function RootLayout({
