@@ -15,6 +15,7 @@ import type * as http from "../http.js";
 import type * as nicknames from "../nicknames.js";
 import type * as rooms from "../rooms.js";
 import type * as rooms_manage from "../rooms/manage.js";
+import type * as scheduling from "../scheduling.js";
 
 import type {
   ApiFromModules,
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   nicknames: typeof nicknames;
   rooms: typeof rooms;
   "rooms/manage": typeof rooms_manage;
+  scheduling: typeof scheduling;
 }>;
 
 /**

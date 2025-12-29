@@ -30,6 +30,7 @@ export default defineSchema({
 
         // Custom fields
         nickname: v.optional(v.string()),
+        ratingScore: v.optional(v.number()),
     }),
     rooms: defineTable({
         host: v.id("users"),
@@ -38,6 +39,11 @@ export default defineSchema({
         currentSong: v.optional(v.object(song)),
         settings: v.object({
             maxSongsPerUser: v.number(),
+            scheduler: v.optional(v.union(
+                v.literal("FCFS"),
+                v.literal("roundRobin"),
+                v.literal("weighted")
+            )),
         }),
     })
         .index("by_code", ["code"])
@@ -46,13 +52,17 @@ export default defineSchema({
 
     queuedSongs: defineTable({
         room: v.id("rooms"),
+        userQueuePosition: v.optional(v.number()),
         ...song,
     })
         .index("by_room_type", ["room", "type"])
-        .index("by_added_by_room", ["addedBy", "room"]),
+        .index("by_added_by_room", ["addedBy", "room"])
+        .index("by_room_userQueuePosition", ["room", "addedBy", "userQueuePosition"]),
 
     history: defineTable({
         room: v.id("rooms"),
+        likes: v.optional(v.number()),
+        dislikes: v.optional(v.number()),
         ...song,
     })
         .index("by_room", ["room"])

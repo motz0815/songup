@@ -3,6 +3,7 @@ import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { mutation } from "./functions"
+import { getNextSong, getQueueFCFS, getQueueRoundRobin, getQueueWeighted } from "./scheduling"
 
 /**
  * This query returns the queue of songs for a room.
@@ -10,33 +11,28 @@ import { mutation } from "./functions"
  * It does not include the current song. That is stored in the room object.
  */
 export const getQueue = query({
-    args: {
+    args: { 
         roomId: v.id("rooms"),
         cursor: v.optional(v.string()),
         numItems: v.optional(v.number()),
     },
-    handler: async (ctx, args) => {
-        const queue = await ctx.db
-            .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
-            .order("asc")
-            .take(args.numItems ?? 5)
+    handler: async (ctx, { roomId, numItems }) => {
+        const room = await ctx.db.get(roomId)
+        if (!room) return []
 
-        return await Promise.all(
-            queue.map(async (song) => {
-                if (!song.addedBy) {
-                    return {
-                        ...song,
-                        addedByNickname: undefined,
-                    }
-                }
-                const user = await ctx.db.get(song.addedBy as Id<"users">)
-                return {
-                    ...song,
-                    addedByNickname: user?.nickname,
-                }
-            }),
-        )
+        const scheduler = room.settings?.scheduler ?? "roundRobin"
+        numItems = numItems ?? 5
+
+        switch (scheduler) {
+        case "FCFS":
+            return getQueueFCFS(ctx, roomId, numItems)
+        case "roundRobin":
+            return getQueueRoundRobin(ctx, roomId, numItems)
+        case "weighted":
+            return getQueueWeighted(ctx, roomId, numItems)
+        default:
+            return getQueueFCFS(ctx, roomId, numItems)
+        }
     },
 })
 
@@ -208,11 +204,7 @@ export const popSong = mutation({
         }
 
         // Check if there is a song in the queue
-        const nextSong = await ctx.db
-            .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
-            .order("asc")
-            .first()
+        const nextSong = await getNextSong(ctx, args.roomId)
 
         // If there is no next song, just remove the current song
         // But if there is a next song, make it the current song and remove that song from the queue
@@ -229,6 +221,7 @@ export const popSong = mutation({
                     duration,
                 },
             })
+            // remove song from queue
             await ctx.db.delete(nextSong._id)
         } else {
             await ctx.db.patch(args.roomId, {
