@@ -114,7 +114,7 @@ async function weightedNextSong(ctx: any, roomId: Id<"rooms">) {
     return anonQueue.length > 0 ? anonQueue[0] : null
 }
 
-async function attachNicknames(ctx: any, songs: Doc<"queuedSongs">[]) {
+export async function attachNicknames(ctx: any, songs: Doc<"queuedSongs">[]) {
     return Promise.all(
         songs.map(async (song) => {
         if (!song.addedBy) {

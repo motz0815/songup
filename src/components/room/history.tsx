@@ -20,27 +20,21 @@ export function History({ roomId }: { roomId: Id<"rooms"> }) {
     }))
 
     return (
-        <section className="flex flex-col gap-2">
-            <h2 className="text-xl font-bold">Song History</h2>
-
-            <ScrollArea
-                className="h-[320px] rounded-lg border border-white/20 bg-white/10 shadow-md backdrop-blur-lg"
-            >
-                <ul className="space-y-4 p-4">
-                    {historySongs.length > 0 ? (
-                        historySongs.map(song => (
-                            <li key={song.id}>
-                                <SongCard song={song} />
-                            </li>
-                        ))
-                    ) : (
-                        <p className="text-center text-white/70">
-                            No songs played yet.
-                        </p>
-                    )}
-                </ul>
-            </ScrollArea>
-        </section>
+        <ScrollArea className="h-[320px] rounded-lg border border-white/20 bg-white/10 shadow-md backdrop-blur-lg">
+            <ul className="space-y-4 p-4">
+                {historySongs.length > 0 ? (
+                    historySongs.map(song => (
+                        <li key={song.id}>
+                            <SongCard song={song} />
+                        </li>
+                    ))
+                ) : (
+                    <p className="text-center text-white/70">
+                        No songs played yet.
+                    </p>
+                )}
+            </ul>
+        </ScrollArea>
     )
 }
 

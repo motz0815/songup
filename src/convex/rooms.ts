@@ -3,7 +3,7 @@ import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { mutation } from "./functions"
-import { getNextSong, getQueueFCFS, getQueueRoundRobin, getQueueWeighted } from "./scheduling"
+import { attachNicknames, getNextSong, getQueueFCFS, getQueueRoundRobin, getQueueWeighted } from "./scheduling"
 
 /**
  * This query returns the queue of songs for a room.
@@ -34,6 +34,25 @@ export const getQueue = query({
             return getQueueFCFS(ctx, roomId, numItems)
         }
     },
+})
+
+export const getPersonalQueue = query({
+    args: {
+        roomId: v.id("rooms"),
+        cursor: v.optional(v.string()),
+        numItems: v.optional(v.number()),
+    },
+    handler: async (ctx, args) => {
+        const userId = await getAuthUserId(ctx)
+        if (userId === null)
+            return []
+        const queue = await ctx.db
+            .query("queuedSongs")
+            .withIndex("by_added_by_room", q => q.eq("addedBy", userId).eq("room", args.roomId))
+            .order("asc")
+            .take(args.numItems ?? 5)
+        return await attachNicknames(ctx, queue)
+    }
 })
 
 export const getRoomByCode = query({

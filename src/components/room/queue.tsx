@@ -8,7 +8,7 @@ import { ImageWithFallback } from "../image-with-fallback"
 import { ScrollArea } from "../ui/scroll-area"
 
 export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
-    const queue = useQuery(api.rooms.getQueue, {
+    const queue = useQuery(api.rooms.getPersonalQueue, {
         roomId,
     })
 

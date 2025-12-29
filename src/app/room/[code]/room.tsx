@@ -90,7 +90,7 @@ export default function Room({
                         )}
                     </section>
                     <section className="flex flex-col gap-2">
-                        <h2 className="text-xl font-bold">Up next</h2>
+                        <h2 className="text-xl font-bold">Your Queue</h2>
                         <Queue roomId={roomId} />
                     </section>
                     <section className="flex flex-col gap-2">
@@ -137,7 +137,10 @@ export default function Room({
                         </div>
                     </section>
 
-                    < History roomId={roomId} />
+                    <section className="flex flex-col gap-2">
+                        <h2 className="text-xl font-bold">Song History</h2>
+                        < History roomId={roomId} />
+                    </section>
                 </main>
             </div>
         </div>
