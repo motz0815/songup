@@ -9,7 +9,7 @@ DemocraTune is an open-source, privacy-friendly music queue system. Hosts can co
 ## Features
 
 - [X] **🔓 No Logins Required**
-  Host and users can use SongUp without creating an account.
+  Host and users can use DemocraTune without creating an account.
 
 - [X] **💸 Free for Everyone**
   SongUp is completely free to use.
@@ -19,7 +19,7 @@ DemocraTune is an open-source, privacy-friendly music queue system. Hosts can co
   (Works flawlessly on mobile too.)
 
 - [ ] **2️⃣ Queue Management**
-  Hosts can choose one of several queueing algorithms, to fairly selects songs from the recommendations.
+  Hosts can choose one of several queueing algorithms, to fairly select songs from the recommendations.
   
 - [X] **🎶 Never Silence**
   When creating a room, hosts can choose a fallback playlist that will play when no one has added a song to the queue, while
