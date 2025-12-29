@@ -15,6 +15,7 @@ import {
 } from "convex/react"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { History } from "@/components/room/history"
 
 export default function Room({
     roomId,
@@ -135,6 +136,8 @@ export default function Room({
                             </div>
                         </div>
                     </section>
+
+                    < History roomId={roomId} />
                 </main>
             </div>
         </div>

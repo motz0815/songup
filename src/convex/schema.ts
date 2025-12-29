@@ -43,10 +43,18 @@ export default defineSchema({
         .index("by_code", ["code"])
         .index("by_host", ["host"])
         .index("by_expires_at", ["expiresAt"]),
+
     queuedSongs: defineTable({
         room: v.id("rooms"),
         ...song,
     })
         .index("by_room_type", ["room", "type"])
         .index("by_added_by_room", ["addedBy", "room"]),
+
+    history: defineTable({
+        room: v.id("rooms"),
+        ...song,
+    })
+        .index("by_room", ["room"])
+
 })

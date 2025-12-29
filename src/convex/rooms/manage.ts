@@ -98,8 +98,16 @@ export const cleanExpiredRooms = internalMutation({
             .collect()
 
         for (const room of expiredRooms) {
+            const expiredHistory = await ctx.db
+                .query("history")
+                .withIndex("by_room", (q) => q.eq("room", room._id))
+                .collect()
+            for (const pastSong of expiredHistory) {
+                await ctx.db.delete(pastSong._id)
+            }
             await ctx.db.delete(room._id)
         }
+
     },
 })
 

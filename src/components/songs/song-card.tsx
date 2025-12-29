@@ -4,10 +4,19 @@ import { Doc } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
 import { ImageWithFallback } from "../image-with-fallback"
 
+export type SongView = {
+    id: string,
+    videoId: string,
+    title: string,
+    artist: string,
+    duration: number,
+    addedByNickname?: string,
+}
+
 export function SongCard({
     song,
 }: {
-    song: Doc<"queuedSongs"> & { addedByNickname?: string }
+    song: SongView
 }) {
     return (
         <div

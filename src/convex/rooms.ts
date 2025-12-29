@@ -199,6 +199,14 @@ export const popSong = mutation({
             throw new Error("User is not the host of the room")
         }
 
+        // Add current song to history
+        if (room.currentSong) {
+            await ctx.db.insert("history", {
+                room: args.roomId,
+                ...room.currentSong,
+            })
+        }
+
         // Check if there is a song in the queue
         const nextSong = await ctx.db
             .query("queuedSongs")
@@ -229,3 +237,31 @@ export const popSong = mutation({
         }
     },
 })
+
+export const getSongHistory = query(
+    async ({ db }, { roomId }: { roomId: Id<"rooms"> }) => {
+        const history = await db
+            .query("history")
+            .withIndex("by_room", (q) =>
+                q.eq("room", roomId),
+            )
+            .order("desc")
+            .collect()
+
+        return await Promise.all(
+            history.map(async (song) => {
+                if (!song.addedBy) {
+                    return {
+                        ...song,
+                        addedByNickname: undefined,
+                    }
+                }
+                const user = await db.get(song.addedBy as Id<"users">)
+                return {
+                    ...song,
+                    addedByNickname: user?.nickname,
+                }
+            }),
+        )
+    },
+)
