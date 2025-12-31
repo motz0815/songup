@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function ManageRoomsPage() {
     const preloadedRooms = await preloadQuery(
+        // @ts-ignore
         api.rooms.manage.listOwnRooms,
         {},
         {

@@ -3,6 +3,7 @@ import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
 import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
+import { internal } from "../_generated/api"
 
 export const createRoom = mutation({
     args: {
@@ -106,14 +107,11 @@ export const cleanExpiredRooms = internalMutation({
             .collect()
 
         for (const room of expiredRooms) {
-            const expiredHistory = await ctx.db
-                .query("history")
-                .withIndex("by_room", (q) => q.eq("room", room._id))
-                .collect()
-            for (const pastSong of expiredHistory) {
-                await ctx.db.delete(pastSong._id)
-            }
             await ctx.db.delete(room._id)
+            // @ts-ignore
+            ctx.scheduler.runAfter(0, internal.functions.deleteRoomPlaylist , {
+                roomId: room._id,
+            })
         }
 
     },

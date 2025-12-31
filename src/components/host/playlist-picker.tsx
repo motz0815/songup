@@ -81,7 +81,13 @@ export function PlaylistPicker({
     function handleSelectPlaylist(playlistId: string) {
         setOpen(false)
         setLoading(true)
-        fetch(`/flask/get-playlist?playlistId=${playlistId}`)
+        fetch(`/fastapi/get-playlist?playlistId=${playlistId}`,
+            {
+                headers: { 
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true", 
+                },
+            })
             .then((res) => res.json())
             .then((data: APIPlaylist) => {
                 onChange(data)
@@ -109,7 +115,13 @@ export function PlaylistPicker({
     }
 
     useEffect(() => {
-        fetch("/flask/get-mood-categories")
+        fetch("/fastapi/get-mood-categories",
+            {
+                headers: { 
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true", 
+                },
+            })
             .then((res) => res.json())
             .then((data: Mood[]) => {
                 setMoods(data)
@@ -119,7 +131,13 @@ export function PlaylistPicker({
     useEffect(() => {
         if (selectedMood) {
             fetch(
-                `/flask/get-mood-playlists?mood_category=${selectedMood.params}`,
+                `/fastapi/get-mood-playlists?mood_category=${selectedMood.params}`,
+            {
+                headers: { 
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true", 
+                },
+            }
             )
                 .then((res) => res.json())
                 .then((data: MoodPlaylist[]) => {

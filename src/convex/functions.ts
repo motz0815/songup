@@ -2,14 +2,20 @@
 import {
     internalMutation as rawInternalMutation,
     mutation as rawMutation,
+    internalAction,
 } from "./_generated/server"
 /* eslint-enable no-restricted-imports */
+import { v } from "convex/values"
 import {
     customCtx,
     customMutation,
 } from "convex-helpers/server/customFunctions"
 import { Triggers } from "convex-helpers/server/triggers"
 import { DataModel } from "./_generated/dataModel"
+
+type AddSongData = { videoId: string, playlistId: string };
+
+const baseUrl = process.env.FASTAPI_BASE_URL
 
 // start using Triggers, with table types from schema.ts
 const triggers = new Triggers<DataModel>()
@@ -22,6 +28,12 @@ triggers.register("rooms", async (ctx, change) => {
             .withIndex("by_room_type", (q) => q.eq("room", change.id))) {
             await ctx.db.delete(song._id)
         }
+        for await (const song of ctx.db
+            .query("history")
+            .withIndex("by_room", (q) => q.eq("room", change.id))
+        ) {
+            await ctx.db.delete(song._id)
+        }
     }
 })
 
@@ -32,3 +44,63 @@ export const internalMutation = customMutation(
     rawInternalMutation,
     customCtx(triggers.wrapDB),
 )
+
+export const addSongToPlaylist = internalAction({
+    args : {
+        roomId: v.id("rooms"),
+        videoId: v.optional(v.string()),
+        playlistId: v.optional(v.string()),
+    },
+    handler: async (_, args) => {
+        // add to history playlist
+        if (!args.videoId || !args.playlistId) return
+        const payload: AddSongData = { videoId: args.videoId, playlistId: args.playlistId };
+        const res = await fetch(`${baseUrl}/rooms/${args.roomId}/playlist`, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true",  
+            },
+            body: JSON.stringify(payload)
+        })
+
+        const text = await res.text()
+
+        console.log("STATUS", res.status)
+        res.headers.forEach((value, key) => {
+            console.log(key, value)
+        })
+        console.log("BODY", text.slice(0, 300))
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.detail || "Failed to add song");
+        } else {
+            console.log(`Successfully added song to playlist ${args.playlistId}`)
+        }
+    }
+})
+
+export const deleteRoomPlaylist = internalAction({
+    args : {
+        roomId: v.id("rooms"),
+        playlistId: v.optional(v.string())
+    },
+    handler: async (_, args) => {
+        if (!args.playlistId) return
+        const payload = { playlistId: args.playlistId }
+        const res = await fetch(`${baseUrl}/rooms/${args.roomId.toString()}/playlist`, {
+            method: "DELETE",
+            headers: { 
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true",  
+            },
+            body: JSON.stringify(payload)
+        })
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.detail || "Failed to delete playlist");
+        }
+    }
+})

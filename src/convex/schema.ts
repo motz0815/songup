@@ -37,6 +37,7 @@ export default defineSchema({
         code: v.string(),
         expiresAt: v.number(),
         currentSong: v.optional(v.object(song)),
+        playlistId: v.optional(v.string()), 
         settings: v.object({
             maxSongsPerUser: v.number(),
             scheduler: v.optional(v.union(
@@ -65,6 +66,7 @@ export default defineSchema({
         dislikes: v.optional(v.number()),
         ...song,
     })
-        .index("by_room", ["room"])
+        .index("by_room", ["room"]),
+        
 
 })

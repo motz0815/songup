@@ -26,24 +26,53 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
 
     const router = useRouter()
 
+    // @ts-ignore 
     const createRoom = useAuthedMutation(api.rooms.manage.createRoom)
+    // @ts-ignore 
+    const setRoomPlaylist = useAuthedMutation(api.rooms.setRoomPlaylist)
 
     async function handleCreateRoom(formData: FormData) {
-        await createRoom({
-            maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
-            fallbackSongs: playlist
-                ? playlist.tracks.map((track) => ({
-                      videoId: track.videoId,
-                      title: track.title,
-                      artist: track.artists[0].name,
-                      duration: track.duration_seconds,
-                  }))
-                : undefined,
-        }).then((data) => {
+        setLoading(true)
+        try {
+            const roomData = await createRoom({
+                maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
+                fallbackSongs: playlist
+                    ? playlist.tracks.map((track) => ({
+                        videoId: track.videoId,
+                        title: track.title,
+                        artist: track.artists[0].name,
+                        duration: track.duration_seconds,
+                    }))
+                    : undefined,
+            })
+
+            const res = await fetch (
+                `/fastapi/rooms/${roomData.roomId}/playlist`, 
+                {
+                    method: "PUT",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "true", 
+                    },
+                    body: JSON.stringify({ }),
+                }
+            )
+        
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "Failed to create playlist");
+            } else {
+                const { playlistId } = await res.json()
+                await setRoomPlaylist({
+                    playlistId: playlistId,
+                    roomId: roomData.roomId,
+                })
+            }
+
             toast.success("Room created")
             posthog.capture("room_created", {
-                id: data.roomId,
-                code: data.code,
+                id: roomData.roomId,
+                code: roomData.code,
                 maxSongsPerUser: formData.get("maxSongsPerUser"),
                 fallbackPlaylist: playlist && {
                     id: playlist.id,
@@ -53,8 +82,14 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                     trackCount: playlist.trackCount,
                 },
             })
-            router.push(`/host/${data.code}`)
-        })
+                
+            router.push(`/host/${roomData.code}`)
+        } catch (err: any) {
+            toast.error(err.message || "Failed to create room")
+            console.error(err)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (

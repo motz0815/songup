@@ -1,9 +1,11 @@
 import { getAuthUserId } from "@convex-dev/auth/server"
 import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
-import { query } from "./_generated/server"
+import { query, MutationCtx } from "./_generated/server"
 import { mutation } from "./functions"
 import { attachNicknames, getNextSong, getQueueFCFS, getQueueRoundRobin, getQueueWeighted } from "./scheduling"
+import { internal } from "./_generated/api";
+
 
 /**
  * This query returns the queue of songs for a room.
@@ -199,7 +201,7 @@ export const popSong = mutation({
     args: {
         roomId: v.id("rooms"),
     },
-    handler: async (ctx, args) => {
+    handler: async (ctx: MutationCtx, args) => {
         const room = await ctx.db.get(args.roomId)
         if (!room) {
             throw new Error("Room not found")
@@ -214,11 +216,13 @@ export const popSong = mutation({
             throw new Error("User is not the host of the room")
         }
 
+        const oldSong = room.currentSong
+
         // Add current song to history
-        if (room.currentSong) {
+        if (oldSong) {
             await ctx.db.insert("history", {
                 room: args.roomId,
-                ...room.currentSong,
+                ...oldSong,
             })
         }
 
@@ -247,6 +251,13 @@ export const popSong = mutation({
                 currentSong: undefined,
             })
         }
+        console.log(`About to add song to playlist ${room.playlistId}`)
+        // @ts-ignore
+        await ctx.scheduler.runAfter(0, internal.functions.addSongToPlaylist, {
+            roomId: args.roomId,
+            videoId: oldSong?.videoId,
+            playlistId: room.playlistId
+        })
     },
 })
 
@@ -277,3 +288,22 @@ export const getSongHistory = query(
         )
     },
 )
+
+export const setRoomPlaylist = mutation({
+  args: {
+    roomId: v.id("rooms"),
+    playlistId: v.string(),
+  },
+  handler: async ({ db }, { roomId, playlistId }) => {
+    await db.patch(roomId, { playlistId })
+  },
+})
+
+export const getRoomById = query({
+    args: { roomId: v.id("rooms") },
+    handler: async ({ db }, { roomId }) => {
+        const room = await db.get(roomId)
+        return room
+    },
+})
+

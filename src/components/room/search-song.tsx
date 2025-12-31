@@ -32,7 +32,13 @@ export function SearchSong({
             console.log("Query", query)
             setError(null)
             const results: [] = await fetch(
-                `/flask/search?query=${encodeURIComponent(query)}`,
+                `/fastapi/search?query=${encodeURIComponent(query)}`,
+            {
+                headers: { 
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true", 
+                },
+            }
             ).then((res) => res.json())
             console.log("Results", results)
             setResults(results)

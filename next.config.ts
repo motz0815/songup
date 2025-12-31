@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
     rewrites: async () => {
         return [
             {
-                source: "/flask/:path*",
+                source: "/fastapi/:path*",
                 destination:
                     process.env.NODE_ENV === "development"
-                        ? "http://127.0.0.1:5328/flask/:path*"
-                        : "/api/flask/index",
+                        ? `${process.env.NEXT_PUBLIC_FASTAPI_URL ?? "http://127.0.0.1:5328"}/:path*`
+                        : "/api/fast_api/index", // TODO: change
             },
             {
                 source: "/relay-iljT/static/:path*",
