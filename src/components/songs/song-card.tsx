@@ -1,6 +1,5 @@
 "use client"
 
-import { Doc } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
 import { ImageWithFallback } from "../image-with-fallback"
 
