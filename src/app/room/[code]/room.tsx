@@ -4,6 +4,7 @@ import { NicknameForm } from "@/components/auth/nickname-form"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { AddSong } from "@/components/room/add-song"
 import { Queue } from "@/components/room/queue"
+import { NowPlaying } from "@/components/room/current-song"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
@@ -60,34 +61,7 @@ export default function Room({
                 <main className="flex flex-col gap-4">
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Now Playing</h2>
-                        {currentSong ? (
-                            <div
-                                className={cn(
-                                    "flex items-center space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all",
-                                )}
-                            >
-                                <ImageWithFallback
-                                    src={`https://i.ytimg.com/vi_webp/${currentSong.videoId}/mqdefault.webp`}
-                                    width={128}
-                                    height={128}
-                                    alt={`${currentSong.title}`}
-                                    className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
-                                    unoptimized
-                                />
-                                <div>
-                                    <h4 className="text-lg font-semibold text-shadow-md md:text-xl">
-                                        {currentSong.title}
-                                    </h4>
-                                    <p className="text-sm text-gray-100 text-shadow-sm md:text-lg">
-                                        {currentSong.artist}
-                                    </p>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
-                                <p className="text-center">No song playing.</p>
-                            </div>
-                        )}
+                        <NowPlaying currentSong={currentSong ?? null} />
                     </section>
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Your Queue</h2>

@@ -12,7 +12,7 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
         roomId,
     })
 
-    const [animationParent] = useAutoAnimate()
+    const [animationParent] = useAutoAnimate<HTMLUListElement>()
 
     return (
         <ScrollArea className="h-full max-h-[40vh] grow overflow-y-auto rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg">
