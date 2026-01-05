@@ -89,7 +89,7 @@ async def get_playlist(playlist_id: str):
     return await asyncio.to_thread(lambda: ytAnon.get_playlist(playlist_id))
 
 async def create_playlist(title: str, description: str):
-    return await asyncio.to_thread(lambda: yt.create_playlist(title, description))
+    return await asyncio.to_thread(lambda: yt.create_playlist(title, description, privacy_status="UNLISTED"))
 
 async def delete_playlist(playlist_id: str):
     return await asyncio.to_thread(lambda: yt.delete_playlist(playlist_id))

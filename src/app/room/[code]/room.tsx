@@ -139,7 +139,7 @@ export default function Room({
 
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Song History</h2>
-                        < History roomId={roomId} />
+                        < History roomId={roomId} playlistId={room?.playlistId}/>
                     </section>
                 </main>
             </div>

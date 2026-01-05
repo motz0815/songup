@@ -7,7 +7,7 @@ import { ScrollArea } from "../ui/scroll-area"
 import { SongCard } from "../songs/song-card"
 import type { SongView } from "../songs/song-card"
 
-export function History({ roomId }: { roomId: Id<"rooms"> }) {
+export function History({ roomId, playlistId }: { roomId: Id<"rooms">, playlistId: string | undefined }) {
     const history = useQuery(api.rooms.getSongHistory, { roomId }) ?? []
 
     const historySongs: SongView[] = history.map(song => ({
@@ -34,6 +34,32 @@ export function History({ roomId }: { roomId: Id<"rooms"> }) {
                     </p>
                 )}
             </ul>
+
+            {historySongs.length > 0 && playlistId && (
+            <div className="flex justify-center mt-3">
+                <a
+                href={`https://music.youtube.com/playlist?list=${playlistId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open playlist in YouTube Music"
+                className="
+                    inline-flex items-center gap-2
+                    rounded-lg bg-[#FF0033] px-4 py-2
+                    font-medium text-white
+                    hover:bg-[#E6002E]
+                    transition
+                    shadow-md
+                "
+                >
+                <img
+                    src="/ytmusic.svg"
+                    alt=""
+                    className="h-6 w-6 flex-shrink-0"
+                />
+                <span className="text-sm md:text-base">Open in YouTube Music</span>
+                </a>
+            </div>
+            )}
         </ScrollArea>
     )
 }
