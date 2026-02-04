@@ -17,6 +17,7 @@ export default function Host({
     preloadedRoom,
 }: {
     roomId: Id<"rooms">
+    // @ts-ignore
     preloadedRoom: Preloaded<typeof api.rooms.getRoomByCode>
 }) {
     /*
@@ -150,7 +151,7 @@ export default function Host({
                             )}
                             <div className="flex h-full w-full flex-col items-center justify-center gap-2">
                                 <h2 className="text-6xl font-bold">
-                                    songup.tv
+                                    democratune.timkolesnichenko.me
                                 </h2>
                                 <p className="text-4xl">
                                     Enter code{" "}
@@ -191,7 +192,7 @@ export default function Host({
                         <RoomQRCode roomCode={room?.code ?? ""} />
                         <p className="text-center text-lg text-white/80 text-shadow-sm">
                             ...or visit{" "}
-                            <span className="font-bold">songup.tv</span> and
+                            <span className="font-bold">democratune.timkolesnichenko.me</span> and
                             enter code{" "}
                             <span className="font-bold">{room?.code}</span>
                         </p>
@@ -200,7 +201,7 @@ export default function Host({
                 <footer className="flex w-full items-center justify-between px-1">
                     <Link href="/host">
                         <h2 className="text-3xl font-bold text-white/80">
-                            SongUp
+                            DemocraTune
                             <span className="text-sm text-white/80">.tv</span>
                         </h2>
                     </Link>

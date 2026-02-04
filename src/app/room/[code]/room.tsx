@@ -51,7 +51,7 @@ export default function Room({
                     <Link href="/">
                         <div className="flex items-center gap-2">
                             <ArrowLeft className="size-6" />
-                            <h1 className="text-xl font-bold">SongUp</h1>
+                            <h1 className="text-xl font-bold">DemocraTune</h1>
                         </div>
                     </Link>
                     <h2 className="text-xl">
