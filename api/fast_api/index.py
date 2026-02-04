@@ -38,6 +38,8 @@ else:
     frontendUrl = "http://localhost:3000"
 
 origins = [
+    "https://democratune.timkolesnichenko.me",  # prod
+    "http://localhost:3000",                     # local dev
     frontendUrl,
 ]
 
