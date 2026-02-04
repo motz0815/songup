@@ -1,13 +1,16 @@
 {
-  "functions": {
-    "api/index.py": {
-      "runtime": "python3.11"
-    }
-  },
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/index"
+      "src": "src/package.json",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.11"
+      }
     }
   ]
 }
