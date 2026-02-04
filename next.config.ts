@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
     rewrites: async () => {
         return [
             {
-                source: "/fastapi/:path*",
+                source: "/api/:path*",
                 destination:
                     process.env.NODE_ENV === "development"
                         ? `${process.env.NEXT_PUBLIC_FASTAPI_URL ?? "http://127.0.0.1:5328"}/:path*`

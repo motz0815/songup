@@ -32,7 +32,7 @@ export function SearchSong({
             console.log("Query", query)
             setError(null)
             const results: [] = await fetch(
-                `/fastapi/search?query=${encodeURIComponent(query)}`,
+                `/api/search?query=${encodeURIComponent(query)}`,
             {
                 headers: { 
                     "Content-Type": "application/json",

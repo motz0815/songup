@@ -55,7 +55,7 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
             })
 
             const res = await fetch (
-                `/fastapi/rooms/${roomData.roomId}/playlist`, 
+                `/api/rooms/${roomData.roomId}/playlist`, 
                 {
                     method: "PUT",
                     headers: { 

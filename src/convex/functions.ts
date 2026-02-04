@@ -7,7 +7,6 @@ import {
 /* eslint-enable no-restricted-imports */
 import { v } from "convex/values"
 import {
-    customAction,
     customCtx,
     customMutation,
 } from "convex-helpers/server/customFunctions"
@@ -16,8 +15,6 @@ import { DataModel } from "./_generated/dataModel"
 import { internal } from "./_generated/api"
 
 type AddSongData = { videoId: string, playlistId: string };
-
-const baseUrl = process.env.FASTAPI_BASE_URL
 
 // start using Triggers, with table types from schema.ts
 const triggers = new Triggers<DataModel>()
@@ -67,7 +64,7 @@ export const addSongToPlaylist = internalAction({
         // add to history playlist
         if (!args.videoId || !args.playlistId) return
         const payload: AddSongData = { videoId: args.videoId, playlistId: args.playlistId };
-        const res = await fetch(`${baseUrl}/rooms/${args.roomId}/playlist`, {
+        const res = await fetch(`/api/rooms/${args.roomId}/playlist`, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
@@ -93,7 +90,7 @@ export const deleteRoomPlaylist = internalAction({
     handler: async (_, args) => {
         if (!args.playlistId) return
         const payload = { playlistId: args.playlistId }
-        const res = await fetch(`${baseUrl}/rooms/${args.roomId.toString()}/playlist`, {
+        const res = await fetch(`/api/rooms/${args.roomId.toString()}/playlist`, {
             method: "DELETE",
             headers: { 
                 "Content-Type": "application/json",

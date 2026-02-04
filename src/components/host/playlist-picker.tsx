@@ -81,7 +81,7 @@ export function PlaylistPicker({
     function handleSelectPlaylist(playlistId: string) {
         setOpen(false)
         setLoading(true)
-        fetch(`/fastapi/get-playlist?playlistId=${playlistId}`,
+        fetch(`/api/get-playlist?playlistId=${playlistId}`,
             {
                 headers: { 
                     "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export function PlaylistPicker({
     }
 
     useEffect(() => {
-        fetch("/fastapi/get-mood-categories",
+        fetch("/api/get-mood-categories",
             {
                 headers: { 
                     "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export function PlaylistPicker({
     useEffect(() => {
         if (selectedMood) {
             fetch(
-                `/fastapi/get-mood-playlists?mood_category=${selectedMood.params}`,
+                `/api/get-mood-playlists?mood_category=${selectedMood.params}`,
             {
                 headers: { 
                     "Content-Type": "application/json",
