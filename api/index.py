@@ -161,3 +161,8 @@ async def add_song(room_id: str, data: AddSongData):
 
     await add_playlist_items(data.playlistId, [data.videoId])
     return {"status": "added"}
+
+if __name__ == "__main__":
+    import uvicorn
+    port = os.environ.get("PORT") or 4000 
+    uvicorn.run(app, host="0.0.0.0", port=port)
