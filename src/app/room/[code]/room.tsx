@@ -7,7 +7,6 @@ import { Queue } from "@/components/room/queue"
 import { NowPlaying } from "@/components/room/current-song"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import { cn } from "@/lib/utils"
 import {
     Preloaded,
     useConvexAuth,
@@ -23,6 +22,7 @@ export default function Room({
     preloadedRoom,
 }: {
     roomId: Id<"rooms">
+    // @ts-ignore
     preloadedRoom: Preloaded<typeof api.rooms.getRoomByCode>
 }) {
     /*

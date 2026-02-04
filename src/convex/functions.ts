@@ -7,11 +7,13 @@ import {
 /* eslint-enable no-restricted-imports */
 import { v } from "convex/values"
 import {
+    customAction,
     customCtx,
     customMutation,
 } from "convex-helpers/server/customFunctions"
 import { Triggers } from "convex-helpers/server/triggers"
 import { DataModel } from "./_generated/dataModel"
+import { internal } from "./_generated/api"
 
 type AddSongData = { videoId: string, playlistId: string };
 
@@ -22,10 +24,20 @@ const triggers = new Triggers<DataModel>()
 
 // Cascade delete all songs in a room when the room is deleted
 triggers.register("rooms", async (ctx, change) => {
+    console.log("Rooms changed", change)
     if (change.operation === "delete") {
+        console.log("Deleting leftovers from room")
+        if (change.oldDoc.playlistId) {
+            // @ts-ignore 
+            ctx.scheduler.runAfter(0, internal.functions.deleteRoomPlaylist, {
+                roomId: change.oldDoc._id,
+                playlistId: change.oldDoc.playlistId,
+            })
+        }
         for await (const song of ctx.db
             .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", change.id))) {
+            .withIndex("by_room_type", (q) => q.eq("room", change.id))
+        ) {
             await ctx.db.delete(song._id)
         }
         for await (const song of ctx.db
@@ -63,14 +75,6 @@ export const addSongToPlaylist = internalAction({
             },
             body: JSON.stringify(payload)
         })
-
-        const text = await res.text()
-
-        console.log("STATUS", res.status)
-        res.headers.forEach((value, key) => {
-            console.log(key, value)
-        })
-        console.log("BODY", text.slice(0, 300))
 
         if (!res.ok) {
             const errorData = await res.json();

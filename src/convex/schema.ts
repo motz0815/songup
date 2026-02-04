@@ -40,11 +40,12 @@ export default defineSchema({
         playlistId: v.optional(v.string()), 
         settings: v.object({
             maxSongsPerUser: v.number(),
-            scheduler: v.optional(v.union(
+            scheduler: v.union(
                 v.literal("FCFS"),
                 v.literal("roundRobin"),
                 v.literal("weighted")
-            )),
+            ),
+            numSongsToForget: v.number(),
         }),
     })
         .index("by_code", ["code"])

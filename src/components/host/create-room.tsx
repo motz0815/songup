@@ -20,8 +20,14 @@ import { Label } from "../ui/label"
 import { SubmitButton } from "../ui/submit-button"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
 
+type SchedulerOption = "FCFS" | "roundRobin" | "weighted"
+
 export function CreateRoom({ children }: { children?: React.ReactNode }) {
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
+    const [scheduler, setScheduler] = useState<SchedulerOption>("FCFS")
+    const [maxSongs, setMaxSongs] = useState(2)
+    const [ratingsForget, setRatingsForget] = useState(false)
+    const [ratingsForgetCount, setRatingsForgetCount] = useState(5)
     const [loading, setLoading] = useState(false)
 
     const router = useRouter()
@@ -35,7 +41,9 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
         setLoading(true)
         try {
             const roomData = await createRoom({
-                maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
+                maxSongsPerUser: maxSongs,
+                scheduler: scheduler,
+                numSongsToForget: (ratingsForget) ? ratingsForgetCount : -1,
                 fallbackSongs: playlist
                     ? playlist.tracks.map((track) => ({
                         videoId: track.videoId,
@@ -95,45 +103,84 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                {children || (
-                    <Button>
-                        <PlusIcon className="size-4" /> Create Room
-                    </Button>
-                )}
+                <Button>Create Room</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Create Room</DialogTitle>
+                <DialogTitle>Create Room</DialogTitle>
                 </DialogHeader>
+
                 <form
                     action={handleCreateRoom}
                     className="flex w-full flex-col gap-4"
                 >
+                {/* Scheduler select */}
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="scheduler">Scheduler</Label>
+                    <select
+                    id="scheduler"
+                    className="rounded border px-2 py-1"
+                    value={scheduler}
+                    onChange={e => setScheduler(e.target.value as SchedulerOption)}
+                    >
+                    <option value="FCFS">FCFS</option>
+                    <option value="roundRobin">Round Robin</option>
+                    <option value="weighted">DemocraTune</option>
+                    </select>
+                </div>
+
+                {/* Max songs / personal queue size */}
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="maxSongs">
+                    {scheduler === "FCFS" ? "Max songs per user" : "Max size of personal queue"}
+                    </Label>
+                    <Input
+                    id="maxSongs"
+                    type="number"
+                    min={1}
+                    value={maxSongs}
+                    onChange={e => setMaxSongs(Number(e.target.value))}
+                    />
+                </div>
+
+                {/* Additional DemocraTune options */}
+                {scheduler === "weighted" && (
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="maxSongsPerUser">
-                            Max songs per user
-                        </Label>
+                    <Label htmlFor="ratingsForget">Can ratings be forgotten?</Label>
+                    <input
+                        type="checkbox"
+                        id="ratingsForget"
+                        checked={ratingsForget}
+                        onChange={e => setRatingsForget(e.target.checked)}
+                    />
+
+                    {ratingsForget && (
+                        <div className="flex flex-col gap-2">
+                        <Label htmlFor="ratingsForgetCount">Number of songs after which ratings are forgotten</Label>
                         <Input
-                            id="maxSongsPerUser"
-                            name="maxSongsPerUser"
-                            defaultValue="2"
-                            min="1"
-                            required
+                            id="ratingsForgetCount"
                             type="number"
+                            min={1}
+                            value={ratingsForgetCount}
+                            onChange={e => setRatingsForgetCount(Number(e.target.value))}
                         />
+                        </div>
+                    )}
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <Label htmlFor="fallbackPlaylist">
-                            Select a fallback playlist
-                        </Label>
-                        <PlaylistPicker
-                            id="fallbackPlaylist"
-                            value={playlist}
-                            onLoadingChange={setLoading}
-                            onChange={setPlaylist}
-                        />
-                    </div>
-                    <SubmitButton disabled={loading}>Create Room</SubmitButton>
+                )}
+
+                {/* Fallback playlist picker */}
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="fallbackPlaylist">Fallback playlist</Label>
+                    <PlaylistPicker
+                    id="fallbackPlaylist"
+                    value={playlist}
+                    onChange={setPlaylist}
+                    onLoadingChange={() => {}}
+                    />
+                </div>
+
+                <SubmitButton disabled={loading}>Create Room</SubmitButton>
                 </form>
             </DialogContent>
         </Dialog>

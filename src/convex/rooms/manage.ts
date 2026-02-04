@@ -3,18 +3,16 @@ import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
 import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
-import { internal } from "../_generated/api"
 
 export const createRoom = mutation({
     args: {
         maxSongsPerUser: v.number(),
-        scheduler: v.optional(
-            v.union(
-                v.literal("FCFS"),
-                v.literal("roundRobin"),
-                v.literal("weighted")
-            )
+        scheduler: v.union(
+            v.literal("FCFS"),
+            v.literal("roundRobin"),
+            v.literal("weighted")
         ),
+        numSongsToForget: v.number(),
         fallbackSongs: v.optional(
             v.array(
                 v.object({
@@ -50,6 +48,7 @@ export const createRoom = mutation({
             settings: {
                 maxSongsPerUser: args.maxSongsPerUser,
                 scheduler: args.scheduler,
+                numSongsToForget: args.numSongsToForget,
             },
         })
 
@@ -108,10 +107,6 @@ export const cleanExpiredRooms = internalMutation({
 
         for (const room of expiredRooms) {
             await ctx.db.delete(room._id)
-            // @ts-ignore
-            ctx.scheduler.runAfter(0, internal.functions.deleteRoomPlaylist , {
-                roomId: room._id,
-            })
         }
 
     },

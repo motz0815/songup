@@ -1,0 +1,5 @@
+ngrok http 5328
+
+bunx convex dev
+
+bun run dev

@@ -9,6 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react"
 import type { SongView } from "../songs/song-card"
 
 export function History({ roomId, playlistId }: { roomId: Id<"rooms">, playlistId: string | undefined }) {
+    // @ts-ignore
     const history = useQuery(api.rooms.getSongHistory, { roomId }) ?? []
 
     const historySongs: SongView[] = history.map(song => ({
