@@ -1,10 +1,11 @@
+import Google from "@auth/core/providers/google"
 import { Anonymous } from "@convex-dev/auth/providers/Anonymous"
 import { convexAuth, getAuthUserId } from "@convex-dev/auth/server"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
-    providers: [Anonymous],
+    providers: [Anonymous, Google],
 })
 
 export const getCurrentUser = query({
