@@ -47,10 +47,10 @@ export const getOrCreateCustomer = action({
     }),
     handler: async (ctx) => {
         const identity = await ctx.auth.getUserIdentity()
-        if (!identity) throw new Error("Not authenticated")
+        if (!identity || !identity.userId) throw new Error("Not authenticated")
 
         return await stripeClient.getOrCreateCustomer(ctx, {
-            userId: identity.subject,
+            userId: identity.userId.toString(),
             email: identity.email,
             name: identity.name,
         })
@@ -76,11 +76,11 @@ export const createSubscriptionCheckout = action({
     }),
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity()
-        if (!identity) throw new Error("Not authenticated")
+        if (!identity || !identity.userId) throw new Error("Not authenticated")
 
         // Get or create customer using the component
         const customerResult = await stripeClient.getOrCreateCustomer(ctx, {
-            userId: identity.subject,
+            userId: identity.userId.toString(),
             email: identity.email,
             name: identity.name,
         })
@@ -94,11 +94,11 @@ export const createSubscriptionCheckout = action({
             successUrl: getURL("/host/?success=true"),
             cancelUrl: getURL("/host/?canceled=true"),
             metadata: {
-                userId: identity.subject,
+                userId: identity.userId.toString(),
                 // productType: "hat_subscription",
             },
             subscriptionMetadata: {
-                userId: identity.subject,
+                userId: identity.userId.toString(),
             },
         })
     },
@@ -117,11 +117,11 @@ export const createPaymentCheckout = action({
     }),
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity()
-        if (!identity) throw new Error("Not authenticated")
+        if (!identity || !identity.userId) throw new Error("Not authenticated")
 
         // Get or create customer using the component
         const customerResult = await stripeClient.getOrCreateCustomer(ctx, {
-            userId: identity.subject,
+            userId: identity.userId.toString(),
             email: identity.email,
             name: identity.name,
         })

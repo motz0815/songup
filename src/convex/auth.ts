@@ -6,6 +6,12 @@ import { query } from "./_generated/server"
 
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     providers: [Anonymous, Google],
+    jwt: {
+        customClaims: async (ctx, { userId }) => {
+            const user = await ctx.db.get("users", userId)
+            return { userId, email: user?.email, name: user.name }
+        },
+    },
 })
 
 export const getCurrentUser = query({
