@@ -1,5 +1,6 @@
 "use client"
 
+import { UserButton } from "@/components/auth/user-button"
 import { CreateRoom } from "@/components/host/create-room"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Button } from "@/components/ui/button"
@@ -11,7 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { api } from "@/convex/_generated/api"
-import { Preloaded, usePreloadedQuery } from "convex/react"
+import { Preloaded, usePreloadedQuery, useQuery } from "convex/react"
 import { formatDistance } from "date-fns"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
@@ -23,6 +24,8 @@ export default function ManageRooms({
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
 
+    const user = useQuery(api.auth.getCurrentUser)
+
     return (
         <div className="flex min-h-screen flex-col">
             <header className="h-20 border-b">
@@ -30,10 +33,11 @@ export default function ManageRooms({
                     <Link href="/">
                         <h1 className="text-4xl font-bold">Your Rooms</h1>
                     </Link>
-                    <CreateRoom />
+                    <UserButton />
                 </div>
             </header>
             <main className="flex w-full flex-col gap-4">
+                {JSON.stringify(user)}
                 <div className="flex w-full flex-wrap gap-4 p-4">
                     {rooms && rooms.length > 0 ? (
                         <>

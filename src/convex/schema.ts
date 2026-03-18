@@ -30,7 +30,7 @@ export default defineSchema({
 
         // Custom fields
         nickname: v.optional(v.string()),
-    }).index("by_email", ["email"]),
+    }).index("email", ["email"]),
     rooms: defineTable({
         host: v.id("users"),
         code: v.string(),

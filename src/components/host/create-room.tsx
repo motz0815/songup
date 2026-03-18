@@ -98,7 +98,9 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                             onChange={setPlaylist}
                         />
                     </div>
-                    <SubmitButton disabled={loading}>Create Room</SubmitButton>
+                    <SubmitButton size="lg" disabled={loading}>
+                        Create Room
+                    </SubmitButton>
                 </form>
             </DialogContent>
         </Dialog>

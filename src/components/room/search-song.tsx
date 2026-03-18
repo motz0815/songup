@@ -121,7 +121,7 @@ export function SearchSong({
                                 name="duration"
                                 value={song.duration_seconds}
                             />
-                            <SubmitButton size="sm">
+                            <SubmitButton size="icon">
                                 <PlusCircleIcon className="size-4" />
                             </SubmitButton>
                         </form>
