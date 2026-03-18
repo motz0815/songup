@@ -1,5 +1,6 @@
 import { StripeSubscriptions } from "@convex-dev/stripe"
 import { v } from "convex/values"
+import StripeSDK from "stripe"
 import { components } from "./_generated/api"
 import { action, query } from "./_generated/server"
 
@@ -94,7 +95,7 @@ export const createSubscriptionCheckout = action({
             cancelUrl: getURL("/host/?canceled=true"),
             metadata: {
                 userId: identity.subject,
-                productType: "hat_subscription",
+                // productType: "hat_subscription",
             },
             subscriptionMetadata: {
                 userId: identity.subject,
@@ -125,21 +126,52 @@ export const createPaymentCheckout = action({
             name: identity.name,
         })
 
-        // Create checkout session with payment intent metadata for linking
-        return await stripeClient.createCheckoutSession(ctx, {
-            priceId: args.priceId,
-            customerId: customerResult.customerId,
+        const stripe = new StripeSDK(process.env.STRIPE_SECRET_KEY!)
+        const session = await stripe.checkout.sessions.create({
+            customer: customerResult.customerId,
             mode: "payment",
-            successUrl: getURL("/host/?success=true"),
-            cancelUrl: getURL("/host/?canceled=true"),
+            line_items: [
+                {
+                    price: args.priceId,
+                    quantity: 1,
+                },
+            ],
+            success_url: getURL("/host/?success=true"),
+            cancel_url: getURL("/host/?canceled=true"),
+            managed_payments: {
+                enabled: true,
+            },
             metadata: {
                 userId: identity.subject,
-                productType: "hat",
             },
-            paymentIntentMetadata: {
-                userId: identity.subject,
+            payment_intent_data: {
+                metadata: {
+                    userId: identity.subject,
+                },
             },
         })
+
+        return {
+            sessionId: session.id,
+            url: session.url,
+        }
+
+        // Create checkout session with payment intent metadata for linking (original)
+        // This method is disabled because the Convex stripe component doesn't support managed payments yet
+        // return await stripeClient.createCheckoutSession(ctx, {
+        //     priceId: args.priceId,
+        //     customerId: customerResult.customerId,
+        //     mode: "payment",
+        //     successUrl: getURL("/host/?success=true"),
+        //     cancelUrl: getURL("/host/?canceled=true"),
+        //     metadata: {
+        //         userId: identity.subject,
+        //         productType: "hat",
+        //     },
+        //     paymentIntentMetadata: {
+        //         userId: identity.subject,
+        //     },
+        // })
     },
 })
 
