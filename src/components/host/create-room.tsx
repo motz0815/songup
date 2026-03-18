@@ -20,7 +20,7 @@ import { Label } from "../ui/label"
 import { SubmitButton } from "../ui/submit-button"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
 
-export function CreateRoom({ children }: { children?: React.ReactNode }) {
+export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
     const [loading, setLoading] = useState(false)
 

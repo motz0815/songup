@@ -1,7 +1,7 @@
 "use client"
 
 import { UserButton } from "@/components/auth/user-button"
-import { CreateRoom } from "@/components/host/create-room"
+import { CreateRoomForm } from "@/components/host/create-room"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,7 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { api } from "@/convex/_generated/api"
-import { Preloaded, usePreloadedQuery, useQuery } from "convex/react"
+import { Preloaded, usePreloadedQuery } from "convex/react"
 import { formatDistance } from "date-fns"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
@@ -23,8 +23,6 @@ export default function ManageRooms({
     preloadedRooms: Preloaded<typeof api.rooms.manage.listOwnRooms>
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
-
-    const user = useQuery(api.auth.getCurrentUser)
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -37,7 +35,6 @@ export default function ManageRooms({
                 </div>
             </header>
             <main className="flex w-full flex-col gap-4">
-                {JSON.stringify(user)}
                 <div className="flex w-full flex-wrap gap-4 p-4">
                     {rooms && rooms.length > 0 ? (
                         <>
@@ -140,24 +137,24 @@ export default function ManageRooms({
                             ))}
                             <Card className="w-full max-w-md border-2 border-dashed shadow-none">
                                 <CardContent className="flex h-full items-center justify-center">
-                                    <CreateRoom>
+                                    <CreateRoomForm>
                                         <Button variant="outline">
                                             <PlusIcon className="size-4" />
                                             Create another room
                                         </Button>
-                                    </CreateRoom>
+                                    </CreateRoomForm>
                                 </CardContent>
                             </Card>
                         </>
                     ) : (
                         <Card className="w-full max-w-md border-2 border-dashed shadow-none">
                             <CardContent className="flex h-full items-center justify-center">
-                                <CreateRoom>
+                                <CreateRoomForm>
                                     <Button variant="outline">
                                         <PlusIcon className="size-4" />
                                         Create a room
                                     </Button>
-                                </CreateRoom>
+                                </CreateRoomForm>
                             </CardContent>
                         </Card>
                     )}
