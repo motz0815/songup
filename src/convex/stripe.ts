@@ -142,11 +142,11 @@ export const createPaymentCheckout = action({
                 enabled: true,
             },
             metadata: {
-                userId: identity.subject,
+                userId: identity.userId.toString(),
             },
             payment_intent_data: {
                 metadata: {
-                    userId: identity.subject,
+                    userId: identity.userId.toString(),
                 },
             },
         })
@@ -165,11 +165,11 @@ export const createPaymentCheckout = action({
         //     successUrl: getURL("/host/?success=true"),
         //     cancelUrl: getURL("/host/?canceled=true"),
         //     metadata: {
-        //         userId: identity.subject,
+        //         userId: identity.userId.toString(),
         //         productType: "hat",
         //     },
         //     paymentIntentMetadata: {
-        //         userId: identity.subject,
+        //         userId: identity.userId.toString(),
         //     },
         // })
     },
@@ -223,7 +223,7 @@ export const cancelSubscription = action({
     returns: v.null(),
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity()
-        if (!identity) throw new Error("Not authenticated")
+        if (!identity || !identity.userId) throw new Error("Not authenticated")
 
         // Verify ownership by checking the subscription's userId
         const subscription = await ctx.runQuery(
@@ -231,7 +231,10 @@ export const cancelSubscription = action({
             { stripeSubscriptionId: args.subscriptionId },
         )
 
-        if (!subscription || subscription.userId !== identity.subject) {
+        if (
+            !subscription ||
+            subscription.userId !== identity.userId.toString()
+        ) {
             throw new Error("Subscription not found or access denied")
         }
 
@@ -254,7 +257,7 @@ export const reactivateSubscription = action({
     returns: v.null(),
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity()
-        if (!identity) throw new Error("Not authenticated")
+        if (!identity || !identity.userId) throw new Error("Not authenticated")
 
         // Verify ownership
         const subscription = await ctx.runQuery(
@@ -262,7 +265,10 @@ export const reactivateSubscription = action({
             { stripeSubscriptionId: args.subscriptionId },
         )
 
-        if (!subscription || subscription.userId !== identity.subject) {
+        if (
+            !subscription ||
+            subscription.userId !== identity.userId.toString()
+        ) {
             throw new Error("Subscription not found or access denied")
         }
 
@@ -297,12 +303,12 @@ export const getCustomerPortalUrl = action({
     ),
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity()
-        if (!identity) throw new Error("Not authenticated")
+        if (!identity || !identity.userId) throw new Error("Not authenticated")
 
         // Find customer ID from subscriptions or payments
         const subscriptions = await ctx.runQuery(
             components.stripe.public.listSubscriptionsByUserId,
-            { userId: identity.subject },
+            { userId: identity.userId.toString() },
         )
 
         if (subscriptions.length > 0) {
@@ -314,7 +320,7 @@ export const getCustomerPortalUrl = action({
 
         const payments = await ctx.runQuery(
             components.stripe.public.listPaymentsByUserId,
-            { userId: identity.subject },
+            { userId: identity.userId.toString() },
         )
 
         if (payments.length > 0 && payments[0].stripeCustomerId) {
