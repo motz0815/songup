@@ -30,7 +30,7 @@ export const getQueue = query({
                         addedByNickname: undefined,
                     }
                 }
-                const user = await ctx.db.get(song.addedBy as Id<"users">)
+                const user = await ctx.db.get("users", song.addedBy)
                 return {
                     ...song,
                     addedByNickname: user?.nickname,
@@ -55,7 +55,7 @@ export const getRoomByCode = query({
         }
 
         const currentSongUser = room?.currentSong?.addedBy
-            ? await ctx.db.get(room.currentSong.addedBy as Id<"users">)
+            ? await ctx.db.get("users", room.currentSong.addedBy)
             : null
 
         // Enrich the query result with the nickname of the user who added the current song
@@ -81,7 +81,7 @@ export const isHost = query({
             return false
         }
 
-        const room = await ctx.db.get(args.roomId)
+        const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
             throw new Error("Room not found")
         }
@@ -95,7 +95,7 @@ export const getSongsLeftToAdd = query({
         roomId: v.id("rooms"),
     },
     handler: async (ctx, args) => {
-        const room = await ctx.db.get(args.roomId)
+        const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
             throw new Error("Room not found")
         }
@@ -130,7 +130,7 @@ export const addSong = mutation({
             throw new Error("User not found")
         }
 
-        const room = await ctx.db.get(args.roomId)
+        const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
             throw new Error("Room not found")
         }
@@ -150,9 +150,9 @@ export const addSong = mutation({
         // Decide whether this song should become the current song or to queue it
         if (!room.currentSong) {
             // room currently has no song playing, so this song should become the current song
-            await ctx.db.patch(args.roomId, {
+            await ctx.db.patch("rooms", args.roomId, {
                 currentSong: {
-                    addedBy: userId as Id<"users">,
+                    addedBy: userId,
                     videoId: args.videoId,
                     title: args.title,
                     artist: args.artist,
@@ -185,7 +185,7 @@ export const popSong = mutation({
         roomId: v.id("rooms"),
     },
     handler: async (ctx, args) => {
-        const room = await ctx.db.get(args.roomId)
+        const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
             throw new Error("Room not found")
         }
@@ -211,7 +211,7 @@ export const popSong = mutation({
         if (nextSong) {
             // Extract only the song fields, excluding Convex metadata and room field
             const { addedBy, type, videoId, title, artist, duration } = nextSong
-            await ctx.db.patch(args.roomId, {
+            await ctx.db.patch("rooms", args.roomId, {
                 currentSong: {
                     addedBy,
                     type,
@@ -221,9 +221,9 @@ export const popSong = mutation({
                     duration,
                 },
             })
-            await ctx.db.delete(nextSong._id)
+            await ctx.db.delete("queuedSongs", nextSong._id)
         } else {
-            await ctx.db.patch(args.roomId, {
+            await ctx.db.patch("rooms", args.roomId, {
                 currentSong: undefined,
             })
         }

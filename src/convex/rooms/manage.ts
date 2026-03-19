@@ -98,7 +98,7 @@ export const cleanExpiredRooms = internalMutation({
             .collect()
 
         for (const room of expiredRooms) {
-            await ctx.db.delete(room._id)
+            await ctx.db.delete("rooms", room._id)
         }
     },
 })

@@ -20,7 +20,7 @@ triggers.register("rooms", async (ctx, change) => {
         for await (const song of ctx.db
             .query("queuedSongs")
             .withIndex("by_room_type", (q) => q.eq("room", change.id))) {
-            await ctx.db.delete(song._id)
+            await ctx.db.delete("queuedSongs", song._id)
         }
     }
 })
