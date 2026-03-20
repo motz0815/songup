@@ -8,7 +8,7 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     jwt: {
         customClaims: async (ctx, { userId }) => {
             const user = await ctx.db.get("users", userId)
-            return { userId, email: user?.email, name: user.name }
+            return { userId, email: user?.email, name: user?.name }
         },
     },
 })
