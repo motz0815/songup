@@ -1,8 +1,19 @@
 import { getAuthUserId } from "@convex-dev/auth/server"
 import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
-import { MutationCtx, query } from "../_generated/server"
+import { internalQuery, MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
+
+export const convertToProRoom = internalMutation({
+    args: {
+        roomId: v.id("rooms"),
+    },
+    handler: async (ctx, args) => {
+        await ctx.db.patch("rooms", args.roomId, {
+            isPro: true,
+        })
+    },
+})
 
 export const createRoom = mutation({
     args: {
@@ -48,6 +59,19 @@ export const createRoom = mutation({
             await addFallbackSongs(ctx, roomId, args.fallbackSongs)
         }
         return { roomId, code }
+    },
+})
+
+export const getLatestRoomByUser = internalQuery({
+    args: {
+        userId: v.id("users"),
+    },
+    handler: async (ctx, args) => {
+        return await ctx.db
+            .query("rooms")
+            .withIndex("by_host", (q) => q.eq("host", args.userId))
+            .order("desc")
+            .first()
     },
 })
 
