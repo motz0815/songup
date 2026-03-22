@@ -1,21 +1,72 @@
 import { getAuthUserId } from "@convex-dev/auth/server"
 import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
-import { internalQuery, MutationCtx, query } from "../_generated/server"
+import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
 
-export const convertToProRoom = internalMutation({
+export const activateProRoom = internalMutation({
     args: {
         roomId: v.id("rooms"),
     },
     handler: async (ctx, args) => {
         await ctx.db.patch("rooms", args.roomId, {
-            isPro: true,
+            proStatus: "active",
             expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days expiry
         })
     },
 })
 
+export const prepareProRoom = mutation({
+    args: {
+        maxSongsPerUser: v.number(),
+        fallbackSongs: v.optional(
+            v.array(
+                v.object({
+                    videoId: v.string(),
+                    title: v.string(),
+                    artist: v.string(),
+                    duration: v.number(),
+                }),
+            ),
+        ),
+    },
+    handler: async (ctx, args) => {
+        const userId = await getAuthUserId(ctx)
+        if (!userId) {
+            throw new Error("User not found")
+        }
+
+        let code: string
+        // Generate a unique room code
+        do {
+            code = generateRoomCode(4)
+        } while (
+            await ctx.db
+                .query("rooms")
+                .withIndex("by_code", (q) => q.eq("code", code))
+                .unique()
+        )
+
+        const roomId = await ctx.db.insert("rooms", {
+            host: userId as Id<"users">,
+            proStatus: "pending",
+            code,
+            expiresAt: Date.now() + 1000 * 60 * 60 * 25, // Prepared pro rooms expire after 25 hours, because Stripe's checkout session expires after 24 hours
+            settings: {
+                maxSongsPerUser: args.maxSongsPerUser,
+            },
+        })
+
+        if (args.fallbackSongs) {
+            await addFallbackSongs(ctx, roomId, args.fallbackSongs)
+        }
+        return { roomId, code }
+    },
+})
+
+/*
+ * Create a free room
+ */
 export const createRoom = mutation({
     args: {
         maxSongsPerUser: v.number(),
@@ -49,6 +100,7 @@ export const createRoom = mutation({
 
         const roomId = await ctx.db.insert("rooms", {
             host: userId as Id<"users">,
+            proStatus: "free",
             code,
             expiresAt: Date.now() + 1000 * 60 * 60 * 48, // 48 hours
             settings: {
@@ -60,19 +112,6 @@ export const createRoom = mutation({
             await addFallbackSongs(ctx, roomId, args.fallbackSongs)
         }
         return { roomId, code }
-    },
-})
-
-export const getLatestRoomByUser = internalQuery({
-    args: {
-        userId: v.id("users"),
-    },
-    handler: async (ctx, args) => {
-        return await ctx.db
-            .query("rooms")
-            .withIndex("by_host", (q) => q.eq("host", args.userId))
-            .order("desc")
-            .first()
     },
 })
 

@@ -14,26 +14,15 @@ registerRoutes(http, components.stripe, {
     events: {
         "payment_intent.succeeded": async (ctx, event) => {
             const paymentIntent = event.data.object
-            const userId = paymentIntent.metadata.userId
+            const roomId = paymentIntent.metadata.roomId as Id<"rooms">
 
-            // Create a pro room for the user
-            // We'll just take the latest room for the user
-            const room = await ctx.runQuery(
-                internal.rooms.manage.getLatestRoomByUser,
-                {
-                    userId: userId as Id<"users">,
-                },
-            )
-            if (!room) {
-                throw new Error("Room not found")
-            }
-
-            await ctx.runMutation(internal.rooms.manage.convertToProRoom, {
-                roomId: room._id,
+            // Convert the pending pro room to an active pro room
+            await ctx.runMutation(internal.rooms.manage.activateProRoom, {
+                roomId,
             })
 
             // TODO: Get the room id from the payment intent metadata
-            // await ctx.runMutation(internal.rooms.manage.convertToProRoom, {
+            // await ctx.runMutation(internal.rooms.manage.activateProRoom, {
             //     roomId: paymentIntent.metadata.roomId as Id<"rooms">,
             // })
         },

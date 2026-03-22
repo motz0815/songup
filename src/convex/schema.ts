@@ -33,7 +33,11 @@ export default defineSchema({
     }).index("email", ["email"]),
     rooms: defineTable({
         host: v.id("users"),
-        isPro: v.optional(v.boolean()),
+        proStatus: v.union(
+            v.literal("free"),
+            v.literal("pending"),
+            v.literal("active"),
+        ),
         code: v.string(),
         expiresAt: v.number(),
         currentSong: v.optional(v.object(song)),
