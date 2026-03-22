@@ -101,7 +101,8 @@ export default function ManageRooms({
                                                             </span>
                                                         </CardDescription>
                                                     </div>
-                                                    {room.isPro && (
+                                                    {room.proStatus ===
+                                                        "active" && (
                                                         <div className="flex items-center gap-2">
                                                             <Badge>Pro</Badge>
                                                         </div>
