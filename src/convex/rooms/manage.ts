@@ -11,6 +11,7 @@ export const convertToProRoom = internalMutation({
     handler: async (ctx, args) => {
         await ctx.db.patch("rooms", args.roomId, {
             isPro: true,
+            expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days expiry
         })
     },
 })
