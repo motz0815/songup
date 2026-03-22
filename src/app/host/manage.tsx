@@ -13,12 +13,10 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { api } from "@/convex/_generated/api"
-import { Preloaded, useAction, usePreloadedQuery } from "convex/react"
+import { Preloaded, usePreloadedQuery } from "convex/react"
 import { formatDistance } from "date-fns"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { toast } from "sonner"
 
 export default function ManageRooms({
     preloadedRooms,
@@ -26,19 +24,6 @@ export default function ManageRooms({
     preloadedRooms: Preloaded<typeof api.rooms.manage.listOwnRooms>
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
-
-    const createCheckout = useAction(api.stripe.createPaymentCheckout)
-
-    async function handleBuyProRoom() {
-        const checkout = await createCheckout({
-            priceId: "price_1TC0O1JltLB2hBVhJP1ouGWT",
-        })
-        if (checkout?.url) {
-            redirect(checkout.url)
-        } else {
-            toast.error("Something went wrong")
-        }
-    }
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -51,7 +36,6 @@ export default function ManageRooms({
                 </div>
             </header>
             <main className="flex w-full flex-col gap-4">
-                <Button onClick={handleBuyProRoom}>Click me</Button>
                 <div className="flex w-full flex-wrap gap-4 p-4">
                     {rooms && rooms.length > 0 ? (
                         <>

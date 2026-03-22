@@ -110,6 +110,7 @@ export const createSubscriptionCheckout = action({
 export const createPaymentCheckout = action({
     args: {
         priceId: v.string(),
+        roomId: v.id("rooms"),
     },
     returns: v.object({
         sessionId: v.string(),
@@ -143,10 +144,12 @@ export const createPaymentCheckout = action({
             },
             metadata: {
                 userId: identity.userId.toString(),
+                roomId: args.roomId.toString(),
             },
             payment_intent_data: {
                 metadata: {
                     userId: identity.userId.toString(),
+                    roomId: args.roomId.toString(),
                 },
             },
         })

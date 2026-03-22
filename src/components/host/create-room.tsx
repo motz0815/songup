@@ -1,9 +1,11 @@
 "use client"
 
 import { api } from "@/convex/_generated/api"
+import { Id } from "@/convex/_generated/dataModel"
 import { useAuthedMutation } from "@/lib/auth"
+import { useAction } from "convex/react"
 import { PlusIcon } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -18,6 +20,7 @@ import {
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { SubmitButton } from "../ui/submit-button"
+import { Switch } from "../ui/switch"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
 
 export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
@@ -28,8 +31,11 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
 
     const createRoom = useAuthedMutation(api.rooms.manage.createRoom)
 
+    const createCheckout = useAction(api.stripe.createPaymentCheckout)
+
     async function handleCreateRoom(formData: FormData) {
         await createRoom({
+            pro: formData.get("pro") === "on",
             maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
             fallbackSongs: playlist
                 ? playlist.tracks.map((track) => ({
@@ -39,8 +45,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                       duration: track.duration_seconds,
                   }))
                 : undefined,
-        }).then((data) => {
-            toast.success("Room created")
+        }).then(async (data) => {
             posthog.capture("room_created", {
                 id: data.roomId,
                 code: data.code,
@@ -53,7 +58,24 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                     trackCount: playlist.trackCount,
                 },
             })
-            router.push(`/host/${data.code}`)
+
+            if (formData.get("pro") === "on") {
+                const checkout = await createCheckout({
+                    priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
+                    roomId: data.roomId as Id<"rooms">,
+                })
+                if (checkout?.url) {
+                    toast.success("Redirecting to checkout")
+                    redirect(checkout.url)
+                } else {
+                    toast.error(
+                        "Something went wrong while redirecting to checkout",
+                    )
+                }
+            } else {
+                toast.success("Room created")
+                router.push(`/host/${data.code}`)
+            }
         })
     }
 
@@ -74,6 +96,10 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                     action={handleCreateRoom}
                     className="flex w-full flex-col gap-4"
                 >
+                    <div className="flex items-center gap-2">
+                        <Switch id="pro" name="pro" />
+                        <Label htmlFor="pro">Pro room (5€)</Label>
+                    </div>
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="maxSongsPerUser">
                             Max songs per user
