@@ -20,11 +20,6 @@ registerRoutes(http, components.stripe, {
             await ctx.runMutation(internal.rooms.manage.activateProRoom, {
                 roomId,
             })
-
-            // TODO: Get the room id from the payment intent metadata
-            // await ctx.runMutation(internal.rooms.manage.activateProRoom, {
-            //     roomId: paymentIntent.metadata.roomId as Id<"rooms">,
-            // })
         },
     },
 })

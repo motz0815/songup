@@ -46,9 +46,11 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                   }))
                 : undefined,
         }).then(async (data) => {
+            const pro = formData.get("pro") === "on"
             posthog.capture("room_created", {
                 id: data.roomId,
                 code: data.code,
+                pro,
                 maxSongsPerUser: formData.get("maxSongsPerUser"),
                 fallbackPlaylist: playlist && {
                     id: playlist.id,
@@ -59,7 +61,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 },
             })
 
-            if (formData.get("pro") === "on") {
+            if (pro) {
                 const checkout = await createCheckout({
                     priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
                     roomId: data.roomId as Id<"rooms">,
