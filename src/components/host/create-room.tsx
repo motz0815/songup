@@ -3,8 +3,9 @@
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useAuthedMutation } from "@/lib/auth"
+import { cn } from "@/lib/utils"
 import { useAction } from "convex/react"
-import { PlusIcon } from "lucide-react"
+import { CheckIcon, PlusIcon, SparklesIcon, ZapIcon } from "lucide-react"
 import { redirect, useRouter } from "next/navigation"
 import posthog from "posthog-js"
 import { useState } from "react"
@@ -19,13 +20,23 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { SubmitButton } from "../ui/submit-button"
-import { Switch } from "../ui/switch"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
+
+const FREE_FEATURES = ["Unlimited guests", "Fallback playlist (up to 50 songs)"]
+
+const PRO_FEATURES = [
+    "Unlimited guests",
+    "Fallback playlist (unlimited songs)",
+    "Advanced queue controls",
+    "Control the room from your mobile device",
+]
 
 export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
     const [loading, setLoading] = useState(false)
+    const [roomTier, setRoomTier] = useState<"free" | "pro">("free")
 
     const router = useRouter()
 
@@ -35,7 +46,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
 
     async function handleCreateRoom(formData: FormData) {
         await createRoom({
-            pro: formData.get("pro") === "on",
+            pro: formData.get("pro") === "pro",
             maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
             fallbackSongs: playlist
                 ? playlist.tracks.map((track) => ({
@@ -46,7 +57,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                   }))
                 : undefined,
         }).then(async (data) => {
-            const pro = formData.get("pro") === "on"
+            const pro = formData.get("pro") === "pro"
             posthog.capture("room_created", {
                 id: data.roomId,
                 code: data.code,
@@ -98,9 +109,95 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                     action={handleCreateRoom}
                     className="flex w-full flex-col gap-4"
                 >
-                    <div className="flex items-center gap-2">
-                        <Switch id="pro" name="pro" />
-                        <Label htmlFor="pro">Pro room (5€)</Label>
+                    <input type="hidden" name="pro" value={roomTier} />
+                    <div className="flex flex-col gap-2">
+                        <Label>Room type</Label>
+                        <RadioGroup
+                            value={roomTier}
+                            onValueChange={(v) =>
+                                setRoomTier(v as "free" | "pro")
+                            }
+                            className="grid grid-cols-2 gap-3"
+                        >
+                            {/* Free tier */}
+                            <label
+                                htmlFor="tier-free"
+                                className={cn(
+                                    "flex cursor-pointer flex-col gap-3 rounded-lg border p-4 transition-colors",
+                                    roomTier === "free"
+                                        ? "border-primary bg-primary/5"
+                                        : "border-border hover:border-primary/50",
+                                )}
+                            >
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <ZapIcon className="text-muted-foreground size-4" />
+                                        <span className="font-medium">
+                                            Free
+                                        </span>
+                                    </div>
+                                    <RadioGroupItem
+                                        value="free"
+                                        id="tier-free"
+                                    />
+                                </div>
+                                <p className="text-2xl font-bold">
+                                    0€
+                                    <span className="text-muted-foreground text-sm font-normal">
+                                        {" "}
+                                        / room
+                                    </span>
+                                </p>
+                                <ul className="text-muted-foreground flex flex-col gap-1.5 text-sm">
+                                    {FREE_FEATURES.map((f) => (
+                                        <li
+                                            key={f}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <CheckIcon className="text-primary size-3.5 shrink-0" />
+                                            {f}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </label>
+
+                            {/* Pro tier */}
+                            <label
+                                htmlFor="tier-pro"
+                                className={cn(
+                                    "flex cursor-pointer flex-col gap-3 rounded-lg border p-4 transition-colors",
+                                    roomTier === "pro"
+                                        ? "border-primary bg-primary/5"
+                                        : "border-border hover:border-primary/50",
+                                )}
+                            >
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <SparklesIcon className="size-4 text-amber-500" />
+                                        <span className="font-medium">Pro</span>
+                                    </div>
+                                    <RadioGroupItem value="pro" id="tier-pro" />
+                                </div>
+                                <p className="text-2xl font-bold">
+                                    5€
+                                    <span className="text-muted-foreground text-sm font-normal">
+                                        {" "}
+                                        / room
+                                    </span>
+                                </p>
+                                <ul className="text-muted-foreground flex flex-col gap-1.5 text-sm">
+                                    {PRO_FEATURES.map((f) => (
+                                        <li
+                                            key={f}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <CheckIcon className="size-3.5 shrink-0 text-amber-500" />
+                                            {f}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </label>
+                        </RadioGroup>
                     </div>
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="maxSongsPerUser">
