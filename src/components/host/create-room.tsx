@@ -4,12 +4,19 @@ import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useAuthedMutation } from "@/lib/auth"
 import { cn } from "@/lib/utils"
-import { useAction } from "convex/react"
-import { CheckIcon, PlusIcon, SparklesIcon, ZapIcon } from "lucide-react"
+import { useAction, useQuery } from "convex/react"
+import {
+    AlertCircleIcon,
+    CheckIcon,
+    PlusIcon,
+    SparklesIcon,
+    ZapIcon,
+} from "lucide-react"
 import { redirect, useRouter } from "next/navigation"
 import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
 import { Button } from "../ui/button"
 import {
     Dialog,
@@ -37,6 +44,8 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
     const [loading, setLoading] = useState(false)
     const [roomTier, setRoomTier] = useState<"free" | "pro">("free")
+    const user = useQuery(api.auth.getCurrentUser)
+    const isLoggedIn = !user?.isAnonymous && user
 
     const router = useRouter()
 
@@ -199,6 +208,17 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                             </label>
                         </RadioGroup>
                     </div>
+                    {roomTier === "pro" && !isLoggedIn && (
+                        <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50">
+                            <AlertCircleIcon />
+                            <AlertTitle>
+                                Sign in to create a Pro room
+                            </AlertTitle>
+                            <AlertDescription>
+                                Please sign in before creating a Pro room
+                            </AlertDescription>
+                        </Alert>
+                    )}
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="maxSongsPerUser">
                             Max songs per user
@@ -223,7 +243,12 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                             onChange={setPlaylist}
                         />
                     </div>
-                    <SubmitButton size="lg" disabled={loading}>
+                    <SubmitButton
+                        size="lg"
+                        disabled={
+                            loading || (roomTier === "pro" && !isLoggedIn)
+                        }
+                    >
                         Create Room
                     </SubmitButton>
                 </form>

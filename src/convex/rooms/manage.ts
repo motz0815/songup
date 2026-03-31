@@ -101,10 +101,17 @@ async function addFallbackSongs(
         duration: number
     }[],
 ) {
+    // Check if room is pro
+    const room = await ctx.db.get("rooms", roomId)
+    if (!room) {
+        throw new Error("Room not found")
+    }
+
     // Deliberately don't add the fallback songs directly into the current song in the room object
     // to make users add songs themselves and see that they get added in front of fallback songs
-    // Limit to 100 songs
-    for (const song of songs.slice(0, 100)) {
+    // Limit to 1000 songs for pro rooms (will never be reached in production, just for safety)
+    // Limit to 50 songs for free rooms
+    for (const song of songs.slice(0, room.proStatus === "free" ? 50 : 1000)) {
         await ctx.db.insert("queuedSongs", {
             room: roomId,
             type: "fallback",

@@ -4,7 +4,6 @@ import { api } from "@/convex/_generated/api"
 import { useAuthActions } from "@convex-dev/auth/react"
 import { useAction, useConvexAuth, useQuery } from "convex/react"
 import { ChevronsUpDown, CreditCard, LogOut, User } from "lucide-react"
-import { FaGoogle } from "react-icons/fa"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
@@ -18,9 +17,10 @@ import {
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { Skeleton } from "../ui/skeleton"
+import { SignInButton } from "./sign-in-button"
 
 export function UserButton() {
-    const { signIn, signOut } = useAuthActions()
+    const { signOut } = useAuthActions()
     const { isLoading } = useConvexAuth()
     const user = useQuery(api.auth.getCurrentUser)
 
@@ -124,16 +124,7 @@ export function UserButton() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
-                        <Button
-                            variant="outline"
-                            size="lg"
-                            onClick={() =>
-                                void signIn("google", { redirectTo: "/host" })
-                            }
-                        >
-                            <FaGoogle className="size-4" />
-                            Sign in with Google
-                        </Button>
+                        <SignInButton variant="outline" size="lg" />
                     )}
                 </>
             )}
