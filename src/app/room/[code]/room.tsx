@@ -4,16 +4,18 @@ import { NicknameForm } from "@/components/auth/nickname-form"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { AddSong } from "@/components/room/add-song"
 import { Queue } from "@/components/room/queue"
+import { Button } from "@/components/ui/button"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
 import {
     Preloaded,
     useConvexAuth,
+    useMutation,
     usePreloadedQuery,
     useQuery,
 } from "convex/react"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, SkipForwardIcon } from "lucide-react"
 import Link from "next/link"
 
 export default function Room({
@@ -30,13 +32,19 @@ export default function Room({
     const room = usePreloadedQuery(preloadedRoom)
     const { isLoading } = useConvexAuth()
 
+    const user = useQuery(api.auth.getCurrentUser)
+
     const currentSong = room?.currentSong
 
     const songsLeftToAdd = useQuery(api.rooms.getSongsLeftToAdd, {
         roomId,
     })
 
+    const skipToNextSong = useMutation(api.rooms.controls.skipToNextSong)
+
     const nickname = useQuery(api.nicknames.getNickname)
+    const isHostAndPro =
+        room?.proStatus === "active" && room?.host === user?._id
 
     /*
      * OTHER STATE
@@ -49,7 +57,10 @@ export default function Room({
                     <Link href="/">
                         <div className="flex items-center gap-2">
                             <ArrowLeft className="size-6" />
-                            <h1 className="text-xl font-bold">SongUp</h1>
+                            <h1 className="text-xl font-bold">
+                                SongUp {room?.proStatus === "active" && "Pro"}{" "}
+                                {isHostAndPro && "(Host)"}
+                            </h1>
                         </div>
                     </Link>
                     <h2 className="text-xl">
@@ -92,6 +103,23 @@ export default function Room({
                         <h2 className="text-xl font-bold">Up next</h2>
                         <Queue roomId={roomId} />
                     </section>
+                    {isHostAndPro && (
+                        <section className="flex flex-col gap-2">
+                            <h2 className="text-xl font-bold">Host controls</h2>
+                            <div className="flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
+                                <Button
+                                    variant="ghost"
+                                    onClick={() => {
+                                        skipToNextSong({
+                                            roomId,
+                                        })
+                                    }}
+                                >
+                                    <SkipForwardIcon /> Skip
+                                </Button>
+                            </div>
+                        </section>
+                    )}
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Add songs</h2>
                         <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">

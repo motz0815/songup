@@ -31,8 +31,17 @@ export const skipToNextSong = mutation({
             return
         }
         await ctx.db.delete("queuedSongs", nextSong._id)
+        // Extract only the song fields, excluding Convex metadata and room field
+        const { addedBy, type, videoId, title, artist, duration } = nextSong
         await ctx.db.patch("rooms", args.roomId, {
-            currentSong: nextSong,
+            currentSong: {
+                addedBy,
+                type,
+                videoId,
+                title,
+                artist,
+                duration,
+            },
         })
     },
 })
