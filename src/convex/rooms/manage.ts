@@ -119,6 +119,7 @@ async function addFallbackSongs(
             title: song.title,
             artist: song.artist,
             duration: song.duration,
+            order: 0,
         })
     }
 }

@@ -18,7 +18,7 @@ export const getQueue = query({
     handler: async (ctx, args) => {
         const queue = await ctx.db
             .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
+            .withIndex("by_room_order_type", (q) => q.eq("room", args.roomId))
             .order("asc")
             .take(args.numItems ?? 5)
 
@@ -170,6 +170,7 @@ export const addSong = mutation({
                 title: args.title,
                 artist: args.artist,
                 duration: args.duration,
+                order: 0,
             })
         }
     },
@@ -202,7 +203,7 @@ export const popSong = mutation({
         // Check if there is a song in the queue
         const nextSong = await ctx.db
             .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", args.roomId))
+            .withIndex("by_room_order_type", (q) => q.eq("room", args.roomId))
             .order("asc")
             .first()
 

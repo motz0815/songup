@@ -14,6 +14,7 @@ import type * as functions from "../functions.js";
 import type * as http from "../http.js";
 import type * as nicknames from "../nicknames.js";
 import type * as rooms from "../rooms.js";
+import type * as rooms_controls from "../rooms/controls.js";
 import type * as rooms_manage from "../rooms/manage.js";
 import type * as stripe from "../stripe.js";
 
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   nicknames: typeof nicknames;
   rooms: typeof rooms;
+  "rooms/controls": typeof rooms_controls;
   "rooms/manage": typeof rooms_manage;
   stripe: typeof stripe;
 }>;

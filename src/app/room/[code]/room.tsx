@@ -43,8 +43,8 @@ export default function Room({
      */
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-500 to-indigo-950 text-white">
-            <div className="mx-auto h-full max-w-screen-lg p-4">
+        <div className="min-h-screen bg-linear-to-br from-slate-500 to-indigo-950 text-white">
+            <div className="mx-auto h-full max-w-5xl p-4">
                 <header className="mb-6 flex w-full items-center justify-between">
                     <Link href="/">
                         <div className="flex items-center gap-2">
