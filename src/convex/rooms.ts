@@ -40,6 +40,16 @@ export const getQueue = query({
     },
 })
 
+export const getRoom = query({
+    args: {
+        roomId: v.id("rooms"),
+    },
+    handler: async (ctx, args) => {
+        const room = await ctx.db.get("rooms", args.roomId)
+        return room
+    },
+})
+
 export const getRoomByCode = query({
     args: {
         code: v.string(),
