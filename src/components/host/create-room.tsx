@@ -4,6 +4,7 @@ import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useAuthedMutation } from "@/lib/auth"
 import { cn } from "@/lib/utils"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useAction, useQuery } from "convex/react"
 import {
     AlertCircleIcon,
@@ -46,6 +47,8 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
     const [roomTier, setRoomTier] = useState<"free" | "pro">("free")
     const user = useQuery(api.auth.getCurrentUser)
     const isLoggedIn = !user?.isAnonymous && user
+
+    const [animationParent] = useAutoAnimate()
 
     const router = useRouter()
 
@@ -117,6 +120,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 <form
                     action={handleCreateRoom}
                     className="flex w-full flex-col gap-4"
+                    ref={animationParent}
                 >
                     <input type="hidden" name="pro" value={roomTier} />
                     <div className="flex flex-col gap-2">
