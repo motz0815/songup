@@ -31,13 +31,18 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { SubmitButton } from "../ui/submit-button"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
 
-const FREE_FEATURES = ["Unlimited guests", "Fallback playlist (up to 50 songs)"]
+const FREE_FEATURES = [
+    "Unlimited guests",
+    "Fallback playlist (up to 50 songs)",
+    "Expires after 48 hours",
+]
 
 const PRO_FEATURES = [
     "Unlimited guests",
     "Fallback playlist (unlimited songs)",
     "Advanced queue controls",
     "Control the room from your mobile device",
+    "Expires after 7 days",
 ]
 
 export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
