@@ -3,7 +3,7 @@
 import { api } from "@/convex/_generated/api"
 import { useAuthActions } from "@convex-dev/auth/react"
 import { useAction, useConvexAuth, useQuery } from "convex/react"
-import { ChevronsUpDown, CreditCard, LogOut, User } from "lucide-react"
+import { ChevronsUpDown, CreditCard, LogOut } from "lucide-react"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
@@ -105,10 +105,10 @@ export function UserButton() {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem>
+                                    {/* <DropdownMenuItem>
                                         <User />
                                         Account
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem> */}
                                     <DropdownMenuItem onClick={manageBilling}>
                                         <CreditCard />
                                         Billing
