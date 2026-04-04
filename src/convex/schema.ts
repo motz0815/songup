@@ -30,9 +30,14 @@ export default defineSchema({
 
         // Custom fields
         nickname: v.optional(v.string()),
-    }),
+    }).index("email", ["email"]),
     rooms: defineTable({
         host: v.id("users"),
+        proStatus: v.union(
+            v.literal("free"),
+            v.literal("pending"),
+            v.literal("active"),
+        ),
         code: v.string(),
         expiresAt: v.number(),
         currentSong: v.optional(v.object(song)),
@@ -45,8 +50,9 @@ export default defineSchema({
         .index("by_expires_at", ["expiresAt"]),
     queuedSongs: defineTable({
         room: v.id("rooms"),
+        order: v.number(),
         ...song,
     })
-        .index("by_room_type", ["room", "type"])
+        .index("by_room_order_type", ["room", "order", "type"])
         .index("by_added_by_room", ["addedBy", "room"]),
 })

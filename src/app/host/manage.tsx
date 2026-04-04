@@ -1,7 +1,9 @@
 "use client"
 
-import { CreateRoom } from "@/components/host/create-room"
+import { UserButton } from "@/components/auth/user-button"
+import { CreateRoomForm } from "@/components/host/create-room"
 import { ImageWithFallback } from "@/components/image-with-fallback"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -30,7 +32,7 @@ export default function ManageRooms({
                     <Link href="/">
                         <h1 className="text-4xl font-bold">Your Rooms</h1>
                     </Link>
-                    <CreateRoom />
+                    <UserButton />
                 </div>
             </header>
             <main className="flex w-full flex-col gap-4">
@@ -48,34 +50,48 @@ export default function ManageRooms({
                                     >
                                         <Card className="h-full w-full max-w-md transition-shadow hover:shadow-md">
                                             <CardHeader>
-                                                <CardTitle className="text-2xl">
-                                                    Room Code: {room.code}
-                                                </CardTitle>
-                                                <CardDescription>
-                                                    Expires:{" "}
-                                                    <span
-                                                        // If the room expires in less than 6 hours, make the text red
-                                                        className={
-                                                            new Date(
-                                                                room.expiresAt,
-                                                            ).getTime() -
-                                                                Date.now() <
-                                                            6 * 60 * 60 * 1000
-                                                                ? "text-red-500"
-                                                                : ""
-                                                        }
-                                                    >
-                                                        {formatDistance(
-                                                            new Date(
-                                                                room.expiresAt,
-                                                            ),
-                                                            Date.now(),
-                                                            {
-                                                                addSuffix: true,
-                                                            },
-                                                        )}
-                                                    </span>
-                                                </CardDescription>
+                                                <div className="flex items-center justify-between">
+                                                    <div>
+                                                        <CardTitle className="text-2xl">
+                                                            Room Code:{" "}
+                                                            {room.code}
+                                                        </CardTitle>
+                                                        <CardDescription>
+                                                            Expires:{" "}
+                                                            <span
+                                                                // If the room expires in less than 6 hours, make the text red
+                                                                className={
+                                                                    new Date(
+                                                                        room.expiresAt,
+                                                                    ).getTime() -
+                                                                        Date.now() <
+                                                                    6 *
+                                                                        60 *
+                                                                        60 *
+                                                                        1000
+                                                                        ? "text-red-500"
+                                                                        : ""
+                                                                }
+                                                            >
+                                                                {formatDistance(
+                                                                    new Date(
+                                                                        room.expiresAt,
+                                                                    ),
+                                                                    Date.now(),
+                                                                    {
+                                                                        addSuffix: true,
+                                                                    },
+                                                                )}
+                                                            </span>
+                                                        </CardDescription>
+                                                    </div>
+                                                    {room.proStatus ===
+                                                        "active" && (
+                                                        <div className="flex items-center gap-2">
+                                                            <Badge>Pro</Badge>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </CardHeader>
                                             <CardContent>
                                                 <div className="flex flex-col gap-4">
@@ -136,24 +152,24 @@ export default function ManageRooms({
                             ))}
                             <Card className="w-full max-w-md border-2 border-dashed shadow-none">
                                 <CardContent className="flex h-full items-center justify-center">
-                                    <CreateRoom>
+                                    <CreateRoomForm>
                                         <Button variant="outline">
                                             <PlusIcon className="size-4" />
                                             Create another room
                                         </Button>
-                                    </CreateRoom>
+                                    </CreateRoomForm>
                                 </CardContent>
                             </Card>
                         </>
                     ) : (
                         <Card className="w-full max-w-md border-2 border-dashed shadow-none">
                             <CardContent className="flex h-full items-center justify-center">
-                                <CreateRoom>
+                                <CreateRoomForm>
                                     <Button variant="outline">
                                         <PlusIcon className="size-4" />
                                         Create a room
                                     </Button>
-                                </CreateRoom>
+                                </CreateRoomForm>
                             </CardContent>
                         </Card>
                     )}

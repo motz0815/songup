@@ -202,6 +202,9 @@ export default function Host({
                         <h2 className="text-3xl font-bold text-white/80">
                             SongUp
                             <span className="text-sm text-white/80">.tv</span>
+                            {room?.proStatus === "active" && (
+                                <span className="ml-2 text-shadow-md">Pro</span>
+                            )}
                         </h2>
                     </Link>
                     <p className="text-3xl font-bold text-white/80">
