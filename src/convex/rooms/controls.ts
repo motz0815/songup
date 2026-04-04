@@ -46,6 +46,23 @@ export const skipToNextSong = mutation({
     },
 })
 
+export const deleteSong = mutation({
+    args: {
+        roomId: v.id("rooms"),
+        songId: v.id("queuedSongs"),
+    },
+    handler: async (ctx, args) => {
+        await assertHostAndProRoom(ctx, args.roomId)
+
+        const song = await ctx.db.get("queuedSongs", args.songId)
+        if (!song) {
+            throw new Error("Song not found")
+        }
+
+        await ctx.db.delete("queuedSongs", args.songId)
+    },
+})
+
 export const playQueuedSongNext = mutation({
     args: {
         roomId: v.id("rooms"),
