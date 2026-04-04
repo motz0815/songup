@@ -130,17 +130,40 @@ export default function Home() {
                 </main>
                 <footer className="w-full border-t border-white/20 px-4 py-6 md:px-6">
                     <div className="flex flex-col items-center justify-between sm:flex-row">
-                        <p className="text-xs text-white/80">
-                            Made with ❤️ by{" "}
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="underline"
-                                href="https://github.com/motz0815"
-                            >
-                                matthias
-                            </a>
-                        </p>
+                        <div>
+                            <span className="flex gap-2 text-xs text-white/80">
+                                <span>
+                                    Made with ❤️ by{" "}
+                                    <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="underline"
+                                        href="https://github.com/motz0815"
+                                    >
+                                        matthias
+                                    </a>
+                                </span>
+                                <a
+                                    className="underline"
+                                    href="/docs/legal/terms"
+                                >
+                                    Terms of Service
+                                </a>
+                                <a
+                                    className="underline"
+                                    href="/docs/legal/privacy"
+                                >
+                                    Privacy
+                                </a>
+                                <a
+                                    className="underline"
+                                    href="/docs/legal/imprint"
+                                >
+                                    Imprint
+                                </a>
+                            </span>
+                        </div>
+
                         <div className="mt-4 flex items-center space-x-4 sm:mt-0">
                             <a
                                 href="https://github.com/motz0815/songup"
