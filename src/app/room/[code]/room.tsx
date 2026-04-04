@@ -130,19 +130,29 @@ export default function Room({
                                         <p>
                                             Logged in as <b>{nickname}</b>
                                         </p>
-                                        {songsLeftToAdd ? (
+                                        {isHostAndPro ? (
                                             <p>
-                                                You can add up to{" "}
-                                                <span className="font-bold">
-                                                    {songsLeftToAdd}
-                                                </span>{" "}
-                                                more songs.
+                                                You are the host of a pro room.
+                                                You can add unlimited songs.
                                             </p>
                                         ) : (
-                                            <p>
-                                                You can&apos;t add any more
-                                                songs at the moment.
-                                            </p>
+                                            <>
+                                                {songsLeftToAdd ? (
+                                                    <p>
+                                                        You can add up to{" "}
+                                                        <span className="font-bold">
+                                                            {songsLeftToAdd}
+                                                        </span>{" "}
+                                                        more songs.
+                                                    </p>
+                                                ) : (
+                                                    <p>
+                                                        You can&apos;t add any
+                                                        more songs at the
+                                                        moment.
+                                                    </p>
+                                                )}
+                                            </>
                                         )}
                                         {/* <SearchSongDialog
                                             addSong={addSong}

@@ -153,7 +153,14 @@ export const addSong = mutation({
             )
             .collect()
 
-        if (userSongs.length >= room.settings.maxSongsPerUser) {
+        if (
+            userSongs.length >= room.settings.maxSongsPerUser &&
+            // If the user is the host of a pro room, they can add unlimited songs
+            !(
+                room.proStatus === "active" &&
+                room.host === (userId as Id<"users">)
+            )
+        ) {
             throw new Error("User has reached the maximum number of songs")
         }
 

@@ -4,7 +4,7 @@ import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useMutation, useQuery } from "convex/react"
-import { ListStartIcon } from "lucide-react"
+import { ListStartIcon, Trash2Icon } from "lucide-react"
 import { ImageWithFallback } from "../image-with-fallback"
 import { Button } from "../ui/button"
 import { ScrollArea } from "../ui/scroll-area"
@@ -27,6 +27,8 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
         api.rooms.controls.playQueuedSongNext,
     )
 
+    const deleteSong = useMutation(api.rooms.controls.deleteSong)
+
     const [animationParent] = useAutoAnimate()
 
     return (
@@ -41,14 +43,14 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
                                     width={128}
                                     height={128}
                                     alt={`${song.title}`}
-                                    className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
+                                    className="aspect-video h-12 rounded-lg border border-white/20 object-cover md:h-20"
                                     unoptimized
                                 />
                                 <div className="w-full">
-                                    <h4 className="text-lg font-semibold text-shadow-md md:text-xl">
+                                    <h4 className="text-md font-semibold text-shadow-md sm:text-lg md:text-xl">
                                         {song.title}
                                     </h4>
-                                    <p className="text-sm text-gray-100 text-shadow-sm md:text-lg">
+                                    <p className="text-xs text-gray-100 text-shadow-sm sm:text-sm md:text-lg">
                                         {song.artist}
                                     </p>
                                 </div>
@@ -64,6 +66,20 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
                                         }}
                                     >
                                         <ListStartIcon />
+                                    </Button>
+                                )}
+                                {isHostAndPro && (
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => {
+                                            deleteSong({
+                                                roomId,
+                                                songId: song._id,
+                                            })
+                                        }}
+                                    >
+                                        <Trash2Icon />
                                     </Button>
                                 )}
                             </div>
