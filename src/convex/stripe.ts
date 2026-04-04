@@ -137,6 +137,7 @@ export const createPaymentCheckout = action({
                     quantity: 1,
                 },
             ],
+            allow_promotion_codes: true,
             success_url: getURL("/host/?success=true"),
             cancel_url: getURL("/host/?canceled=true"),
             managed_payments: {
