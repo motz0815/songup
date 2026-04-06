@@ -52,8 +52,9 @@ export function MobileMenu() {
             <SheetContent
                 side="right"
                 className="dark w-72 border-white/20 bg-black/50 text-white backdrop-blur-lg"
+                showCloseButton={false}
             >
-                <SheetHeader className="border-b border-white/20 pb-4">
+                <SheetHeader className="h-16 justify-center border-b border-white/20">
                     <SheetTitle className="text-xl font-bold text-white">
                         SongUp
                     </SheetTitle>
