@@ -5,7 +5,7 @@ import { Music, Tv, Users } from "lucide-react"
 import { Metadata, Viewport } from "next"
 import Link from "next/link"
 import { FaDiscord, FaGithub } from "react-icons/fa"
-import { LandingBackground } from "./background"
+import { LandingBackground } from "../background"
 
 export const metadata: Metadata = {
     title: "SongUp - Open source shared music queue for parties",
@@ -21,13 +21,6 @@ export default function Home() {
         <>
             <LandingBackground />
             <div className="flex min-h-screen flex-col items-center text-white">
-                <header className="w-full border-b border-white/20 px-4 py-6 text-center md:px-6">
-                    <Link href="/">
-                        <h1 className="text-2xl font-bold tracking-tighter text-shadow-md sm:text-3xl md:text-4xl">
-                            SongUp
-                        </h1>
-                    </Link>
-                </header>
                 <main className="flex-1">
                     <section className="w-full py-12 lg:py-24">
                         <div className="container px-4 md:px-6">
