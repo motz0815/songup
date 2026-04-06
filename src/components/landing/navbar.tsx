@@ -5,6 +5,7 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 import { UserButton } from "../auth/user-button"
@@ -24,8 +25,8 @@ export async function LandingNavbar() {
                         <NavigationMenu>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="bg-transparent">
-                                        Getting Started
+                                    <NavigationMenuTrigger>
+                                        Use Cases
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <ul className="w-96">
@@ -52,6 +53,14 @@ export async function LandingNavbar() {
                                             </ListItem>
                                         </ul>
                                     </NavigationMenuContent>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <NavigationMenuLink
+                                        asChild
+                                        className={navigationMenuTriggerStyle()}
+                                    >
+                                        <Link href="/pricing">Pricing</Link>
+                                    </NavigationMenuLink>
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu>
