@@ -27,6 +27,14 @@ export async function LandingNavbar() {
                         <NavigationMenu>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
+                                    <NavigationMenuLink
+                                        asChild
+                                        className={navigationMenuTriggerStyle()}
+                                    >
+                                        <Link href="/#demo">Features</Link>
+                                    </NavigationMenuLink>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
                                     <NavigationMenuTrigger>
                                         Use Cases
                                     </NavigationMenuTrigger>

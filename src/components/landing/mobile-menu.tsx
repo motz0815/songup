@@ -43,6 +43,11 @@ const navItems = [
         section: "More",
         links: [
             {
+                href: "/#demo",
+                title: "Features",
+                description: "See how SongUp works in real time",
+            },
+            {
                 href: "/#pricing",
                 title: "Pricing",
                 description: "Simple, transparent pricing for every use case",

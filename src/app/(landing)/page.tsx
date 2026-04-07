@@ -1,6 +1,7 @@
 import { DemoSection } from "@/components/landing/demo-section"
 import { Stats } from "@/components/landing/stats"
 import { JoinRoomForm } from "@/components/room/join-room"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, MessageSquareQuote, PartyPopper, Sparkles } from "lucide-react"
@@ -86,19 +87,25 @@ export default function Home() {
                             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                                 {[
                                     {
-                                        quote: "Your quote here.",
-                                        author: "Name",
-                                        role: "Role / Context",
+                                        quote: "I was able to get it running quickly and queue up some YouTube songs, and will use it for my next party!",
+                                        author: "Traun Leyden",
+                                        src: "https://ph-avatars.imgix.net/4621187/e889ad71-1fe0-4fe0-88fb-6dfe8b74a7d0.jpeg?auto=compress&codec=mozjpeg&cs=strip&auto=format&w=32&h=32&fit=crop&frame=1&dpr=2",
+                                        role: "On ProductHunt",
+                                        href: "https://www.producthunt.com/products/songup?comment=4338038",
                                     },
                                     {
-                                        quote: "Your quote here.",
-                                        author: "Name",
-                                        role: "Role / Context",
+                                        quote: "Really cool! Love how intuitive the UI is.",
+                                        author: "OwnIntroduction8326",
+                                        src: "https://styles.redditmedia.com/t5_a3u16e/styles/profileIcon_snoo-nftv2_bmZ0X2VpcDE1NToxMzdfZWI5NTlhNzE1ZGZmZmU2ZjgyZjQ2MDU1MzM5ODJjNDg1OWNiMTRmZV8yMzgyNjcyNQ_rare_7b725bf1-11ed-4a56-afe1-794e0eabc221-headshot.png?width=64&height=64&frame=1&auto=webp&crop=64%3A64%2Csmart&s=a9238ca4e998fa82125e1a9863f72f560ba483f4",
+                                        role: "On Reddit",
+                                        href: "https://www.reddit.com/r/webdev/comments/1i9iygo/comment/m94gz5y/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button",
                                     },
                                     {
-                                        quote: "Your quote here.",
-                                        author: "Name",
-                                        role: "Role / Context",
+                                        quote: "Oh this is great, I've wanted this exact thing for years!!!",
+                                        author: "ic_nay",
+                                        src: "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_5.png",
+                                        role: "On Reddit",
+                                        href: "https://www.reddit.com/r/webdev/comments/1i9iygo/comment/m94jof6/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button",
                                     },
                                 ].map((testimonial, i) => (
                                     <Card
@@ -106,7 +113,21 @@ export default function Home() {
                                         className="border-white/20 bg-white/5 text-white backdrop-blur-lg"
                                     >
                                         <CardContent className="flex flex-col gap-4">
-                                            <MessageSquareQuote className="size-6 text-white/30" />
+                                            {testimonial.src ? (
+                                                <Avatar>
+                                                    <AvatarImage
+                                                        src={testimonial.src}
+                                                        alt={testimonial.author}
+                                                    />
+                                                    <AvatarFallback>
+                                                        {testimonial.author.charAt(
+                                                            0,
+                                                        )}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                            ) : (
+                                                <MessageSquareQuote className="size-6 text-white/30" />
+                                            )}
                                             <p className="text-sm leading-relaxed text-white/80 italic">
                                                 &ldquo;{testimonial.quote}
                                                 &rdquo;
@@ -115,9 +136,15 @@ export default function Home() {
                                                 <p className="text-sm font-medium">
                                                     {testimonial.author}
                                                 </p>
-                                                <p className="text-xs text-white/50">
-                                                    {testimonial.role}
-                                                </p>
+                                                <a
+                                                    href={testimonial.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <p className="text-xs text-white/50">
+                                                        {testimonial.role}
+                                                    </p>
+                                                </a>
                                             </div>
                                         </CardContent>
                                     </Card>
