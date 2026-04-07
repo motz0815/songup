@@ -62,11 +62,11 @@ export function DemoSection() {
 
                 <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1fr_380px]">
                     {/* Video Player */}
-                    <div className="overflow-hidden rounded-xl border border-white/20 bg-black/40 backdrop-blur-lg lg:aspect-auto">
+                    <div className="aspect-video overflow-hidden rounded-xl border border-white/20 bg-black/40 backdrop-blur-lg lg:aspect-auto">
                         <video
                             ref={videoRef}
                             key={activeDemo.id}
-                            className="size-full object-contain"
+                            className="size-full object-cover"
                             autoPlay
                             muted
                             playsInline
