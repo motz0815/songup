@@ -7,8 +7,10 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { ArrowRightIcon } from "lucide-react"
 import Link from "next/link"
 import { UserButton } from "../auth/user-button"
+import { Button } from "../ui/button"
 import { MobileMenu } from "./mobile-menu"
 
 export async function LandingNavbar() {
@@ -31,25 +33,27 @@ export async function LandingNavbar() {
                                     <NavigationMenuContent>
                                         <ul className="w-96">
                                             <ListItem
-                                                href="/why"
-                                                title="Introduction"
+                                                href="/#parties"
+                                                title="Parties"
                                             >
-                                                Re-usable components built with
-                                                Tailwind CSS.
+                                                SongUp makes queuing songs at a
+                                                party fairer than ever
                                             </ListItem>
                                             <ListItem
-                                                href="/docs/installation"
-                                                title="Installation"
+                                                href="/#gatherings"
+                                                title="Gatherings"
                                             >
-                                                How to install dependencies and
-                                                structure your app.
+                                                Using SongUp at meetings and
+                                                gatherings makes everyone feel
+                                                included
                                             </ListItem>
                                             <ListItem
-                                                href="/docs/primitives/typography"
-                                                title="Typography"
+                                                href="/blog"
+                                                title="Blog"
+                                                arrow
                                             >
-                                                Styles for headings, paragraphs,
-                                                lists...etc
+                                                Explore even more reasons to use
+                                                SongUp in our blog
                                             </ListItem>
                                         </ul>
                                     </NavigationMenuContent>
@@ -59,7 +63,7 @@ export async function LandingNavbar() {
                                         asChild
                                         className={navigationMenuTriggerStyle()}
                                     >
-                                        <Link href="/pricing">Pricing</Link>
+                                        <Link href="/#pricing">Pricing</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
                             </NavigationMenuList>
@@ -71,7 +75,10 @@ export async function LandingNavbar() {
                     <MobileMenu />
                 </div>
                 {/* Desktop user button — hidden on mobile */}
-                <div className="hidden md:block">
+                <div className="hidden items-center gap-2 md:flex">
+                    <Link href="/host">
+                        <Button variant="ghost">Manage rooms</Button>
+                    </Link>
                     <UserButton />
                 </div>
             </div>
@@ -83,14 +90,23 @@ function ListItem({
     title,
     children,
     href,
+    arrow = false,
     ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+}: React.ComponentPropsWithoutRef<"li"> & { href: string; arrow?: boolean }) {
     return (
         <li {...props}>
             <NavigationMenuLink asChild>
                 <Link href={href}>
                     <div className="flex flex-col gap-1 text-sm">
-                        <div className="leading-none font-medium">{title}</div>
+                        <div className="flex items-end gap-1">
+                            <div className="leading-none font-medium">
+                                {title}
+                            </div>
+                            {arrow && (
+                                <ArrowRightIcon className="text-foreground size-3" />
+                            )}
+                        </div>
+
                         <div className="text-muted-foreground line-clamp-2">
                             {children}
                         </div>
