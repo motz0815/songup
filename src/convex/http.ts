@@ -3,10 +3,13 @@ import { httpRouter } from "convex/server"
 import { components, internal } from "./_generated/api"
 import { Id } from "./_generated/dataModel"
 import { auth } from "./auth"
+import { ossStats } from "./stats"
 
 const http = httpRouter()
 
 auth.addHttpRoutes(http)
+
+ossStats.registerRoutes(http)
 
 // Register Stripe webhook handler at /stripe/webhook
 registerRoutes(http, components.stripe, {

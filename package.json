@@ -18,7 +18,9 @@
   "dependencies": {
     "@auth/core": "0.37.0",
     "@convex-dev/auth": "^0.0.91",
+    "@convex-dev/crons": "^0.2.0",
     "@convex-dev/stripe": "^0.1.4",
+    "@erquhart/convex-oss-stats": "^0.8.2",
     "@formkit/auto-animate": "^0.9.0",
     "@paper-design/shaders-react": "^0.0.72",
     "class-variance-authority": "^0.7.1",

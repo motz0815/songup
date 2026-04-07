@@ -55,4 +55,8 @@ export default defineSchema({
     })
         .index("by_room_order_type", ["room", "order", "type"])
         .index("by_added_by_room", ["addedBy", "room"]),
+    stats: defineTable({
+        roomsCreated: v.number(),
+        songsAdded: v.number(),
+    }),
 })

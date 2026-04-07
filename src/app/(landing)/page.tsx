@@ -1,4 +1,5 @@
 import { DemoSection } from "@/components/landing/demo-section"
+import { Stats } from "@/components/landing/stats"
 import { JoinRoomForm } from "@/components/room/join-room"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -79,31 +80,7 @@ export default function Home() {
                                 Users love SongUp.
                             </h2>
                             {/* Stats */}
-                            <div className="mb-16 grid grid-cols-1 divide-y divide-white/10 rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-                                {[
-                                    { value: "000", label: "GitHub Stars" },
-                                    {
-                                        value: "000",
-                                        label: "Rooms Created",
-                                    },
-                                    {
-                                        value: "000",
-                                        label: "Songs Added / Month",
-                                    },
-                                ].map((stat) => (
-                                    <div
-                                        key={stat.label}
-                                        className="flex flex-col items-center gap-1 px-6 py-8"
-                                    >
-                                        <span className="text-4xl font-bold tracking-tight">
-                                            {stat.value}
-                                        </span>
-                                        <span className="text-sm text-white/60">
-                                            {stat.label}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
+                            <Stats />
 
                             {/* Quotes */}
                             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
