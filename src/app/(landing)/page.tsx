@@ -2,14 +2,7 @@ import { DemoSection } from "@/components/landing/demo-section"
 import { JoinRoomForm } from "@/components/room/join-room"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-    Check,
-    Music,
-    PartyPopper,
-    Sparkles,
-    Tv,
-    Users,
-} from "lucide-react"
+import { Check, MessageSquareQuote, PartyPopper, Sparkles } from "lucide-react"
 import { Metadata, Viewport } from "next"
 import Link from "next/link"
 import { FaDiscord, FaGithub } from "react-icons/fa"
@@ -78,58 +71,85 @@ export default function Home() {
                             </div>
                         </div>
                     </section>
-                    <section
-                        id="features"
-                        className="w-full py-12 md:py-24 lg:py-32"
-                    >
+
+                    {/* Social Proof */}
+                    <section className="w-full py-12 md:py-24">
                         <div className="container px-4 md:px-6">
-                            <h2 className="mb-8 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                                Features
+                            <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                                Users love SongUp.
                             </h2>
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                                <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
-                                    <CardHeader>
-                                        <Tv className="mb-2 h-8 w-8" />
-                                        <CardTitle className="text-shadow-md">
-                                            Central Display
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="text-shadow-sm">
-                                        Host page designed for a central TV,
-                                        showing the YouTube player, queue, and
-                                        room QR code.
-                                    </CardContent>
-                                </Card>
-                                <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
-                                    <CardHeader>
-                                        <Users className="mb-2 h-8 w-8" />
-                                        <CardTitle className="text-shadow-md">
-                                            Collaborative Queuing
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="text-shadow-sm">
-                                        Party members can add up to 2 songs at
-                                        once to the main queue using their
-                                        devices.
-                                    </CardContent>
-                                </Card>
-                                <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
-                                    <CardHeader>
-                                        <Music className="mb-2 h-8 w-8" />
-                                        <CardTitle className="text-shadow-md">
-                                            No Login Required
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="text-shadow-sm">
-                                        Create a room instantly without the need
-                                        for user accounts or logins.
-                                    </CardContent>
-                                </Card>
+                            {/* Stats */}
+                            <div className="mb-16 grid grid-cols-1 divide-y divide-white/10 rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+                                {[
+                                    { value: "000", label: "GitHub Stars" },
+                                    {
+                                        value: "000",
+                                        label: "Rooms Created",
+                                    },
+                                    {
+                                        value: "000",
+                                        label: "Songs Added / Month",
+                                    },
+                                ].map((stat) => (
+                                    <div
+                                        key={stat.label}
+                                        className="flex flex-col items-center gap-1 px-6 py-8"
+                                    >
+                                        <span className="text-4xl font-bold tracking-tight">
+                                            {stat.value}
+                                        </span>
+                                        <span className="text-sm text-white/60">
+                                            {stat.label}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Quotes */}
+                            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                                {[
+                                    {
+                                        quote: "Your quote here.",
+                                        author: "Name",
+                                        role: "Role / Context",
+                                    },
+                                    {
+                                        quote: "Your quote here.",
+                                        author: "Name",
+                                        role: "Role / Context",
+                                    },
+                                    {
+                                        quote: "Your quote here.",
+                                        author: "Name",
+                                        role: "Role / Context",
+                                    },
+                                ].map((testimonial, i) => (
+                                    <Card
+                                        key={i}
+                                        className="border-white/20 bg-white/5 text-white backdrop-blur-lg"
+                                    >
+                                        <CardContent className="flex flex-col gap-4">
+                                            <MessageSquareQuote className="size-6 text-white/30" />
+                                            <p className="text-sm leading-relaxed text-white/80 italic">
+                                                &ldquo;{testimonial.quote}
+                                                &rdquo;
+                                            </p>
+                                            <div className="mt-auto">
+                                                <p className="text-sm font-medium">
+                                                    {testimonial.author}
+                                                </p>
+                                                <p className="text-xs text-white/50">
+                                                    {testimonial.role}
+                                                </p>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
                             </div>
                         </div>
                     </section>
 
-                    {/* Demo GIFs */}
+                    {/* Demo Videos */}
                     <DemoSection />
 
                     {/* Use Cases */}
@@ -142,15 +162,14 @@ export default function Home() {
                                 <div>
                                     <PartyPopper className="mb-4 size-10" />
                                     <h2 className="mb-4 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                                        The party DJ everyone
-                                        deserves
+                                        The party DJ everyone deserves
                                     </h2>
                                     <p className="mb-6 text-lg text-white/70">
                                         No more one person hogging the speaker
-                                        all night. With SongUp, every guest
-                                        gets a say in the playlist. The host
-                                        shows the queue on a TV while guests
-                                        add songs from their phones.
+                                        all night. With SongUp, every guest gets
+                                        a say in the playlist. The host shows
+                                        the queue on a TV while guests add songs
+                                        from their phones.
                                     </p>
                                     <ul className="flex flex-col gap-3">
                                         {[
@@ -194,8 +213,8 @@ export default function Home() {
                                         Perfect for any gathering
                                     </h2>
                                     <p className="mb-6 text-lg text-white/70">
-                                        Team events, watch parties, barbecues
-                                        — whenever a group wants shared music,
+                                        Team events, watch parties, barbecues —
+                                        whenever a group wants shared music,
                                         SongUp keeps it collaborative and fun.
                                         Everyone feels included, no awkward
                                         phone hand-offs.
