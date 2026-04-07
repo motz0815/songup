@@ -16,6 +16,7 @@ import type * as nicknames from "../nicknames.js";
 import type * as rooms from "../rooms.js";
 import type * as rooms_controls from "../rooms/controls.js";
 import type * as rooms_manage from "../rooms/manage.js";
+import type * as stats from "../stats.js";
 import type * as stripe from "../stripe.js";
 
 import type {
@@ -33,6 +34,7 @@ declare const fullApi: ApiFromModules<{
   rooms: typeof rooms;
   "rooms/controls": typeof rooms_controls;
   "rooms/manage": typeof rooms_manage;
+  stats: typeof stats;
   stripe: typeof stripe;
 }>;
 
@@ -494,6 +496,217 @@ export declare const components: {
         "internal",
         { quantity: number; stripeSubscriptionId: string },
         null
+      >;
+    };
+  };
+  ossStats: {
+    github: {
+      getGithubOwners: FunctionReference<
+        "query",
+        "internal",
+        { owners: Array<string> },
+        Array<null | {
+          contributorCount: number;
+          dependentCount: number;
+          dependentCountPrevious?: { count: number; updatedAt: number };
+          dependentCountUpdatedAt?: number;
+          name: string;
+          nameNormalized: string;
+          starCount: number;
+          updatedAt: number;
+        }>
+      >;
+      getGithubRepo: FunctionReference<
+        "query",
+        "internal",
+        { name: string },
+        null | {
+          contributorCount: number;
+          dependentCount: number;
+          dependentCountPrevious?: { count: number; updatedAt: number };
+          dependentCountUpdatedAt?: number;
+          name: string;
+          nameNormalized: string;
+          owner: string;
+          ownerNormalized: string;
+          starCount: number;
+          updatedAt: number;
+        }
+      >;
+      getGithubRepos: FunctionReference<
+        "query",
+        "internal",
+        { names: Array<string> },
+        Array<null | {
+          contributorCount: number;
+          dependentCount: number;
+          dependentCountPrevious?: { count: number; updatedAt: number };
+          dependentCountUpdatedAt?: number;
+          name: string;
+          nameNormalized: string;
+          owner: string;
+          ownerNormalized: string;
+          starCount: number;
+          updatedAt: number;
+        }>
+      >;
+      updateGithubOwner: FunctionReference<
+        "mutation",
+        "internal",
+        { name: string },
+        any
+      >;
+      updateGithubOwnerStats: FunctionReference<
+        "action",
+        "internal",
+        { githubAccessToken: string; owner: string; page?: number },
+        any
+      >;
+      updateGithubRepos: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          repos: Array<{
+            contributorCount: number;
+            dependentCount: number;
+            name: string;
+            owner: string;
+            starCount: number;
+          }>;
+        },
+        any
+      >;
+      updateGithubRepoStars: FunctionReference<
+        "mutation",
+        "internal",
+        { name: string; owner: string; starCount: number },
+        any
+      >;
+      updateGithubRepoStats: FunctionReference<
+        "action",
+        "internal",
+        { githubAccessToken: string; repo: string },
+        any
+      >;
+    };
+    lib: {
+      clearAndSync: FunctionReference<
+        "action",
+        "internal",
+        {
+          githubAccessToken: string;
+          githubOwners?: Array<string>;
+          githubRepos?: Array<string>;
+          minStars?: number;
+          npmOrgs?: Array<string>;
+          npmPackages?: Array<string>;
+        },
+        any
+      >;
+      clearPage: FunctionReference<
+        "mutation",
+        "internal",
+        { tableName: "githubRepos" | "npmPackages" },
+        { isDone: boolean }
+      >;
+      clearTable: FunctionReference<
+        "action",
+        "internal",
+        { tableName: "githubRepos" | "npmPackages" },
+        null
+      >;
+      sync: FunctionReference<
+        "action",
+        "internal",
+        {
+          githubAccessToken: string;
+          githubOwners?: Array<string>;
+          githubRepos?: Array<string>;
+          minStars?: number;
+          npmOrgs?: Array<string>;
+          npmPackages?: Array<string>;
+        },
+        null
+      >;
+    };
+    npm: {
+      getNpmOrgs: FunctionReference<
+        "query",
+        "internal",
+        { names: Array<string> },
+        Array<null | {
+          dayOfWeekAverages: Array<number>;
+          downloadCount: number;
+          downloadCountUpdatedAt: number;
+          name: string;
+          updatedAt: number;
+        }>
+      >;
+      getNpmPackage: FunctionReference<
+        "query",
+        "internal",
+        { name: string },
+        null | {
+          dayOfWeekAverages: Array<number>;
+          downloadCount: number;
+          downloadCountUpdatedAt?: number;
+          name: string;
+          org?: string;
+          updatedAt: number;
+        }
+      >;
+      getNpmPackages: FunctionReference<
+        "query",
+        "internal",
+        { names: Array<string> },
+        {
+          dayOfWeekAverages: Array<number>;
+          downloadCount: number;
+          downloadCountUpdatedAt: number;
+          updatedAt: number;
+        }
+      >;
+      updateNpmOrg: FunctionReference<
+        "mutation",
+        "internal",
+        { name: string },
+        any
+      >;
+      updateNpmOrgStats: FunctionReference<
+        "action",
+        "internal",
+        { org: string; page?: number },
+        any
+      >;
+      updateNpmPackage: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          dayOfWeekAverages: Array<number>;
+          downloadCount: number;
+          name: string;
+        },
+        any
+      >;
+      updateNpmPackagesForOrg: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          org: string;
+          packages: Array<{
+            dayOfWeekAverages: Array<number>;
+            downloadCount: number;
+            isNotFound?: boolean;
+            name: string;
+          }>;
+        },
+        any
+      >;
+      updateNpmPackageStats: FunctionReference<
+        "action",
+        "internal",
+        { name: string },
+        any
       >;
     };
   };
