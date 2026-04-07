@@ -17,23 +17,35 @@ import { Button } from "../ui/button"
 
 const navItems = [
     {
-        section: "Getting Started",
+        section: "Use Cases",
         links: [
             {
-                href: "/why",
-                title: "Introduction",
-                description: "Re-usable components built with Tailwind CSS.",
-            },
-            {
-                href: "/docs/installation",
-                title: "Installation",
+                href: "/#parties",
+                title: "Parties",
                 description:
-                    "How to install dependencies and structure your app.",
+                    "SongUp makes queuing songs at a party fairer than ever",
             },
             {
-                href: "/docs/primitives/typography",
-                title: "Typography",
-                description: "Styles for headings, paragraphs, lists...etc",
+                href: "/#gatherings",
+                title: "Gatherings",
+                description:
+                    "Using SongUp at meetings and gatherings makes everyone feel included",
+            },
+            {
+                href: "/blog",
+                title: "Blog",
+                description:
+                    "Explore even more reasons to use SongUp in our blog",
+            },
+        ],
+    },
+    {
+        section: "More",
+        links: [
+            {
+                href: "/#pricing",
+                title: "Pricing",
+                description: "Simple, transparent pricing for every use case",
             },
         ],
     },
@@ -90,7 +102,14 @@ export function MobileMenu() {
                         </div>
                     ))}
                 </nav>
-                <SheetFooter className="border-t border-white/20 p-4">
+                <SheetFooter className="flex-col gap-2 border-t border-white/20 p-4">
+                    <SheetClose asChild>
+                        <Link href="/host" className="w-full">
+                            <Button variant="outline" className="w-full">
+                                Manage rooms
+                            </Button>
+                        </Link>
+                    </SheetClose>
                     <UserButton />
                 </SheetFooter>
             </SheetContent>
