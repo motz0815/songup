@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, MessageSquareQuote, PartyPopper, Sparkles } from "lucide-react"
 import { Metadata, Viewport } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { FaDiscord, FaGithub } from "react-icons/fa"
 import { LandingBackground } from "../background"
@@ -177,7 +178,7 @@ export default function Home() {
                                     </p>
                                     <ul className="flex flex-col gap-3">
                                         {[
-                                            "Fair queue — everyone adds up to 2 songs at a time",
+                                            "Fair queue — everyone adds up to 2 (configurable) songs at a time",
                                             "QR code on screen for instant joining",
                                             "No app download or sign-up needed",
                                         ].map((item) => (
@@ -192,9 +193,13 @@ export default function Home() {
                                     </ul>
                                 </div>
                                 <div className="flex aspect-video items-center justify-center rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg">
-                                    <span className="text-sm text-white/40">
-                                        party-illustration.png
-                                    </span>
+                                    <Image
+                                        src="/songup-host.png"
+                                        alt="SongUp host view"
+                                        width={1280}
+                                        height={720}
+                                        className="object-cover"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -207,9 +212,13 @@ export default function Home() {
                         <div className="container px-4 md:px-6">
                             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
                                 <div className="order-2 flex aspect-video items-center justify-center rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg md:order-1">
-                                    <span className="text-sm text-white/40">
-                                        gathering-illustration.png
-                                    </span>
+                                    <Image
+                                        src="/songup-host-2.png"
+                                        alt="SongUp host view"
+                                        width={1280}
+                                        height={720}
+                                        className="object-cover"
+                                    />
                                 </div>
                                 <div className="order-1 md:order-2">
                                     <Sparkles className="mb-4 size-10" />
@@ -225,7 +234,7 @@ export default function Home() {
                                     </p>
                                     <ul className="flex flex-col gap-3">
                                         {[
-                                            "Works on any device with a browser",
+                                            "Fallback playlist plays while no one adds anything",
                                             "Real-time sync across all connected guests",
                                             "Host stays in control with skip & remove",
                                         ].map((item) => (
@@ -265,7 +274,7 @@ export default function Home() {
                                     </CardHeader>
                                     <CardContent className="flex flex-col gap-4">
                                         <p className="text-4xl font-bold">
-                                            $0
+                                            0€
                                             <span className="text-base font-normal text-white/60">
                                                 {" "}
                                                 / forever
@@ -273,10 +282,9 @@ export default function Home() {
                                         </p>
                                         <ul className="flex flex-col gap-2 text-white/80">
                                             {[
-                                                "1 room at a time",
-                                                "Up to 10 guests",
-                                                "YouTube playback",
-                                                "QR code sharing",
+                                                "Unlimited guests",
+                                                "Fallback playlist (up to 50 songs)",
+                                                "Expires after 48 hours",
                                             ].map((item) => (
                                                 <li
                                                     key={item}
@@ -289,10 +297,10 @@ export default function Home() {
                                         </ul>
                                         <Link href="/host">
                                             <Button
-                                                variant="outline"
-                                                className="mt-2 w-full border-white/20"
+                                                variant="secondary"
+                                                className="mt-2 w-full"
                                             >
-                                                Get started
+                                                Create a free room
                                             </Button>
                                         </Link>
                                     </CardContent>
@@ -306,18 +314,19 @@ export default function Home() {
                                     </CardHeader>
                                     <CardContent className="flex flex-col gap-4">
                                         <p className="text-4xl font-bold">
-                                            $5
+                                            5€
                                             <span className="text-base font-normal text-white/60">
                                                 {" "}
-                                                / month
+                                                / one-time
                                             </span>
                                         </p>
                                         <ul className="flex flex-col gap-2 text-white/80">
                                             {[
-                                                "Unlimited rooms",
                                                 "Unlimited guests",
-                                                "Priority queue support",
-                                                "Custom room branding",
+                                                "Fallback playlist (unlimited songs)",
+                                                "Advanced queue controls",
+                                                "Control the room from your mobile device",
+                                                "Expires after 7 days",
                                             ].map((item) => (
                                                 <li
                                                     key={item}
@@ -330,7 +339,7 @@ export default function Home() {
                                         </ul>
                                         <Link href="/host">
                                             <Button className="mt-2 w-full border border-white/20">
-                                                Upgrade to Pro
+                                                Create a Pro room
                                             </Button>
                                         </Link>
                                     </CardContent>
