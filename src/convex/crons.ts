@@ -9,6 +9,4 @@ crons.hourly(
     internal.rooms.manage.cleanExpiredRooms,
 )
 
-crons.interval("update stats", { hours: 6 }, internal.stats.updateStats)
-
 export default crons

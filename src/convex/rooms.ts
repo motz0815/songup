@@ -3,6 +3,7 @@ import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { mutation } from "./functions"
+import { countSongAdded } from "./stats"
 
 /**
  * This query returns the queue of songs for a room.
@@ -190,6 +191,8 @@ export const addSong = mutation({
                 order: 0,
             })
         }
+        // For song addition stats
+        await countSongAdded(ctx)
     },
 })
 

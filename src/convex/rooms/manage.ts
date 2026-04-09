@@ -3,6 +3,7 @@ import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
 import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
+import { countRoomCreated } from "../stats"
 
 export const activateProRoom = internalMutation({
     args: {
@@ -68,6 +69,8 @@ export const createRoom = mutation({
                 maxSongsPerUser: args.maxSongsPerUser,
             },
         })
+        // For room creation stats
+        await countRoomCreated(ctx)
 
         if (args.fallbackSongs) {
             await addFallbackSongs(ctx, roomId, args.fallbackSongs)
