@@ -259,42 +259,45 @@ export default function Home() {
                     >
                         <div className="container px-4 md:px-6">
                             <h2 className="mb-4 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                                Simple, transparent pricing
+                                It's free. You don't even need to log in.
                             </h2>
                             <p className="mx-auto mb-12 max-w-2xl text-center text-white/70">
-                                Start for free. Upgrade when you need more.
+                                You can create an unlimited number of free
+                                rooms. Buy a Pro Room (one-time payment) if you
+                                need more features.
                             </p>
 
                             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
                                 <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
                                     <CardHeader>
                                         <CardTitle className="text-2xl text-shadow-md">
-                                            Free
+                                            Free Room
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="flex flex-col gap-4">
-                                        <p className="text-4xl font-bold">
-                                            0€
-                                            <span className="text-base font-normal text-white/60">
-                                                {" "}
-                                                / forever
-                                            </span>
-                                        </p>
-                                        <ul className="flex flex-col gap-2 text-white/80">
-                                            {[
-                                                "Unlimited guests",
-                                                "Fallback playlist (up to 50 songs)",
-                                                "Expires after 48 hours",
-                                            ].map((item) => (
-                                                <li
-                                                    key={item}
-                                                    className="flex items-center gap-2"
-                                                >
-                                                    <Check className="size-4 text-green-400" />
-                                                    {item}
-                                                </li>
-                                            ))}
-                                        </ul>
+                                    <CardContent className="flex h-full flex-col justify-between gap-4">
+                                        <div className="flex flex-col gap-4">
+                                            <p className="text-4xl font-bold">
+                                                0€
+                                                <span className="text-base font-normal text-white/60">
+                                                    {" "}
+                                                    / room
+                                                </span>
+                                            </p>
+                                            <ul className="flex flex-col gap-2 text-white/80">
+                                                {[
+                                                    "Unlimited guests",
+                                                    "Fallback playlist (up to 50 songs)",
+                                                ].map((item) => (
+                                                    <li
+                                                        key={item}
+                                                        className="flex items-center gap-2"
+                                                    >
+                                                        <Check className="size-4 text-green-400" />
+                                                        {item}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                         <Link href="/host">
                                             <Button
                                                 variant="secondary"
@@ -309,34 +312,35 @@ export default function Home() {
                                 <Card className="border-purple-400/40 bg-white/15 text-white shadow-lg shadow-purple-500/10 backdrop-blur-lg">
                                     <CardHeader>
                                         <CardTitle className="text-2xl text-shadow-md">
-                                            Pro
+                                            Pro Room
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="flex flex-col gap-4">
-                                        <p className="text-4xl font-bold">
-                                            5€
-                                            <span className="text-base font-normal text-white/60">
-                                                {" "}
-                                                / one-time
-                                            </span>
-                                        </p>
-                                        <ul className="flex flex-col gap-2 text-white/80">
-                                            {[
-                                                "Unlimited guests",
-                                                "Fallback playlist (unlimited songs)",
-                                                "Advanced queue controls",
-                                                "Control the room from your mobile device",
-                                                "Expires after 7 days",
-                                            ].map((item) => (
-                                                <li
-                                                    key={item}
-                                                    className="flex items-center gap-2"
-                                                >
-                                                    <Check className="size-4 text-green-400" />
-                                                    {item}
-                                                </li>
-                                            ))}
-                                        </ul>
+                                    <CardContent className="flex h-full flex-col justify-between gap-4">
+                                        <div className="flex flex-col gap-4">
+                                            <p className="text-4xl font-bold">
+                                                5€
+                                                <span className="text-base font-normal text-white/60">
+                                                    {" "}
+                                                    / room
+                                                </span>
+                                            </p>
+                                            <ul className="flex flex-col gap-2 text-white/80">
+                                                {[
+                                                    "Unlimited guests",
+                                                    "Fallback playlist (unlimited songs)",
+                                                    "Advanced queue controls",
+                                                    "Control the room from your mobile device",
+                                                ].map((item) => (
+                                                    <li
+                                                        key={item}
+                                                        className="flex items-center gap-2"
+                                                    >
+                                                        <Check className="size-4 text-green-400" />
+                                                        {item}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                         <Link href="/host">
                                             <Button className="mt-2 w-full border border-white/20">
                                                 Create a Pro room
