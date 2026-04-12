@@ -75,6 +75,9 @@ export default function Home() {
                         </div>
                     </section>
 
+                    {/* Demo Videos */}
+                    <DemoSection />
+
                     {/* Social Proof */}
                     <section className="w-full py-12 md:py-24">
                         <div className="container px-4 md:px-6">
@@ -153,9 +156,6 @@ export default function Home() {
                             </div>
                         </div>
                     </section>
-
-                    {/* Demo Videos */}
-                    <DemoSection />
 
                     {/* Use Cases */}
                     <section
