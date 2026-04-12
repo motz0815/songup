@@ -2,33 +2,35 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Badge } from "../ui/badge"
 
 const demos = [
     {
         id: "host-view",
         title: "Host View",
-        description: "See the central display with player, queue, and QR code",
+        description:
+            "The host sets up a central display with player, queue and a QR code",
         src: "/demos/host-view.mp4",
     },
     {
         id: "search-songs",
         title: "Search & Add",
-        description: "Search YouTube and add songs to the shared queue",
+        description: "Guests search YouTube and add songs to the shared queue",
         src: "/demos/search-add.mp4",
     },
     {
         id: "queue-management",
         title: "Queue Management",
-        description: "Reorder, skip, or remove songs from the queue",
+        description:
+            "The host can reorder, skip, or remove songs from the queue",
         src: "/demos/queue-management.mp4",
         pro: true,
     },
     {
         id: "join-room",
         title: "Join a Room",
-        description: "Scan the QR code or enter the room code to join",
+        description: "Guests scan the QR code or enter the room code to join",
         src: "/demos/join-room.mp4",
     },
 ]
@@ -36,19 +38,37 @@ const demos = [
 export function DemoSection() {
     const [activeIndex, setActiveIndex] = useState(0)
     const videoRef = useRef<HTMLVideoElement>(null)
+    const barRef = useRef<HTMLDivElement>(null)
+    const rafRef = useRef<number>(0)
 
-    const activeDemo = demos[activeIndex]
+    useEffect(() => {
+        demos.forEach((demo) => {
+            const link = document.createElement("link")
+            link.rel = "prefetch"
+            link.href = demo.src
+            document.head.appendChild(link)
+        })
+    }, [])
 
-    function selectDemo(index: number) {
-        setActiveIndex(index)
-        if (videoRef.current) {
-            videoRef.current.load()
+    useEffect(() => {
+        const video = videoRef.current
+        const bar = barRef.current
+        if (!video) return
+        if (bar) bar.style.transform = "scaleX(0)"
+        video.play().catch(() => {})
+
+        function tick() {
+            if (video && bar && video.duration) {
+                bar.style.transform = `scaleX(${video.currentTime / video.duration})`
+            }
+            rafRef.current = requestAnimationFrame(tick)
         }
-    }
+        rafRef.current = requestAnimationFrame(tick)
+        return () => cancelAnimationFrame(rafRef.current)
+    }, [activeIndex])
 
     function handleEnded() {
-        const next = (activeIndex + 1) % demos.length
-        setActiveIndex(next)
+        setActiveIndex((prev) => (prev + 1) % demos.length)
     }
 
     return (
@@ -65,18 +85,16 @@ export function DemoSection() {
 
                 <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1fr_380px]">
                     {/* Video Player */}
-                    <div className="aspect-video overflow-hidden rounded-xl border border-white/20 bg-black/40 backdrop-blur-lg lg:aspect-auto">
+                    <div className="relative aspect-video overflow-hidden rounded-xl border border-white/20 bg-black/40 backdrop-blur-lg">
                         <video
                             ref={videoRef}
-                            key={activeDemo.id}
-                            className="size-full object-cover"
+                            src={demos[activeIndex].src}
+                            className="absolute inset-0 size-full object-cover"
                             autoPlay
                             muted
                             playsInline
                             onEnded={handleEnded}
-                        >
-                            <source src={activeDemo.src} type="video/mp4" />
-                        </video>
+                        />
                     </div>
 
                     {/* Selector Cards */}
@@ -86,15 +104,15 @@ export function DemoSection() {
                                 key={demo.id}
                                 role="button"
                                 tabIndex={0}
-                                onClick={() => selectDemo(i)}
+                                onClick={() => setActiveIndex(i)}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter" || e.key === " ") {
                                         e.preventDefault()
-                                        selectDemo(i)
+                                        setActiveIndex(i)
                                     }
                                 }}
                                 className={cn(
-                                    "flex-1 cursor-pointer gap-2 border-white/20 bg-white/5 text-white backdrop-blur-lg transition-all",
+                                    "relative flex-1 cursor-pointer gap-2 overflow-hidden border-white/20 bg-white/5 text-white backdrop-blur-lg transition-all",
                                     activeIndex === i
                                         ? "border-white/50 bg-white/15 shadow-lg"
                                         : "hover:bg-white/10",
@@ -115,6 +133,13 @@ export function DemoSection() {
                                 <CardContent className="text-sm text-white/60">
                                     {demo.description}
                                 </CardContent>
+                                <div
+                                    ref={activeIndex === i ? barRef : undefined}
+                                    className={cn(
+                                        "absolute inset-x-0 bottom-0 h-0.5 origin-left bg-white/60",
+                                        activeIndex !== i && "hidden",
+                                    )}
+                                />
                             </Card>
                         ))}
                     </div>
