@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useRef, useState } from "react"
+import { Badge } from "../ui/badge"
 
 const demos = [
     {
@@ -22,6 +23,7 @@ const demos = [
         title: "Queue Management",
         description: "Reorder, skip, or remove songs from the queue",
         src: "/demos/queue-management.mp4",
+        pro: true,
     },
     {
         id: "join-room",
@@ -53,11 +55,12 @@ export function DemoSection() {
         <section id="demo" className="w-full py-12 md:py-24 lg:py-32">
             <div className="container px-4 md:px-6">
                 <h2 className="mb-4 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                    See it in Action
+                    How SongUp works
                 </h2>
                 <p className="mx-auto mb-12 max-w-2xl text-center text-white/70">
-                    Watch how SongUp works in real time — from hosting a room to
-                    queueing songs collaboratively.
+                    The host connects to the Speakers and creates a room. Guests
+                    join the room using the QR or room code and start adding
+                    songs.
                 </p>
 
                 <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1fr_380px]">
@@ -91,16 +94,23 @@ export function DemoSection() {
                                     }
                                 }}
                                 className={cn(
-                                    "flex-1 cursor-pointer gap-0 border-white/20 bg-white/5 text-white backdrop-blur-lg transition-all",
+                                    "flex-1 cursor-pointer gap-2 border-white/20 bg-white/5 text-white backdrop-blur-lg transition-all",
                                     activeIndex === i
                                         ? "border-white/50 bg-white/15 shadow-lg"
                                         : "hover:bg-white/10",
                                 )}
                             >
-                                <CardHeader>
+                                <CardHeader className="flex items-center justify-between">
                                     <CardTitle className="text-base">
                                         {demo.title}
                                     </CardTitle>
+                                    {demo.pro && (
+                                        <div className="flex items-center gap-2">
+                                            <Badge variant="secondary">
+                                                Pro
+                                            </Badge>
+                                        </div>
+                                    )}
                                 </CardHeader>
                                 <CardContent className="text-sm text-white/60">
                                     {demo.description}
