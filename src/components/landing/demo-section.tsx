@@ -42,15 +42,6 @@ export function DemoSection() {
     const rafRef = useRef<number>(0)
 
     useEffect(() => {
-        demos.forEach((demo) => {
-            const link = document.createElement("link")
-            link.rel = "prefetch"
-            link.href = demo.src
-            document.head.appendChild(link)
-        })
-    }, [])
-
-    useEffect(() => {
         const video = videoRef.current
         const bar = barRef.current
         if (!video) return
