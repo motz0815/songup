@@ -29,13 +29,8 @@ export function StatsClient({
                     value: roomStats?.songsAdded ?? 0,
                     label: "Songs Added",
                 },
-            ].map((stat) => (
-                <a
-                    href={stat.href}
-                    key={stat.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+            ].map((stat) => {
+                const content = (
                     <div className="flex flex-col items-center gap-1 px-6 py-8">
                         <span className="text-4xl font-bold tracking-tight">
                             {stat.value}
@@ -44,8 +39,21 @@ export function StatsClient({
                             {stat.label}
                         </span>
                     </div>
-                </a>
-            ))}
+                )
+
+                return stat.href ? (
+                    <a
+                        href={stat.href}
+                        key={stat.label}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {content}
+                    </a>
+                ) : (
+                    <div key={stat.label}>{content}</div>
+                )
+            })}
         </div>
     )
 }
