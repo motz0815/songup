@@ -6,8 +6,7 @@ SongUp makes queuing songs from everyone easier and fairer than ever. 🎵
 
 Host a room for free at [songup.tv](https://songup.tv)!
 
-<img width="2656" height="1511" alt="songup-host" src="https://github.com/user-attachments/assets/fabd4b36-887e-4406-9cc9-47c7c1b5b122" />
-
+<img width="1608" height="951" alt="songup-host" src="https://github.com/user-attachments/assets/49357ce6-649f-4e18-b867-58d5237fbad6" />
 
 ## 🎉 What is SongUp?
 
