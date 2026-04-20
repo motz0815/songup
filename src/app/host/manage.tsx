@@ -10,12 +10,13 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 import { api } from "@/convex/_generated/api"
 import { Preloaded, usePreloadedQuery } from "convex/react"
-import { PlusIcon } from "lucide-react"
+import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 
 export default function ManageRooms({
@@ -44,105 +45,119 @@ export default function ManageRooms({
                                     key={room.code}
                                     className="w-full max-w-md"
                                 >
-                                    <Link
-                                        href={`/host/${room.code}`}
-                                        key={room.code}
-                                        className="hover:cursor-default"
-                                    >
-                                        <Card className="h-full w-full max-w-md transition-shadow hover:shadow-lg">
-                                            <CardHeader>
-                                                <div className="flex items-center justify-between">
-                                                    <div>
-                                                        <CardTitle className="text-2xl">
+                                    <Card className="h-full w-full max-w-md transition-shadow hover:shadow-lg">
+                                        <CardHeader>
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <CardTitle className="text-2xl">
+                                                        <Link
+                                                            href={`/host/${room.code}`}
+                                                            className="hover:underline"
+                                                        >
                                                             Room Code:{" "}
                                                             {room.code}
-                                                        </CardTitle>
-                                                        <CardDescription>
-                                                            <RoomExpiry
-                                                                createdAt={
-                                                                    room._creationTime
-                                                                }
-                                                                expiresAt={
-                                                                    room.expiresAt
-                                                                }
-                                                            />
-                                                        </CardDescription>
+                                                        </Link>
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        <RoomExpiry
+                                                            createdAt={
+                                                                room._creationTime
+                                                            }
+                                                            expiresAt={
+                                                                room.expiresAt
+                                                            }
+                                                        />
+                                                    </CardDescription>
+                                                </div>
+                                                {room.proStatus === "active" ? (
+                                                    <div className="flex items-center gap-2">
+                                                        <Badge>Pro</Badge>
                                                     </div>
-                                                    {room.proStatus ===
-                                                        "active" && (
-                                                        <div className="flex items-center gap-2">
-                                                            <Badge>Pro</Badge>
+                                                ) : (
+                                                    <Button variant="outline">
+                                                        <ArrowBigUpDashIcon
+                                                            className="size-4"
+                                                            data-icon="inline-start"
+                                                        />
+                                                        Upgrade
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className="h-full">
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex flex-col">
+                                                    <h2 className="text-lg font-semibold">
+                                                        Settings
+                                                    </h2>
+                                                    <p className="text-sm">
+                                                        {
+                                                            room.settings
+                                                                .maxSongsPerUser
+                                                        }{" "}
+                                                        songs per user
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <h2 className="text-lg font-semibold">
+                                                        Current Song
+                                                    </h2>
+                                                    {room.currentSong ? (
+                                                        <div className="flex items-center justify-between space-x-4 rounded-lg border p-3 shadow-sm transition-all">
+                                                            <ImageWithFallback
+                                                                src={`https://i.ytimg.com/vi_webp/${room.currentSong.videoId}/mqdefault.webp`}
+                                                                width={128}
+                                                                height={128}
+                                                                alt={`${room.currentSong.title}`}
+                                                                className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
+                                                                unoptimized
+                                                            />
+                                                            <div className="w-full">
+                                                                <h4 className="text-lg font-semibold md:text-xl">
+                                                                    {
+                                                                        room
+                                                                            .currentSong
+                                                                            .title
+                                                                    }
+                                                                </h4>
+                                                                <p className="text-muted-foreground text-sm md:text-lg">
+                                                                    {
+                                                                        room
+                                                                            .currentSong
+                                                                            .artist
+                                                                    }
+                                                                </p>
+                                                            </div>
                                                         </div>
+                                                    ) : (
+                                                        <p className="text-sm">
+                                                            No song playing
+                                                        </p>
                                                     )}
                                                 </div>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <div className="flex flex-col gap-4">
-                                                    <div className="flex flex-col">
-                                                        <h2 className="text-lg font-semibold">
-                                                            Settings
-                                                        </h2>
-                                                        <p className="text-sm">
-                                                            {
-                                                                room.settings
-                                                                    .maxSongsPerUser
-                                                            }{" "}
-                                                            songs per user
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex flex-col">
-                                                        <h2 className="text-lg font-semibold">
-                                                            Current Song
-                                                        </h2>
-                                                        {room.currentSong ? (
-                                                            <div className="flex items-center justify-between space-x-4 rounded-lg border p-3 shadow-sm transition-all">
-                                                                <ImageWithFallback
-                                                                    src={`https://i.ytimg.com/vi_webp/${room.currentSong.videoId}/mqdefault.webp`}
-                                                                    width={128}
-                                                                    height={128}
-                                                                    alt={`${room.currentSong.title}`}
-                                                                    className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
-                                                                    unoptimized
-                                                                />
-                                                                <div className="w-full">
-                                                                    <h4 className="text-lg font-semibold md:text-xl">
-                                                                        {
-                                                                            room
-                                                                                .currentSong
-                                                                                .title
-                                                                        }
-                                                                    </h4>
-                                                                    <p className="text-muted-foreground text-sm md:text-lg">
-                                                                        {
-                                                                            room
-                                                                                .currentSong
-                                                                                .artist
-                                                                        }
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            <p className="text-sm">
-                                                                No song playing
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    </Link>
+                                            </div>
+                                        </CardContent>
+                                        <CardFooter className="flex justify-end">
+                                            <Link href={`/host/${room.code}`}>
+                                                <Button variant="outline">
+                                                    <ArrowRightIcon className="size-4" />
+                                                    Open
+                                                </Button>
+                                            </Link>
+                                        </CardFooter>
+                                    </Card>
                                 </div>
                             ))}
-                            <Card className="w-full max-w-md border-2 border-dashed shadow-none">
-                                <CardContent className="flex h-full items-center justify-center">
+                            <div className="w-full max-w-md rounded-xl border-2 border-dashed shadow-none ring-0">
+                                <div className="flex h-full items-center justify-center">
                                     <CreateRoomForm>
                                         <Button variant="outline">
                                             <PlusIcon className="size-4" />
                                             Create another room
                                         </Button>
                                     </CreateRoomForm>
-                                </CardContent>
-                            </Card>
+                                </div>
+                            </div>
                         </>
                     ) : (
                         <Card className="w-full max-w-md border-2 border-dashed shadow-none">
