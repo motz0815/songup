@@ -2,6 +2,7 @@
 
 import { UserButton } from "@/components/auth/user-button"
 import { CreateRoomForm } from "@/components/host/create-room"
+import { RoomExpiry } from "@/components/host/room-expiry"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -14,7 +15,6 @@ import {
 } from "@/components/ui/card"
 import { api } from "@/convex/_generated/api"
 import { Preloaded, usePreloadedQuery } from "convex/react"
-import { formatDistance } from "date-fns"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
 
@@ -47,8 +47,9 @@ export default function ManageRooms({
                                     <Link
                                         href={`/host/${room.code}`}
                                         key={room.code}
+                                        className="hover:cursor-default"
                                     >
-                                        <Card className="h-full w-full max-w-md transition-shadow hover:shadow-md">
+                                        <Card className="h-full w-full max-w-md transition-shadow hover:shadow-lg">
                                             <CardHeader>
                                                 <div className="flex items-center justify-between">
                                                     <div>
@@ -57,32 +58,14 @@ export default function ManageRooms({
                                                             {room.code}
                                                         </CardTitle>
                                                         <CardDescription>
-                                                            Expires:{" "}
-                                                            <span
-                                                                // If the room expires in less than 6 hours, make the text red
-                                                                className={
-                                                                    new Date(
-                                                                        room.expiresAt,
-                                                                    ).getTime() -
-                                                                        Date.now() <
-                                                                    6 *
-                                                                        60 *
-                                                                        60 *
-                                                                        1000
-                                                                        ? "text-red-500"
-                                                                        : ""
+                                                            <RoomExpiry
+                                                                createdAt={
+                                                                    room._creationTime
                                                                 }
-                                                            >
-                                                                {formatDistance(
-                                                                    new Date(
-                                                                        room.expiresAt,
-                                                                    ),
-                                                                    Date.now(),
-                                                                    {
-                                                                        addSuffix: true,
-                                                                    },
-                                                                )}
-                                                            </span>
+                                                                expiresAt={
+                                                                    room.expiresAt
+                                                                }
+                                                            />
                                                         </CardDescription>
                                                     </div>
                                                     {room.proStatus ===
