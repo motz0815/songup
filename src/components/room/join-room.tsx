@@ -22,6 +22,10 @@ export function JoinRoomForm() {
                     placeholder="Enter room code"
                     className="bg-background text-foreground max-w-3xs"
                     required
+                    onInput={(e) =>
+                        (e.currentTarget.value =
+                            e.currentTarget.value.toUpperCase())
+                    }
                     minLength={4}
                 />
                 <SubmitButton className="border border-white/20">
