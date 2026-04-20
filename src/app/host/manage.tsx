@@ -23,9 +23,12 @@ import {
     ItemTitle,
 } from "@/components/ui/item"
 import { api } from "@/convex/_generated/api"
-import { Preloaded, usePreloadedQuery } from "convex/react"
+import { Id } from "@/convex/_generated/dataModel"
+import { Preloaded, useAction, usePreloadedQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { toast } from "sonner"
 
 export default function ManageRooms({
     preloadedRooms,
@@ -33,6 +36,21 @@ export default function ManageRooms({
     preloadedRooms: Preloaded<typeof api.rooms.manage.listOwnRooms>
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
+
+    const createCheckout = useAction(api.stripe.createPaymentCheckout)
+
+    async function handleRedirectToProCheckout(roomId: Id<"rooms">) {
+        const checkout = await createCheckout({
+            priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
+            roomId,
+        })
+        if (checkout?.url) {
+            toast.success("Redirecting to checkout")
+            redirect(checkout.url)
+        } else {
+            toast.error("Something went wrong while redirecting to checkout")
+        }
+    }
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -79,7 +97,14 @@ export default function ManageRooms({
                                                         Pro
                                                     </Badge>
                                                 ) : (
-                                                    <Button variant="outline">
+                                                    <Button
+                                                        variant="outline"
+                                                        onClick={() =>
+                                                            handleRedirectToProCheckout(
+                                                                room._id,
+                                                            )
+                                                        }
+                                                    >
                                                         <ArrowBigUpDashIcon
                                                             className="size-4"
                                                             data-icon="inline-start"
