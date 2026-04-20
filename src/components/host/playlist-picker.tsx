@@ -267,7 +267,7 @@ function PlaylistCard({
     return (
         <div
             className={cn(
-                "hover:bg-secondary flex items-center space-x-4 rounded-lg border p-2 shadow-sm transition-all hover:cursor-pointer",
+                "hover:bg-secondary flex items-center space-x-4 rounded-lg border p-2 transition-all hover:cursor-pointer",
                 loading && "hover:bg-transparent",
             )}
         >

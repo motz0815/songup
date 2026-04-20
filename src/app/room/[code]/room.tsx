@@ -3,11 +3,13 @@
 import { NicknameForm } from "@/components/auth/nickname-form"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { AddSong } from "@/components/room/add-song"
+import { ProUpsell } from "@/components/room/pro-upsell"
 import { Queue } from "@/components/room/queue"
 import { Button } from "@/components/ui/button"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 import {
     Preloaded,
     useConvexAuth,
@@ -43,12 +45,15 @@ export default function Room({
     const skipToNextSong = useMutation(api.rooms.controls.skipToNextSong)
 
     const nickname = useQuery(api.nicknames.getNickname)
-    const isHostAndPro =
-        room?.proStatus === "active" && room?.host === user?._id
+
+    const isHost = room?.host === user?._id
+    const isPro = room?.proStatus === "active"
 
     /*
      * OTHER STATE
      */
+
+    const [animationParent] = useAutoAnimate()
 
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-500 to-indigo-950 text-white">
@@ -59,7 +64,7 @@ export default function Room({
                             <ArrowLeft className="size-6" />
                             <h1 className="text-xl font-bold">
                                 SongUp {room?.proStatus === "active" && "Pro"}{" "}
-                                {isHostAndPro && "(Host)"}
+                                {isHost && isPro && "(Host)"}
                             </h1>
                         </div>
                     </Link>
@@ -67,7 +72,7 @@ export default function Room({
                         <span className="font-bold">{room?.code}</span>
                     </h2>
                 </header>
-                <main className="flex flex-col gap-4">
+                <main className="flex flex-col gap-4" ref={animationParent}>
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Now Playing</h2>
                         {currentSong ? (
@@ -103,7 +108,7 @@ export default function Room({
                         <h2 className="text-xl font-bold">Up next</h2>
                         <Queue roomId={roomId} />
                     </section>
-                    {isHostAndPro && (
+                    {isHost && isPro && (
                         <section className="flex flex-col gap-2">
                             <h2 className="text-xl font-bold">Host controls</h2>
                             <div className="flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
@@ -120,6 +125,12 @@ export default function Room({
                             </div>
                         </section>
                     )}
+                    {isHost && !isPro && (
+                        <ProUpsell
+                            roomId={roomId}
+                            roomCode={room?.code ?? ""}
+                        />
+                    )}
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Add songs</h2>
                         <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
@@ -130,7 +141,7 @@ export default function Room({
                                         <p>
                                             Logged in as <b>{nickname}</b>
                                         </p>
-                                        {isHostAndPro ? (
+                                        {isHost && isPro ? (
                                             <p>
                                                 You are the host of a pro room.
                                                 You can add unlimited songs.

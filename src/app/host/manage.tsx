@@ -2,21 +2,33 @@
 
 import { UserButton } from "@/components/auth/user-button"
 import { CreateRoomForm } from "@/components/host/create-room"
+import { RoomExpiry } from "@/components/host/room-expiry"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     Card,
+    CardAction,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import {
+    Item,
+    ItemContent,
+    ItemDescription,
+    ItemMedia,
+    ItemTitle,
+} from "@/components/ui/item"
 import { api } from "@/convex/_generated/api"
-import { Preloaded, usePreloadedQuery } from "convex/react"
-import { formatDistance } from "date-fns"
-import { PlusIcon } from "lucide-react"
+import { Id } from "@/convex/_generated/dataModel"
+import { Preloaded, useAction, usePreloadedQuery } from "convex/react"
+import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { toast } from "sonner"
 
 export default function ManageRooms({
     preloadedRooms,
@@ -25,12 +37,29 @@ export default function ManageRooms({
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
 
+    const createCheckout = useAction(api.stripe.createPaymentCheckout)
+
+    async function handleRedirectToProCheckout(roomId: Id<"rooms">) {
+        const checkout = await createCheckout({
+            priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
+            roomId,
+        })
+        if (checkout?.url) {
+            toast.success("Redirecting to checkout")
+            redirect(checkout.url)
+        } else {
+            toast.error("Something went wrong while redirecting to checkout")
+        }
+    }
+
     return (
         <div className="flex min-h-screen flex-col">
             <header className="h-20 border-b">
                 <div className="flex h-full items-center justify-between px-4">
                     <Link href="/">
-                        <h1 className="text-4xl font-bold">Your Rooms</h1>
+                        <h1 className="text-2xl font-bold lg:text-4xl">
+                            <span className="hidden lg:inline">Your</span> Rooms
+                        </h1>
                     </Link>
                     <UserButton />
                 </div>
@@ -44,134 +73,160 @@ export default function ManageRooms({
                                     key={room.code}
                                     className="w-full max-w-md"
                                 >
-                                    <Link
-                                        href={`/host/${room.code}`}
-                                        key={room.code}
-                                    >
-                                        <Card className="h-full w-full max-w-md transition-shadow hover:shadow-md">
-                                            <CardHeader>
-                                                <div className="flex items-center justify-between">
-                                                    <div>
-                                                        <CardTitle className="text-2xl">
-                                                            Room Code:{" "}
-                                                            {room.code}
-                                                        </CardTitle>
-                                                        <CardDescription>
-                                                            Expires:{" "}
-                                                            <span
-                                                                // If the room expires in less than 6 hours, make the text red
-                                                                className={
-                                                                    new Date(
-                                                                        room.expiresAt,
-                                                                    ).getTime() -
-                                                                        Date.now() <
-                                                                    6 *
-                                                                        60 *
-                                                                        60 *
-                                                                        1000
-                                                                        ? "text-red-500"
-                                                                        : ""
-                                                                }
-                                                            >
-                                                                {formatDistance(
-                                                                    new Date(
-                                                                        room.expiresAt,
-                                                                    ),
-                                                                    Date.now(),
-                                                                    {
-                                                                        addSuffix: true,
-                                                                    },
-                                                                )}
-                                                            </span>
-                                                        </CardDescription>
-                                                    </div>
-                                                    {room.proStatus ===
-                                                        "active" && (
-                                                        <div className="flex items-center gap-2">
-                                                            <Badge>Pro</Badge>
-                                                        </div>
-                                                    )}
+                                    <Card className="h-full w-full max-w-md">
+                                        <CardHeader>
+                                            <CardTitle className="text-2xl">
+                                                <Link
+                                                    href={`/host/${room.code}`}
+                                                    className="hover:underline"
+                                                >
+                                                    Room Code: {room.code}
+                                                </Link>
+                                            </CardTitle>
+                                            <CardDescription>
+                                                <RoomExpiry
+                                                    createdAt={
+                                                        room._creationTime
+                                                    }
+                                                    expiresAt={room.expiresAt}
+                                                />
+                                            </CardDescription>
+                                            <CardAction>
+                                                {room.proStatus === "active" ? (
+                                                    <Badge className="m-1">
+                                                        Pro
+                                                    </Badge>
+                                                ) : (
+                                                    <Button
+                                                        variant="outline"
+                                                        onClick={() =>
+                                                            handleRedirectToProCheckout(
+                                                                room._id,
+                                                            )
+                                                        }
+                                                    >
+                                                        <ArrowBigUpDashIcon
+                                                            className="size-4"
+                                                            data-icon="inline-start"
+                                                        />
+                                                        Upgrade
+                                                    </Button>
+                                                )}
+                                            </CardAction>
+                                        </CardHeader>
+                                        <CardContent className="h-full">
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex flex-col">
+                                                    <h2 className="text-lg font-semibold">
+                                                        Settings
+                                                    </h2>
+                                                    <p className="text-sm">
+                                                        {
+                                                            room.settings
+                                                                .maxSongsPerUser
+                                                        }{" "}
+                                                        songs per user
+                                                    </p>
                                                 </div>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <div className="flex flex-col gap-4">
-                                                    <div className="flex flex-col">
-                                                        <h2 className="text-lg font-semibold">
-                                                            Settings
-                                                        </h2>
-                                                        <p className="text-sm">
-                                                            {
-                                                                room.settings
-                                                                    .maxSongsPerUser
-                                                            }{" "}
-                                                            songs per user
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex flex-col">
-                                                        <h2 className="text-lg font-semibold">
-                                                            Current Song
-                                                        </h2>
-                                                        {room.currentSong ? (
-                                                            <div className="flex items-center justify-between space-x-4 rounded-lg border p-3 shadow-sm transition-all">
+                                                <div className="flex flex-col gap-1">
+                                                    <h2 className="text-lg font-semibold">
+                                                        Current Song
+                                                    </h2>
+                                                    {room.currentSong ? (
+                                                        <Item
+                                                            variant="outline"
+                                                            size="sm"
+                                                        >
+                                                            <ItemMedia>
                                                                 <ImageWithFallback
                                                                     src={`https://i.ytimg.com/vi_webp/${room.currentSong.videoId}/mqdefault.webp`}
                                                                     width={128}
                                                                     height={128}
                                                                     alt={`${room.currentSong.title}`}
-                                                                    className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
+                                                                    className="aspect-video h-12 w-auto rounded-lg border border-white/20 object-cover"
                                                                     unoptimized
                                                                 />
-                                                                <div className="w-full">
-                                                                    <h4 className="text-lg font-semibold md:text-xl">
-                                                                        {
-                                                                            room
-                                                                                .currentSong
-                                                                                .title
-                                                                        }
-                                                                    </h4>
-                                                                    <p className="text-muted-foreground text-sm md:text-lg">
-                                                                        {
-                                                                            room
-                                                                                .currentSong
-                                                                                .artist
-                                                                        }
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            <p className="text-sm">
-                                                                No song playing
-                                                            </p>
-                                                        )}
-                                                    </div>
+                                                            </ItemMedia>
+                                                            <ItemContent>
+                                                                <ItemTitle>
+                                                                    {
+                                                                        room
+                                                                            .currentSong
+                                                                            .title
+                                                                    }
+                                                                </ItemTitle>
+                                                                <ItemDescription>
+                                                                    {
+                                                                        room
+                                                                            .currentSong
+                                                                            .artist
+                                                                    }
+                                                                </ItemDescription>
+                                                            </ItemContent>
+                                                            <ItemContent className="flex-none text-center">
+                                                                <ItemDescription>
+                                                                    {Math.floor(
+                                                                        room
+                                                                            .currentSong
+                                                                            .duration /
+                                                                            60,
+                                                                    )}
+                                                                    :
+                                                                    {Math.floor(
+                                                                        room
+                                                                            .currentSong
+                                                                            .duration %
+                                                                            60,
+                                                                    )
+                                                                        .toString()
+                                                                        .padStart(
+                                                                            2,
+                                                                            "0",
+                                                                        )}
+                                                                </ItemDescription>
+                                                            </ItemContent>
+                                                        </Item>
+                                                    ) : (
+                                                        <p className="text-sm">
+                                                            No song playing
+                                                        </p>
+                                                    )}
                                                 </div>
-                                            </CardContent>
-                                        </Card>
-                                    </Link>
+                                            </div>
+                                        </CardContent>
+                                        <CardFooter className="flex justify-end">
+                                            <Link href={`/host/${room.code}`}>
+                                                <Button variant="outline">
+                                                    <ArrowRightIcon className="size-4" />
+                                                    Open
+                                                </Button>
+                                            </Link>
+                                        </CardFooter>
+                                    </Card>
                                 </div>
                             ))}
-                            <Card className="w-full max-w-md border-2 border-dashed shadow-none">
-                                <CardContent className="flex h-full items-center justify-center">
+                            <div className="w-full max-w-md rounded-xl border-2 border-dashed py-4 shadow-none ring-0">
+                                <div className="flex h-full items-center justify-center">
                                     <CreateRoomForm>
                                         <Button variant="outline">
                                             <PlusIcon className="size-4" />
                                             Create another room
                                         </Button>
                                     </CreateRoomForm>
-                                </CardContent>
-                            </Card>
+                                </div>
+                            </div>
                         </>
                     ) : (
-                        <Card className="w-full max-w-md border-2 border-dashed shadow-none">
-                            <CardContent className="flex h-full items-center justify-center">
+                        <div className="w-full max-w-md rounded-xl border-2 border-dashed py-4 shadow-none ring-0">
+                            <div className="flex h-full items-center justify-center">
                                 <CreateRoomForm>
                                     <Button variant="outline">
                                         <PlusIcon className="size-4" />
                                         Create a room
                                     </Button>
                                 </CreateRoomForm>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     )}
                 </div>
             </main>

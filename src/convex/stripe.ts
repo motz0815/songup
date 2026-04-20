@@ -111,6 +111,8 @@ export const createPaymentCheckout = action({
     args: {
         priceId: v.string(),
         roomId: v.id("rooms"),
+        successUrl: v.optional(v.string()),
+        cancelUrl: v.optional(v.string()),
     },
     returns: v.object({
         sessionId: v.string(),
@@ -138,8 +140,8 @@ export const createPaymentCheckout = action({
                 },
             ],
             allow_promotion_codes: true,
-            success_url: getURL("/host/?success=true"),
-            cancel_url: getURL("/host/?canceled=true"),
+            success_url: args.successUrl || getURL("/host/?success=true"),
+            cancel_url: args.cancelUrl || getURL("/host/?canceled=true"),
             managed_payments: {
                 enabled: true,
             },

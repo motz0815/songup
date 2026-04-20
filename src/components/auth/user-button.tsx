@@ -59,8 +59,10 @@ export function UserButton() {
                                 >
                                     <Avatar className="size-8 rounded-lg">
                                         <AvatarImage
-                                            src={user.image}
-                                            alt={user.name}
+                                            src={user.image || ""}
+                                            alt={user.name || ""}
+                                            width={64}
+                                            height={64}
                                         />
                                         <AvatarFallback className="rounded-lg">
                                             {user.name?.charAt(0) || "?"}
@@ -86,8 +88,10 @@ export function UserButton() {
                                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                         <Avatar className="size-8 rounded-lg">
                                             <AvatarImage
-                                                src={user.image}
-                                                alt={user.name}
+                                                src={user.image || ""}
+                                                alt={user.name || ""}
+                                                width={64}
+                                                height={64}
                                             />
                                             <AvatarFallback className="rounded-lg">
                                                 {user.name?.charAt(0) || "?"}
