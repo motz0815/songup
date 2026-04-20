@@ -8,12 +8,20 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     Card,
+    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import {
+    Item,
+    ItemContent,
+    ItemDescription,
+    ItemMedia,
+    ItemTitle,
+} from "@/components/ui/item"
 import { api } from "@/convex/_generated/api"
 import { Preloaded, usePreloadedQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
@@ -31,7 +39,9 @@ export default function ManageRooms({
             <header className="h-20 border-b">
                 <div className="flex h-full items-center justify-between px-4">
                     <Link href="/">
-                        <h1 className="text-4xl font-bold">Your Rooms</h1>
+                        <h1 className="text-2xl font-bold lg:text-4xl">
+                            <span className="hidden lg:inline">Your</span> Rooms
+                        </h1>
                     </Link>
                     <UserButton />
                 </div>
@@ -45,34 +55,29 @@ export default function ManageRooms({
                                     key={room.code}
                                     className="w-full max-w-md"
                                 >
-                                    <Card className="h-full w-full max-w-md transition-shadow hover:shadow-lg">
+                                    <Card className="h-full w-full max-w-md">
                                         <CardHeader>
-                                            <div className="flex items-center justify-between">
-                                                <div>
-                                                    <CardTitle className="text-2xl">
-                                                        <Link
-                                                            href={`/host/${room.code}`}
-                                                            className="hover:underline"
-                                                        >
-                                                            Room Code:{" "}
-                                                            {room.code}
-                                                        </Link>
-                                                    </CardTitle>
-                                                    <CardDescription>
-                                                        <RoomExpiry
-                                                            createdAt={
-                                                                room._creationTime
-                                                            }
-                                                            expiresAt={
-                                                                room.expiresAt
-                                                            }
-                                                        />
-                                                    </CardDescription>
-                                                </div>
+                                            <CardTitle className="text-2xl">
+                                                <Link
+                                                    href={`/host/${room.code}`}
+                                                    className="hover:underline"
+                                                >
+                                                    Room Code: {room.code}
+                                                </Link>
+                                            </CardTitle>
+                                            <CardDescription>
+                                                <RoomExpiry
+                                                    createdAt={
+                                                        room._creationTime
+                                                    }
+                                                    expiresAt={room.expiresAt}
+                                                />
+                                            </CardDescription>
+                                            <CardAction>
                                                 {room.proStatus === "active" ? (
-                                                    <div className="flex items-center gap-2">
-                                                        <Badge>Pro</Badge>
-                                                    </div>
+                                                    <Badge className="m-1">
+                                                        Pro
+                                                    </Badge>
                                                 ) : (
                                                     <Button variant="outline">
                                                         <ArrowBigUpDashIcon
@@ -82,7 +87,7 @@ export default function ManageRooms({
                                                         Upgrade
                                                     </Button>
                                                 )}
-                                            </div>
+                                            </CardAction>
                                         </CardHeader>
                                         <CardContent className="h-full">
                                             <div className="flex flex-col gap-4">
@@ -98,37 +103,64 @@ export default function ManageRooms({
                                                         songs per user
                                                     </p>
                                                 </div>
-                                                <div className="flex flex-col">
+                                                <div className="flex flex-col gap-1">
                                                     <h2 className="text-lg font-semibold">
                                                         Current Song
                                                     </h2>
                                                     {room.currentSong ? (
-                                                        <div className="flex items-center justify-between space-x-4 rounded-lg border p-3 shadow-sm transition-all">
-                                                            <ImageWithFallback
-                                                                src={`https://i.ytimg.com/vi_webp/${room.currentSong.videoId}/mqdefault.webp`}
-                                                                width={128}
-                                                                height={128}
-                                                                alt={`${room.currentSong.title}`}
-                                                                className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
-                                                                unoptimized
-                                                            />
-                                                            <div className="w-full">
-                                                                <h4 className="text-lg font-semibold md:text-xl">
+                                                        <Item
+                                                            variant="outline"
+                                                            size="sm"
+                                                        >
+                                                            <ItemMedia>
+                                                                <ImageWithFallback
+                                                                    src={`https://i.ytimg.com/vi_webp/${room.currentSong.videoId}/mqdefault.webp`}
+                                                                    width={128}
+                                                                    height={128}
+                                                                    alt={`${room.currentSong.title}`}
+                                                                    className="aspect-video h-12 w-auto rounded-lg border border-white/20 object-cover"
+                                                                    unoptimized
+                                                                />
+                                                            </ItemMedia>
+                                                            <ItemContent>
+                                                                <ItemTitle>
                                                                     {
                                                                         room
                                                                             .currentSong
                                                                             .title
                                                                     }
-                                                                </h4>
-                                                                <p className="text-muted-foreground text-sm md:text-lg">
+                                                                </ItemTitle>
+                                                                <ItemDescription>
                                                                     {
                                                                         room
                                                                             .currentSong
                                                                             .artist
                                                                     }
-                                                                </p>
-                                                            </div>
-                                                        </div>
+                                                                </ItemDescription>
+                                                            </ItemContent>
+                                                            <ItemContent className="flex-none text-center">
+                                                                <ItemDescription>
+                                                                    {Math.floor(
+                                                                        room
+                                                                            .currentSong
+                                                                            .duration /
+                                                                            60,
+                                                                    )}
+                                                                    :
+                                                                    {Math.floor(
+                                                                        room
+                                                                            .currentSong
+                                                                            .duration %
+                                                                            60,
+                                                                    )
+                                                                        .toString()
+                                                                        .padStart(
+                                                                            2,
+                                                                            "0",
+                                                                        )}
+                                                                </ItemDescription>
+                                                            </ItemContent>
+                                                        </Item>
                                                     ) : (
                                                         <p className="text-sm">
                                                             No song playing
@@ -148,7 +180,7 @@ export default function ManageRooms({
                                     </Card>
                                 </div>
                             ))}
-                            <div className="w-full max-w-md rounded-xl border-2 border-dashed shadow-none ring-0">
+                            <div className="w-full max-w-md rounded-xl border-2 border-dashed py-4 shadow-none ring-0">
                                 <div className="flex h-full items-center justify-center">
                                     <CreateRoomForm>
                                         <Button variant="outline">
@@ -160,16 +192,16 @@ export default function ManageRooms({
                             </div>
                         </>
                     ) : (
-                        <Card className="w-full max-w-md border-2 border-dashed shadow-none">
-                            <CardContent className="flex h-full items-center justify-center">
+                        <div className="w-full max-w-md rounded-xl border-2 border-dashed py-4 shadow-none ring-0">
+                            <div className="flex h-full items-center justify-center">
                                 <CreateRoomForm>
                                     <Button variant="outline">
                                         <PlusIcon className="size-4" />
                                         Create a room
                                     </Button>
                                 </CreateRoomForm>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     )}
                 </div>
             </main>
