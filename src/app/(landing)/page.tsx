@@ -114,7 +114,7 @@ export default function Home() {
                                 ].map((testimonial, i) => (
                                     <Card
                                         key={i}
-                                        className="border-white/20 bg-white/5 text-white backdrop-blur-lg"
+                                        className="border border-white/20 bg-white/5 text-white backdrop-blur-lg"
                                     >
                                         <CardContent className="flex flex-col gap-4">
                                             {testimonial.src ? (
@@ -270,7 +270,7 @@ export default function Home() {
                             </p>
 
                             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
-                                <Card className="border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
+                                <Card className="border border-white/20 bg-white/10 text-white shadow-md backdrop-blur-lg">
                                     <CardHeader>
                                         <CardTitle className="text-2xl text-shadow-md">
                                             Free Room
@@ -311,7 +311,7 @@ export default function Home() {
                                     </CardContent>
                                 </Card>
 
-                                <Card className="border-purple-400/40 bg-white/15 text-white shadow-lg shadow-purple-500/10 backdrop-blur-lg">
+                                <Card className="border border-purple-400/40 bg-white/15 text-white shadow-lg shadow-purple-500/10 backdrop-blur-lg">
                                     <CardHeader>
                                         <CardTitle className="text-2xl text-shadow-md">
                                             Pro Room
