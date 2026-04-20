@@ -103,7 +103,7 @@ export function DemoSection() {
                                     }
                                 }}
                                 className={cn(
-                                    "relative flex-1 cursor-pointer gap-2 overflow-hidden border border-white/20 bg-white/5 text-white backdrop-blur-lg transition-all",
+                                    "relative flex-1 cursor-pointer overflow-hidden border border-white/20 bg-white/5 text-white backdrop-blur-lg transition-all",
                                     activeIndex === i
                                         ? "border-white/50 bg-white/15 shadow-lg"
                                         : "hover:bg-white/10",
