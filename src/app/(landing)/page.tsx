@@ -122,6 +122,8 @@ export default function Home() {
                                                     <AvatarImage
                                                         src={testimonial.src}
                                                         alt={testimonial.author}
+                                                        width={64}
+                                                        height={64}
                                                     />
                                                     <AvatarFallback>
                                                         {testimonial.author.charAt(

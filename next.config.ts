@@ -37,6 +37,15 @@ const nextConfig: NextConfig = {
             {
                 hostname: "*.googleusercontent.com",
             },
+            {
+                hostname: "*.imgix.net",
+            },
+            {
+                hostname: "*.redditstatic.com",
+            },
+            {
+                hostname: "styles.redditmedia.com",
+            },
         ],
     },
     skipTrailingSlashRedirect: true,
