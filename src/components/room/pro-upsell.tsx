@@ -3,7 +3,8 @@
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { getURL } from "@/lib/utils"
-import { useAction } from "convex/react"
+import { useAuthActions } from "@convex-dev/auth/react"
+import { useAction, useQuery } from "convex/react"
 import { ArrowBigUpDashIcon, XIcon } from "lucide-react"
 import { redirect } from "next/navigation"
 import { useState } from "react"
@@ -20,7 +21,17 @@ export function ProUpsell({
     const [dismissed, setDismissed] = useState(false)
     const createCheckout = useAction(api.stripe.createPaymentCheckout)
 
+    const { signIn } = useAuthActions()
+    const user = useQuery(api.auth.getCurrentUser)
+
     async function handleRedirectToProCheckout() {
+        // If the user is not signed in, sign them in and redirect to the pay page
+        if (!user?._id || user.isAnonymous) {
+            await signIn("google", {
+                redirectTo: `/pay?roomId=${roomId}&successUrl=${getURL(`/room/${roomCode}?success=true`)}&cancelUrl=${getURL(`/room/${roomCode}?canceled=true`)}`,
+            })
+            return
+        }
         const checkout = await createCheckout({
             priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
             roomId,

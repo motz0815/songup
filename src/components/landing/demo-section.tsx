@@ -69,7 +69,7 @@ export function DemoSection() {
                     How SongUp works
                 </h2>
                 <p className="mx-auto mb-12 max-w-2xl text-center text-white/70">
-                    The host connects to the Speakers and creates a room. Guests
+                    The host connects to the speakers and creates a room. Guests
                     join the room using the QR or room code and start adding
                     songs.
                 </p>

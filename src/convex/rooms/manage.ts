@@ -8,9 +8,11 @@ import { countRoomCreated } from "../stats"
 export const activateProRoom = internalMutation({
     args: {
         roomId: v.id("rooms"),
+        userId: v.id("users"),
     },
     handler: async (ctx, args) => {
         await ctx.db.patch("rooms", args.roomId, {
+            host: args.userId, // Handle the case where the host created an account in the moment of paying for the room
             proStatus: "active",
             expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days expiry
         })
