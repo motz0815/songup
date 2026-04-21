@@ -18,10 +18,12 @@ registerRoutes(http, components.stripe, {
         "payment_intent.succeeded": async (ctx, event) => {
             const paymentIntent = event.data.object
             const roomId = paymentIntent.metadata.roomId as Id<"rooms">
+            const userId = paymentIntent.metadata.userId as Id<"users">
 
             // Convert the pending pro room to an active pro room
             await ctx.runMutation(internal.rooms.manage.activateProRoom, {
                 roomId,
+                userId,
             })
         },
     },

@@ -24,7 +24,8 @@ import {
 } from "@/components/ui/item"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import { Preloaded, useAction, usePreloadedQuery } from "convex/react"
+import { useAuthActions } from "@convex-dev/auth/react"
+import { Preloaded, useAction, usePreloadedQuery, useQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -39,7 +40,15 @@ export default function ManageRooms({
 
     const createCheckout = useAction(api.stripe.createPaymentCheckout)
 
+    const { signIn } = useAuthActions()
+    const user = useQuery(api.auth.getCurrentUser)
+
     async function handleRedirectToProCheckout(roomId: Id<"rooms">) {
+        // If the user is not signed in, sign them in and redirect to the pay page
+        if (!user?._id || user.isAnonymous) {
+            await signIn("google", { redirectTo: `/pay?roomId=${roomId}` })
+            return
+        }
         const checkout = await createCheckout({
             priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
             roomId,
