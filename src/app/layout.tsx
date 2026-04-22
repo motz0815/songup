@@ -1,3 +1,4 @@
+import CookieBanner from "@/components/cookie-banner"
 import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/sonner"
 import { getURL } from "@/lib/utils"
@@ -30,6 +31,7 @@ export default function RootLayout({
             >
                 <Providers>{children}</Providers>
                 <Toaster richColors theme="light" />
+                <CookieBanner />
             </body>
         </html>
     )
