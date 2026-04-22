@@ -13,7 +13,8 @@ export function IdentificationProvider({
     const user = useQuery(api.auth.getCurrentUser)
 
     useEffect(() => {
-        if (!user?.isAnonymous && user?._id) posthog.identify(user._id)
+        if (!user?.isAnonymous && user?._id && !posthog._isIdentified())
+            posthog.identify(user._id)
     }, [user?._id])
 
     return <>{children}</>
