@@ -4,6 +4,7 @@ import { api } from "@/convex/_generated/api"
 import { useAuthActions } from "@convex-dev/auth/react"
 import { useAction, useConvexAuth, useQuery } from "convex/react"
 import { ChevronsUpDown, CreditCard, LogOut } from "lucide-react"
+import posthog from "posthog-js"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
@@ -120,7 +121,10 @@ export function UserButton() {
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
-                                    onClick={() => void signOut()}
+                                    onClick={() => {
+                                        signOut()
+                                        posthog.reset()
+                                    }}
                                 >
                                     <LogOut />
                                     Log out
