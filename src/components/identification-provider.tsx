@@ -14,7 +14,10 @@ export function IdentificationProvider({
 
     useEffect(() => {
         if (!user?.isAnonymous && user?._id && !posthog._isIdentified())
-            posthog.identify(user._id)
+            posthog.identify(user._id, {
+                email: user.email,
+                name: user.name,
+            })
     }, [user?._id])
 
     return <>{children}</>
