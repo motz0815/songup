@@ -279,7 +279,7 @@ export default function Home() {
                                     <CardContent className="flex h-full flex-col justify-between gap-4">
                                         <div className="flex flex-col gap-4">
                                             <p className="text-4xl font-bold">
-                                                0€
+                                                0$
                                                 <span className="text-base font-normal text-white/60">
                                                     {" "}
                                                     / room
@@ -320,7 +320,7 @@ export default function Home() {
                                     <CardContent className="flex h-full flex-col justify-between gap-4">
                                         <div className="flex flex-col gap-4">
                                             <p className="text-4xl font-bold">
-                                                5€
+                                                5$
                                                 <span className="text-base font-normal text-white/60">
                                                     {" "}
                                                     / room

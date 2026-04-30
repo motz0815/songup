@@ -156,7 +156,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                                     />
                                 </div>
                                 <p className="text-2xl font-bold">
-                                    0€
+                                    0$
                                     <span className="text-muted-foreground text-sm font-normal">
                                         {" "}
                                         / room
@@ -193,7 +193,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                                     <RadioGroupItem value="pro" id="tier-pro" />
                                 </div>
                                 <p className="text-2xl font-bold">
-                                    5€
+                                    5$
                                     <span className="text-muted-foreground text-sm font-normal">
                                         {" "}
                                         / room
