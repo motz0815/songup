@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: songup-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-convex}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-convex_dev_password}
+      POSTGRES_DB: ${DB_NAME:-convex}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-convex}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  convex-backend:
+    image: node:22-alpine
+    container_name: songup-convex
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-convex}:${DB_PASSWORD:-convex_dev_password}@postgres:5432/${DB_NAME:-convex}
+      NODE_ENV: production
+      CONVEX_URL: http://convex-backend:3210
+    ports:
+      - "3210:3210"
+    command: >
+      sh -c "apk add --no-cache python3 make g++ &&
+             bun install &&
+             bun run build &&
+             npx convex deploy --url http://convex-backend:3210"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  flask:
+    image: python:3.11-alpine
+    container_name: songup-flask
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: production
+      FLASK_DEBUG: 0
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5328:5328"
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+             python -m flask --app api/flask/index run -p 5328 --host 0.0.0.0"
+    restart: unless-stopped
+
+  nextjs:
+    image: node:22-alpine
+    container_name: songup-nextjs
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_CONVEX_URL: ${NEXT_PUBLIC_CONVEX_URL:-http://localhost:3210}
+      CONVEX_DEPLOYMENT: prod
+      FLASK_URL: ${FLASK_URL:-http://flask:5328}
+    ports:
+      - "3000:3000"
+    command: >
+      sh -c "bun install &&
+             bun run build &&
+             bun start"
+    depends_on:
+      - convex-backend
+      - flask
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
