@@ -3,20 +3,12 @@
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useAuthedMutation } from "@/lib/auth"
-import { cn } from "@/lib/utils"
 import { useAction, useQuery } from "convex/react"
-import {
-    AlertCircleIcon,
-    CheckIcon,
-    PlusIcon,
-    SparklesIcon,
-    ZapIcon,
-} from "lucide-react"
+import { PlusIcon } from "lucide-react"
 import { redirect, useRouter } from "next/navigation"
 import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
 import { Button } from "../ui/button"
 import {
     Dialog,
@@ -27,7 +19,6 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { SubmitButton } from "../ui/submit-button"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
 
@@ -60,7 +51,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
 
     async function handleCreateRoom(formData: FormData) {
         await createRoom({
-            pro: formData.get("pro") === "pro",
+            pro: false, //formData.get("pro") === "pro",
             maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
             fallbackSongs: playlist
                 ? playlist.tracks.map((track) => ({
@@ -71,7 +62,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                   }))
                 : undefined,
         }).then(async (data) => {
-            const pro = formData.get("pro") === "pro"
+            const pro = false //formData.get("pro") === "pro"
             posthog.capture("room_created", {
                 id: data.roomId,
                 code: data.code,
@@ -123,7 +114,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                     action={handleCreateRoom}
                     className="flex w-full flex-col gap-4"
                 >
-                    <input type="hidden" name="pro" value={roomTier} />
+                    {/* <input type="hidden" name="pro" value={roomTier} />
                     <div className="flex flex-col gap-2">
                         <Label>Room type</Label>
                         <RadioGroup
@@ -133,7 +124,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                             }
                             className="grid grid-cols-2 gap-3"
                         >
-                            {/* Free tier */}
+                            
                             <label
                                 htmlFor="tier-free"
                                 className={cn(
@@ -175,7 +166,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                                 </ul>
                             </label>
 
-                            {/* Pro tier */}
+                            
                             <label
                                 htmlFor="tier-pro"
                                 className={cn(
@@ -223,7 +214,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                                 Please sign in before creating a Pro room
                             </AlertDescription>
                         </Alert>
-                    )}
+                    )} */}
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="maxSongsPerUser">
                             Max songs per user
