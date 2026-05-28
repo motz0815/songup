@@ -4,13 +4,11 @@ import { HostBackground } from "@/components/host/background"
 import { RoomQRCode } from "@/components/host/qr-code"
 import { Queue } from "@/components/host/queue"
 import { UpgradeRoom } from "@/components/host/upgrade-room"
-import { Button } from "@/components/ui/button"
 import { Fullscreen } from "@/components/ui/fullscreen"
 import { Progress } from "@/components/ui/progress"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { Preloaded, useMutation, usePreloadedQuery } from "convex/react"
-import { ArrowBigUpDashIcon } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
@@ -201,7 +199,7 @@ export default function Host({
                     </div>
                 </div>
                 <footer className="flex w-full items-center justify-between px-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-baseline gap-2">
                         <Link href="/host">
                             <h2 className="text-3xl font-bold text-white/80">
                                 SongUp
@@ -216,17 +214,11 @@ export default function Host({
                             </h2>
                         </Link>
                         {room?.proStatus === "free" && (
-                            <span className="ml-2 text-shadow-md">
-                                <UpgradeRoom roomId={roomId}>
-                                    <Button variant="ghost">
-                                        <ArrowBigUpDashIcon
-                                            className="size-4"
-                                            data-icon="inline-start"
-                                        />
-                                        Upgrade
-                                    </Button>
-                                </UpgradeRoom>
-                            </span>
+                            <UpgradeRoom roomId={roomId}>
+                                <span className="flex cursor-pointer items-baseline gap-2 text-xl font-bold text-white/80 hover:underline">
+                                    Free
+                                </span>
+                            </UpgradeRoom>
                         )}
                     </div>
                     <p className="text-3xl font-bold text-white/80">
