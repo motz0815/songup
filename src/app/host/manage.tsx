@@ -3,6 +3,7 @@
 import { UserButton } from "@/components/auth/user-button"
 import { CreateRoomForm } from "@/components/host/create-room"
 import { RoomExpiry } from "@/components/host/room-expiry"
+import { UpgradeRoom } from "@/components/host/upgrade-room"
 import { ImageWithFallback } from "@/components/image-with-fallback"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -23,13 +24,9 @@ import {
     ItemTitle,
 } from "@/components/ui/item"
 import { api } from "@/convex/_generated/api"
-import { Id } from "@/convex/_generated/dataModel"
-import { useAuthActions } from "@convex-dev/auth/react"
-import { Preloaded, useAction, usePreloadedQuery, useQuery } from "convex/react"
+import { Preloaded, usePreloadedQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { toast } from "sonner"
 
 export default function ManageRooms({
     preloadedRooms,
@@ -37,29 +34,6 @@ export default function ManageRooms({
     preloadedRooms: Preloaded<typeof api.rooms.manage.listOwnRooms>
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
-
-    const createCheckout = useAction(api.stripe.createPaymentCheckout)
-
-    const { signIn } = useAuthActions()
-    const user = useQuery(api.auth.getCurrentUser)
-
-    async function handleRedirectToProCheckout(roomId: Id<"rooms">) {
-        // If the user is not signed in, sign them in and redirect to the pay page
-        if (!user?._id || user.isAnonymous) {
-            await signIn("google", { redirectTo: `/pay?roomId=${roomId}` })
-            return
-        }
-        const checkout = await createCheckout({
-            priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
-            roomId,
-        })
-        if (checkout?.url) {
-            toast.success("Redirecting to checkout")
-            redirect(checkout.url)
-        } else {
-            toast.error("Something went wrong while redirecting to checkout")
-        }
-    }
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -106,20 +80,17 @@ export default function ManageRooms({
                                                         Pro
                                                     </Badge>
                                                 ) : (
-                                                    <Button
-                                                        variant="outline"
-                                                        onClick={() =>
-                                                            handleRedirectToProCheckout(
-                                                                room._id,
-                                                            )
-                                                        }
+                                                    <UpgradeRoom
+                                                        roomId={room._id}
                                                     >
-                                                        <ArrowBigUpDashIcon
-                                                            className="size-4"
-                                                            data-icon="inline-start"
-                                                        />
-                                                        Upgrade
-                                                    </Button>
+                                                        <Button variant="outline">
+                                                            <ArrowBigUpDashIcon
+                                                                className="size-4"
+                                                                data-icon="inline-start"
+                                                            />
+                                                            Upgrade
+                                                        </Button>
+                                                    </UpgradeRoom>
                                                 )}
                                             </CardAction>
                                         </CardHeader>
