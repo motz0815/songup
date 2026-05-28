@@ -1,50 +1,13 @@
 "use client"
 
-import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import { getURL } from "@/lib/utils"
-import { useAuthActions } from "@convex-dev/auth/react"
-import { useAction, useQuery } from "convex/react"
 import { ArrowBigUpDashIcon, XIcon } from "lucide-react"
-import { redirect } from "next/navigation"
 import { useState } from "react"
-import { toast } from "sonner"
+import { UpgradeRoom } from "../host/upgrade-room"
 import { Button } from "../ui/button"
 
-export function ProUpsell({
-    roomId,
-    roomCode,
-}: {
-    roomId: Id<"rooms">
-    roomCode: string
-}) {
+export function ProUpsell({ roomId }: { roomId: Id<"rooms"> }) {
     const [dismissed, setDismissed] = useState(false)
-    const createCheckout = useAction(api.stripe.createPaymentCheckout)
-
-    const { signIn } = useAuthActions()
-    const user = useQuery(api.auth.getCurrentUser)
-
-    async function handleRedirectToProCheckout() {
-        // If the user is not signed in, sign them in and redirect to the pay page
-        if (!user?._id || user.isAnonymous) {
-            await signIn("google", {
-                redirectTo: `/pay?roomId=${roomId}&successUrl=${getURL(`/room/${roomCode}?success=true`)}&cancelUrl=${getURL(`/room/${roomCode}?canceled=true`)}`,
-            })
-            return
-        }
-        const checkout = await createCheckout({
-            priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
-            roomId,
-            successUrl: getURL(`/room/${roomCode}?success=true`),
-            cancelUrl: getURL(`/room/${roomCode}?canceled=true`),
-        })
-        if (checkout?.url) {
-            toast.success("Redirecting to checkout")
-            redirect(checkout.url)
-        } else {
-            toast.error("Something went wrong while redirecting to checkout")
-        }
-    }
 
     return (
         <>
@@ -65,10 +28,12 @@ export function ProUpsell({
                         <p className="mr-6">
                             Want to control the room from here?{" "}
                         </p>
-                        <Button onClick={handleRedirectToProCheckout}>
-                            <ArrowBigUpDashIcon data-icon="inline-start" />
-                            Upgrade to Pro
-                        </Button>
+                        <UpgradeRoom roomId={roomId}>
+                            <Button>
+                                <ArrowBigUpDashIcon data-icon="inline-start" />
+                                Upgrade to Pro
+                            </Button>
+                        </UpgradeRoom>
                     </div>
                 </section>
             )}
