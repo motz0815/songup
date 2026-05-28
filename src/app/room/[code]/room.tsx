@@ -125,12 +125,7 @@ export default function Room({
                             </div>
                         </section>
                     )}
-                    {isHost && !isPro && (
-                        <ProUpsell
-                            roomId={roomId}
-                            roomCode={room?.code ?? ""}
-                        />
-                    )}
+                    {isHost && !isPro && <ProUpsell roomId={roomId} />}
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Add songs</h2>
                         <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
