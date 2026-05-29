@@ -1,3 +1,5 @@
+"use node"
+
 import { v } from "convex/values"
 import { internalAction } from "../_generated/server"
 import PostHogClient from "./posthog"
