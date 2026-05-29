@@ -13,11 +13,17 @@ export function IdentificationProvider({
     const user = useQuery(api.auth.getCurrentUser)
 
     useEffect(() => {
-        if (!user?.isAnonymous && user?._id && !posthog._isIdentified())
+        if (!user?.isAnonymous && user?._id && !posthog._isIdentified()) {
+            posthog.opt_in_capturing({
+                captureProperties: {
+                    source: "sign-in",
+                },
+            })
             posthog.identify(user._id, {
                 email: user.email,
                 name: user.name,
             })
+        }
     }, [user?._id])
 
     return <>{children}</>
