@@ -1,4 +1,5 @@
 import type { NextConfig } from "next"
+import path from "node:path"
 
 // The marketing website is the PRIMARY multi-zone. It owns the apex domain
 // (songup.tv) and rewrites path prefixes owned by the other zones to their
@@ -9,6 +10,11 @@ const BLOG_DOMAIN = process.env.BLOG_DOMAIN ?? "http://localhost:3003"
 const DOCS_DOMAIN = process.env.DOCS_DOMAIN ?? "http://localhost:3002"
 
 const nextConfig: NextConfig = {
+    // The website imports shared workspace packages (@songup/ui, and a
+    // lightweight @songup/backend client) from outside its own directory.
+    // Point output file tracing at the monorepo root so Vercel bundles those
+    // files into the serverless output.
+    outputFileTracingRoot: path.join(__dirname, "../../"),
     rewrites: async () => {
         return [
             // PostHog reverse proxy (the website captures analytics too)

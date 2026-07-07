@@ -1,6 +1,11 @@
 import type { NextConfig } from "next"
+import path from "node:path"
 
 const nextConfig: NextConfig = {
+    // This app imports shared workspace packages (@songup/ui, @songup/backend)
+    // that live outside its own directory. Point output file tracing at the
+    // monorepo root so Vercel bundles those files into the serverless output.
+    outputFileTracingRoot: path.join(__dirname, "../../"),
     // The app is a secondary multi-zone behind the marketing website
     // (songup.tv). Its build assets are served under /app-static so they
     // don't collide with the primary zone's /_next assets.
