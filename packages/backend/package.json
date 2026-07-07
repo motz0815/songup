@@ -1,0 +1,29 @@
+{
+  "name": "@songup/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./convex/*": "./convex/*"
+  },
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "16.2.6"
+  },
+  "dependencies": {
+    "@auth/core": "0.37.0",
+    "@convex-dev/auth": "^0.0.92",
+    "@convex-dev/stripe": "^0.1.4",
+    "@erquhart/convex-oss-stats": "^0.8.2",
+    "convex": "^1.39.1",
+    "convex-helpers": "^0.1.118",
+    "posthog-node": "^5.35.6",
+    "stripe": "^20.5.0-alpha.4"
+  }
+}
