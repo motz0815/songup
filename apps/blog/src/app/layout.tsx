@@ -3,8 +3,9 @@ import { Footer, Layout, Navbar, ThemeSwitch } from "nextra-theme-blog"
 import { Head, Search } from "nextra/components"
 import { getPageMap } from "nextra/page-map"
 import "nextra-theme-blog/style.css"
+import { getSiteUrl } from "@/lib/site-url"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://songup.tv"
+const SITE_URL = getSiteUrl()
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),

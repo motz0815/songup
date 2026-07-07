@@ -1,6 +1,7 @@
+import { getSiteUrl } from "@/lib/site-url"
 import { getPosts, type PostFrontMatter } from "../posts/get-posts"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://songup.tv"
+const SITE_URL = getSiteUrl()
 
 const CONFIG = {
     title: "SongUp Blog",
