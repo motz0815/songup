@@ -39,11 +39,12 @@ export default function ManageRooms({
         <div className="flex min-h-screen flex-col">
             <header className="h-20 border-b">
                 <div className="flex h-full items-center justify-between px-4">
-                    <Link href="/">
+                    {/* "/" is owned by the website zone — use a full navigation. */}
+                    <a href="/">
                         <h1 className="text-2xl font-bold lg:text-4xl">
                             <span className="hidden lg:inline">Your</span> Rooms
                         </h1>
-                    </Link>
+                    </a>
                     <UserButton />
                 </div>
             </header>

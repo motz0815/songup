@@ -18,7 +18,6 @@ import {
     useQuery,
 } from "convex/react"
 import { ArrowLeft, SkipForwardIcon } from "lucide-react"
-import Link from "next/link"
 
 export default function Room({
     roomId,
@@ -59,7 +58,8 @@ export default function Room({
         <div className="min-h-screen bg-linear-to-br from-slate-500 to-indigo-950 text-white">
             <div className="mx-auto h-full max-w-5xl p-4">
                 <header className="mb-6 flex w-full items-center justify-between">
-                    <Link href="/">
+                    {/* "/" is owned by the website zone — use a full navigation. */}
+                    <a href="/">
                         <div className="flex items-center gap-2">
                             <ArrowLeft className="size-6" />
                             <h1 className="text-xl font-bold">
@@ -67,7 +67,7 @@ export default function Room({
                                 {isHost && isPro && "(Host)"}
                             </h1>
                         </div>
-                    </Link>
+                    </a>
                     <h2 className="text-xl">
                         <span className="font-bold">{room?.code}</span>
                     </h2>

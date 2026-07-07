@@ -1,7 +1,6 @@
 import { JoinRoomForm } from "@/components/room/join-room"
 import { Button } from "@/components/ui/button"
 import { HomeIcon } from "lucide-react"
-import Link from "next/link"
 
 export default function NotFound() {
     return (
@@ -13,9 +12,10 @@ export default function NotFound() {
             <JoinRoomForm />
             <p className="text-sm text-gray-500">or</p>
             <Button asChild>
-                <Link href="/">
+                {/* "/" is owned by the website zone — use a full navigation. */}
+                <a href="/">
                     <HomeIcon className="size-4" /> Go back to home
-                </Link>
+                </a>
             </Button>
         </div>
     )
