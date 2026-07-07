@@ -10,6 +10,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { isCrossZoneHref } from "@/lib/zones"
 import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -85,34 +86,52 @@ export function MobileMenu() {
                                 {section.section}
                             </p>
                             <ul className="flex flex-col gap-1">
-                                {section.links.map((link) => (
-                                    <li key={link.href}>
-                                        <SheetClose asChild>
-                                            <Link
-                                                href={link.href}
-                                                className="flex flex-col gap-0.5 rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/10"
-                                            >
-                                                <span className="font-medium">
-                                                    {link.title}
-                                                </span>
-                                                <span className="line-clamp-2 text-xs text-white/60">
-                                                    {link.description}
-                                                </span>
-                                            </Link>
-                                        </SheetClose>
-                                    </li>
-                                ))}
+                                {section.links.map((link) => {
+                                    const className =
+                                        "flex flex-col gap-0.5 rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/10"
+                                    const inner = (
+                                        <>
+                                            <span className="font-medium">
+                                                {link.title}
+                                            </span>
+                                            <span className="line-clamp-2 text-xs text-white/60">
+                                                {link.description}
+                                            </span>
+                                        </>
+                                    )
+                                    return (
+                                        <li key={link.href}>
+                                            <SheetClose asChild>
+                                                {isCrossZoneHref(link.href) ? (
+                                                    <a
+                                                        href={link.href}
+                                                        className={className}
+                                                    >
+                                                        {inner}
+                                                    </a>
+                                                ) : (
+                                                    <Link
+                                                        href={link.href}
+                                                        className={className}
+                                                    >
+                                                        {inner}
+                                                    </Link>
+                                                )}
+                                            </SheetClose>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </div>
                     ))}
                 </nav>
                 <SheetFooter className="flex-col gap-2 border-t border-white/20 p-4">
                     <SheetClose asChild>
-                        <Link href="/host" className="w-full">
+                        <a href="/host" className="w-full">
                             <Button variant="outline" className="w-full">
                                 Manage rooms
                             </Button>
-                        </Link>
+                        </a>
                     </SheetClose>
                 </SheetFooter>
             </SheetContent>

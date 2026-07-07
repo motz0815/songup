@@ -7,9 +7,10 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { Button } from "@/components/ui/button"
+import { isCrossZoneHref } from "@/lib/zones"
 import { ArrowRightIcon } from "lucide-react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { MobileMenu } from "./mobile-menu"
 
 export async function LandingNavbar() {
@@ -83,9 +84,9 @@ export async function LandingNavbar() {
                 </div>
                 {/* Desktop actions — hidden on mobile */}
                 <div className="hidden items-center gap-2 md:flex">
-                    <Link href="/host">
+                    <a href="/host">
                         <Button variant="ghost">Manage rooms</Button>
-                    </Link>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -99,25 +100,27 @@ function ListItem({
     arrow = false,
     ...props
 }: React.ComponentPropsWithoutRef<"li"> & { href: string; arrow?: boolean }) {
+    const inner = (
+        <div className="flex flex-col gap-1 text-sm">
+            <div className="flex items-end gap-1">
+                <div className="leading-none font-medium">{title}</div>
+                {arrow && (
+                    <ArrowRightIcon className="text-foreground size-3" />
+                )}
+            </div>
+
+            <div className="text-muted-foreground line-clamp-2">{children}</div>
+        </div>
+    )
+
     return (
         <li {...props}>
             <NavigationMenuLink asChild>
-                <Link href={href}>
-                    <div className="flex flex-col gap-1 text-sm">
-                        <div className="flex items-end gap-1">
-                            <div className="leading-none font-medium">
-                                {title}
-                            </div>
-                            {arrow && (
-                                <ArrowRightIcon className="text-foreground size-3" />
-                            )}
-                        </div>
-
-                        <div className="text-muted-foreground line-clamp-2">
-                            {children}
-                        </div>
-                    </div>
-                </Link>
+                {isCrossZoneHref(href) ? (
+                    <a href={href}>{inner}</a>
+                ) : (
+                    <Link href={href}>{inner}</Link>
+                )}
             </NavigationMenuLink>
         </li>
     )

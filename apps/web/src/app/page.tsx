@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, MessageSquareQuote, PartyPopper, Sparkles } from "lucide-react"
 import { Metadata, Viewport } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import { FaDiscord, FaGithub } from "react-icons/fa"
 import { LandingBackground } from "./background"
 
@@ -39,14 +38,14 @@ export default function Home() {
                                 </p>
                                 <div className="flex flex-col items-center gap-4 md:items-stretch">
                                     <div className="flex items-baseline gap-2">
-                                        <Link href="/host">
+                                        <a href="/host">
                                             <Button
                                                 size="lg"
                                                 className="border border-white/20 text-lg"
                                             >
                                                 Host your own room
                                             </Button>
-                                        </Link>
+                                        </a>
                                         or
                                     </div>
                                     <JoinRoomForm />
@@ -301,14 +300,14 @@ export default function Home() {
                                                 ))}
                                             </ul>
                                         </div>
-                                        <Link href="/host">
+                                        <a href="/host">
                                             <Button
                                                 variant="secondary"
                                                 className="mt-2 w-full"
                                             >
                                                 Create a free room
                                             </Button>
-                                        </Link>
+                                        </a>
                                     </CardContent>
                                 </Card>
 
@@ -344,11 +343,11 @@ export default function Home() {
                                                 ))}
                                             </ul>
                                         </div>
-                                        <Link href="/host">
+                                        <a href="/host">
                                             <Button className="mt-2 w-full border border-white/20">
                                                 Create a Pro room
                                             </Button>
-                                        </Link>
+                                        </a>
                                     </CardContent>
                                 </Card>
                             </div>
