@@ -1,5 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "../../../../packages/ui/src/styles/theme.css";
+@import "@songup/ui/theme.css";
 
 @source "../../../../packages/ui/src";
