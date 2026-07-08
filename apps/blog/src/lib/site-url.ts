@@ -11,7 +11,7 @@ export function getSiteUrl(): string {
     const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim()
     let url = configured && configured !== "" ? configured : "https://songup.tv"
     url = url.replace(/\/+$/, "")
-    if (!url.includes("http")) {
+    if (!/^https?:\/\//i.test(url)) {
         url = `https://${url}`
     }
     return url
