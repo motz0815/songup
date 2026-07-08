@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
     // Point output file tracing at the monorepo root so Vercel bundles those
     // files into the serverless output.
     outputFileTracingRoot: path.join(__dirname, "../../"),
+    // The website imports shared workspace packages by name (e.g. the CSS
+    // `@import "@songup/ui/theme.css"` in globals.css). Turbopack needs these
+    // listed here to resolve/transpile files from the package; without it the
+    // CSS import fails to resolve and the dev server enters an infinite
+    // compile→error loop. Mirrors apps/app.
+    transpilePackages: ["@songup/ui", "@songup/backend"],
     rewrites: async () => {
         return [
             // PostHog reverse proxy (the website captures analytics too)
