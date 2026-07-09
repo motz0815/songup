@@ -14,7 +14,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
       "env": [
         "NEXT_PUBLIC_CONVEX_URL",
         "NEXT_PUBLIC_CONVEX_SITE_URL",
