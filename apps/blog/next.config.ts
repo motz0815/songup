@@ -19,4 +19,12 @@ export default withNextra({
     },
     assetPrefix: "/blog-static",
     basePath: "/blog",
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "images.pexels.com",
+            },
+        ],
+    },
 })

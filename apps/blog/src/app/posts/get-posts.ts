@@ -7,6 +7,8 @@ export type PostFrontMatter = {
     description?: string
     author?: string
     tags?: string[]
+    keywords?: string[]
+    image?: string
 }
 
 export async function getPosts() {
