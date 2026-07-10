@@ -1,8 +1,7 @@
 import CookieBanner from "@/components/cookie-banner"
-import { LandingNavbar } from "@/components/landing/navbar"
 import { Providers } from "@/components/providers"
-import { Toaster } from "@/components/ui/sonner"
-import { getURL } from "@/lib/utils"
+import { Toaster } from "@songup/ui/components/sonner"
+import { getURL } from "@songup/ui/lib/utils"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
@@ -30,7 +29,6 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <LandingNavbar />
                 <Providers>{children}</Providers>
                 <Toaster richColors theme="light" />
                 <CookieBanner />

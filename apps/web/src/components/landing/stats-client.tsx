@@ -1,6 +1,6 @@
 "use client"
 
-import { api } from "@/convex/_generated/api"
+import { api } from "@songup/backend/convex/_generated/api"
 import { Preloaded, usePreloadedQuery } from "convex/react"
 
 export function StatsClient({

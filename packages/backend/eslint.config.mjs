@@ -7,6 +7,7 @@ const eslintConfig = [
     ...next,
     {
         rules: {
+            "@next/next/no-html-link-for-pages": "off",
             // Force mutations to go through functions.ts (custom function
             // wrappers) instead of importing the raw `_generated/server` ones.
             "no-restricted-imports": [

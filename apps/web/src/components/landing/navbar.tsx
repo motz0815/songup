@@ -1,3 +1,6 @@
+import { UserButton } from "@/components/auth/user-button"
+import { isCrossZoneHref } from "@/lib/zones"
+import { Button } from "@songup/ui/components/button"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -6,9 +9,7 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import { Button } from "@/components/ui/button"
-import { isCrossZoneHref } from "@/lib/zones"
+} from "@songup/ui/components/navigation-menu"
 import { ArrowRightIcon } from "lucide-react"
 import Link from "next/link"
 import { MobileMenu } from "./mobile-menu"
@@ -82,11 +83,12 @@ export async function LandingNavbar() {
                 <div className="md:hidden">
                     <MobileMenu />
                 </div>
-                {/* Desktop actions — hidden on mobile */}
+                {/* Desktop user actions — hidden on mobile */}
                 <div className="hidden items-center gap-2 md:flex">
-                    <a href="/host">
+                    <Link href="/host">
                         <Button variant="ghost">Manage rooms</Button>
-                    </a>
+                    </Link>
+                    <UserButton />
                 </div>
             </div>
         </nav>
@@ -104,9 +106,7 @@ function ListItem({
         <div className="flex flex-col gap-1 text-sm">
             <div className="flex items-end gap-1">
                 <div className="leading-none font-medium">{title}</div>
-                {arrow && (
-                    <ArrowRightIcon className="text-foreground size-3" />
-                )}
+                {arrow && <ArrowRightIcon className="text-foreground size-3" />}
             </div>
 
             <div className="text-muted-foreground line-clamp-2">{children}</div>

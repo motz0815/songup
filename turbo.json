@@ -1,43 +1,38 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
-  "globalEnv": [
-    "NODE_ENV",
-    "VERCEL_ENV",
-    "VERCEL_URL",
-    "VERCEL_OIDC_TOKEN"
-  ],
-  "globalPassThroughEnv": [
-    "CONVEX_DEPLOYMENT",
-    "CONVEX_DEPLOY_KEY"
-  ],
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
-      "env": [
-        "NEXT_PUBLIC_CONVEX_URL",
-        "NEXT_PUBLIC_CONVEX_SITE_URL",
-        "NEXT_PUBLIC_POSTHOG_KEY",
-        "NEXT_PUBLIC_POSTHOG_UI_HOST",
-        "NEXT_PUBLIC_STRIPE_ROOM_PRICE",
-        "NEXT_PUBLIC_SITE_URL",
-        "NEXT_PUBLIC_VERCEL_URL",
-        "APP_DOMAIN",
-        "WEB_DOMAIN",
-        "BLOG_DOMAIN",
-        "DOCS_DOMAIN"
-      ]
-    },
-    "check-types": {
-      "dependsOn": ["^build"]
-    },
-    "lint": {
-      "dependsOn": ["^build"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
+    "$schema": "https://turborepo.dev/schema.json",
+    "ui": "tui",
+    "globalEnv": ["NODE_ENV", "VERCEL_ENV", "VERCEL_URL"],
+    "globalPassThroughEnv": [
+        "CONVEX_DEPLOYMENT",
+        "CONVEX_DEPLOY_KEY",
+        "VERCEL_OIDC_TOKEN"
+    ],
+    "tasks": {
+        "build": {
+            "dependsOn": ["^build"],
+            "inputs": ["$TURBO_DEFAULT$", ".env*"],
+            "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
+            "env": [
+                "NEXT_PUBLIC_CONVEX_URL",
+                "NEXT_PUBLIC_CONVEX_SITE_URL",
+                "NEXT_PUBLIC_POSTHOG_KEY",
+                "NEXT_PUBLIC_POSTHOG_UI_HOST",
+                "NEXT_PUBLIC_STRIPE_ROOM_PRICE",
+                "NEXT_PUBLIC_SITE_URL",
+                "NEXT_PUBLIC_VERCEL_URL",
+                "BLOG_DOMAIN",
+                "DOCS_DOMAIN"
+            ]
+        },
+        "check-types": {
+            "dependsOn": ["^check-types"]
+        },
+        "lint": {
+            "dependsOn": ["^lint"]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        }
     }
-  }
 }

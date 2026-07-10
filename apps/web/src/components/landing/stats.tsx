@@ -1,4 +1,4 @@
-import { api } from "@/convex/_generated/api"
+import { api } from "@songup/backend/convex/_generated/api"
 import { preloadQuery } from "convex/nextjs"
 import { StatsClient } from "./stats-client"
 

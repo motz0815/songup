@@ -3,14 +3,7 @@
 // browser performs a full navigation through the zone rewrite. Using next/link
 // would trigger a client-side App Router transition/prefetch that 404s, since
 // the route does not exist inside the website zone.
-const CROSS_ZONE_PREFIXES = [
-    "/host",
-    "/room",
-    "/pay",
-    "/discord",
-    "/blog",
-    "/docs",
-]
+const CROSS_ZONE_PREFIXES = ["/blog", "/docs"]
 
 export function isCrossZoneHref(href: string): boolean {
     return CROSS_ZONE_PREFIXES.some(

@@ -1,6 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { UserButton } from "@/components/auth/user-button"
+import { isCrossZoneHref } from "@/lib/zones"
+import { Button } from "@songup/ui/components/button"
 import {
     Sheet,
     SheetClose,
@@ -9,8 +11,7 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "@/components/ui/sheet"
-import { isCrossZoneHref } from "@/lib/zones"
+} from "@songup/ui/components/sheet"
 import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -127,12 +128,13 @@ export function MobileMenu() {
                 </nav>
                 <SheetFooter className="flex-col gap-2 border-t border-white/20 p-4">
                     <SheetClose asChild>
-                        <a href="/host" className="w-full">
+                        <Link href="/host" className="w-full">
                             <Button variant="outline" className="w-full">
                                 Manage rooms
                             </Button>
-                        </a>
+                        </Link>
                     </SheetClose>
+                    <UserButton />
                 </SheetFooter>
             </SheetContent>
         </Sheet>

@@ -1,8 +1,8 @@
 "use client"
+import { Button } from "@songup/ui/components/button"
 import { CornerDownLeft } from "lucide-react"
 import posthog from "posthog-js"
 import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
 
 function KeyboardHandler({ onEnter }: { onEnter: () => void }) {
     useEffect(() => {
@@ -25,9 +25,12 @@ export default function CookieBanner() {
     const [consentGiven, setConsentGiven] = useState<CookieConsent | "">("")
 
     useEffect(() => {
-        // We want this to only run once the client loads
-        // or else it causes a hydration error
-        setConsentGiven(posthog.get_explicit_consent_status())
+        // Defer the browser-only value until after hydration.
+        const frame = requestAnimationFrame(() => {
+            setConsentGiven(posthog.get_explicit_consent_status())
+        })
+
+        return () => cancelAnimationFrame(frame)
     }, [])
 
     function handleAcceptCookies() {

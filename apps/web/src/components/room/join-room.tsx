@@ -2,6 +2,7 @@
 
 import { Input } from "@songup/ui/components/input"
 import { SubmitButton } from "@songup/ui/components/submit-button"
+import { redirect } from "next/navigation"
 
 export function JoinRoomForm() {
     async function handleJoinRoom(formData: FormData) {
@@ -10,10 +11,7 @@ export function JoinRoomForm() {
             return
         }
 
-        // /room/* is served by the app zone, not the website zone. Use a full
-        // navigation so the request goes through the multi-zone rewrite instead
-        // of a client-side App Router transition that would 404 here.
-        window.location.href = `/room/${code}`
+        redirect(`/room/${code}`)
     }
 
     return (

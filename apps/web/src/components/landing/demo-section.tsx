@@ -1,9 +1,14 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
+import { Badge } from "@songup/ui/components/badge"
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@songup/ui/components/card"
+import { cn } from "@songup/ui/lib/utils"
 import { useEffect, useRef, useState } from "react"
-import { Badge } from "@/components/ui/badge"
 
 const demos = [
     {
