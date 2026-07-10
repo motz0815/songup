@@ -10,8 +10,16 @@
 .songup-blog {
     min-height: 100vh;
     background:
-        radial-gradient(circle at 0% 0%, rgb(129 19 255 / 42%), transparent 36rem),
-        radial-gradient(circle at 100% 8%, rgb(0 135 255 / 28%), transparent 30rem),
+        radial-gradient(
+            circle at 0% 0%,
+            rgb(129 19 255 / 42%),
+            transparent 36rem
+        ),
+        radial-gradient(
+            circle at 100% 8%,
+            rgb(0 135 255 / 28%),
+            transparent 30rem
+        ),
         #000;
     color: var(--blog-text);
 }
@@ -108,12 +116,6 @@
     text-decoration: none;
 }
 
-.text-link:hover,
-.post-card h2 a:hover,
-.post-card p a:hover {
-    color: #c99cff;
-}
-
 .post-list {
     display: grid;
     gap: 0.75rem;
@@ -125,7 +127,9 @@
     background: var(--blog-panel);
     padding: 1.25rem 1.35rem;
     backdrop-filter: blur(12px);
-    transition: background 150ms ease, border-color 150ms ease;
+    transition:
+        background 150ms ease,
+        border-color 150ms ease;
 }
 
 .post-card:hover {
