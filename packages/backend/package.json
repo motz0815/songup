@@ -29,6 +29,7 @@
     "dependencies": {
         "@auth/core": "0.37.0",
         "@convex-dev/auth": "^0.0.92",
+        "@convex-dev/crons": "^0.2.0",
         "@convex-dev/stripe": "^0.1.4",
         "@erquhart/convex-oss-stats": "^0.8.2",
         "convex": "^1.39.1",
