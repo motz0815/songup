@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "next dev --turbopack --port 3002",
         "build": "next build",
+        "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
         "start": "next start --port 3002",
         "lint": "eslint .",
         "check-types": "tsc --noEmit"
@@ -24,6 +25,7 @@
         "babel-plugin-react-compiler": "1.0.0",
         "eslint": "^9.39.4",
         "eslint-config-next": "16.2.6",
+        "pagefind": "^1.5.2",
         "typescript": "^6.0.3"
     }
 }
