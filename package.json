@@ -6,66 +6,28 @@
     "node": "22.x"
   },
   "packageManager": "bun@1.2.19",
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "next-dev": "bun --bun next dev --turbopack",
-    "flask-dev": "FLASK_DEBUG=1 pip3 install --break-system-packages -r requirements.txt && python3 -m flask --app api/flask/index run -p 5328",
-    "dev": "concurrently \"bun run next-dev\" \"bun run flask-dev\"",
-    "build": "bun --bun next build",
-    "start": "bun --bun next start",
-    "lint": "bun --bun next lint",
-    "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then bunx convex deploy --cmd 'bun run build'; else bun run build; fi"
-  },
-  "dependencies": {
-    "@auth/core": "0.37.0",
-    "@convex-dev/auth": "^0.0.92",
-    "@convex-dev/crons": "^0.2.0",
-    "@convex-dev/stripe": "^0.1.4",
-    "@erquhart/convex-oss-stats": "^0.8.2",
-    "@formkit/auto-animate": "^0.9.0",
-    "@paper-design/shaders-react": "^0.0.76",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "convex": "^1.39.1",
-    "convex-helpers": "^0.1.118",
-    "date-fns": "^4.3.0",
-    "lucide-react": "^1.17.0",
-    "next": "16.2.6",
-    "next-themes": "^0.4.6",
-    "posthog-js": "^1.376.3",
-    "posthog-node": "^5.35.6",
-    "radix-ui": "^1.4.3",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
-    "react-icons": "^5.6.0",
-    "react-qr-code": "^2.0.21",
-    "react-youtube": "^10.1.0",
-    "sonner": "^2.0.7",
-    "stripe": "^20.5.0-alpha.4",
-    "tailwind-merge": "^3.6.0",
-    "zod": "^4.4.3"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "check-types": "turbo run check-types",
+    "format": "prettier --write \"**/*.{ts,tsx,md,css}\"",
+    "convex-dev": "turbo run dev --filter=@songup/backend"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.5",
-    "@tailwindcss/postcss": "^4.3.0",
-    "@types/node": "^22.19.19",
-    "@types/react": "19.2.15",
-    "@types/react-dom": "19.2.3",
-    "concurrently": "^10.0.0",
-    "eslint": "^10.4.0",
-    "eslint-config-next": "16.2.6",
     "prettier": "^3.8.3",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "tailwindcss": "^4.3.0",
-    "tw-animate-css": "^1.4.0",
+    "turbo": "^2",
     "typescript": "^6.0.3"
   },
-  "trustedDependencies": [
-    "@tailwindcss/oxide"
-  ],
+  "trustedDependencies": ["@tailwindcss/oxide"],
   "overrides": {
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "stripe": "20.5.0-alpha.4"
+    "stripe": "20.5.0-alpha.4",
+    "zod": "4.3.6",
+    "eslint": "9.39.4"
   }
 }
