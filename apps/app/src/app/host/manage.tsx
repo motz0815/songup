@@ -24,16 +24,12 @@ import {
     ItemTitle,
 } from "@/components/ui/item"
 import { api } from "@/convex/_generated/api"
-import { Preloaded, usePreloadedQuery } from "convex/react"
+import { useQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 
-export default function ManageRooms({
-    preloadedRooms,
-}: {
-    preloadedRooms: Preloaded<typeof api.rooms.manage.listOwnRooms>
-}) {
-    const rooms = usePreloadedQuery(preloadedRooms)
+export default function ManageRooms() {
+    const rooms = useQuery(api.rooms.manage.listOwnRooms)
 
     return (
         <div className="flex min-h-screen flex-col">
