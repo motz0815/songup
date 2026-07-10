@@ -1,0 +1,9 @@
+{
+  "extends": "@songup/typescript-config/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node", "react", "react-dom"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
