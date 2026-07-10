@@ -1,6 +1,8 @@
 import type { NextConfig } from "next"
 import path from "node:path"
 
+// TODO: Remove `--webpack` from the next-dev script once Turbopack no longer
+// stalls while compiling this app zone's routes in multi-zone development.
 const nextConfig: NextConfig = {
     // This app imports shared workspace packages (@songup/ui, @songup/backend)
     // that live outside its own directory. Point output file tracing at the

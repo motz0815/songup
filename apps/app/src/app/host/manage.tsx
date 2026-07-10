@@ -23,13 +23,19 @@ import {
     ItemMedia,
     ItemTitle,
 } from "@/components/ui/item"
+import { Skeleton } from "@/components/ui/skeleton"
 import { api } from "@/convex/_generated/api"
-import { useQuery } from "convex/react"
+import { useConvexAuth, useQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 
 export default function ManageRooms() {
-    const rooms = useQuery(api.rooms.manage.listOwnRooms)
+    const { isLoading: isAuthLoading } = useConvexAuth()
+    const rooms = useQuery(
+        api.rooms.manage.listOwnRooms,
+        isAuthLoading ? "skip" : {},
+    )
+    const isLoading = isAuthLoading || rooms === undefined
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -46,7 +52,25 @@ export default function ManageRooms() {
             </header>
             <main className="flex w-full flex-col gap-4">
                 <div className="flex w-full flex-wrap gap-4 p-4">
-                    {rooms && rooms.length > 0 ? (
+                    {isLoading ? (
+                        <Card
+                            className="h-64 w-full max-w-md"
+                            aria-busy="true"
+                            aria-label="Loading rooms"
+                        >
+                            <CardHeader>
+                                <Skeleton className="h-8 w-48" />
+                                <Skeleton className="h-4 w-32" />
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <Skeleton className="h-5 w-24" />
+                                <Skeleton className="h-16 w-full" />
+                            </CardContent>
+                            <CardFooter className="justify-end">
+                                <Skeleton className="h-9 w-24" />
+                            </CardFooter>
+                        </Card>
+                    ) : rooms && rooms.length > 0 ? (
                         <>
                             {rooms.map((room) => (
                                 <div
