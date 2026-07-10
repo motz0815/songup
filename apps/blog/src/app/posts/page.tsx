@@ -23,9 +23,7 @@ export default async function PostsPage() {
             <p className="page-intro">
                 Hosting guides, music inspiration, and SongUp news.
             </p>
-            <div
-                className="tag-list not-prose"
-            >
+            <div className="tag-list not-prose">
                 {Object.entries(allTags).map(([tag, count]) => (
                     <Link
                         key={tag}
