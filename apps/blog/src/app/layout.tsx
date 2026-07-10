@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
-import { Footer, Layout, Navbar, ThemeSwitch } from "nextra-theme-blog"
+import { Layout, Navbar } from "nextra-theme-blog"
 import { Head, Search } from "nextra/components"
 import { getPageMap } from "nextra/page-map"
 import "nextra-theme-blog/style.css"
+import "./blog.css"
 import { getSiteUrl } from "@/lib/site-url"
 
 const SITE_URL = getSiteUrl()
@@ -32,23 +33,44 @@ export default async function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <Head backgroundColor={{ dark: "#0f172a", light: "#fefce8" }} />
-            <body>
-                <Layout>
-                    <Navbar pageMap={await getPageMap()}>
-                        <Search />
-                        <ThemeSwitch />
-                    </Navbar>
+            <Head backgroundColor={{ dark: "#000000", light: "#000000" }} />
+            <body className="songup-blog">
+                <div className="blog-shell">
+                    <Layout nextThemes={{ forcedTheme: "dark" }}>
+                        <Navbar pageMap={await getPageMap()}>
+                            {/* The Website zone owns this route. */}
+                            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                            <a
+                                href="/"
+                                aria-label="SongUp home"
+                                className="home-link"
+                            >
+                                <span
+                                    aria-hidden="true"
+                                    className="home-link-icon"
+                                >
+                                    ←
+                                </span>
+                                <span className="home-link-label">
+                                    <span className="home-link-full">
+                                        SongUp home
+                                    </span>
+                                    <span className="home-link-short">
+                                        Home
+                                    </span>
+                                </span>
+                            </a>
+                            <Search />
+                        </Navbar>
 
-                    {children}
+                        {children}
 
-                    <Footer>
-                        {new Date().getFullYear()} © SongUp.
-                        <a href="/blog/rss.xml" style={{ float: "right" }}>
-                            RSS
-                        </a>
-                    </Footer>
-                </Layout>
+                        <footer className="blog-footer">
+                            {new Date().getFullYear()} © SongUp.
+                            <a href="/blog/rss.xml">RSS</a>
+                        </footer>
+                    </Layout>
+                </div>
             </body>
         </html>
     )
