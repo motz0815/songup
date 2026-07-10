@@ -12,19 +12,19 @@
         "check-types": "tsc --noEmit"
     },
     "dependencies": {
-        "next": "16.2.6",
+        "next": "16.2.10",
         "nextra": "^4.6.1",
         "nextra-theme-blog": "^4.6.1",
-        "react": "19.2.6",
-        "react-dom": "19.2.6"
+        "react": "19.2.7",
+        "react-dom": "19.2.7"
     },
     "devDependencies": {
-        "@types/node": "^22.19.19",
+        "@types/node": "^22.20.1",
         "@types/react": "19.2.15",
         "@types/react-dom": "19.2.3",
         "babel-plugin-react-compiler": "1.0.0",
-        "eslint": "^9.39.4",
-        "eslint-config-next": "16.2.6",
+        "eslint": "^9.39.5",
+        "eslint-config-next": "16.2.10",
         "pagefind": "^1.5.2",
         "typescript": "^6.0.3"
     }

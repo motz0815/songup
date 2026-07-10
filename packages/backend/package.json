@@ -21,20 +21,20 @@
         "check-types": "tsc --noEmit -p convex/tsconfig.json"
     },
     "devDependencies": {
-        "@eslint/eslintrc": "^3.3.5",
-        "eslint": "^9.39.4",
-        "eslint-config-next": "16.2.6",
+        "@eslint/eslintrc": "^3.3.6",
+        "eslint": "^9.39.5",
+        "eslint-config-next": "16.2.10",
         "typescript": "^6.0.3"
     },
     "dependencies": {
         "@auth/core": "0.37.0",
-        "@convex-dev/auth": "^0.0.92",
+        "@convex-dev/auth": "^0.0.94",
         "@convex-dev/crons": "^0.2.0",
-        "@convex-dev/stripe": "^0.1.4",
+        "@convex-dev/stripe": "^0.1.6",
         "@erquhart/convex-oss-stats": "^0.8.2",
-        "convex": "^1.39.1",
-        "convex-helpers": "^0.1.118",
-        "posthog-node": "^5.35.6",
+        "convex": "^1.42.1",
+        "convex-helpers": "^0.1.120",
+        "posthog-node": "^5.40.0",
         "stripe": "^20.5.0-alpha.4"
     }
 }
