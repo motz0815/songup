@@ -16,7 +16,7 @@
     "convex-dev": "turbo run dev --filter=@songup/backend"
   },
   "devDependencies": {
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.5",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "turbo": "^2",
