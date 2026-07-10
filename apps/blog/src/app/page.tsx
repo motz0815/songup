@@ -9,23 +9,31 @@ export default async function HomePage() {
     const latestPosts = posts.slice(0, LATEST_POSTS_COUNT)
 
     return (
-        <div data-pagefind-ignore="all">
-            <h1>SongUp Blog</h1>
-            <p>
-                Welcome to the SongUp blog — the collaborative song request
-                queue for parties, bars, and events. Here we share product
-                updates, behind-the-scenes stories, and practical guides for
-                hosting unforgettable nights.
-            </p>
+        <div className="blog-home" data-pagefind-ignore="all">
+            <section className="blog-intro">
+                <h1>SongUp Blog</h1>
+                <p>
+                    Product updates, hosting tips, and music ideas for better
+                    parties, bars, and events.
+                </p>
+            </section>
 
-            <h2>Latest posts</h2>
-            {latestPosts.map((post) => (
-                <PostCard key={post.route} post={post} />
-            ))}
+            <section className="latest-posts" aria-labelledby="latest-posts">
+                <div className="section-heading">
+                    <h2 id="latest-posts">Latest posts</h2>
+                    <Link href="/posts" className="text-link">
+                        View all <span aria-hidden="true">→</span>
+                    </Link>
+                </div>
 
-            <p>
-                <Link href="/posts">Browse all posts →</Link>
-            </p>
+                <div className="post-list">
+                    {latestPosts.map((post) => (
+                        <article className="post-card" key={post.route}>
+                            <PostCard post={post} />
+                        </article>
+                    ))}
+                </div>
+            </section>
         </div>
     )
 }

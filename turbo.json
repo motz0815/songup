@@ -24,6 +24,27 @@
                 "DOCS_DOMAIN"
             ]
         },
+        "@songup/web#build": {
+            "dependsOn": ["^build"],
+            "inputs": [
+                "$TURBO_DEFAULT$",
+                ".env*",
+                "$TURBO_ROOT$/apps/blog/src/app/posts/**",
+                "$TURBO_ROOT$/apps/docs/src/app/**"
+            ],
+            "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
+            "env": [
+                "NEXT_PUBLIC_CONVEX_URL",
+                "NEXT_PUBLIC_CONVEX_SITE_URL",
+                "NEXT_PUBLIC_POSTHOG_KEY",
+                "NEXT_PUBLIC_POSTHOG_UI_HOST",
+                "NEXT_PUBLIC_STRIPE_ROOM_PRICE",
+                "NEXT_PUBLIC_SITE_URL",
+                "NEXT_PUBLIC_VERCEL_URL",
+                "BLOG_DOMAIN",
+                "DOCS_DOMAIN"
+            ]
+        },
         "check-types": {
             "dependsOn": ["^check-types"]
         },
