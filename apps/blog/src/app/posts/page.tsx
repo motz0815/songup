@@ -18,11 +18,13 @@ export default async function PostsPage() {
     }
 
     return (
-        <div data-pagefind-ignore="all">
+        <div className="posts-page" data-pagefind-ignore="all">
             <h1>Posts</h1>
+            <p className="page-intro">
+                Hosting guides, music inspiration, and SongUp news.
+            </p>
             <div
-                className="not-prose"
-                style={{ display: "flex", flexWrap: "wrap", gap: ".5rem" }}
+                className="tag-list not-prose"
             >
                 {Object.entries(allTags).map(([tag, count]) => (
                     <Link
@@ -34,9 +36,13 @@ export default async function PostsPage() {
                     </Link>
                 ))}
             </div>
-            {posts.map((post) => (
-                <PostCard key={post.route} post={post} />
-            ))}
+            <div className="post-list">
+                {posts.map((post) => (
+                    <article className="post-card" key={post.route}>
+                        <PostCard post={post} />
+                    </article>
+                ))}
+            </div>
         </div>
     )
 }
