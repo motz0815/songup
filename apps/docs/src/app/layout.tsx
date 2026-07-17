@@ -28,6 +28,9 @@ export default async function RootLayout({
                     pageMap={await getPageMap()}
                     docsRepositoryBase="https://github.com/motz0815/songup/tree/develop/apps/docs"
                     footer={footer}
+                    feedback={{
+                        labels: "documentation",
+                    }}
                 >
                     {children}
                 </Layout>
