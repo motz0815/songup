@@ -1,19 +1,19 @@
 import { getAuthUserId } from "@convex-dev/auth/server"
 import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
-import { query, MutationCtx } from "./_generated/server"
+import { query } from "./_generated/server"
 import { mutation } from "./functions"
-import { attachNicknames, getNextSong, getQueueFCFS, getQueueRoundRobin, getQueueWeighted } from "./scheduling"
-import { internal } from "./_generated/api";
-
+import { advanceRoom } from "./playback"
+import { attachNicknames, getScheduledQueue } from "./scheduling"
 
 /**
- * This query returns the queue of songs for a room.
+ * This query returns the queue of songs for a room, in the order the room's
+ * scheduler will play them.
  *
  * It does not include the current song. That is stored in the room object.
  */
 export const getQueue = query({
-    args: { 
+    args: {
         roomId: v.id("rooms"),
         cursor: v.optional(v.string()),
         numItems: v.optional(v.number()),
@@ -22,19 +22,7 @@ export const getQueue = query({
         const room = await ctx.db.get(roomId)
         if (!room) return []
 
-        const scheduler = room.settings?.scheduler ?? "roundRobin"
-        numItems = numItems ?? 5
-
-        switch (scheduler) {
-        case "FCFS":
-            return getQueueFCFS(ctx, roomId, numItems)
-        case "roundRobin":
-            return getQueueRoundRobin(ctx, roomId, numItems)
-        case "weighted":
-            return getQueueWeighted(ctx, roomId, numItems)
-        default:
-            return getQueueFCFS(ctx, roomId, numItems)
-        }
+        return await getScheduledQueue(ctx, roomId, numItems ?? 5)
     },
 })
 
@@ -195,13 +183,15 @@ export const addSong = mutation({
 /**
  * This mutation pops the current song from the queue and makes the next song the current song.
  *
- * It should be called by the host when the current song finished playing.
+ * It should be called by the host when the current song finished playing, or
+ * when the host skips it manually. Listeners reach the same code path by
+ * hitting the skip-vote threshold (see `voting.voteToSkip`).
  */
 export const popSong = mutation({
     args: {
         roomId: v.id("rooms"),
     },
-    handler: async (ctx: MutationCtx, args) => {
+    handler: async (ctx, args) => {
         const room = await ctx.db.get(args.roomId)
         if (!room) {
             throw new Error("Room not found")
@@ -216,48 +206,7 @@ export const popSong = mutation({
             throw new Error("User is not the host of the room")
         }
 
-        const oldSong = room.currentSong
-
-        // Add current song to history
-        if (oldSong) {
-            await ctx.db.insert("history", {
-                room: args.roomId,
-                ...oldSong,
-            })
-        }
-
-        // Check if there is a song in the queue
-        const nextSong = await getNextSong(ctx, args.roomId)
-
-        // If there is no next song, just remove the current song
-        // But if there is a next song, make it the current song and remove that song from the queue
-        if (nextSong) {
-            // Extract only the song fields, excluding Convex metadata and room field
-            const { addedBy, type, videoId, title, artist, duration } = nextSong
-            await ctx.db.patch(args.roomId, {
-                currentSong: {
-                    addedBy,
-                    type,
-                    videoId,
-                    title,
-                    artist,
-                    duration,
-                },
-            })
-            // remove song from queue
-            await ctx.db.delete(nextSong._id)
-        } else {
-            await ctx.db.patch(args.roomId, {
-                currentSong: undefined,
-            })
-        }
-        console.log(`About to add song to playlist ${room.playlistId}`)
-        // @ts-ignore
-        await ctx.scheduler.runAfter(0, internal.functions.addSongToPlaylist, {
-            roomId: args.roomId,
-            videoId: oldSong?.videoId,
-            playlistId: room.playlistId
-        })
+        await advanceRoom(ctx, args.roomId)
     },
 })
 

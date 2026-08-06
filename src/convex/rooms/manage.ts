@@ -3,16 +3,16 @@ import { v } from "convex/values"
 import { Id } from "../_generated/dataModel"
 import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
+import { schedulerValidator } from "../schema"
+import { clampSkipThreshold } from "../settings"
 
 export const createRoom = mutation({
     args: {
         maxSongsPerUser: v.number(),
-        scheduler: v.union(
-            v.literal("FCFS"),
-            v.literal("roundRobin"),
-            v.literal("weighted")
-        ),
+        scheduler: schedulerValidator,
         numSongsToForget: v.number(),
+        /** Share of listeners who must vote before the current song is skipped. */
+        skipThreshold: v.optional(v.number()),
         fallbackSongs: v.optional(
             v.array(
                 v.object({
@@ -49,6 +49,7 @@ export const createRoom = mutation({
                 maxSongsPerUser: args.maxSongsPerUser,
                 scheduler: args.scheduler,
                 numSongsToForget: args.numSongsToForget,
+                skipThreshold: clampSkipThreshold(args.skipThreshold),
             },
         })
 
