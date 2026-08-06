@@ -166,10 +166,15 @@ export function forgetToken(): void {
  * API
  */
 
+/** How long to wait when Spotify doesn't say, and how many times to bother. */
+const RATE_LIMIT_FALLBACK_MS = 2000
+const RATE_LIMIT_RETRIES = 2
+
 async function call<T>(
     token: string,
     path: string,
     init?: RequestInit,
+    attempt = 0,
 ): Promise<T> {
     const response = await fetch(`${API}${path}`, {
         ...init,
@@ -179,6 +184,18 @@ async function call<T>(
             "Content-Type": "application/json",
         },
     })
+
+    // A 40-song export is a few dozen searches back to back, which is enough
+    // to get throttled. Waiting is the whole fix, and without it the songs
+    // after the limit would all be reported as "not on Spotify".
+    if (response.status === 429 && attempt < RATE_LIMIT_RETRIES) {
+        const retryAfter = Number(response.headers.get("Retry-After"))
+        const waitMs = Number.isFinite(retryAfter)
+            ? retryAfter * 1000
+            : RATE_LIMIT_FALLBACK_MS
+        await new Promise((resolve) => setTimeout(resolve, waitMs))
+        return call<T>(token, path, init, attempt + 1)
+    }
 
     if (response.status === 401) {
         forgetToken()
@@ -246,11 +263,14 @@ export async function resolveTrack(
     const title = searchable(track.title)
     const artist = searchable(track.artist)
 
-    // Field filters first, because they're far more precise. If the artist
-    // string came from a YouTube upload it may not be an artist Spotify knows,
-    // in which case the loose query is the one that finds it.
+    // Field filters first, because they're far more precise. The values are
+    // quoted: unquoted, `artist:Dua Lipa` filters on "Dua" and leaves "Lipa"
+    // as loose text, which matches a surprising amount of the wrong thing.
+    //
+    // The bare query is the fallback, because an artist string lifted from a
+    // YouTube upload often isn't an artist Spotify has ever heard of.
     const queries = [
-        `track:${title} artist:${artist}`,
+        `track:"${title}" artist:"${artist}"`,
         `${title} ${artist}`,
     ]
 
