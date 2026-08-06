@@ -1,10 +1,18 @@
 "use client"
 
-import { PlusCircleIcon } from "lucide-react"
+import { formatDuration } from "@/lib/utils"
+import { PlusCircleIcon, SearchXIcon } from "lucide-react"
 import { useState } from "react"
 import { ImageWithFallback } from "../image-with-fallback"
 import { Input } from "../ui/input"
 import { SubmitButton } from "../ui/submit-button"
+
+type SearchResult = {
+    videoId: string
+    title: string
+    artists: { name: string }[]
+    duration_seconds: number
+}
 
 export function SearchSong({
     onSelect,
@@ -16,33 +24,44 @@ export function SearchSong({
         duration: number
     }) => Promise<void>
 }) {
-    const [results, setResults] = useState<
-        {
-            videoId: string
-            title: string
-            artists: { name: string }[]
-            duration_seconds: number
-        }[]
-    >([])
+    const [results, setResults] = useState<SearchResult[]>([])
     const [error, setError] = useState<string | null>(null)
+    const [searched, setSearched] = useState(false)
 
     async function handleSearch(formData: FormData) {
+        const query = (formData.get("query") as string)?.trim()
+        if (!query) return
+
+        setError(null)
+        setSearched(true)
+
         try {
-            const query = formData.get("query") as string
-            console.log("Query", query)
-            setError(null)
-            const results: [] = await fetch(
+            const response = await fetch(
                 `/api/search?query=${encodeURIComponent(query)}`,
-            {
-                headers: { 
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "true", 
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "true",
+                    },
                 },
+            )
+            const body = await response.json()
+
+            // The API answers with `{ error }` on failure, so anything that
+            // isn't an array would blow up the list below.
+            if (!response.ok || !Array.isArray(body)) {
+                setResults([])
+                setError(
+                    typeof body?.error === "string"
+                        ? body.error
+                        : "Failed to search for songs. Please try again.",
+                )
+                return
             }
-            ).then((res) => res.json())
-            console.log("Results", results)
-            setResults(results)
+
+            setResults(body)
         } catch (error) {
+            setResults([])
             setError("Failed to search for songs. Please try again.")
             console.error(error)
         }
@@ -59,7 +78,11 @@ export function SearchSong({
         try {
             await onSelect(song)
         } catch (error) {
-            setError("Failed to select song. Please try again.")
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to add that song. Please try again.",
+            )
         }
     }
 
@@ -71,6 +94,7 @@ export function SearchSong({
                         name="query"
                         type="search"
                         placeholder="Search for a song"
+                        autoComplete="off"
                     />
                     <SubmitButton>Search</SubmitButton>
                 </div>
@@ -78,61 +102,74 @@ export function SearchSong({
             {error && (
                 <p className="text-center text-sm text-red-500">{error}</p>
             )}
+            {searched && !error && results.length === 0 && (
+                <div className="flex flex-col items-center gap-2 py-6 text-muted-foreground">
+                    <SearchXIcon className="size-6" />
+                    <p className="text-sm">
+                        Nothing playable found. Try a different search.
+                    </p>
+                </div>
+            )}
             <ul className="flex flex-col gap-2">
-                {results.map((song) => (
-                    <li key={song.videoId}>
-                        <form
-                            action={handleSelectSong}
-                            className="flex items-center justify-between rounded-lg bg-gray-100 p-2"
-                        >
-                            <div className="flex items-center space-x-2">
-                                <ImageWithFallback
-                                    src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
-                                    alt={`${song.title}`}
-                                    width={40}
-                                    height={40}
-                                    className="rounded-sm object-cover"
-                                    unoptimized
-                                />
-                                <div className="text-left">
-                                    <p className="text-sm font-semibold">
-                                        {song.title}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                        {song.artists
-                                            .map((artist) => artist.name)
-                                            .join(", ")}
-                                    </p>
+                {results.map((song) => {
+                    const artist = song.artists
+                        .map((artist) => artist.name)
+                        .join(", ")
+
+                    return (
+                        <li key={song.videoId}>
+                            <form
+                                action={handleSelectSong}
+                                className="flex items-center justify-between gap-3 rounded-lg bg-muted p-2 transition-colors hover:bg-muted/70"
+                            >
+                                <div className="flex min-w-0 items-center gap-3">
+                                    <ImageWithFallback
+                                        src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
+                                        alt={`${song.title}`}
+                                        width={64}
+                                        height={36}
+                                        className="aspect-video w-16 shrink-0 rounded-sm object-cover"
+                                        unoptimized
+                                    />
+                                    <div className="min-w-0 text-left">
+                                        <p className="truncate text-sm font-semibold">
+                                            {song.title}
+                                        </p>
+                                        <p className="truncate text-xs text-muted-foreground">
+                                            {artist} &middot;{" "}
+                                            {formatDuration(
+                                                song.duration_seconds,
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <input
-                                type="hidden"
-                                name="videoId"
-                                value={song.videoId}
-                            />
-                            <input
-                                type="hidden"
-                                name="title"
-                                value={song.title}
-                            />
-                            <input
-                                type="hidden"
-                                name="artist"
-                                value={song.artists
-                                    .map((artist) => artist.name)
-                                    .join(", ")}
-                            />
-                            <input
-                                type="hidden"
-                                name="duration"
-                                value={song.duration_seconds}
-                            />
-                            <SubmitButton size="sm">
-                                <PlusCircleIcon className="size-4" />
-                            </SubmitButton>
-                        </form>
-                    </li>
-                ))}
+                                <input
+                                    type="hidden"
+                                    name="videoId"
+                                    value={song.videoId}
+                                />
+                                <input
+                                    type="hidden"
+                                    name="title"
+                                    value={song.title}
+                                />
+                                <input
+                                    type="hidden"
+                                    name="artist"
+                                    value={artist}
+                                />
+                                <input
+                                    type="hidden"
+                                    name="duration"
+                                    value={song.duration_seconds}
+                                />
+                                <SubmitButton size="sm" aria-label="Add song">
+                                    <PlusCircleIcon className="size-4" />
+                                </SubmitButton>
+                            </form>
+                        </li>
+                    )
+                })}
             </ul>
         </div>
     )
