@@ -55,13 +55,12 @@ user-weighted fairness, and experimental features such as voting and karaoke mod
   YouTube playlist!
 
 - [X] **📤 Take It Home**
-  Played songs are catalogued by what they *are*, not by their YouTube id, so the night can leave YouTube.
-  Each song in the history links out to wherever else it can be heard — Amazon Music, Tidal, Deezer,
-  Pandora and more — and the whole room's history can be pushed into a private Spotify playlist.
+  Heard something you liked? Every song in the history links out to wherever else it can be heard —
+  Spotify, Amazon Music, Tidal, Deezer, Pandora and more — and you can send the room's whole night
+  straight to a private playlist on your own Spotify account.
 
-  The Spotify connection happens entirely in your browser: DemocraTune never sees the access token, and
-  doesn't keep one. Set `NEXT_PUBLIC_SPOTIFY_CLIENT_ID` and register `<your-origin>/spotify/callback` as a
-  redirect URI to enable it.
+  Connecting Spotify happens entirely in your browser. DemocraTune never sees your login, and forgets
+  the connection the moment you close the tab.
 
 - [ ] **🎤 Karaoke Mode**
   Special karaoke mode with synced lyrics.
