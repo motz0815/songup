@@ -1,7 +1,3 @@
-# Legacy requirements.txt - kept for backwards compatibility
-# Vercel serverless functions use api/requirements.txt instead
-
-# For local development with uvicorn:
-# uvicorn api.index:app --reload --port 5328
-
-# For Vercel deployment, the api/requirements.txt is used per-function
+fastapi==0.121.2
+ytmusicapi==1.11.1
+python-dotenv==1.0.0
