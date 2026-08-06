@@ -3,6 +3,7 @@
 import { NicknameForm } from "@/components/auth/nickname-form"
 import { AddSong } from "@/components/room/add-song"
 import { NowPlaying } from "@/components/room/current-song"
+import { ExportPlaylist } from "@/components/room/export-playlist"
 import { History } from "@/components/room/history"
 import { Queue } from "@/components/room/queue"
 import { VoteControls } from "@/components/room/vote-controls"
@@ -158,6 +159,10 @@ export default function Room({
                         <History
                             roomId={roomId}
                             playlistId={room?.playlistId}
+                        />
+                        <ExportPlaylist
+                            roomId={roomId}
+                            roomCode={room?.code ?? ""}
                         />
                     </section>
                 </main>

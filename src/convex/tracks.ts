@@ -7,6 +7,7 @@ import {
     type ActionCtx,
     type MutationCtx,
 } from "./_generated/server"
+import { fingerprint } from "./fingerprint"
 import { internalMutation } from "./functions"
 
 /*
@@ -17,43 +18,6 @@ import { internalMutation } from "./functions"
  * service-agnostic identity for the same recordings so that a night's history
  * can be handed to Spotify, or anywhere else, once the room is over.
  */
-
-/**
- * Bracketed suffixes that describe the *upload* rather than the *recording*.
- *
- * Deliberately short. Stripping "(Live)" or "(Acoustic)" would collapse
- * genuinely different recordings into one catalogue entry, and the whole point
- * of the fingerprint is that two rows mean two different things.
- */
-const UPLOAD_NOISE =
-    /\((?:official\s+)?(?:music\s+)?(?:video|audio|lyric video|lyrics|visualizer|mv|hd|hq|4k)\)|\[(?:official\s+)?(?:music\s+)?(?:video|audio|lyric video|lyrics|visualizer|mv|hd|hq|4k)\]|\((?:official|explicit)\)/gi
-
-/** "feat. X", "ft X", "featuring X" - credited differently on every service. */
-const FEATURING = /\s*[([]?\s*(?:feat|ft|featuring)\.?\s[^)\]]*[)\]]?/gi
-
-/**
- * Collapses a title and artist into a key that survives the same recording
- * being uploaded twice with different decoration.
- *
- * This is intentionally lossy. Its job is to stop the catalogue filling up with
- * near-duplicates, not to be a musicological identity - `isrc` does that job
- * when a provider gives us one.
- */
-export function fingerprint(artist: string, title: string): string {
-    const normalise = (value: string) =>
-        value
-            .toLowerCase()
-            // Split accents off their letters so the combining marks can be
-            // dropped; "Beyoncé" and "Beyonce" have to land on the same key.
-            .normalize("NFD")
-            .replace(/[̀-ͯ]/g, "")
-            .replace(UPLOAD_NOISE, " ")
-            .replace(FEATURING, " ")
-            .replace(/[^a-z0-9]+/g, " ")
-            .trim()
-
-    return `${normalise(artist)}|${normalise(title)}`
-}
 
 /**
  * Finds or creates the catalogue entry for a song, and returns its id.
@@ -111,10 +75,22 @@ export async function upsertTrack(
  * RESOLUTION
  *
  * Odesli (song.link) takes a URL on one service and returns the same recording
- * on every service it knows about. That is exactly the matching problem we'd
- * otherwise have to solve ourselves with fuzzy search, and it's free and
- * unauthenticated - at the cost of a fairly tight rate limit, which is why
- * results are cached on the track forever.
+ * on the others. It's free and unauthenticated, which makes it the cheapest way
+ * to offer "open this on your service" links.
+ *
+ * Two limits, both measured against the live API rather than assumed, and both
+ * the reason this is enrichment rather than the backbone of anything:
+ *
+ *  - The anonymous tier never returns Spotify or Apple Music. Not for obscure
+ *    tracks, not for Never Gonna Give You Up. So Spotify export cannot lean on
+ *    this and does its own search instead (see `lib/spotify.ts`).
+ *  - Coverage is per-upload and patchy. Official music videos for very well
+ *    known songs resolve to nothing at all, while other uploads return a dozen
+ *    services. A miss is normal, not an error.
+ *
+ * What it does cover well is everything we can't write to anyway - Amazon
+ * Music, Tidal, Deezer, Pandora, Napster, Anghami, Boomplay, Yandex - which is
+ * precisely where a link is the only thing we could offer.
  */
 
 const ODESLI_ENDPOINT = "https://api.song.link/v1-alpha.1/links"
@@ -123,7 +99,13 @@ const ODESLI_ENDPOINT = "https://api.song.link/v1-alpha.1/links"
 const ODESLI_RETRY_MS = 60 * 1000
 const ODESLI_MAX_ATTEMPTS = 3
 
-/** Maps Odesli's `entityUniqueId` prefixes onto our `providerIds` keys. */
+/**
+ * Maps Odesli's `entityUniqueId` prefixes onto our `providerIds` keys.
+ *
+ * Spotify and iTunes are listed even though the anonymous API has never once
+ * returned them - if that ever changes, the export picks the id up for free
+ * instead of paying for a search.
+ */
 const ENTITY_PREFIX_TO_PROVIDER: Record<string, string> = {
     SPOTIFY_SONG: "spotify",
     ITUNES_SONG: "appleMusic",
@@ -220,14 +202,14 @@ export const resolveTrack = internalAction({
         }
 
         const body = (await response.json()) as OdesliResponse
-        const { links, providerIds, isrc } = readOdesli(body)
+        const { links, providerIds, isrc, matched } = readOdesli(body)
 
         await ctx.runMutation(internal.tracks.saveResolution, {
             trackId: args.trackId,
             links,
             providerIds,
             isrc,
-            unresolvable: Object.keys(links).length === 0,
+            unresolvable: !matched,
         })
     },
 })
@@ -249,6 +231,8 @@ async function retry(
 }
 
 type OdesliResponse = {
+    /** A song.link page listing every service Odesli found. */
+    pageUrl?: string
     linksByPlatform?: Record<string, { url?: string; entityUniqueId?: string }>
     entitiesByUniqueId?: Record<
         string,
@@ -256,11 +240,20 @@ type OdesliResponse = {
     >
 }
 
+/**
+ * Key under which the song.link landing page is stored alongside the per-service
+ * links. It isn't a service, but it belongs with them: it's the one link that
+ * covers whatever we failed to list individually.
+ */
+export const ODESLI_PAGE_KEY = "odesli"
+
 /** Pulls the web links, per-service ids and ISRC out of an Odesli payload. */
 function readOdesli(body: OdesliResponse) {
     const links: Record<string, string> = {}
     const providerIds: Record<string, string> = {}
     let isrc: string | undefined
+
+    if (body.pageUrl) links[ODESLI_PAGE_KEY] = body.pageUrl
 
     for (const [platform, entry] of Object.entries(
         body.linksByPlatform ?? {},
@@ -276,6 +269,8 @@ function readOdesli(body: OdesliResponse) {
     }
 
     // Any entity will do - an ISRC identifies the recording, not the service.
+    // In practice the anonymous API has never included one, so treat this as
+    // opportunistic rather than something to build on.
     for (const entity of Object.values(body.entitiesByUniqueId ?? {})) {
         if (entity?.isrc) {
             isrc = entity.isrc
@@ -283,5 +278,15 @@ function readOdesli(body: OdesliResponse) {
         }
     }
 
-    return { links, providerIds, isrc }
+    // Odesli answers even when it recognised nothing, echoing back the YouTube
+    // link it was given plus Audius, which auto-matches almost anything. Those
+    // three don't mean the recording was found anywhere new.
+    const matched = Object.keys(links).some(
+        (platform) =>
+            !["youtube", "youtubeMusic", "audius", ODESLI_PAGE_KEY].includes(
+                platform,
+            ),
+    )
+
+    return { links, providerIds, isrc, matched }
 }

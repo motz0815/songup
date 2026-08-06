@@ -220,19 +220,36 @@ export const getSongHistory = query(
             .order("desc")
             .collect()
 
+        // Both lookups repeat heavily down a night's history: the same handful
+        // of people, and the same songs when one gets played twice.
+        const nicknames = new Map<string, string | undefined>()
+        const links = new Map<string, Record<string, string> | undefined>()
+
         return await Promise.all(
             history.map(async (song) => {
-                if (!song.addedBy) {
-                    return {
-                        ...song,
-                        addedByNickname: undefined,
+                let addedByNickname: string | undefined
+                if (song.addedBy) {
+                    if (nicknames.has(song.addedBy)) {
+                        addedByNickname = nicknames.get(song.addedBy)
+                    } else {
+                        const user = await db.get(song.addedBy as Id<"users">)
+                        addedByNickname = user?.nickname
+                        nicknames.set(song.addedBy, addedByNickname)
                     }
                 }
-                const user = await db.get(song.addedBy as Id<"users">)
-                return {
-                    ...song,
-                    addedByNickname: user?.nickname,
+
+                let songLinks: Record<string, string> | undefined
+                if (song.track) {
+                    if (links.has(song.track)) {
+                        songLinks = links.get(song.track)
+                    } else {
+                        const track = await db.get(song.track)
+                        songLinks = track?.links
+                        links.set(song.track, songLinks)
+                    }
                 }
+
+                return { ...song, addedByNickname, links: songLinks }
             }),
         )
     },
