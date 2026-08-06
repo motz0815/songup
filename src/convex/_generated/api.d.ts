@@ -19,6 +19,7 @@ import type * as rooms from "../rooms.js";
 import type * as rooms_manage from "../rooms/manage.js";
 import type * as scheduling from "../scheduling.js";
 import type * as settings from "../settings.js";
+import type * as tracks from "../tracks.js";
 import type * as voting from "../voting.js";
 
 import type {
@@ -39,6 +40,7 @@ declare const fullApi: ApiFromModules<{
   "rooms/manage": typeof rooms_manage;
   scheduling: typeof scheduling;
   settings: typeof settings;
+  tracks: typeof tracks;
   voting: typeof voting;
 }>;
 

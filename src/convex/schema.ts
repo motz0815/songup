@@ -78,11 +78,58 @@ export default defineSchema({
         room: v.id("rooms"),
         likes: v.optional(v.number()),
         dislikes: v.optional(v.number()),
+        /**
+         * The catalogue entry this play refers to. Optional because rows
+         * written before the catalogue existed don't have one, and because a
+         * play is still worth recording even if the upsert fails.
+         */
+        track: v.optional(v.id("tracks")),
         ...song,
     })
         .index("by_room", ["room"])
         // Used to walk a user's most recent songs when computing their rating.
         .index("by_room_added_by", ["room", "addedBy"]),
+
+    /**
+     * A service-agnostic catalogue of recordings.
+     *
+     * Everything else in the app is keyed on a YouTube `videoId`, which is
+     * meaningless to Spotify or anyone else. This table is the identity that
+     * survives leaving YouTube: it holds what a recording *is*, plus whatever
+     * per-service ids we've managed to resolve for it.
+     */
+    tracks: defineTable({
+        title: v.string(),
+        artist: v.string(),
+        /** Seconds. Used to verify matches when resolving by search. */
+        duration: v.number(),
+        /**
+         * Normalised "artist|title", the key used to collapse the same
+         * recording arriving from different uploads. See `tracks.fingerprint`.
+         */
+        fingerprint: v.string(),
+        /** The industry-standard recording id, when a provider gives us one. */
+        isrc: v.optional(v.string()),
+        /** Per-service ids, filled in lazily as resolution succeeds. */
+        providerIds: v.object({
+            youtube: v.optional(v.string()),
+            spotify: v.optional(v.string()),
+            appleMusic: v.optional(v.string()),
+            deezer: v.optional(v.string()),
+            tidal: v.optional(v.string()),
+        }),
+        /** Public per-service web links, keyed by Odesli's platform names. */
+        links: v.optional(v.record(v.string(), v.string())),
+        /** When resolution last ran. Absent means it never has. */
+        resolvedAt: v.optional(v.number()),
+        /**
+         * Set when resolution ran but found nothing, so we don't retry a
+         * hopeless track on every export.
+         */
+        unresolvable: v.optional(v.boolean()),
+    })
+        .index("by_fingerprint", ["fingerprint"])
+        .index("by_isrc", ["isrc"]),
 
     /**
      * Presence. Listeners heartbeat while they have the room page open so the
@@ -98,20 +145,16 @@ export default defineSchema({
         .index("by_room_user", ["room", "user"]),
 
     /**
-     * Votes to skip the song playing right now. `videoId` scopes a vote to the
-     * song it was cast for, so votes can never leak into the next song.
-     */
-    skipVotes: defineTable({
-        room: v.id("rooms"),
-        user: v.id("users"),
-        videoId: v.string(),
-    })
-        .index("by_room_video", ["room", "videoId"])
-        .index("by_room_video_user", ["room", "videoId", "user"]),
-
-    /**
-     * Up/down votes on a song. These drive the rating of the user who added it,
-     * which the DemocraSchedule scheduler turns into queue weight.
+     * The room's only vote. One per listener per song.
+     *
+     * A vote does two jobs at once: it moves the rating of whoever added the
+     * song, and - when it's a downvote - it counts towards ending the song
+     * early. There is deliberately no separate "skip" ballot; disliking a song
+     * and wanting it gone are the same opinion, and splitting them made people
+     * cast one and forget the other.
+     *
+     * `videoId` scopes a vote to the song it was cast for, so votes can never
+     * leak into whatever plays next.
      */
     songVotes: defineTable({
         room: v.id("rooms"),
@@ -123,6 +166,5 @@ export default defineSchema({
         value: v.union(v.literal(1), v.literal(-1)),
     })
         .index("by_room_video", ["room", "videoId"])
-        .index("by_room_video_voter", ["room", "videoId", "voter"])
-        .index("by_room_owner", ["room", "songOwner"]),
+        .index("by_room_video_voter", ["room", "videoId", "voter"]),
 })

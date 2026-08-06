@@ -10,7 +10,10 @@ export const PRESENCE_WINDOW_MS = 2 * 60 * 1000
 /** How often the room page checks in. Comfortably inside the window above. */
 export const HEARTBEAT_INTERVAL_MS = 30 * 1000
 
-/** Used for rooms created before the skip threshold was configurable. */
+/**
+ * Share of listeners who have to downvote before a song is cut short. Used for
+ * rooms created before the threshold was configurable.
+ */
 export const DEFAULT_SKIP_THRESHOLD = 0.5
 
 export const MIN_SKIP_THRESHOLD = 0.1
@@ -52,7 +55,7 @@ export function weightFromScore(score: number): number {
 }
 
 /**
- * How many skip votes the current song needs.
+ * How many downvotes the current song has to collect before it's cut short.
  *
  * Always at least one, so a room with a single listener isn't stuck with a song
  * nobody wants, and never more than the number of people who could vote.

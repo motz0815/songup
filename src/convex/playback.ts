@@ -3,6 +3,7 @@ import { Doc, Id } from "./_generated/dataModel"
 import type { MutationCtx } from "./_generated/server"
 import { tallyVoteDocs } from "./ratings"
 import { getNextSong } from "./scheduling"
+import { upsertTrack } from "./tracks"
 
 /**
  * Ends the room's current song and starts the next one.
@@ -25,7 +26,9 @@ export async function advanceRoom(
 
     if (oldSong) {
         // Freeze the song's votes onto its history row. Ratings read these
-        // totals afterwards, so the live votes can be cleared away.
+        // totals afterwards, so the live votes can be cleared away. The
+        // downvotes that ended a song early are included, which is the point:
+        // being skipped should cost the person who queued it.
         const votes = await ctx.db
             .query("songVotes")
             .withIndex("by_room_video", (q) =>
@@ -40,14 +43,15 @@ export async function advanceRoom(
             ...oldSong,
             likes,
             dislikes,
+            // Gives the played song an identity that outlives YouTube, so the
+            // night can be exported somewhere else later.
+            track: await upsertTrack(ctx, oldSong),
         })
 
         for (const vote of votes) {
             await ctx.db.delete(vote._id)
         }
     }
-
-    await clearSkipVotes(ctx, roomId, oldSong?.videoId)
 
     const nextSong = await getNextSong(ctx, roomId)
 
@@ -73,24 +77,4 @@ export async function advanceRoom(
     }
 
     return nextSong
-}
-
-/** Drops skip votes for a song so they can't count towards the next one. */
-export async function clearSkipVotes(
-    ctx: MutationCtx,
-    roomId: Id<"rooms">,
-    videoId: string | undefined,
-) {
-    if (!videoId) return
-
-    const votes = await ctx.db
-        .query("skipVotes")
-        .withIndex("by_room_video", (q) =>
-            q.eq("room", roomId).eq("videoId", videoId),
-        )
-        .collect()
-
-    for (const vote of votes) {
-        await ctx.db.delete(vote._id)
-    }
 }

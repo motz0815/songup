@@ -17,7 +17,7 @@ import {
     usePreloadedQuery,
     useQuery,
 } from "convex/react"
-import { SkipForwardIcon } from "lucide-react"
+import { SkipForwardIcon, ThumbsUpIcon } from "lucide-react"
 import Link from "next/link"
 import { useCallback, useState } from "react"
 
@@ -39,7 +39,9 @@ export default function Host({
 
     const currentSong = room?.currentSong ?? null
 
-    const skipStatus = useQuery(api.voting.getSkipStatus, { roomId })
+    // Downvotes double as skip requests, so this one query drives both the
+    // rating readout and the skip meter.
+    const votes = useQuery(api.voting.getCurrentSongVotes, { roomId })
 
     /*
      * MUTATIONS
@@ -165,12 +167,20 @@ export default function Host({
                             </div>
 
                             {/* Stays out of the way until the room starts
-                                calling for a skip. */}
+                                turning on the song. */}
                             <div className="flex h-9 items-center gap-4">
-                                {skipStatus && skipStatus.votes > 0 && (
+                                {votes && votes.likes > 0 && (
+                                    <span className="flex items-center gap-1.5 text-sm text-emerald-300/90">
+                                        <ThumbsUpIcon className="size-4" />
+                                        <span className="tabular-nums">
+                                            {votes.likes}
+                                        </span>
+                                    </span>
+                                )}
+                                {votes && votes.dislikes > 0 && (
                                     <QuorumMeter
-                                        votes={skipStatus.votes}
-                                        required={skipStatus.required}
+                                        votes={votes.dislikes}
+                                        required={votes.required}
                                     />
                                 )}
                                 {currentSong && (

@@ -4,7 +4,7 @@ import { Id } from "./_generated/dataModel"
 import { query, QueryCtx } from "./_generated/server"
 import { mutation } from "./functions"
 import { advanceRoom } from "./playback"
-import { getUserRating } from "./ratings"
+import { getUserRating, tallyVoteDocs } from "./ratings"
 import {
     DEFAULT_SKIP_THRESHOLD,
     PRESENCE_WINDOW_MS,
@@ -57,113 +57,13 @@ async function countActiveListeners(
 }
 
 /*
- * SKIP VOTES
- */
-
-export const getSkipStatus = query({
-    args: { roomId: v.id("rooms") },
-    handler: async (ctx, args) => {
-        const room = await ctx.db.get(args.roomId)
-        if (!room?.currentSong) return null
-
-        const userId = await getAuthUserId(ctx)
-        const threshold = room.settings.skipThreshold ?? DEFAULT_SKIP_THRESHOLD
-        const activeListeners = await countActiveListeners(ctx, args.roomId)
-
-        const votes = await ctx.db
-            .query("skipVotes")
-            .withIndex("by_room_video", (q) =>
-                q
-                    .eq("room", args.roomId)
-                    .eq("videoId", room.currentSong!.videoId),
-            )
-            .collect()
-
-        return {
-            videoId: room.currentSong.videoId,
-            votes: votes.length,
-            required: votesRequired(activeListeners, threshold),
-            activeListeners,
-            threshold,
-            hasVoted: userId
-                ? votes.some((vote) => vote.user === userId)
-                : false,
-        }
-    },
-})
-
-/**
- * Casts or withdraws a vote to skip the song playing now. Once the threshold is
- * reached the room advances immediately, from inside this same mutation, so the
- * skip doesn't depend on the host screen noticing.
- */
-export const voteToSkip = mutation({
-    args: {
-        roomId: v.id("rooms"),
-        videoId: v.string(),
-    },
-    handler: async (ctx, args) => {
-        const userId = await getAuthUserId(ctx)
-        if (!userId) {
-            throw new Error("You need to join the room before voting")
-        }
-
-        const room = await ctx.db.get(args.roomId)
-        if (!room) {
-            throw new Error("Room not found")
-        }
-
-        // The song may have changed between the page rendering and the click.
-        if (room.currentSong?.videoId !== args.videoId) {
-            return { skipped: false, votes: 0, required: 0 }
-        }
-
-        const existing = await ctx.db
-            .query("skipVotes")
-            .withIndex("by_room_video_user", (q) =>
-                q
-                    .eq("room", args.roomId)
-                    .eq("videoId", args.videoId)
-                    .eq("user", userId as Id<"users">),
-            )
-            .unique()
-
-        if (existing) {
-            await ctx.db.delete(existing._id)
-        } else {
-            await ctx.db.insert("skipVotes", {
-                room: args.roomId,
-                videoId: args.videoId,
-                user: userId as Id<"users">,
-            })
-        }
-
-        const votes = await ctx.db
-            .query("skipVotes")
-            .withIndex("by_room_video", (q) =>
-                q.eq("room", args.roomId).eq("videoId", args.videoId),
-            )
-            .collect()
-
-        const threshold = room.settings.skipThreshold ?? DEFAULT_SKIP_THRESHOLD
-        const required = votesRequired(
-            await countActiveListeners(ctx, args.roomId),
-            threshold,
-        )
-
-        if (votes.length >= required) {
-            await advanceRoom(ctx, args.roomId)
-            return { skipped: true, votes: votes.length, required }
-        }
-
-        return { skipped: false, votes: votes.length, required }
-    },
-})
-
-/*
- * SONG RATINGS
+ * VOTING
  *
- * Votes are only cast on the song that is playing. Once it ends the totals are
+ * One vote per listener per song, up or down. A downvote is also a request to
+ * end the song: once enough of the room has cast one, it stops. There is no
+ * separate skip ballot.
+ *
+ * Votes only apply to the song that is playing. When it ends the totals are
  * frozen onto its history row, which keeps the rating window well defined and
  * stops a song being re-litigated an hour later.
  */
@@ -175,6 +75,8 @@ export const getCurrentSongVotes = query({
         if (!room?.currentSong) return null
 
         const userId = await getAuthUserId(ctx)
+        const threshold = room.settings.skipThreshold ?? DEFAULT_SKIP_THRESHOLD
+        const activeListeners = await countActiveListeners(ctx, args.roomId)
 
         const votes = await ctx.db
             .query("songVotes")
@@ -185,21 +87,34 @@ export const getCurrentSongVotes = query({
             )
             .collect()
 
-        const myVote = userId
-            ? (votes.find((vote) => vote.voter === userId)?.value ?? null)
-            : null
+        const { likes, dislikes } = tallyVoteDocs(votes)
 
         return {
             videoId: room.currentSong.videoId,
-            likes: votes.filter((vote) => vote.value === 1).length,
-            dislikes: votes.filter((vote) => vote.value === -1).length,
-            myVote,
-            // Self-voting would let anyone inflate their own scheduling weight.
+            likes,
+            dislikes,
+            myVote: userId
+                ? (votes.find((vote) => vote.voter === userId)?.value ?? null)
+                : null,
+            /** Downvotes still needed to end the song early. */
+            required: votesRequired(activeListeners, threshold),
+            activeListeners,
+            threshold,
+            // Voting on your own song would let anyone inflate their own
+            // scheduling weight - and, now that a downvote skips, let them
+            // fast-forward their own queue.
             canVote: Boolean(userId) && room.currentSong.addedBy !== userId,
         }
     },
 })
 
+/**
+ * Casts, switches or withdraws this listener's vote on the song playing now.
+ *
+ * When the downvotes reach the room's threshold the song ends immediately, from
+ * inside this same mutation, so a skip doesn't depend on the host screen
+ * noticing anything.
+ */
 export const voteOnCurrentSong = mutation({
     args: {
         roomId: v.id("rooms"),
@@ -218,8 +133,9 @@ export const voteOnCurrentSong = mutation({
         }
 
         const currentSong = room.currentSong
+        // The song may have changed between the page rendering and the tap.
         if (currentSong?.videoId !== args.videoId) {
-            throw new Error("That song is no longer playing")
+            return { skipped: false, likes: 0, dislikes: 0, required: 0 }
         }
 
         if (currentSong.addedBy === userId) {
@@ -245,11 +161,34 @@ export const voteOnCurrentSong = mutation({
                 value: args.value,
             })
         } else if (existing.value === args.value) {
-            // Clicking the same button again takes the vote back.
+            // Pressing the same button again takes the vote back.
             await ctx.db.delete(existing._id)
         } else {
             await ctx.db.patch(existing._id, { value: args.value })
         }
+
+        const votes = await ctx.db
+            .query("songVotes")
+            .withIndex("by_room_video", (q) =>
+                q.eq("room", args.roomId).eq("videoId", args.videoId),
+            )
+            .collect()
+
+        const { likes, dislikes } = tallyVoteDocs(votes)
+        const required = votesRequired(
+            await countActiveListeners(ctx, args.roomId),
+            room.settings.skipThreshold ?? DEFAULT_SKIP_THRESHOLD,
+        )
+
+        if (dislikes >= required) {
+            // advanceRoom freezes these votes onto the history row on its way
+            // out, so the downvotes that ended the song still count against
+            // whoever queued it.
+            await advanceRoom(ctx, args.roomId)
+            return { skipped: true, likes, dislikes, required }
+        }
+
+        return { skipped: false, likes, dislikes, required }
     },
 })
 
