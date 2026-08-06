@@ -1,16 +1,19 @@
 "use client"
 
 import { HostBackground } from "@/components/host/background"
+import { HostPlayer, PlaybackStatus } from "@/components/host/player"
 import { RoomQRCode } from "@/components/host/qr-code"
 import { Queue } from "@/components/host/queue"
 import { Fullscreen } from "@/components/ui/fullscreen"
 import { Progress } from "@/components/ui/progress"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
+import { formatDuration } from "@/lib/utils"
 import { Preloaded, useMutation, usePreloadedQuery } from "convex/react"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
-import YouTube, { YouTubeProps } from "react-youtube"
+import { useCallback, useState } from "react"
+
+const SITE_NAME = "democratune.timkolesnichenko.me"
 
 export default function Host({
     roomId,
@@ -26,7 +29,7 @@ export default function Host({
 
     const room = usePreloadedQuery(preloadedRoom)
 
-    const currentSong = room?.currentSong
+    const currentSong = room?.currentSong ?? null
 
     /*
      * MUTATIONS
@@ -65,109 +68,70 @@ export default function Host({
      * OTHER STATE
      */
 
-    const playerRef = useRef<YouTube>(null)
+    const [playback, setPlayback] = useState<PlaybackStatus>({
+        progress: 0,
+        elapsed: 0,
+        duration: 0,
+        error: null,
+    })
 
-    const [progress, setProgress] = useState(0)
+    const advance = useCallback(() => popSong({ roomId }), [popSong, roomId])
 
-    /*
-     * EFFECTS
-     */
-
-    // track the current song progress
-    useEffect(() => {
-        const intervalId = setInterval(async () => {
-            if (!currentSong) setProgress(0)
-            if (playerRef.current) {
-                const duration = await playerRef.current
-                    .getInternalPlayer()
-                    ?.getDuration()
-                const currentTime = await playerRef.current
-                    .getInternalPlayer()
-                    ?.getCurrentTime()
-                if (duration && currentTime) {
-                    setProgress(currentTime / duration)
-                }
-            }
-        }, 1000)
-
-        // Cleanup function to clear the interval when component unmounts
-        return () => clearInterval(intervalId)
-    }, [])
+    const handleStatusChange = useCallback(
+        (status: PlaybackStatus) => setPlayback(status),
+        [],
+    )
 
     /*
-     * OPTIONS
+     * RENDER
      */
 
-    const opts: YouTubeProps["opts"] = {
-        width: "100%",
-        height: "100%",
-        playerVars: {
-            autoplay: 1,
-            // Disable cookies and tracking
-            enablejsapi: 0,
-            disablekb: 1,
-            fs: 0,
-            rel: 0,
-            modestbranding: 1,
-            controls: 1,
-        },
-        host: "https://www.youtube-nocookie.com",
-    }
-
-    const onPlayerStateChange: YouTubeProps["onStateChange"] = (event) => {
-        if (event.data === -1) {
-            event.target.playVideo()
-        }
-    }
-
+    // The player is always mounted so that YouTube keeps a warm iframe between
+    // songs; the join panel covers it whenever nothing is playing.
     return (
         <div className="relative min-h-screen w-full p-4 text-white lg:h-screen">
             <HostBackground videoId={currentSong?.videoId} />
             <main className="flex h-full w-full flex-col gap-4">
                 <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
                     <div className="flex w-full flex-col gap-4 lg:col-span-2 lg:row-span-2">
-                        <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-white/20 backdrop-blur-lg">
-                            {currentSong && (
-                                <YouTube
-                                    ref={playerRef}
-                                    className="z-10 aspect-video w-full"
-                                    videoId={currentSong.videoId ?? ""}
-                                    opts={opts}
-                                    onStateChange={onPlayerStateChange}
-                                    onEnd={() => {
-                                        // Pop song from queue
-                                        popSong({
-                                            roomId,
-                                        })
-                                    }}
-                                    onError={() => {
-                                        // Song probably isn't playable in embeds. To prevent SongUp from going silent, pop this song.
-                                        // TODO there shouldn't actually ever be non-embeddable songs in the queue
-                                        popSong({
-                                            roomId,
-                                        })
-                                    }}
-                                />
+                        <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-white/20 backdrop-blur-lg">
+                            <HostPlayer
+                                song={currentSong}
+                                onAdvance={advance}
+                                onStatusChange={handleStatusChange}
+                                className={currentSong ? "" : "invisible"}
+                            />
+                            {!currentSong && (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center">
+                                    <h2 className="text-4xl font-bold text-balance xl:text-6xl">
+                                        {SITE_NAME}
+                                    </h2>
+                                    <p className="text-2xl xl:text-4xl">
+                                        Enter code{" "}
+                                        <span className="font-extrabold">
+                                            {room?.code}
+                                        </span>
+                                    </p>
+                                </div>
                             )}
-                            <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                                <h2 className="text-6xl font-bold">
-                                    democratune.timkolesnichenko.me
-                                </h2>
-                                <p className="text-4xl">
-                                    Enter code{" "}
-                                    <span className="font-extrabold">
-                                        {room?.code}
-                                    </span>
-                                </p>
-                            </div>
                         </div>
                         <div className="flex w-full flex-col items-center gap-3">
-                            <Progress
-                                value={progress * 100}
-                                max={100}
-                                className="dark w-2/3"
-                                indicatorClassName="duration-1000 ease-linear"
-                            />
+                            <div className="flex w-2/3 items-center gap-3">
+                                <Progress
+                                    value={playback.progress * 100}
+                                    max={100}
+                                    className="dark grow"
+                                    indicatorClassName="duration-500 ease-linear"
+                                />
+                                <span className="w-24 shrink-0 text-right text-sm tabular-nums text-white/70">
+                                    {formatDuration(playback.elapsed)} /{" "}
+                                    {formatDuration(
+                                        playback.duration ||
+                                            currentSong?.duration ||
+                                            0,
+                                    )}
+                                </span>
+                            </div>
                             <div>
                                 <h2 className="text-center text-3xl font-bold text-shadow-md">
                                     {currentSong
@@ -192,7 +156,7 @@ export default function Host({
                         <RoomQRCode roomCode={room?.code ?? ""} />
                         <p className="text-center text-lg text-white/80 text-shadow-sm">
                             ...or visit{" "}
-                            <span className="font-bold">democratune.timkolesnichenko.me</span> and
+                            <span className="font-bold">{SITE_NAME}</span> and
                             enter code{" "}
                             <span className="font-bold">{room?.code}</span>
                         </p>

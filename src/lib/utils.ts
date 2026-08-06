@@ -6,6 +6,24 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Formats a number of seconds as `m:ss`, or `h:mm:ss` for anything over an hour.
+ * Anything non-finite or negative renders as `0:00` so the UI never shows NaN.
+ */
+export function formatDuration(seconds: number): string {
+    if (!Number.isFinite(seconds) || seconds < 0) return "0:00"
+
+    const total = Math.floor(seconds)
+    const hours = Math.floor(total / 3600)
+    const minutes = Math.floor((total % 3600) / 60)
+    const secs = total % 60
+
+    if (hours > 0) {
+        return `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`
+    }
+    return `${minutes}:${String(secs).padStart(2, "0")}`
+}
+
+/**
  * Constructs a full URL based on the provided path and environment variables.
  *
  * This function prioritizes the following environment variables to determine the base URL:
