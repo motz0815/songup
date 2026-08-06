@@ -144,6 +144,18 @@ export default function Home() {
 
                         </p>
                         <div className="mt-4 flex items-center space-x-4 sm:mt-0">
+                            <Link
+                                href="/privacy"
+                                className="text-sm text-white/80 hover:text-white"
+                            >
+                                Privacy
+                            </Link>
+                            <Link
+                                href="/terms"
+                                className="text-sm text-white/80 hover:text-white"
+                            >
+                                Terms
+                            </Link>
                             <a
                                 href="https://github.com/KOLESNiii/DemocraTune/"
                                 target="_blank"
