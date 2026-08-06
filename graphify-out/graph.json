@@ -9,7 +9,7 @@
       "source_file": "package.json",
       "source_location": "L1",
       "id": "package_json",
-      "community": 3,
+      "community": 5,
       "norm_label": "package.json"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "package.json",
       "source_location": "L2",
       "id": "democratune_package_name",
-      "community": 3,
+      "community": 5,
       "norm_label": "name"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "package.json",
       "source_location": "L3",
       "id": "democratune_package_version",
-      "community": 3,
+      "community": 5,
       "norm_label": "version"
     },
     {
@@ -36,7 +36,7 @@
       "source_file": "package.json",
       "source_location": "L4",
       "id": "democratune_package_private",
-      "community": 3,
+      "community": 5,
       "norm_label": "private"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "package.json",
       "source_location": "L5",
       "id": "democratune_package_engines",
-      "community": 3,
+      "community": 5,
       "norm_label": "engines"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "package.json",
       "source_location": "L6",
       "id": "democratune_package_engines_node",
-      "community": 3,
+      "community": 5,
       "norm_label": "node"
     },
     {
@@ -63,7 +63,7 @@
       "source_file": "package.json",
       "source_location": "L8",
       "id": "democratune_package_packagemanager",
-      "community": 3,
+      "community": 5,
       "norm_label": "packagemanager"
     },
     {
@@ -72,7 +72,7 @@
       "source_file": "package.json",
       "source_location": "L9",
       "id": "democratune_package_scripts",
-      "community": 3,
+      "community": 5,
       "norm_label": "scripts"
     },
     {
@@ -81,7 +81,7 @@
       "source_file": "package.json",
       "source_location": "L10",
       "id": "democratune_package_scripts_next_dev",
-      "community": 3,
+      "community": 5,
       "norm_label": "next-dev"
     },
     {
@@ -90,7 +90,7 @@
       "source_file": "package.json",
       "source_location": "L11",
       "id": "democratune_package_scripts_dev",
-      "community": 3,
+      "community": 5,
       "norm_label": "dev"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "package.json",
       "source_location": "L12",
       "id": "democratune_package_scripts_build",
-      "community": 3,
+      "community": 5,
       "norm_label": "build"
     },
     {
@@ -108,7 +108,7 @@
       "source_file": "package.json",
       "source_location": "L13",
       "id": "democratune_package_scripts_start",
-      "community": 3,
+      "community": 5,
       "norm_label": "start"
     },
     {
@@ -117,7 +117,7 @@
       "source_file": "package.json",
       "source_location": "L14",
       "id": "democratune_package_scripts_lint",
-      "community": 3,
+      "community": 5,
       "norm_label": "lint"
     },
     {
@@ -126,7 +126,7 @@
       "source_file": "package.json",
       "source_location": "L15",
       "id": "democratune_package_scripts_vercel_build",
-      "community": 3,
+      "community": 5,
       "norm_label": "vercel-build"
     },
     {
@@ -549,7 +549,7 @@
       "source_file": "package.json",
       "source_location": "L65",
       "id": "democratune_package_trusteddependencies",
-      "community": 3,
+      "community": 5,
       "norm_label": "trusteddependencies"
     },
     {
@@ -558,7 +558,7 @@
       "source_file": "package.json",
       "source_location": "L68",
       "id": "democratune_package_overrides",
-      "community": 3,
+      "community": 5,
       "norm_label": "overrides"
     },
     {
@@ -567,7 +567,7 @@
       "source_file": "package.json",
       "source_location": "L69",
       "id": "democratune_package_overrides_types_react",
-      "community": 3,
+      "community": 5,
       "norm_label": "@types/react"
     },
     {
@@ -576,7 +576,7 @@
       "source_file": "package.json",
       "source_location": "L70",
       "id": "democratune_package_overrides_types_react_dom",
-      "community": 3,
+      "community": 5,
       "norm_label": "@types/react-dom"
     },
     {
@@ -1096,7 +1096,7 @@
       "label": "clampSkipThreshold()",
       "file_type": "code",
       "source_file": "src/convex/settings.ts",
-      "source_location": "L24",
+      "source_location": "L27",
       "id": "convex_settings_clampskipthreshold",
       "community": 36,
       "norm_label": "clampskipthreshold()"
@@ -1105,7 +1105,7 @@
       "label": "weightFromScore()",
       "file_type": "code",
       "source_file": "src/convex/settings.ts",
-      "source_location": "L50",
+      "source_location": "L53",
       "id": "convex_settings_weightfromscore",
       "community": 36,
       "norm_label": "weightfromscore()"
@@ -1114,7 +1114,7 @@
       "label": "votesRequired()",
       "file_type": "code",
       "source_file": "src/convex/settings.ts",
-      "source_location": "L60",
+      "source_location": "L63",
       "id": "convex_settings_votesrequired",
       "community": 36,
       "norm_label": "votesrequired()"
@@ -1125,7 +1125,7 @@
       "source_file": "src/convex/nicknames.ts",
       "source_location": "L1",
       "id": "src_convex_nicknames_ts",
-      "community": 0,
+      "community": 39,
       "norm_label": "nicknames.ts"
     },
     {
@@ -1134,7 +1134,7 @@
       "source_file": "src/convex/nicknames.ts",
       "source_location": "L7",
       "id": "convex_nicknames_setnickname",
-      "community": 0,
+      "community": 39,
       "norm_label": "setnickname"
     },
     {
@@ -1143,7 +1143,7 @@
       "source_file": "src/convex/nicknames.ts",
       "source_location": "L29",
       "id": "convex_nicknames_getnickname",
-      "community": 0,
+      "community": 39,
       "norm_label": "getnickname"
     },
     {
@@ -1152,7 +1152,7 @@
       "source_file": "src/convex/nicknames.ts",
       "source_location": "L38",
       "id": "convex_nicknames_getnicknamebyuserid",
-      "community": 0,
+      "community": 39,
       "norm_label": "getnicknamebyuserid"
     },
     {
@@ -1186,16 +1186,16 @@
       "label": "mutation",
       "file_type": "code",
       "source_file": "src/convex/functions.ts",
-      "source_location": "L51",
+      "source_location": "L65",
       "id": "convex_functions_mutation",
-      "community": 0,
+      "community": 39,
       "norm_label": "mutation"
     },
     {
       "label": "internalMutation",
       "file_type": "code",
       "source_file": "src/convex/functions.ts",
-      "source_location": "L52",
+      "source_location": "L66",
       "id": "convex_functions_internalmutation",
       "community": 41,
       "norm_label": "internalmutation"
@@ -1204,7 +1204,7 @@
       "label": "addSongToPlaylist",
       "file_type": "code",
       "source_file": "src/convex/functions.ts",
-      "source_location": "L57",
+      "source_location": "L71",
       "id": "convex_functions_addsongtoplaylist",
       "community": 39,
       "norm_label": "addsongtoplaylist"
@@ -1213,7 +1213,7 @@
       "label": "deleteRoomPlaylist",
       "file_type": "code",
       "source_file": "src/convex/functions.ts",
-      "source_location": "L85",
+      "source_location": "L99",
       "id": "convex_functions_deleteroomplaylist",
       "community": 39,
       "norm_label": "deleteroomplaylist"
@@ -1269,26 +1269,125 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L1",
       "id": "src_convex_playback_ts",
-      "community": 42,
+      "community": 40,
       "norm_label": "playback.ts"
     },
     {
       "label": "advanceRoom()",
       "file_type": "code",
       "source_file": "src/convex/playback.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "id": "convex_playback_advanceroom",
-      "community": 42,
+      "community": 40,
       "norm_label": "advanceroom()"
     },
     {
-      "label": "clearSkipVotes()",
+      "label": "tracks.ts",
       "file_type": "code",
-      "source_file": "src/convex/playback.ts",
-      "source_location": "L79",
-      "id": "convex_playback_clearskipvotes",
-      "community": 42,
-      "norm_label": "clearskipvotes()"
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L1",
+      "id": "src_convex_tracks_ts",
+      "community": 33,
+      "norm_label": "tracks.ts"
+    },
+    {
+      "label": "upsertTrack()",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L29",
+      "id": "convex_tracks_upserttrack",
+      "community": 40,
+      "norm_label": "upserttrack()"
+    },
+    {
+      "label": "ENTITY_PREFIX_TO_PROVIDER",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L109",
+      "id": "convex_tracks_entity_prefix_to_provider",
+      "community": 33,
+      "norm_label": "entity_prefix_to_provider"
+    },
+    {
+      "label": "getTrack",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L116",
+      "id": "convex_tracks_gettrack",
+      "community": 33,
+      "norm_label": "gettrack"
+    },
+    {
+      "label": "saveResolution",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L121",
+      "id": "convex_tracks_saveresolution",
+      "community": 33,
+      "norm_label": "saveresolution"
+    },
+    {
+      "label": "resolveTrack",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L150",
+      "id": "convex_tracks_resolvetrack",
+      "community": 33,
+      "norm_label": "resolvetrack"
+    },
+    {
+      "label": "retry()",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L217",
+      "id": "convex_tracks_retry",
+      "community": 33,
+      "norm_label": "retry()"
+    },
+    {
+      "label": "OdesliResponse",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L233",
+      "id": "convex_tracks_odesliresponse",
+      "community": 33,
+      "norm_label": "odesliresponse"
+    },
+    {
+      "label": "readOdesli()",
+      "file_type": "code",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L251",
+      "id": "convex_tracks_readodesli",
+      "community": 33,
+      "norm_label": "readodesli()"
+    },
+    {
+      "label": "exports.ts",
+      "file_type": "code",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L1",
+      "id": "src_convex_exports_ts",
+      "community": 0,
+      "norm_label": "exports.ts"
+    },
+    {
+      "label": "ExportedTrack",
+      "file_type": "code",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L12",
+      "id": "convex_exports_exportedtrack",
+      "community": 0,
+      "norm_label": "exportedtrack"
+    },
+    {
+      "label": "getRoomExport",
+      "file_type": "code",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L28",
+      "id": "convex_exports_getroomexport",
+      "community": 0,
+      "norm_label": "getroomexport"
     },
     {
       "label": "voting.ts",
@@ -1318,28 +1417,10 @@
       "norm_label": "countactivelisteners()"
     },
     {
-      "label": "getSkipStatus",
-      "file_type": "code",
-      "source_file": "src/convex/voting.ts",
-      "source_location": "L63",
-      "id": "convex_voting_getskipstatus",
-      "community": 36,
-      "norm_label": "getskipstatus"
-    },
-    {
-      "label": "voteToSkip",
-      "file_type": "code",
-      "source_file": "src/convex/voting.ts",
-      "source_location": "L100",
-      "id": "convex_voting_votetoskip",
-      "community": 36,
-      "norm_label": "votetoskip"
-    },
-    {
       "label": "getCurrentSongVotes",
       "file_type": "code",
       "source_file": "src/convex/voting.ts",
-      "source_location": "L171",
+      "source_location": "L71",
       "id": "convex_voting_getcurrentsongvotes",
       "community": 36,
       "norm_label": "getcurrentsongvotes"
@@ -1348,7 +1429,7 @@
       "label": "voteOnCurrentSong",
       "file_type": "code",
       "source_file": "src/convex/voting.ts",
-      "source_location": "L203",
+      "source_location": "L118",
       "id": "convex_voting_voteoncurrentsong",
       "community": 36,
       "norm_label": "voteoncurrentsong"
@@ -1357,7 +1438,7 @@
       "label": "getMyRating",
       "file_type": "code",
       "source_file": "src/convex/voting.ts",
-      "source_location": "L261",
+      "source_location": "L200",
       "id": "convex_voting_getmyrating",
       "community": 36,
       "norm_label": "getmyrating"
@@ -1366,7 +1447,7 @@
       "label": "getRoomRatings",
       "file_type": "code",
       "source_file": "src/convex/voting.ts",
-      "source_location": "L283",
+      "source_location": "L222",
       "id": "convex_voting_getroomratings",
       "community": 36,
       "norm_label": "getroomratings"
@@ -1431,7 +1512,7 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L121",
       "id": "convex_ratings_tallyvotedocs",
-      "community": 42,
+      "community": 36,
       "norm_label": "tallyvotedocs()"
     },
     {
@@ -1519,7 +1600,7 @@
       "label": "setRoomPlaylist",
       "file_type": "code",
       "source_file": "src/convex/rooms.ts",
-      "source_location": "L241",
+      "source_location": "L258",
       "id": "convex_rooms_setroomplaylist",
       "community": 40,
       "norm_label": "setroomplaylist"
@@ -1528,7 +1609,7 @@
       "label": "getRoomById",
       "file_type": "code",
       "source_file": "src/convex/rooms.ts",
-      "source_location": "L251",
+      "source_location": "L268",
       "id": "convex_rooms_getroombyid",
       "community": 40,
       "norm_label": "getroombyid"
@@ -1728,7 +1809,7 @@
       "source_file": "src/convex/crons.ts",
       "source_location": "L1",
       "id": "src_convex_crons_ts",
-      "community": 39,
+      "community": 40,
       "norm_label": "crons.ts"
     },
     {
@@ -1737,7 +1818,7 @@
       "source_file": "src/convex/crons.ts",
       "source_location": "L6",
       "id": "convex_crons_crons",
-      "community": 39,
+      "community": 40,
       "norm_label": "crons"
     },
     {
@@ -1836,7 +1917,7 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L260",
       "id": "convex_scheduling_getnextsong",
-      "community": 42,
+      "community": 40,
       "norm_label": "getnextsong()"
     },
     {
@@ -1847,6 +1928,33 @@
       "id": "src_convex_auth_config_ts",
       "community": 32,
       "norm_label": "auth.config.ts"
+    },
+    {
+      "label": "fingerprint.ts",
+      "file_type": "code",
+      "source_file": "src/convex/fingerprint.ts",
+      "source_location": "L1",
+      "id": "src_convex_fingerprint_ts",
+      "community": 33,
+      "norm_label": "fingerprint.ts"
+    },
+    {
+      "label": "normalise()",
+      "file_type": "code",
+      "source_file": "src/convex/fingerprint.ts",
+      "source_location": "L25",
+      "id": "convex_fingerprint_normalise",
+      "community": 33,
+      "norm_label": "normalise()"
+    },
+    {
+      "label": "fingerprint()",
+      "file_type": "code",
+      "source_file": "src/convex/fingerprint.ts",
+      "source_location": "L50",
+      "id": "convex_fingerprint_fingerprint",
+      "community": 33,
+      "norm_label": "fingerprint()"
     },
     {
       "label": "server.d.ts",
@@ -1935,7 +2043,7 @@
       "source_file": "src/convex/_generated/dataModel.d.ts",
       "source_location": "L1",
       "id": "src_convex_generated_datamodel_d_ts",
-      "community": 14,
+      "community": 41,
       "norm_label": "datamodel.d.ts"
     },
     {
@@ -1944,7 +2052,7 @@
       "source_file": "src/convex/_generated/dataModel.d.ts",
       "source_location": "L23",
       "id": "generated_datamodel_d_tablenames",
-      "community": 14,
+      "community": 41,
       "norm_label": "tablenames"
     },
     {
@@ -1953,7 +2061,7 @@
       "source_file": "src/convex/_generated/dataModel.d.ts",
       "source_location": "L30",
       "id": "generated_datamodel_d_doc",
-      "community": 14,
+      "community": 41,
       "norm_label": "doc"
     },
     {
@@ -1962,7 +2070,7 @@
       "source_file": "src/convex/_generated/dataModel.d.ts",
       "source_location": "L48",
       "id": "generated_datamodel_d_id",
-      "community": 14,
+      "community": 41,
       "norm_label": "id"
     },
     {
@@ -1971,7 +2079,7 @@
       "source_file": "src/convex/_generated/dataModel.d.ts",
       "source_location": "L60",
       "id": "generated_datamodel_d_datamodel",
-      "community": 14,
+      "community": 41,
       "norm_label": "datamodel"
     },
     {
@@ -2196,7 +2304,7 @@
       "source_file": "src/app/room/not-found.tsx",
       "source_location": "L1",
       "id": "src_app_room_not_found_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "not-found.tsx"
     },
     {
@@ -2266,7 +2374,7 @@
       "label": "Room()",
       "file_type": "code",
       "source_file": "src/app/room/[code]/room.tsx",
-      "source_location": "L24",
+      "source_location": "L25",
       "id": "code_room_room",
       "community": 4,
       "norm_label": "room()"
@@ -2322,7 +2430,7 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L1",
       "id": "src_app_host_code_host_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "host.tsx"
     },
     {
@@ -2331,7 +2439,7 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L26",
       "id": "code_host_host",
-      "community": 6,
+      "community": 4,
       "norm_label": "host()"
     },
     {
@@ -2362,12 +2470,228 @@
       "norm_label": "hostpage()"
     },
     {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_spotify_callback_page_tsx",
+      "community": 6,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "SpotifyCallbackPage()",
+      "file_type": "code",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L13",
+      "id": "callback_page_spotifycallbackpage",
+      "community": 6,
+      "norm_label": "spotifycallbackpage()"
+    },
+    {
+      "label": "Callback()",
+      "file_type": "code",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L21",
+      "id": "callback_page_callback",
+      "community": 6,
+      "norm_label": "callback()"
+    },
+    {
+      "label": "Status()",
+      "file_type": "code",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L73",
+      "id": "callback_page_status",
+      "community": 6,
+      "norm_label": "status()"
+    },
+    {
+      "label": "spotify.ts",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L1",
+      "id": "src_lib_spotify_ts",
+      "community": 6,
+      "norm_label": "spotify.ts"
+    },
+    {
+      "label": "SCOPES",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L22",
+      "id": "lib_spotify_scopes",
+      "community": 6,
+      "norm_label": "scopes"
+    },
+    {
+      "label": "spotifyConfigured()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L37",
+      "id": "lib_spotify_spotifyconfigured",
+      "community": 6,
+      "norm_label": "spotifyconfigured()"
+    },
+    {
+      "label": "redirectUri()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L41",
+      "id": "lib_spotify_redirecturi",
+      "community": 6,
+      "norm_label": "redirecturi()"
+    },
+    {
+      "label": "randomString()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L49",
+      "id": "lib_spotify_randomstring",
+      "community": 6,
+      "norm_label": "randomstring()"
+    },
+    {
+      "label": "base64Url()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L56",
+      "id": "lib_spotify_base64url",
+      "community": 6,
+      "norm_label": "base64url()"
+    },
+    {
+      "label": "challengeFor()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L63",
+      "id": "lib_spotify_challengefor",
+      "community": 6,
+      "norm_label": "challengefor()"
+    },
+    {
+      "label": "beginAuthorization()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L72",
+      "id": "lib_spotify_beginauthorization",
+      "community": 6,
+      "norm_label": "beginauthorization()"
+    },
+    {
+      "label": "StoredToken",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L89",
+      "id": "lib_spotify_storedtoken",
+      "community": 6,
+      "norm_label": "storedtoken"
+    },
+    {
+      "label": "completeAuthorization()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L97",
+      "id": "lib_spotify_completeauthorization",
+      "community": 6,
+      "norm_label": "completeauthorization()"
+    },
+    {
+      "label": "currentToken()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L144",
+      "id": "lib_spotify_currenttoken",
+      "community": 6,
+      "norm_label": "currenttoken()"
+    },
+    {
+      "label": "forgetToken()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L161",
+      "id": "lib_spotify_forgettoken",
+      "community": 6,
+      "norm_label": "forgettoken()"
+    },
+    {
+      "label": "call()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L173",
+      "id": "lib_spotify_call",
+      "community": 6,
+      "norm_label": "call()"
+    },
+    {
+      "label": "ResolvableTrack",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L220",
+      "id": "lib_spotify_resolvabletrack",
+      "community": 6,
+      "norm_label": "resolvabletrack"
+    },
+    {
+      "label": "searchable()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L229",
+      "id": "lib_spotify_searchable",
+      "community": 6,
+      "norm_label": "searchable()"
+    },
+    {
+      "label": "SearchResponse",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L238",
+      "id": "lib_spotify_searchresponse",
+      "community": 6,
+      "norm_label": "searchresponse"
+    },
+    {
+      "label": "resolveTrack()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L257",
+      "id": "lib_spotify_resolvetrack",
+      "community": 6,
+      "norm_label": "resolvetrack()"
+    },
+    {
+      "label": "ExportProgress",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L302",
+      "id": "lib_spotify_exportprogress",
+      "community": 6,
+      "norm_label": "exportprogress"
+    },
+    {
+      "label": "ExportResult",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L307",
+      "id": "lib_spotify_exportresult",
+      "community": 6,
+      "norm_label": "exportresult"
+    },
+    {
+      "label": "exportPlaylist()",
+      "file_type": "code",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L319",
+      "id": "lib_spotify_exportplaylist",
+      "community": 6,
+      "norm_label": "exportplaylist()"
+    },
+    {
       "label": "utils.ts",
       "file_type": "code",
       "source_file": "src/lib/utils.ts",
       "source_location": "L1",
       "id": "src_lib_utils_ts",
-      "community": 6,
+      "community": 4,
       "norm_label": "utils.ts"
     },
     {
@@ -2385,7 +2709,7 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L12",
       "id": "lib_utils_formatduration",
-      "community": 6,
+      "community": 4,
       "norm_label": "formatduration()"
     },
     {
@@ -2394,7 +2718,7 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L43",
       "id": "lib_utils_geturl",
-      "community": 6,
+      "community": 4,
       "norm_label": "geturl()"
     },
     {
@@ -2596,6 +2920,24 @@
       "norm_label": "yourstanding()"
     },
     {
+      "label": "export-playlist.tsx",
+      "file_type": "code",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L1",
+      "id": "src_components_room_export_playlist_tsx",
+      "community": 6,
+      "norm_label": "export-playlist.tsx"
+    },
+    {
+      "label": "ExportPlaylist()",
+      "file_type": "code",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L26",
+      "id": "room_export_playlist_exportplaylist",
+      "community": 6,
+      "norm_label": "exportplaylist()"
+    },
+    {
       "label": "join-room.tsx",
       "file_type": "code",
       "source_file": "src/components/room/join-room.tsx",
@@ -2610,7 +2952,7 @@
       "source_file": "src/components/room/join-room.tsx",
       "source_location": "L7",
       "id": "room_join_room_joinroomform",
-      "community": 1,
+      "community": 2,
       "norm_label": "joinroomform()"
     },
     {
@@ -2644,19 +2986,19 @@
       "label": "VoteControls()",
       "file_type": "code",
       "source_file": "src/components/room/vote-controls.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "id": "room_vote_controls_votecontrols",
       "community": 4,
       "norm_label": "votecontrols()"
     },
     {
-      "label": "RateButton()",
+      "label": "VoteButton()",
       "file_type": "code",
       "source_file": "src/components/room/vote-controls.tsx",
-      "source_location": "L125",
-      "id": "room_vote_controls_ratebutton",
+      "source_location": "L116",
+      "id": "room_vote_controls_votebutton",
       "community": 4,
-      "norm_label": "ratebutton()"
+      "norm_label": "votebutton()"
     },
     {
       "label": "standings.tsx",
@@ -2664,7 +3006,7 @@
       "source_file": "src/components/host/standings.tsx",
       "source_location": "L1",
       "id": "src_components_host_standings_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "standings.tsx"
     },
     {
@@ -2673,7 +3015,7 @@
       "source_file": "src/components/host/standings.tsx",
       "source_location": "L15",
       "id": "host_standings_standings",
-      "community": 6,
+      "community": 4,
       "norm_label": "standings()"
     },
     {
@@ -2682,7 +3024,7 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L1",
       "id": "src_components_host_player_tsx",
-      "community": 6,
+      "community": 2,
       "norm_label": "player.tsx"
     },
     {
@@ -2691,7 +3033,7 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L8",
       "id": "host_player_playerstate",
-      "community": 6,
+      "community": 2,
       "norm_label": "playerstate"
     },
     {
@@ -2700,7 +3042,7 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L28",
       "id": "host_player_retryable_error_codes",
-      "community": 6,
+      "community": 2,
       "norm_label": "retryable_error_codes"
     },
     {
@@ -2709,7 +3051,7 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L39",
       "id": "host_player_playersong",
-      "community": 6,
+      "community": 2,
       "norm_label": "playersong"
     },
     {
@@ -2718,7 +3060,7 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L46",
       "id": "host_player_playbackstatus",
-      "community": 6,
+      "community": 2,
       "norm_label": "playbackstatus"
     },
     {
@@ -2727,7 +3069,7 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L65",
       "id": "host_player_hostplayer",
-      "community": 6,
+      "community": 2,
       "norm_label": "hostplayer()"
     },
     {
@@ -2799,7 +3141,7 @@
       "source_file": "src/components/host/background.tsx",
       "source_location": "L1",
       "id": "src_components_host_background_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "background.tsx"
     },
     {
@@ -2808,7 +3150,7 @@
       "source_file": "src/components/host/background.tsx",
       "source_location": "L3",
       "id": "host_background_hostbackground",
-      "community": 6,
+      "community": 4,
       "norm_label": "hostbackground()"
     },
     {
@@ -2853,7 +3195,7 @@
       "source_file": "src/components/host/qr-code.tsx",
       "source_location": "L1",
       "id": "src_components_host_qr_code_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "qr-code.tsx"
     },
     {
@@ -2862,7 +3204,7 @@
       "source_file": "src/components/host/qr-code.tsx",
       "source_location": "L4",
       "id": "host_qr_code_roomqrcode",
-      "community": 6,
+      "community": 4,
       "norm_label": "roomqrcode()"
     },
     {
@@ -2880,7 +3222,7 @@
       "source_file": "src/components/host/queue.tsx",
       "source_location": "L19",
       "id": "host_queue_queue",
-      "community": 6,
+      "community": 4,
       "norm_label": "queue()"
     },
     {
@@ -2898,8 +3240,44 @@
       "source_file": "src/components/host/create-room.tsx",
       "source_location": "L28",
       "id": "host_create_room_createroom",
-      "community": 2,
+      "community": 1,
       "norm_label": "createroom()"
+    },
+    {
+      "label": "service-links.tsx",
+      "file_type": "code",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L1",
+      "id": "src_components_songs_service_links_tsx",
+      "community": 2,
+      "norm_label": "service-links.tsx"
+    },
+    {
+      "label": "NAMED_SERVICES",
+      "file_type": "code",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L15",
+      "id": "songs_service_links_named_services",
+      "community": 2,
+      "norm_label": "named_services"
+    },
+    {
+      "label": "ServiceLinks()",
+      "file_type": "code",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L33",
+      "id": "songs_service_links_servicelinks",
+      "community": 2,
+      "norm_label": "servicelinks()"
+    },
+    {
+      "label": "Chip()",
+      "file_type": "code",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L57",
+      "id": "songs_service_links_chip",
+      "community": 2,
+      "norm_label": "chip()"
     },
     {
       "label": "song-card.tsx",
@@ -2914,7 +3292,7 @@
       "label": "SongView",
       "file_type": "code",
       "source_file": "src/components/songs/song-card.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "id": "songs_song_card_songview",
       "community": 4,
       "norm_label": "songview"
@@ -2923,7 +3301,7 @@
       "label": "SongCard()",
       "file_type": "code",
       "source_file": "src/components/songs/song-card.tsx",
-      "source_location": "L15",
+      "source_location": "L18",
       "id": "songs_song_card_songcard",
       "community": 4,
       "norm_label": "songcard()"
@@ -2979,7 +3357,7 @@
       "source_file": "src/components/ui/progress.tsx",
       "source_location": "L1",
       "id": "src_components_ui_progress_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "progress.tsx"
     },
     {
@@ -2988,7 +3366,7 @@
       "source_file": "src/components/ui/progress.tsx",
       "source_location": "L8",
       "id": "ui_progress_progress",
-      "community": 6,
+      "community": 4,
       "norm_label": "progress()"
     },
     {
@@ -3141,7 +3519,7 @@
       "source_file": "src/components/ui/quorum-meter.tsx",
       "source_location": "L1",
       "id": "src_components_ui_quorum_meter_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "quorum-meter.tsx"
     },
     {
@@ -3150,7 +3528,7 @@
       "source_file": "src/components/ui/quorum-meter.tsx",
       "source_location": "L15",
       "id": "ui_quorum_meter_quorummeter",
-      "community": 6,
+      "community": 4,
       "norm_label": "quorummeter()"
     },
     {
@@ -3285,7 +3663,7 @@
       "source_file": "src/components/ui/fullscreen.tsx",
       "source_location": "L1",
       "id": "src_components_ui_fullscreen_tsx",
-      "community": 6,
+      "community": 4,
       "norm_label": "fullscreen.tsx"
     },
     {
@@ -3294,7 +3672,7 @@
       "source_file": "src/components/ui/fullscreen.tsx",
       "source_location": "L5",
       "id": "ui_fullscreen_fullscreen",
-      "community": 6,
+      "community": 4,
       "norm_label": "fullscreen()"
     },
     {
@@ -3456,7 +3834,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L1",
       "id": "src_components_ui_button_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "button.tsx"
     },
     {
@@ -3465,7 +3843,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L7",
       "id": "ui_button_buttonvariants",
-      "community": 1,
+      "community": 2,
       "norm_label": "buttonvariants"
     },
     {
@@ -3474,7 +3852,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L34",
       "id": "ui_button_buttonprops",
-      "community": 1,
+      "community": 2,
       "norm_label": "buttonprops"
     },
     {
@@ -3483,7 +3861,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L41",
       "id": "ui_button_button",
-      "community": 1,
+      "community": 2,
       "norm_label": "button"
     },
     {
@@ -3886,7 +4264,7 @@
       "label": "\ud83d\udcdc License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L58",
+      "source_location": "L69",
       "id": "democratune_readme_license",
       "community": 16,
       "norm_label": "\ud83d\udcdc license"
@@ -4023,8 +4401,44 @@
       "source_file": "src/convex/_generated/api.js",
       "source_location": "L22",
       "id": "generated_api_internal",
-      "community": 39,
+      "community": 40,
       "norm_label": "internal"
+    },
+    {
+      "label": "clearSkipVotes()",
+      "file_type": "code",
+      "source_file": "src/convex/playback.ts",
+      "source_location": "L79",
+      "community": 40,
+      "norm_label": "clearskipvotes()",
+      "id": "convex_playback_clearskipvotes"
+    },
+    {
+      "label": "getSkipStatus",
+      "file_type": "code",
+      "source_file": "src/convex/voting.ts",
+      "source_location": "L63",
+      "community": 36,
+      "norm_label": "getskipstatus",
+      "id": "convex_voting_getskipstatus"
+    },
+    {
+      "label": "voteToSkip",
+      "file_type": "code",
+      "source_file": "src/convex/voting.ts",
+      "source_location": "L100",
+      "community": 36,
+      "norm_label": "votetoskip",
+      "id": "convex_voting_votetoskip"
+    },
+    {
+      "label": "RateButton()",
+      "file_type": "code",
+      "source_file": "src/components/room/vote-controls.tsx",
+      "source_location": "L125",
+      "community": 4,
+      "norm_label": "ratebutton()",
+      "id": "room_vote_controls_ratebutton"
     },
     {
       "label": "getQueueFCFS()",
@@ -5198,9 +5612,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports_from",
@@ -5209,9 +5623,9 @@
       "source_file": "src/components/host/create-room.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_create_room_tsx",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports_from",
@@ -5220,9 +5634,9 @@
       "source_file": "src/components/room/your-standing.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_your_standing_tsx",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports_from",
@@ -5231,9 +5645,9 @@
       "source_file": "src/convex/_generated/api.d.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_generated_api_d_ts",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports_from",
@@ -5242,9 +5656,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports_from",
@@ -5253,9 +5667,9 @@
       "source_file": "src/convex/rooms/manage.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_manage_ts",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports_from",
@@ -5264,9 +5678,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "contains",
@@ -5274,9 +5688,9 @@
       "source_file": "src/convex/settings.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_settings_ts",
-      "target": "convex_settings_clampskipthreshold",
-      "confidence_score": 1.0
+      "target": "convex_settings_clampskipthreshold"
     },
     {
       "relation": "contains",
@@ -5284,9 +5698,9 @@
       "source_file": "src/convex/settings.ts",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_settings_ts",
-      "target": "convex_settings_votesrequired",
-      "confidence_score": 1.0
+      "target": "convex_settings_votesrequired"
     },
     {
       "relation": "contains",
@@ -5294,9 +5708,9 @@
       "source_file": "src/convex/settings.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_settings_ts",
-      "target": "convex_settings_weightfromscore",
-      "confidence_score": 1.0
+      "target": "convex_settings_weightfromscore"
     },
     {
       "relation": "imports_from",
@@ -5305,9 +5719,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "src_convex_settings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_settings_ts"
     },
     {
       "relation": "imports",
@@ -5316,9 +5730,9 @@
       "source_file": "src/convex/rooms/manage.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_manage_ts",
-      "target": "convex_settings_clampskipthreshold",
-      "confidence_score": 1.0
+      "target": "convex_settings_clampskipthreshold"
     },
     {
       "relation": "calls",
@@ -5338,9 +5752,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_settings_weightfromscore",
-      "confidence_score": 1.0
+      "target": "convex_settings_weightfromscore"
     },
     {
       "relation": "imports",
@@ -5349,9 +5763,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_settings_votesrequired",
-      "confidence_score": 1.0
+      "target": "convex_settings_votesrequired"
     },
     {
       "relation": "imports_from",
@@ -5601,12 +6015,23 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "src_convex_functions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/convex/voting.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "src_convex_functions_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_functions_ts"
     },
     {
       "relation": "imports",
@@ -5637,9 +6062,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_functions_mutation",
-      "confidence_score": 1.0
+      "target": "convex_functions_mutation"
     },
     {
       "relation": "imports",
@@ -5651,6 +6076,17 @@
       "confidence_score": 1.0,
       "source": "src_convex_rooms_manage_ts",
       "target": "convex_functions_internalmutation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_functions_internalmutation",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5702,9 +6138,9 @@
       "source_file": "src/convex/rooms/manage.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_manage_ts",
-      "target": "src_convex_schema_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_schema_ts"
     },
     {
       "relation": "contains",
@@ -5712,9 +6148,9 @@
       "source_file": "src/convex/schema.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_schema_ts",
-      "target": "convex_schema_schedulervalidator",
-      "confidence_score": 1.0
+      "target": "convex_schema_schedulervalidator"
     },
     {
       "relation": "contains",
@@ -5733,9 +6169,9 @@
       "source_file": "src/convex/rooms/manage.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_manage_ts",
-      "target": "convex_schema_schedulervalidator",
-      "confidence_score": 1.0
+      "target": "convex_schema_schedulervalidator"
     },
     {
       "relation": "imports_from",
@@ -5744,9 +6180,9 @@
       "source_file": "src/convex/_generated/api.d.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_generated_api_d_ts",
-      "target": "src_convex_playback_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_playback_ts"
     },
     {
       "relation": "contains",
@@ -5754,9 +6190,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "convex_playback_advanceroom",
-      "confidence_score": 1.0
+      "target": "convex_playback_advanceroom"
     },
     {
       "relation": "contains",
@@ -5764,9 +6200,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "convex_playback_clearskipvotes",
-      "confidence_score": 1.0
+      "target": "convex_playback_clearskipvotes"
     },
     {
       "relation": "imports",
@@ -5775,9 +6211,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "convex_ratings_tallyvotedocs",
-      "confidence_score": 1.0
+      "target": "convex_ratings_tallyvotedocs"
     },
     {
       "relation": "imports",
@@ -5786,8 +6222,19 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "convex_scheduling_getnextsong",
+      "target": "convex_scheduling_getnextsong"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/playback.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_convex_playback_ts",
+      "target": "convex_tracks_upserttrack",
       "confidence_score": 1.0
     },
     {
@@ -5797,9 +6244,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "generated_api_internal",
-      "confidence_score": 1.0
+      "target": "generated_api_internal"
     },
     {
       "relation": "imports_from",
@@ -5808,9 +6255,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "src_convex_generated_api_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_api_js"
     },
     {
       "relation": "imports_from",
@@ -5819,9 +6266,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "src_convex_generated_server_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_server_js"
     },
     {
       "relation": "imports_from",
@@ -5830,9 +6277,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "src_convex_ratings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_ratings_ts"
     },
     {
       "relation": "imports_from",
@@ -5841,8 +6288,19 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_playback_ts",
-      "target": "src_convex_scheduling_ts",
+      "target": "src_convex_scheduling_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/playback.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_convex_playback_ts",
+      "target": "src_convex_tracks_ts",
       "confidence_score": 1.0
     },
     {
@@ -5852,9 +6310,9 @@
       "source_file": "src/convex/rooms.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_ts",
-      "target": "src_convex_playback_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_playback_ts"
     },
     {
       "relation": "imports_from",
@@ -5863,9 +6321,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "src_convex_playback_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_playback_ts"
     },
     {
       "relation": "calls",
@@ -5874,9 +6332,9 @@
       "source_file": "src/convex/playback.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_playback_advanceroom",
-      "target": "convex_playback_clearskipvotes",
-      "confidence_score": 1.0
+      "target": "convex_playback_clearskipvotes"
     },
     {
       "relation": "calls",
@@ -5901,15 +6359,26 @@
       "target": "convex_scheduling_getnextsong"
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/convex/playback.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "convex_playback_advanceroom",
+      "target": "convex_tracks_upserttrack"
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/convex/rooms.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_ts",
-      "target": "convex_playback_advanceroom",
-      "confidence_score": 1.0
+      "target": "convex_playback_advanceroom"
     },
     {
       "relation": "imports",
@@ -5918,8 +6387,240 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_playback_advanceroom",
+      "target": "convex_playback_advanceroom"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/_generated/api.d.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_convex_generated_api_d_ts",
+      "target": "src_convex_tracks_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_fingerprint_fingerprint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_entity_prefix_to_provider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_gettrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L233",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_odesliresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L251",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_readodesli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_resolvetrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L217",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_retry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_saveresolution",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "convex_tracks_upserttrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "generated_api_internal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "generated_server_internalaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "generated_server_internalquery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "src_convex_fingerprint_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "src_convex_generated_api_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_convex_tracks_ts",
+      "target": "src_convex_generated_server_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/convex/tracks.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "convex_tracks_upserttrack",
+      "target": "convex_fingerprint_fingerprint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_convex_exports_ts",
+      "target": "convex_exports_exportedtrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "src_convex_exports_ts",
+      "target": "convex_exports_getroomexport",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_convex_exports_ts",
+      "target": "generated_server_query",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/exports.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_convex_exports_ts",
+      "target": "src_convex_generated_server_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/_generated/api.d.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_convex_generated_api_d_ts",
+      "target": "src_convex_exports_ts",
       "confidence_score": 1.0
     },
     {
@@ -5929,9 +6630,20 @@
       "source_file": "src/convex/_generated/api.d.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_generated_api_d_ts",
-      "target": "src_convex_voting_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_voting_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/voting.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_convex_voting_ts",
+      "target": "convex_ratings_getuserrating"
     },
     {
       "relation": "imports",
@@ -5941,7 +6653,7 @@
       "source_location": "L7",
       "weight": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_ratings_getuserrating",
+      "target": "convex_ratings_tallyvotedocs",
       "confidence_score": 1.0
     },
     {
@@ -5950,9 +6662,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_countactivelisteners",
-      "confidence_score": 1.0
+      "target": "convex_voting_countactivelisteners"
     },
     {
       "relation": "contains",
@@ -5960,9 +6672,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_getcurrentsongvotes",
-      "confidence_score": 1.0
+      "target": "convex_voting_getcurrentsongvotes"
     },
     {
       "relation": "contains",
@@ -5970,9 +6682,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L261",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_getmyrating",
-      "confidence_score": 1.0
+      "target": "convex_voting_getmyrating"
     },
     {
       "relation": "contains",
@@ -5980,9 +6692,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L283",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_getroomratings",
-      "confidence_score": 1.0
+      "target": "convex_voting_getroomratings"
     },
     {
       "relation": "contains",
@@ -5990,9 +6702,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_getskipstatus",
-      "confidence_score": 1.0
+      "target": "convex_voting_getskipstatus"
     },
     {
       "relation": "contains",
@@ -6000,9 +6712,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_heartbeat",
-      "confidence_score": 1.0
+      "target": "convex_voting_heartbeat"
     },
     {
       "relation": "contains",
@@ -6010,9 +6722,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_voteoncurrentsong",
-      "confidence_score": 1.0
+      "target": "convex_voting_voteoncurrentsong"
     },
     {
       "relation": "contains",
@@ -6020,9 +6732,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "convex_voting_votetoskip",
-      "confidence_score": 1.0
+      "target": "convex_voting_votetoskip"
     },
     {
       "relation": "imports",
@@ -6031,9 +6743,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "generated_server_query",
-      "confidence_score": 1.0
+      "target": "generated_server_query"
     },
     {
       "relation": "imports_from",
@@ -6042,9 +6754,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "src_convex_generated_server_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_server_js"
     },
     {
       "relation": "imports_from",
@@ -6053,9 +6765,9 @@
       "source_file": "src/convex/voting.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_voting_ts",
-      "target": "src_convex_ratings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_ratings_ts"
     },
     {
       "relation": "imports_from",
@@ -6064,9 +6776,9 @@
       "source_file": "src/convex/_generated/api.d.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_generated_api_d_ts",
-      "target": "src_convex_ratings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_ratings_ts"
     },
     {
       "relation": "contains",
@@ -6074,9 +6786,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_ratings_getuserrating",
-      "confidence_score": 1.0
+      "target": "convex_ratings_getuserrating"
     },
     {
       "relation": "contains",
@@ -6084,9 +6796,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L88",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_ratings_getuserratings",
-      "confidence_score": 1.0
+      "target": "convex_ratings_getuserratings"
     },
     {
       "relation": "contains",
@@ -6094,9 +6806,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_ratings_neutral_rating",
-      "confidence_score": 1.0
+      "target": "convex_ratings_neutral_rating"
     },
     {
       "relation": "contains",
@@ -6104,9 +6816,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_ratings_tallysongvotes",
-      "confidence_score": 1.0
+      "target": "convex_ratings_tallysongvotes"
     },
     {
       "relation": "contains",
@@ -6114,9 +6826,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_ratings_tallyvotedocs",
-      "confidence_score": 1.0
+      "target": "convex_ratings_tallyvotedocs"
     },
     {
       "relation": "contains",
@@ -6124,9 +6836,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "convex_ratings_userrating",
-      "confidence_score": 1.0
+      "target": "convex_ratings_userrating"
     },
     {
       "relation": "imports_from",
@@ -6135,9 +6847,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_ratings_ts",
-      "target": "src_convex_generated_server_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_server_js"
     },
     {
       "relation": "imports_from",
@@ -6146,9 +6858,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "src_convex_ratings_ts",
-      "confidence_score": 1.0
+      "target": "src_convex_ratings_ts"
     },
     {
       "relation": "calls",
@@ -6157,9 +6869,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_ratings_getuserrating",
-      "target": "convex_ratings_tallysongvotes",
-      "confidence_score": 1.0
+      "target": "convex_ratings_tallysongvotes"
     },
     {
       "relation": "calls",
@@ -6179,9 +6891,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "convex_ratings_getuserratings",
-      "confidence_score": 1.0
+      "target": "convex_ratings_getuserratings"
     },
     {
       "relation": "calls",
@@ -6190,9 +6902,9 @@
       "source_file": "src/convex/ratings.ts",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_ratings_tallysongvotes",
-      "target": "convex_ratings_tallyvotedocs",
-      "confidence_score": 1.0
+      "target": "convex_ratings_tallyvotedocs"
     },
     {
       "relation": "imports_from",
@@ -6367,9 +7079,9 @@
       "source_file": "src/convex/rooms.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_rooms_ts",
-      "target": "convex_scheduling_getscheduledqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_getscheduledqueue"
     },
     {
       "relation": "imports",
@@ -6709,9 +7421,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "convex_scheduling_bucketbyuser",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_bucketbyuser"
     },
     {
       "relation": "contains",
@@ -6719,9 +7431,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "convex_scheduling_collectqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_collectqueue"
     },
     {
       "relation": "contains",
@@ -6779,9 +7491,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L251",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "convex_scheduling_getscheduledqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_getscheduledqueue"
     },
     {
       "relation": "contains",
@@ -6789,9 +7501,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "convex_scheduling_queuedsong",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_queuedsong"
     },
     {
       "relation": "contains",
@@ -6809,9 +7521,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L229",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_convex_scheduling_ts",
-      "target": "convex_scheduling_schedulequeue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_schedulequeue"
     },
     {
       "relation": "contains",
@@ -6874,9 +7586,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L256",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_getscheduledqueue",
-      "target": "convex_scheduling_attachnicknames",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_attachnicknames"
     },
     {
       "relation": "calls",
@@ -6907,9 +7619,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L98",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_roundrobinqueue",
-      "target": "convex_scheduling_collectqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_collectqueue"
     },
     {
       "relation": "calls",
@@ -6918,9 +7630,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L159",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_weightedqueue",
-      "target": "convex_scheduling_collectqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_collectqueue"
     },
     {
       "relation": "calls",
@@ -6929,9 +7641,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_roundrobinqueue",
-      "target": "convex_scheduling_bucketbyuser",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_bucketbyuser"
     },
     {
       "relation": "calls",
@@ -6940,9 +7652,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L162",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_weightedqueue",
-      "target": "convex_scheduling_bucketbyuser",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_bucketbyuser"
     },
     {
       "relation": "calls",
@@ -6962,9 +7674,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L246",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_schedulequeue",
-      "target": "convex_scheduling_fcfsqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_fcfsqueue"
     },
     {
       "relation": "calls",
@@ -6984,9 +7696,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L241",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_schedulequeue",
-      "target": "convex_scheduling_roundrobinqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_roundrobinqueue"
     },
     {
       "relation": "calls",
@@ -7006,9 +7718,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L243",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_schedulequeue",
-      "target": "convex_scheduling_weightedqueue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_weightedqueue"
     },
     {
       "relation": "calls",
@@ -7017,9 +7729,9 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L264",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_getnextsong",
-      "target": "convex_scheduling_schedulequeue",
-      "confidence_score": 1.0
+      "target": "convex_scheduling_schedulequeue"
     },
     {
       "relation": "calls",
@@ -7028,8 +7740,50 @@
       "source_file": "src/convex/scheduling.ts",
       "source_location": "L256",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "convex_scheduling_getscheduledqueue",
-      "target": "convex_scheduling_schedulequeue",
+      "target": "convex_scheduling_schedulequeue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/fingerprint.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "src_convex_fingerprint_ts",
+      "target": "convex_fingerprint_fingerprint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/fingerprint.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "src_convex_fingerprint_ts",
+      "target": "convex_fingerprint_normalise",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/_generated/api.d.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "src_convex_generated_api_d_ts",
+      "target": "src_convex_fingerprint_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/convex/fingerprint.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "convex_fingerprint_fingerprint",
+      "target": "convex_fingerprint_normalise",
       "confidence_score": 1.0
     },
     {
@@ -7199,9 +7953,9 @@
       "source_file": "src/components/host/standings.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_standings_tsx",
-      "target": "src_convex_generated_api_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_api_js"
     },
     {
       "relation": "imports_from",
@@ -7213,6 +7967,17 @@
       "confidence_score": 1.0,
       "source": "src_components_room_add_song_tsx",
       "target": "src_convex_generated_api_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "src_convex_generated_api_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -7243,9 +8008,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "src_convex_generated_api_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_api_js"
     },
     {
       "relation": "imports_from",
@@ -7254,9 +8019,9 @@
       "source_file": "src/components/room/your-standing.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_your_standing_tsx",
-      "target": "src_convex_generated_api_js",
-      "confidence_score": 1.0
+      "target": "src_convex_generated_api_js"
     },
     {
       "relation": "contains",
@@ -7855,9 +8620,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "lib_auth_useauthedmutation",
-      "confidence_score": 1.0
+      "target": "lib_auth_useauthedmutation"
     },
     {
       "relation": "imports",
@@ -7880,6 +8645,17 @@
       "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
       "target": "room_current_song_nowplaying"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/room/[code]/room.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_room_code_room_tsx",
+      "target": "room_export_playlist_exportplaylist",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7910,9 +8686,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "room_vote_controls_votecontrols",
-      "confidence_score": 1.0
+      "target": "room_vote_controls_votecontrols"
     },
     {
       "relation": "imports",
@@ -7921,9 +8697,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "room_your_standing_yourstanding",
-      "confidence_score": 1.0
+      "target": "room_your_standing_yourstanding"
     },
     {
       "relation": "imports_from",
@@ -7974,6 +8750,17 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/room/[code]/room.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_room_code_room_tsx",
+      "target": "src_components_room_export_playlist_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L18",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7998,9 +8785,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "src_components_room_vote_controls_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_room_vote_controls_tsx"
     },
     {
       "relation": "imports_from",
@@ -8009,9 +8796,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "src_components_room_your_standing_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_room_your_standing_tsx"
     },
     {
       "relation": "imports_from",
@@ -8020,9 +8807,9 @@
       "source_file": "src/app/room/[code]/room.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_room_code_room_tsx",
-      "target": "src_lib_auth_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_auth_ts"
     },
     {
       "relation": "calls",
@@ -8269,9 +9056,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "host_player_hostplayer",
-      "confidence_score": 1.0
+      "target": "host_player_hostplayer"
     },
     {
       "relation": "imports",
@@ -8280,9 +9067,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "host_player_playbackstatus",
-      "confidence_score": 1.0
+      "target": "host_player_playbackstatus"
     },
     {
       "relation": "imports",
@@ -8313,9 +9100,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "host_standings_standings",
-      "confidence_score": 1.0
+      "target": "host_standings_standings"
     },
     {
       "relation": "imports",
@@ -8324,9 +9111,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "lib_utils_formatduration",
-      "confidence_score": 1.0
+      "target": "lib_utils_formatduration"
     },
     {
       "relation": "imports_from",
@@ -8346,9 +9133,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "src_components_host_player_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_host_player_tsx"
     },
     {
       "relation": "imports_from",
@@ -8379,9 +9166,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "src_components_host_standings_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_host_standings_tsx"
     },
     {
       "relation": "imports_from",
@@ -8412,9 +9199,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "src_components_ui_quorum_meter_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_ui_quorum_meter_tsx"
     },
     {
       "relation": "imports_from",
@@ -8423,9 +9210,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "src_lib_utils_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_utils_ts"
     },
     {
       "relation": "imports",
@@ -8456,9 +9243,9 @@
       "source_file": "src/app/host/[code]/host.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_host_code_host_tsx",
-      "target": "ui_quorum_meter_quorummeter",
-      "confidence_score": 1.0
+      "target": "ui_quorum_meter_quorummeter"
     },
     {
       "relation": "imports_from",
@@ -8514,15 +9301,444 @@
       "target": "src_app_host_code_page_tsx_code_page_generatemetadata"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_app_spotify_callback_page_tsx",
+      "target": "callback_page_callback",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_app_spotify_callback_page_tsx",
+      "target": "callback_page_spotifycallbackpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "src_app_spotify_callback_page_tsx",
+      "target": "callback_page_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_spotify_callback_page_tsx",
+      "target": "lib_spotify_completeauthorization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/spotify/callback/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_spotify_callback_page_tsx",
+      "target": "src_lib_spotify_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "src_lib_spotify_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_base64url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_beginauthorization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L173",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_call",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_challengefor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_completeauthorization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L144",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_currenttoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L319",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_exportplaylist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L302",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_exportprogress",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L307",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_exportresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L161",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_forgettoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_randomstring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_redirecturi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_resolvabletrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L257",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_resolvetrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_scopes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L229",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_searchable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L238",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_searchresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_spotifyconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "src_lib_spotify_ts",
+      "target": "lib_spotify_storedtoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "room_export_playlist_exportplaylist",
+      "target": "lib_spotify_spotifyconfigured"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_spotify_spotifyconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "lib_spotify_beginauthorization",
+      "target": "lib_spotify_redirecturi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "lib_spotify_completeauthorization",
+      "target": "lib_spotify_redirecturi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "lib_spotify_beginauthorization",
+      "target": "lib_spotify_randomstring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "lib_spotify_challengefor",
+      "target": "lib_spotify_base64url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "lib_spotify_beginauthorization",
+      "target": "lib_spotify_challengefor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_spotify_beginauthorization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_spotify_currenttoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L201",
+      "weight": 1.0,
+      "source": "lib_spotify_call",
+      "target": "lib_spotify_forgettoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L359",
+      "weight": 1.0,
+      "source": "lib_spotify_exportplaylist",
+      "target": "lib_spotify_call",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_spotify_resolvabletrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L263",
+      "weight": 1.0,
+      "source": "lib_spotify_resolvetrack",
+      "target": "lib_spotify_searchable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/spotify.ts",
+      "source_location": "L331",
+      "weight": 1.0,
+      "source": "lib_spotify_exportplaylist",
+      "target": "lib_spotify_resolvetrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_spotify_exportresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_spotify_exportplaylist",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/host/player.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "src_lib_utils_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_utils_ts"
     },
     {
       "relation": "imports_from",
@@ -8553,9 +9769,9 @@
       "source_file": "src/components/host/queue.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_queue_tsx",
-      "target": "src_lib_utils_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_utils_ts"
     },
     {
       "relation": "imports_from",
@@ -8564,9 +9780,9 @@
       "source_file": "src/components/host/scheduler-picker.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_scheduler_picker_tsx",
-      "target": "src_lib_utils_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_utils_ts"
     },
     {
       "relation": "imports_from",
@@ -8583,12 +9799,23 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/room/search-song.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_search_song_tsx",
-      "target": "src_lib_utils_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_utils_ts"
     },
     {
       "relation": "imports_from",
@@ -8597,7 +9824,18 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
+      "target": "src_lib_utils_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_components_songs_service_links_tsx",
       "target": "src_lib_utils_ts",
       "confidence_score": 1.0
     },
@@ -8696,9 +9934,9 @@
       "source_file": "src/components/ui/quorum-meter.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_ui_quorum_meter_tsx",
-      "target": "src_lib_utils_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_utils_ts"
     },
     {
       "relation": "imports_from",
@@ -8738,9 +9976,9 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_lib_utils_ts",
-      "target": "lib_utils_formatduration",
-      "confidence_score": 1.0
+      "target": "lib_utils_formatduration"
     },
     {
       "relation": "contains",
@@ -8801,6 +10039,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "room_export_playlist_exportplaylist",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L149",
       "weight": 1.0,
@@ -8813,9 +10062,42 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/room/vote-controls.tsx",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "room_vote_controls_votebutton",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L95",
       "weight": 1.0,
       "source": "room_vote_controls_votecontrols",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "songs_service_links_chip",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "songs_service_links_servicelinks",
       "target": "lib_utils_cn"
     },
     {
@@ -8836,9 +10118,9 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "lib_utils_cn",
-      "confidence_score": 1.0
+      "target": "lib_utils_cn"
     },
     {
       "relation": "imports",
@@ -8858,9 +10140,9 @@
       "source_file": "src/components/host/queue.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_queue_tsx",
-      "target": "lib_utils_cn",
-      "confidence_score": 1.0
+      "target": "lib_utils_cn"
     },
     {
       "relation": "imports",
@@ -8869,9 +10151,9 @@
       "source_file": "src/components/host/scheduler-picker.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_scheduler_picker_tsx",
-      "target": "lib_utils_cn",
-      "confidence_score": 1.0
+      "target": "lib_utils_cn"
     },
     {
       "relation": "imports",
@@ -8888,10 +10170,32 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_components_songs_service_links_tsx",
       "target": "lib_utils_cn",
       "confidence_score": 1.0
     },
@@ -8990,9 +10294,9 @@
       "source_file": "src/components/ui/quorum-meter.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_ui_quorum_meter_tsx",
-      "target": "lib_utils_cn",
-      "confidence_score": 1.0
+      "target": "lib_utils_cn"
     },
     {
       "relation": "imports",
@@ -9342,9 +10646,9 @@
       "source_file": "src/components/room/search-song.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_search_song_tsx",
-      "target": "lib_utils_formatduration",
-      "confidence_score": 1.0
+      "target": "lib_utils_formatduration"
     },
     {
       "relation": "calls",
@@ -9397,9 +10701,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "src_lib_auth_ts",
-      "confidence_score": 1.0
+      "target": "src_lib_auth_ts"
     },
     {
       "relation": "contains",
@@ -9473,9 +10777,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "lib_auth_useauthedmutation",
-      "confidence_score": 1.0
+      "target": "lib_auth_useauthedmutation"
     },
     {
       "relation": "imports_from",
@@ -9872,9 +11176,9 @@
       "source_file": "src/components/room/search-song.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_search_song_tsx",
-      "target": "room_search_song_searchresult",
-      "confidence_score": 1.0
+      "target": "room_search_song_searchresult"
     },
     {
       "relation": "contains",
@@ -9957,9 +11261,9 @@
       "source_file": "src/components/room/your-standing.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_your_standing_tsx",
-      "target": "generated_api_api",
-      "confidence_score": 1.0
+      "target": "generated_api_api"
     },
     {
       "relation": "contains",
@@ -9967,8 +11271,29 @@
       "source_file": "src/components/room/your-standing.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_your_standing_tsx",
-      "target": "room_your_standing_yourstanding",
+      "target": "room_your_standing_yourstanding"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "generated_api_api",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/export-playlist.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_components_room_export_playlist_tsx",
+      "target": "room_export_playlist_exportplaylist",
       "confidence_score": 1.0
     },
     {
@@ -10075,9 +11400,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "generated_api_api",
-      "confidence_score": 1.0
+      "target": "generated_api_api"
     },
     {
       "relation": "contains",
@@ -10085,8 +11410,18 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "room_vote_controls_ratebutton",
+      "target": "room_vote_controls_ratebutton"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/room/vote-controls.tsx",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "src_components_room_vote_controls_tsx",
+      "target": "room_vote_controls_votebutton",
       "confidence_score": 1.0
     },
     {
@@ -10095,9 +11430,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "room_vote_controls_votecontrols",
-      "confidence_score": 1.0
+      "target": "room_vote_controls_votecontrols"
     },
     {
       "relation": "imports_from",
@@ -10106,9 +11441,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "src_components_ui_quorum_meter_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_ui_quorum_meter_tsx"
     },
     {
       "relation": "imports",
@@ -10117,9 +11452,9 @@
       "source_file": "src/components/room/vote-controls.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_room_vote_controls_tsx",
-      "target": "ui_quorum_meter_quorummeter",
-      "confidence_score": 1.0
+      "target": "ui_quorum_meter_quorummeter"
     },
     {
       "relation": "imports",
@@ -10128,9 +11463,9 @@
       "source_file": "src/components/host/standings.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_standings_tsx",
-      "target": "generated_api_api",
-      "confidence_score": 1.0
+      "target": "generated_api_api"
     },
     {
       "relation": "contains",
@@ -10138,9 +11473,9 @@
       "source_file": "src/components/host/standings.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_standings_tsx",
-      "target": "host_standings_standings",
-      "confidence_score": 1.0
+      "target": "host_standings_standings"
     },
     {
       "relation": "contains",
@@ -10148,9 +11483,9 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "host_player_hostplayer",
-      "confidence_score": 1.0
+      "target": "host_player_hostplayer"
     },
     {
       "relation": "contains",
@@ -10158,9 +11493,9 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "host_player_playbackstatus",
-      "confidence_score": 1.0
+      "target": "host_player_playbackstatus"
     },
     {
       "relation": "contains",
@@ -10168,9 +11503,9 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "host_player_playersong",
-      "confidence_score": 1.0
+      "target": "host_player_playersong"
     },
     {
       "relation": "contains",
@@ -10178,9 +11513,9 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "host_player_playerstate",
-      "confidence_score": 1.0
+      "target": "host_player_playerstate"
     },
     {
       "relation": "contains",
@@ -10188,9 +11523,9 @@
       "source_file": "src/components/host/player.tsx",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_player_tsx",
-      "target": "host_player_retryable_error_codes",
-      "confidence_score": 1.0
+      "target": "host_player_retryable_error_codes"
     },
     {
       "relation": "imports_from",
@@ -10489,9 +11824,9 @@
       "source_file": "src/components/host/create-room.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_create_room_tsx",
-      "target": "src_components_host_scheduler_picker_tsx",
-      "confidence_score": 1.0
+      "target": "src_components_host_scheduler_picker_tsx"
     },
     {
       "relation": "contains",
@@ -10499,9 +11834,9 @@
       "source_file": "src/components/host/scheduler-picker.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_scheduler_picker_tsx",
-      "target": "host_scheduler_picker_scheduleroption",
-      "confidence_score": 1.0
+      "target": "host_scheduler_picker_scheduleroption"
     },
     {
       "relation": "contains",
@@ -10509,9 +11844,9 @@
       "source_file": "src/components/host/scheduler-picker.tsx",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_scheduler_picker_tsx",
-      "target": "host_scheduler_picker_schedulerpicker",
-      "confidence_score": 1.0
+      "target": "host_scheduler_picker_schedulerpicker"
     },
     {
       "relation": "contains",
@@ -10519,9 +11854,9 @@
       "source_file": "src/components/host/scheduler-picker.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_scheduler_picker_tsx",
-      "target": "host_scheduler_picker_schedulers",
-      "confidence_score": 1.0
+      "target": "host_scheduler_picker_schedulers"
     },
     {
       "relation": "imports",
@@ -10530,9 +11865,9 @@
       "source_file": "src/components/host/create-room.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_create_room_tsx",
-      "target": "host_scheduler_picker_scheduleroption",
-      "confidence_score": 1.0
+      "target": "host_scheduler_picker_scheduleroption"
     },
     {
       "relation": "imports",
@@ -10541,9 +11876,9 @@
       "source_file": "src/components/host/create-room.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_host_create_room_tsx",
-      "target": "host_scheduler_picker_schedulerpicker",
-      "confidence_score": 1.0
+      "target": "host_scheduler_picker_schedulerpicker"
     },
     {
       "relation": "contains",
@@ -10819,6 +12154,58 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "src_components_songs_service_links_tsx",
+      "target": "songs_service_links_chip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "src_components_songs_service_links_tsx",
+      "target": "songs_service_links_named_services",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/service-links.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "src_components_songs_service_links_tsx",
+      "target": "songs_service_links_servicelinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/song-card.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_songs_song_card_tsx",
+      "target": "src_components_songs_service_links_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/songs/song-card.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_songs_song_card_tsx",
+      "target": "songs_service_links_servicelinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/songs/song-card.tsx",
       "source_location": "L15",
       "weight": 1.0,
@@ -11076,9 +12463,9 @@
       "source_file": "src/components/ui/quorum-meter.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_ui_quorum_meter_tsx",
-      "target": "ui_quorum_meter_quorummeter",
-      "confidence_score": 1.0
+      "target": "ui_quorum_meter_quorummeter"
     },
     {
       "relation": "contains",
@@ -11439,9 +12826,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_search_index_py",
-      "target": "search_index_is_embeddable",
-      "confidence_score": 1.0
+      "target": "search_index_is_embeddable"
     },
     {
       "relation": "contains",
@@ -11459,9 +12846,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_search_index_py",
-      "target": "search_index_normalize",
-      "confidence_score": 1.0
+      "target": "search_index_normalize"
     },
     {
       "relation": "contains",
@@ -11469,9 +12856,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_search_index_py",
-      "target": "search_index_verify_embeddable",
-      "confidence_score": 1.0
+      "target": "search_index_verify_embeddable"
     },
     {
       "relation": "calls",
@@ -11491,9 +12878,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_lambda_handler",
-      "target": "search_index_normalize",
-      "confidence_score": 1.0
+      "target": "search_index_normalize"
     },
     {
       "relation": "calls",
@@ -11502,9 +12889,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_lambda_handler",
-      "target": "search_index_verify_embeddable",
-      "confidence_score": 1.0
+      "target": "search_index_verify_embeddable"
     },
     {
       "relation": "rationale_for",
@@ -11522,9 +12909,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_rationale_41",
-      "target": "search_index_lambda_handler",
-      "confidence_score": 1.0
+      "target": "search_index_lambda_handler"
     },
     {
       "relation": "rationale_for",
@@ -11532,9 +12919,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_rationale_69",
-      "target": "search_index_normalize",
-      "confidence_score": 1.0
+      "target": "search_index_normalize"
     },
     {
       "relation": "rationale_for",
@@ -11542,9 +12929,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_rationale_100",
-      "target": "search_index_verify_embeddable",
-      "confidence_score": 1.0
+      "target": "search_index_verify_embeddable"
     },
     {
       "relation": "calls",
@@ -11563,9 +12950,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_rationale_143",
-      "target": "search_index_cors_response",
-      "confidence_score": 1.0
+      "target": "search_index_cors_response"
     },
     {
       "relation": "rationale_for",
@@ -11583,9 +12970,9 @@
       "source_file": "api/search/index.py",
       "source_location": "L158",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "search_index_rationale_158",
-      "target": "search_index_get_cors_origin",
-      "confidence_score": 1.0
+      "target": "search_index_get_cors_origin"
     },
     {
       "relation": "rationale_for",
@@ -11976,5 +13363,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "828833c77e512327bd31910349371b98a4a400a2"
+  "built_at_commit": "f770ab20c10324fbbe40a7fd9c1e53fb612d46e8"
 }

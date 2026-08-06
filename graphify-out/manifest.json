@@ -10,7 +10,7 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/convex.json": {
-    "mtime": 1786055614.1689162,
+    "mtime": 1786057972.1984303,
     "ast_hash": "9bd055a78217f4928a7dde5c60853ce2",
     "semantic_hash": ""
   },
@@ -55,8 +55,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/functions.ts": {
-    "mtime": 1770201149.9269192,
-    "ast_hash": "0f1819d3fd73f1aa217a16b5220c4587",
+    "mtime": 1786057471.7540014,
+    "ast_hash": "d52b19d9a2fed2ebd20d6ce182216d2d",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/http.ts": {
@@ -65,13 +65,13 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/schema.ts": {
-    "mtime": 1786055009.0618513,
-    "ast_hash": "685b0ca61e7b7ba62fa73d915bab85f1",
+    "mtime": 1786057324.811643,
+    "ast_hash": "1d3f82f14ca61b1400fdddd6a72441c9",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/rooms.ts": {
-    "mtime": 1786055171.4486835,
-    "ast_hash": "8bdb62259c1f3619a6890cd862a0f87a",
+    "mtime": 1786057790.632899,
+    "ast_hash": "9d1c28732c4f8feb7148f9b2e36bc14b",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/auth.ts": {
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/_generated/api.d.ts": {
-    "mtime": 1786055261.8948216,
-    "ast_hash": "40b13dd3b9a3aaa616db494e45c9535e",
+    "mtime": 1786057973.8534632,
+    "ast_hash": "a8bf9a2bb9f39a5f9d7327866faef266",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/rooms/manage.ts": {
@@ -180,8 +180,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/app/room/[code]/room.tsx": {
-    "mtime": 1786055471.8094456,
-    "ast_hash": "dcda3956dafaf0304122144ba914ce50",
+    "mtime": 1786057853.242096,
+    "ast_hash": "81b33aa8696b0a3e0b290493facf803b",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/app/host/page.tsx": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/app/host/[code]/host.tsx": {
-    "mtime": 1786055730.0998414,
-    "ast_hash": "a634fd217a2fe9c5d7a5157a9cf00a75",
+    "mtime": 1786057502.7419229,
+    "ast_hash": "723885eac8cebc25c799bcdbf675c8dd",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/app/host/[code]/page.tsx": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/components/room/history.tsx": {
-    "mtime": 1770219299.777374,
-    "ast_hash": "38ecc8d34f59d5466a648b284cdf0d4f",
+    "mtime": 1786057848.7470093,
+    "ast_hash": "acf9823734f3c5a2c588dcc6790f1fd3",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/components/room/add-song.tsx": {
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/components/songs/song-card.tsx": {
-    "mtime": 1767616267.3181586,
-    "ast_hash": "611a1641d865a66ce3d5522a425a89e6",
+    "mtime": 1786057810.282272,
+    "ast_hash": "4d9bad8656e6affe4c108c3ac4e8ceff",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/components/ui/scroll-area.tsx": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/README.md": {
-    "mtime": 1786055772.2985835,
-    "ast_hash": "b047852e77cccc71dbe6f19684ae845b",
+    "mtime": 1786058074.395488,
+    "ast_hash": "021bbe914bc507a60a6f1c6a5837735d",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/startup.txt": {
@@ -485,18 +485,18 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/settings.ts": {
-    "mtime": 1786055396.5974007,
-    "ast_hash": "587da606d3f7d9803e2a4db21f6fc290",
+    "mtime": 1786057331.5227716,
+    "ast_hash": "ad52ae08c39f551a313ee79157364483",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/playback.ts": {
-    "mtime": 1786055098.6020157,
-    "ast_hash": "a5354423a9e07f8354f2bc7b036057bd",
+    "mtime": 1786057464.4548156,
+    "ast_hash": "61667934042b96c57fdc839f311e15d0",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/voting.ts": {
-    "mtime": 1786055222.947388,
-    "ast_hash": "cac69e4d36054310924898f304be6631",
+    "mtime": 1786057360.7965753,
+    "ast_hash": "798bf96885e5db53b2fa2b585398864b",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/convex/ratings.ts": {
@@ -510,8 +510,8 @@
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/components/room/vote-controls.tsx": {
-    "mtime": 1786055381.9659731,
-    "ast_hash": "1625e8747c44540b3ebec438fac71806",
+    "mtime": 1786057490.8385842,
+    "ast_hash": "ebdbeb6ee827b06c1300b28e71a0d6a2",
     "semantic_hash": ""
   },
   "/home/kolesniii/DemocraTune/src/components/host/standings.tsx": {
@@ -532,6 +532,41 @@
   "/home/kolesniii/DemocraTune/src/components/ui/quorum-meter.tsx": {
     "mtime": 1786055360.276959,
     "ast_hash": "086899c95d29c81b721e8005edcd0316",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/tracks.ts": {
+    "mtime": 1786057914.6162913,
+    "ast_hash": "e4c987c5d28621c2b43c3be3a8e8798d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/exports.ts": {
+    "mtime": 1786057688.3189993,
+    "ast_hash": "a4a40fae32cbfc61390cb3fe30dbdcd3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/fingerprint.ts": {
+    "mtime": 1786057948.1749532,
+    "ast_hash": "5417fc370eefe54a647cada08e46eb90",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/spotify/callback/page.tsx": {
+    "mtime": 1786057742.3719935,
+    "ast_hash": "b2896f42230453394f44bca6b4090f0a",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/lib/spotify.ts": {
+    "mtime": 1786058034.816686,
+    "ast_hash": "62c3797b740c8d2e3d7db57d2a814a19",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/export-playlist.tsx": {
+    "mtime": 1786057830.6659584,
+    "ast_hash": "7d51223fedc6eaf53cd5627bcf59bd2c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/songs/service-links.tsx": {
+    "mtime": 1786057802.3876765,
+    "ast_hash": "810698605612dc3ca377a30c36b8e1d1",
     "semantic_hash": ""
   }
 }
