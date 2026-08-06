@@ -23,11 +23,11 @@ VERIFY_LIMIT = 12
 RESULT_LIMIT = 8
 VERIFY_TIMEOUT_SECONDS = 3
 
-# YouTube Music tags every result with a videoType. ATV entries are the
-# auto-generated "art track" uploads that back the audio-only catalogue; the
-# labels that own them almost always disallow embedded playback, so they show up
-# in search, get queued, and then fail with error 150 on the host screen.
-# Prefer real videos, and treat art tracks as a last resort.
+# YouTube Music tags every result with a videoType. The `videos` filter used
+# below returns OMV/UGC in practice, so this ranking is mostly defensive - it
+# keeps ATV "art tracks" last if the filter ever starts surfacing them, since
+# the labels that own those uploads usually disallow embedded playback. The
+# oEmbed check is what actually removes unplayable songs.
 VIDEO_TYPE_RANK = {
     "MUSIC_VIDEO_TYPE_OMV": 0,          # official music video
     "MUSIC_VIDEO_TYPE_OFFICIAL_SOURCE_MUSIC": 1,

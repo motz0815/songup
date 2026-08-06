@@ -26,22 +26,26 @@ user-weighted fairness, and experimental features such as voting and karaoke mod
   A dedicated host mode designed for TV or laptop screens.
   (Works flawlessly on mobile too.)
 
-- [ ] **2️⃣ Queue Management**
+- [X] **2️⃣ Queue Management**
   Hosts can choose one of several queueing algorithms, to fairly select songs from the recommendations.
   - ***First Come First Served*** - The default scheduling system inherited from SongUp.
   - ***Round Robin*** - A round robin implementation, taking a song from each user in turn.
-  - ***DemocraSchedule*** - A round robin variation using a user's song voting record.
+  - ***DemocraSchedule*** - A round robin variation using a user's song voting record. Implemented as
+    smooth weighted round robin, so well-rated users get proportionally more turns while everyone
+    stays interleaved.
   
 - [X] **🎶 Never Silence**
   When creating a room, hosts can choose a fallback playlist that will play when no one has added a song to the queue, while
   songs that users add will always have priority over fallback songs.
 
-- [ ] **⏭️ Voting**
-  Hosts can set a threshold for users to vote to skip the current song.
+- [X] **⏭️ Voting**
+  Hosts can set a threshold for users to vote to skip the current song. The threshold is a share of the
+  people currently in the room, so it stays meaningful as the party fills up and empties out.
 
-- [ ] **✅️❌ User Rating**
+- [X] **✅️❌ User Rating**
   Users can vote songs up or down, with this affecting a user's rating. Higher rated users get more priority to keep
-  adding songs (depending on scheduling algorithm!).
+  adding songs (depending on scheduling algorithm!). Ratings are scoped to a room, and hosts can choose
+  how many of a user's recent songs still count.
 
 - [X] **📜 Queue History**
   Ever liked a song but forgot what the song's name was? With queue history, you can see which songs have been played,
