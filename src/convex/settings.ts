@@ -32,6 +32,26 @@ export function clampSkipThreshold(threshold: number | undefined): number {
 }
 
 /**
+ * Scheduling weight given to a user with a neutral voting record. Higher values
+ * make DemocraSchedule more forgiving: one downvote shouldn't halve someone's
+ * share of the queue.
+ */
+export const BASE_WEIGHT = 4
+export const MIN_WEIGHT = 1
+export const MAX_WEIGHT = 12
+
+/**
+ * Turns a net vote score into a scheduling weight.
+ *
+ * The result is always strictly positive. That matters: a zero or negative
+ * weight would let a user be selected while contributing nothing to the total,
+ * which is how the previous weighted scheduler could spin forever.
+ */
+export function weightFromScore(score: number): number {
+    return Math.min(MAX_WEIGHT, Math.max(MIN_WEIGHT, BASE_WEIGHT + score))
+}
+
+/**
  * How many skip votes the current song needs.
  *
  * Always at least one, so a room with a single listener isn't stuck with a song

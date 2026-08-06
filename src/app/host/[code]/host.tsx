@@ -4,12 +4,20 @@ import { HostBackground } from "@/components/host/background"
 import { HostPlayer, PlaybackStatus } from "@/components/host/player"
 import { RoomQRCode } from "@/components/host/qr-code"
 import { Queue } from "@/components/host/queue"
+import { Standings } from "@/components/host/standings"
 import { Fullscreen } from "@/components/ui/fullscreen"
 import { Progress } from "@/components/ui/progress"
+import { QuorumMeter } from "@/components/ui/quorum-meter"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { formatDuration } from "@/lib/utils"
-import { Preloaded, useMutation, usePreloadedQuery } from "convex/react"
+import {
+    Preloaded,
+    useMutation,
+    usePreloadedQuery,
+    useQuery,
+} from "convex/react"
+import { SkipForwardIcon } from "lucide-react"
 import Link from "next/link"
 import { useCallback, useState } from "react"
 
@@ -30,6 +38,8 @@ export default function Host({
     const room = usePreloadedQuery(preloadedRoom)
 
     const currentSong = room?.currentSong ?? null
+
+    const skipStatus = useQuery(api.voting.getSkipStatus, { roomId })
 
     /*
      * MUTATIONS
@@ -81,6 +91,8 @@ export default function Host({
         (status: PlaybackStatus) => setPlayback(status),
         [],
     )
+
+    const isDemocraSchedule = room?.settings?.scheduler === "weighted"
 
     /*
      * RENDER
@@ -146,20 +158,45 @@ export default function Host({
                                     </p>
                                 )}
                             </div>
+
+                            {/* Stays out of the way until the room starts
+                                calling for a skip. */}
+                            <div className="flex h-9 items-center gap-4">
+                                {skipStatus && skipStatus.votes > 0 && (
+                                    <QuorumMeter
+                                        votes={skipStatus.votes}
+                                        required={skipStatus.required}
+                                    />
+                                )}
+                                {currentSong && (
+                                    <button
+                                        type="button"
+                                        onClick={() => void advance()}
+                                        className="flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none motion-reduce:transition-none"
+                                    >
+                                        <SkipForwardIcon className="size-4" />
+                                        Skip
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <Queue roomId={roomId} />
-                    <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
-                        <h3 className="text-center text-2xl font-bold text-shadow-md">
-                            Scan to add songs...
-                        </h3>
-                        <RoomQRCode roomCode={room?.code ?? ""} />
-                        <p className="text-center text-lg text-white/80 text-shadow-sm">
-                            ...or visit{" "}
-                            <span className="font-bold">{SITE_NAME}</span> and
-                            enter code{" "}
-                            <span className="font-bold">{room?.code}</span>
-                        </p>
+
+                    <div className="flex min-h-0 w-full flex-col gap-4 lg:row-span-2">
+                        <Queue roomId={roomId} className="min-h-0 flex-1" />
+                        {isDemocraSchedule && <Standings roomId={roomId} />}
+                        <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
+                            <h3 className="text-center text-2xl font-bold text-shadow-md">
+                                Scan to add songs...
+                            </h3>
+                            <RoomQRCode roomCode={room?.code ?? ""} />
+                            <p className="text-center text-lg text-white/80 text-shadow-sm">
+                                ...or visit{" "}
+                                <span className="font-bold">{SITE_NAME}</span>{" "}
+                                and enter code{" "}
+                                <span className="font-bold">{room?.code}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <footer className="flex w-full items-center justify-between px-1">

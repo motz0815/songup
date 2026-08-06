@@ -1,13 +1,6 @@
-import { Doc, Id } from "./_generated/dataModel"
+import type { Doc, Id } from "./_generated/dataModel"
 import type { QueryCtx } from "./_generated/server"
-
-/**
- * Weight given to a user with a neutral voting record. Higher values make the
- * scheduler more forgiving: a single downvote shouldn't halve someone's turn.
- */
-export const BASE_WEIGHT = 4
-export const MIN_WEIGHT = 1
-export const MAX_WEIGHT = 12
+import { BASE_WEIGHT, weightFromScore } from "./settings"
 
 export type UserRating = {
     /** Net upvotes minus downvotes inside the forget window. */
@@ -26,17 +19,6 @@ export const NEUTRAL_RATING: UserRating = {
     dislikes: 0,
     songsCounted: 0,
     weight: BASE_WEIGHT,
-}
-
-/**
- * Turns a net vote score into a scheduling weight.
- *
- * The result is always strictly positive. That matters: a zero or negative
- * weight would let a user be selected while contributing nothing to the total,
- * which is how the previous weighted scheduler could spin forever.
- */
-export function weightFromScore(score: number): number {
-    return Math.min(MAX_WEIGHT, Math.max(MIN_WEIGHT, BASE_WEIGHT + score))
 }
 
 /**

@@ -1,6 +1,7 @@
 import { Doc, Id } from "./_generated/dataModel"
 import type { QueryCtx } from "./_generated/server"
-import { BASE_WEIGHT, getUserRatings } from "./ratings"
+import { getUserRatings } from "./ratings"
+import { BASE_WEIGHT } from "./settings"
 
 export type QueuedSong = Doc<"queuedSongs"> & {
     addedByNickname: string | undefined
