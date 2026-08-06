@@ -3,7 +3,7 @@
 import { HostBackground } from "@/components/host/background"
 import { HostPlayer, PlaybackStatus } from "@/components/host/player"
 import { RoomQRCode } from "@/components/host/qr-code"
-import { Queue } from "@/components/host/queue"
+import { HOST_QUEUE_LENGTH, Queue } from "@/components/host/queue"
 import { Standings } from "@/components/host/standings"
 import { Fullscreen } from "@/components/ui/fullscreen"
 import { Progress } from "@/components/ui/progress"
@@ -47,9 +47,14 @@ export default function Host({
 
     const popSong = useMutation(api.rooms.popSong).withOptimisticUpdate(
         (localStore, args) => {
-            const queue = localStore.getQuery(api.rooms.getQueue, {
+            // These arguments must match what <Queue> subscribes with, or the
+            // lookup misses and the screen waits for the server round trip.
+            const queueArgs = {
                 roomId: args.roomId,
-            })
+                numItems: HOST_QUEUE_LENGTH,
+            }
+
+            const queue = localStore.getQuery(api.rooms.getQueue, queueArgs)
             const nextSong = queue?.[0]
             if (nextSong && room) {
                 // Set the next song as the current song
@@ -67,7 +72,7 @@ export default function Host({
                 // Remove the next song from the queue
                 localStore.setQuery(
                     api.rooms.getQueue,
-                    { roomId: args.roomId },
+                    queueArgs,
                     queue.slice(1),
                 )
             }

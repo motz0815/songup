@@ -9,6 +9,13 @@ import { SongCard } from "../songs/song-card"
 import { ScrollArea } from "../ui/scroll-area"
 import type { SongView } from "../songs/song-card"
 
+/**
+ * How far ahead the host screen shows. Exported because the optimistic update
+ * on `popSong` has to look up the queue under the exact same arguments, or it
+ * silently misses and the song change only lands on the server round trip.
+ */
+export const HOST_QUEUE_LENGTH = 10
+
 export function Queue({
     roomId,
     className,
@@ -18,7 +25,7 @@ export function Queue({
 }) {
     const queue = useQuery(api.rooms.getQueue, {
         roomId,
-        numItems: 10,
+        numItems: HOST_QUEUE_LENGTH,
     }) ?? []
 
     const queueSongs: SongView[] = queue.map(song => ({

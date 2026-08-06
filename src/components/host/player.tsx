@@ -202,12 +202,24 @@ export function HostPlayer({
                 ])
 
                 if (typeof duration === "number" && duration > 0) {
-                    setStatus((prev) => ({
-                        ...prev,
-                        duration,
-                        elapsed: elapsed ?? 0,
-                        progress: Math.min(1, (elapsed ?? 0) / duration),
-                    }))
+                    const seconds = elapsed ?? 0
+                    setStatus((prev) => {
+                        // Returning the previous object lets React skip the
+                        // re-render. Without this the whole host screen
+                        // re-rendered twice a second all night.
+                        if (
+                            prev.duration === duration &&
+                            Math.floor(prev.elapsed) === Math.floor(seconds)
+                        ) {
+                            return prev
+                        }
+                        return {
+                            ...prev,
+                            duration,
+                            elapsed: seconds,
+                            progress: Math.min(1, seconds / duration),
+                        }
+                    })
                 }
             } catch (error) {
                 console.error("Failed to read playback progress", error)
@@ -216,6 +228,12 @@ export function HostPlayer({
 
             // Watchdog: YouTube sometimes leaves the player sitting in
             // UNSTARTED/BUFFERING forever instead of raising an error.
+            //
+            // Only applies once this song has actually been handed to the
+            // player. Before that `startedAtRef` is still zero, and treating
+            // that as "waiting since 1970" would skip the song on the first
+            // tick whenever the room gets a song before onReady fires.
+            if (loadedVideoIdRef.current !== videoId) return
             if (hasPlayedRef.current) return
             const waiting = Date.now() - startedAtRef.current
 
