@@ -21,26 +21,61 @@ function KeyboardHandler({ onEnter }: { onEnter: () => void }) {
 
 type CookieConsent = "granted" | "denied" | "pending"
 
+const CONSENT_STORAGE_KEY = "songup_cookie_consent"
+
+function readStoredConsent(): CookieConsent | null {
+    try {
+        const stored = localStorage.getItem(CONSENT_STORAGE_KEY)
+        if (stored === "granted" || stored === "denied") {
+            return stored
+        }
+    } catch {
+        // localStorage can be unavailable.
+    }
+    return null
+}
+
+function storeConsent(consent: CookieConsent) {
+    try {
+        localStorage.setItem(CONSENT_STORAGE_KEY, consent)
+    } catch {
+        // localStorage can be unavailable.
+    }
+}
+
 export default function CookieBanner() {
     const [consentGiven, setConsentGiven] = useState<CookieConsent | "">("")
 
     useEffect(() => {
         // Defer the browser-only value until after hydration.
         const frame = requestAnimationFrame(() => {
-            setConsentGiven(posthog.get_explicit_consent_status())
+            setConsentGiven(
+                readStoredConsent() ?? posthog.get_explicit_consent_status(),
+            )
         })
 
         return () => cancelAnimationFrame(frame)
     }, [])
 
     function handleAcceptCookies() {
-        posthog.opt_in_capturing()
+        // Dismiss the banner first, so a failing SDK call cannot keep it open.
+        storeConsent("granted")
         setConsentGiven("granted")
+        try {
+            posthog.opt_in_capturing()
+        } catch (error) {
+            posthog.captureException(error)
+        }
     }
 
     function handleDeclineCookies() {
-        posthog.opt_out_capturing()
+        storeConsent("denied")
         setConsentGiven("denied")
+        try {
+            posthog.opt_out_capturing()
+        } catch (error) {
+            posthog.captureException(error)
+        }
     }
 
     return (
