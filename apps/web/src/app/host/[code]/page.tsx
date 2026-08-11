@@ -26,10 +26,13 @@ export default async function HostPage({
     /*
      * AUTHORIZATION
      */
-    // Check if room exists and that the user is the host
-    const preloadedRoom = await preloadQuery(api.rooms.getRoomByCode, {
-        code,
-    })
+    // Check if room exists and that the user is the host.
+    // The room preload and the auth token are independent, so fetch them
+    // together to shorten the time the page blocks before it paints.
+    const [preloadedRoom, token] = await Promise.all([
+        preloadQuery(api.rooms.getRoomByCode, { code }),
+        convexAuthNextjsToken(),
+    ])
 
     const room = preloadedQueryResult(preloadedRoom)
 
@@ -42,9 +45,7 @@ export default async function HostPage({
         {
             roomId: room._id,
         },
-        {
-            token: await convexAuthNextjsToken(),
-        },
+        { token },
     )
 
     if (!isHost) {
