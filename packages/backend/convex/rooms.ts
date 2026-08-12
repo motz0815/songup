@@ -3,6 +3,7 @@ import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { mutation } from "./functions"
+import { extendRoomExpiry } from "./rooms/manage"
 import { countSongAdded } from "./stats"
 
 /**
@@ -108,7 +109,10 @@ export const getSongsLeftToAdd = query({
     handler: async (ctx, args) => {
         const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
-            throw new Error("Room not found")
+            // The room can disappear under a live subscription (for example the
+            // cleanup cron deletes it). Degrade to an empty state instead of
+            // throwing, which would blank the whole page.
+            return null
         }
 
         const userId = await getAuthUserId(ctx)
@@ -191,6 +195,10 @@ export const addSong = mutation({
                 order: 0,
             })
         }
+
+        // The room is in use, so push its expiry forward.
+        await extendRoomExpiry(ctx, room)
+
         // For song addition stats
         await countSongAdded(ctx)
     },
@@ -248,5 +256,8 @@ export const popSong = mutation({
                 currentSong: undefined,
             })
         }
+
+        // The room is in use, so push its expiry forward.
+        await extendRoomExpiry(ctx, room)
     },
 })

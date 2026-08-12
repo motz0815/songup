@@ -5,6 +5,23 @@ import { MutationCtx, query } from "../_generated/server"
 import { internalMutation, mutation } from "../functions"
 import { countRoomCreated } from "../stats"
 
+// A room expires after it stays idle for this long. Activity in the room pushes
+// the expiry forward, so a room in use never expires under its users.
+export const FREE_ROOM_IDLE_MS = 1000 * 60 * 60 * 48 // 48 hours
+export const PRO_ROOM_IDLE_MS = 1000 * 60 * 60 * 24 * 7 // 7 days
+
+// Push a room's expiry forward from now, based on its plan.
+export async function extendRoomExpiry(
+    ctx: MutationCtx,
+    room: { _id: Id<"rooms">; proStatus: "free" | "pending" | "active" },
+) {
+    const idleMs =
+        room.proStatus === "active" ? PRO_ROOM_IDLE_MS : FREE_ROOM_IDLE_MS
+    await ctx.db.patch("rooms", room._id, {
+        expiresAt: Date.now() + idleMs,
+    })
+}
+
 export const activateProRoom = internalMutation({
     args: {
         roomId: v.id("rooms"),
@@ -14,7 +31,7 @@ export const activateProRoom = internalMutation({
         await ctx.db.patch("rooms", args.roomId, {
             host: args.userId, // Handle the case where the host created an account in the moment of paying for the room
             proStatus: "active",
-            expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days expiry
+            expiresAt: Date.now() + PRO_ROOM_IDLE_MS,
         })
     },
 })
@@ -66,7 +83,7 @@ export const createRoom = mutation({
             host: userId as Id<"users">,
             proStatus: args.pro ? "pending" : "free",
             code,
-            expiresAt: Date.now() + 1000 * 60 * 60 * 48, // 48 hours
+            expiresAt: Date.now() + FREE_ROOM_IDLE_MS,
             settings: {
                 maxSongsPerUser: args.maxSongsPerUser,
             },
