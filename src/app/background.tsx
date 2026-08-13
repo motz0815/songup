@@ -1,6 +1,14 @@
 "use client"
 
-import { GrainGradient } from "@paper-design/shaders-react"
+import dynamic from "next/dynamic"
+
+const GrainGradient = dynamic(
+    () =>
+        import("@paper-design/shaders-react").then(
+            (module) => module.GrainGradient,
+        ),
+    { ssr: false },
+)
 
 export function LandingBackground() {
     return (
