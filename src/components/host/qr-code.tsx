@@ -5,7 +5,7 @@ export function RoomQRCode({ roomCode }: { roomCode: string }) {
     const url = getURL(`/room/${roomCode}?utm_source=qr-code`)
 
     return (
-        <div className="h-full max-h-full rounded-lg bg-white p-3">
+        <div className="h-full max-h-full bg-white p-2">
             <QRCode
                 value={url}
                 size={128}

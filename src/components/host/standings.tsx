@@ -17,8 +17,10 @@ export function Standings({ roomId }: { roomId: Id<"rooms"> }) {
     const [animationParent] = useAutoAnimate<HTMLOListElement>()
 
     return (
-        <div className="flex w-full flex-col gap-3 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
-            <h3 className="text-xl font-bold text-shadow-md">Standings</h3>
+        <div className="flex w-full flex-col gap-3 border-t border-white/25 py-4">
+            <h3 className="font-display text-xl font-bold tracking-[-0.025em]">
+                Standings
+            </h3>
 
             {standings.length === 0 ? (
                 <p className="text-white/70">
