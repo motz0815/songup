@@ -15,25 +15,25 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
     const [animationParent] = useAutoAnimate<HTMLUListElement>()
 
     return (
-        <ScrollArea className="h-full max-h-[40vh] grow overflow-y-auto rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg">
-            <ul ref={animationParent} className="space-y-4">
+        <ScrollArea className="h-full max-h-[40vh] grow overflow-y-auto">
+            <ul ref={animationParent}>
                 {queue && queue.length > 0 ? (
                     queue.map((song) => (
                         <li key={song._id}>
-                            <div className="group relative flex items-center justify-between space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all">
+                            <div className="group border-ink/25 relative flex items-center justify-between gap-4 border-b py-4 transition-colors hover:bg-white/35">
                                 <ImageWithFallback
                                     src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
                                     width={128}
                                     height={128}
                                     alt={`${song.title}`}
-                                    className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
+                                    className="aspect-video h-16 w-28 shrink-0 object-cover sm:h-20 sm:w-36"
                                     unoptimized
                                 />
                                 <div className="w-full">
-                                    <h4 className="text-lg font-semibold text-shadow-md md:text-xl">
+                                    <h4 className="font-display text-lg leading-tight font-bold tracking-[-0.025em] md:text-xl">
                                         {song.title}
                                     </h4>
-                                    <p className="text-sm text-gray-100 text-shadow-sm md:text-lg">
+                                    <p className="text-ink/55 mt-1 text-sm md:text-base">
                                         {song.artist}
                                     </p>
                                 </div>
@@ -41,7 +41,10 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
                         </li>
                     ))
                 ) : (
-                    <p className="text-center">No songs in queue. Add some!</p>
+                    <p className="border-ink/25 text-ink/55 border-b py-5">
+                        Your queue is clear. Add something when inspiration
+                        strikes.
+                    </p>
                 )}
             </ul>
         </ScrollArea>

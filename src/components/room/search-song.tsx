@@ -16,6 +16,7 @@ type SearchResult = {
 
 export function SearchSong({
     onSelect,
+    disabled = false,
 }: {
     onSelect: (song: {
         videoId: string
@@ -23,6 +24,7 @@ export function SearchSong({
         artist: string
         duration: number
     }) => Promise<void>
+    disabled?: boolean
 }) {
     const [results, setResults] = useState<SearchResult[]>([])
     const [error, setError] = useState<string | null>(null)
@@ -89,21 +91,28 @@ export function SearchSong({
     return (
         <div className="flex flex-col gap-4">
             <form action={handleSearch}>
-                <div className="flex w-full gap-2">
+                <div className="flex w-full flex-col gap-2 sm:flex-row">
                     <Input
                         name="query"
                         type="search"
-                        placeholder="Search for a song"
+                        placeholder="Search title or artist"
                         autoComplete="off"
+                        disabled={disabled}
+                        className="border-ink bg-paper h-12 rounded-none border-2 text-base shadow-none"
                     />
-                    <SubmitButton>Search</SubmitButton>
+                    <SubmitButton
+                        disabled={disabled}
+                        className="border-ink h-12 rounded-none border-2 px-6 font-bold"
+                    >
+                        Search
+                    </SubmitButton>
                 </div>
             </form>
             {error && (
                 <p className="text-center text-sm text-red-500">{error}</p>
             )}
             {searched && !error && results.length === 0 && (
-                <div className="flex flex-col items-center gap-2 py-6 text-muted-foreground">
+                <div className="text-muted-foreground flex flex-col items-center gap-2 py-6">
                     <SearchXIcon className="size-6" />
                     <p className="text-sm">
                         Nothing playable found. Try a different search.
@@ -120,7 +129,7 @@ export function SearchSong({
                         <li key={song.videoId}>
                             <form
                                 action={handleSelectSong}
-                                className="flex items-center justify-between gap-3 rounded-lg bg-muted p-2 transition-colors hover:bg-muted/70"
+                                className="border-ink/20 flex items-center justify-between gap-3 border-b py-3 transition-colors hover:bg-white/45"
                             >
                                 <div className="flex min-w-0 items-center gap-3">
                                     <ImageWithFallback
@@ -128,14 +137,14 @@ export function SearchSong({
                                         alt={`${song.title}`}
                                         width={64}
                                         height={36}
-                                        className="aspect-video w-16 shrink-0 rounded-sm object-cover"
+                                        className="aspect-video w-20 shrink-0 object-cover"
                                         unoptimized
                                     />
                                     <div className="min-w-0 text-left">
                                         <p className="truncate text-sm font-semibold">
                                             {song.title}
                                         </p>
-                                        <p className="truncate text-xs text-muted-foreground">
+                                        <p className="text-muted-foreground truncate text-xs">
                                             {artist} &middot;{" "}
                                             {formatDuration(
                                                 song.duration_seconds,
@@ -163,7 +172,11 @@ export function SearchSong({
                                     name="duration"
                                     value={song.duration_seconds}
                                 />
-                                <SubmitButton size="sm" aria-label="Add song">
+                                <SubmitButton
+                                    size="sm"
+                                    aria-label="Add song"
+                                    className="rounded-none"
+                                >
                                     <PlusCircleIcon className="size-4" />
                                 </SubmitButton>
                             </form>

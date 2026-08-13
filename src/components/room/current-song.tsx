@@ -1,13 +1,14 @@
 "use client"
 
+import type { Doc } from "@/convex/_generated/dataModel"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { ImageWithFallback } from "../image-with-fallback"
-import { cn } from "@/lib/utils"
-import type { Doc } from "@/convex/_generated/dataModel"
 
-type CurrentSongType = (Doc<"rooms">["currentSong"] & {
-  addedByNickname?: string;
-}) | null;
+type CurrentSongType =
+    | (Doc<"rooms">["currentSong"] & {
+          addedByNickname?: string
+      })
+    | null
 
 export function NowPlaying({ currentSong }: { currentSong: CurrentSongType }) {
     const [animationParent] = useAutoAnimate<HTMLDivElement>({
@@ -16,33 +17,39 @@ export function NowPlaying({ currentSong }: { currentSong: CurrentSongType }) {
     })
 
     return (
-        <div ref={animationParent} className="flex flex-col gap-2">
+        <div ref={animationParent} className="mt-3 flex flex-col gap-2">
             {currentSong ? (
                 <div
                     key={`${currentSong.videoId}-${currentSong.addedBy ?? ""}`}
-                    className={cn(
-                        "flex items-center space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all"
-                    )}
+                    className="border-ink grid gap-5 border-y-2 py-5 transition-all sm:grid-cols-[minmax(0,1.25fr)_minmax(16rem,0.75fr)] sm:items-end"
                 >
                     <ImageWithFallback
                         src={`https://i.ytimg.com/vi_webp/${currentSong.videoId}/mqdefault.webp`}
-                        width={128}
-                        height={128}
+                        width={960}
+                        height={540}
                         alt={`${currentSong.title}`}
-                        className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
+                        className="aspect-video w-full object-cover"
                         unoptimized
                     />
-                    <div>
-                        <h4 className="text-lg font-semibold text-shadow-md md:text-xl">
+                    <div className="pb-1">
+                        <p className="font-code text-broadcast mb-2 text-xs font-bold tracking-[0.16em] uppercase">
+                            Live now
+                        </p>
+                        <h4 className="font-display text-3xl leading-none font-extrabold tracking-[-0.045em] sm:text-5xl">
                             {currentSong.title}
                         </h4>
-                        <p className="text-sm text-gray-100 text-shadow-sm md:text-lg">
+                        <p className="text-ink/60 mt-3 text-lg sm:text-xl">
                             {currentSong.artist}
                         </p>
+                        {currentSong.addedByNickname && (
+                            <p className="text-ink/50 mt-6 text-sm font-semibold">
+                                Added by {currentSong.addedByNickname}
+                            </p>
+                        )}
                     </div>
                 </div>
             ) : (
-                <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
+                <div className="border-ink border-y-2 py-5">
                     <p className="text-center">No song playing.</p>
                 </div>
             )}

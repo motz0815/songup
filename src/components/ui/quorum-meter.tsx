@@ -16,11 +16,13 @@ export function QuorumMeter({
     votes,
     required,
     size = "default",
+    tone = "dark",
     className,
 }: {
     votes: number
     required: number
     size?: "default" | "compact"
+    tone?: "dark" | "light"
     className?: string
 }) {
     const met = required > 0 && votes >= required
@@ -44,8 +46,10 @@ export function QuorumMeter({
                                 "rounded-full border transition-colors duration-300 motion-reduce:transition-none",
                                 compact ? "size-2" : "size-2.5",
                                 index < votes
-                                    ? "border-amber-300 bg-amber-300"
-                                    : "border-white/30 bg-white/5",
+                                    ? "border-quorum bg-quorum"
+                                    : tone === "dark"
+                                      ? "border-white/30 bg-white/5"
+                                      : "border-ink/35 bg-transparent",
                             )}
                         />
                     ))}
@@ -53,12 +57,13 @@ export function QuorumMeter({
             ) : (
                 <div
                     className={cn(
-                        "overflow-hidden rounded-full bg-white/10",
+                        "overflow-hidden rounded-full",
+                        tone === "dark" ? "bg-white/10" : "bg-ink/10",
                         compact ? "h-1.5 w-20" : "h-2 w-32",
                     )}
                 >
                     <div
-                        className="h-full rounded-full bg-amber-300 transition-[width] duration-300 motion-reduce:transition-none"
+                        className="bg-quorum h-full rounded-full transition-[width] duration-300 motion-reduce:transition-none"
                         style={{
                             width: `${Math.min(100, (votes / required) * 100)}%`,
                         }}
@@ -70,7 +75,11 @@ export function QuorumMeter({
                 className={cn(
                     "tabular-nums",
                     compact ? "text-xs" : "text-sm",
-                    met ? "font-semibold text-amber-300" : "text-white/70",
+                    met
+                        ? "text-quorum font-semibold"
+                        : tone === "dark"
+                          ? "text-white/70"
+                          : "text-ink/65",
                 )}
             >
                 {met ? "Skipping" : `${votes} of ${required} to skip`}
