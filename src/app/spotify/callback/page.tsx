@@ -1,5 +1,7 @@
 "use client"
 
+import { BrandMark } from "@/components/brand/brand-mark"
+import { TallyField } from "@/components/brand/tally-field"
 import { completeAuthorization } from "@/lib/spotify"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
@@ -59,7 +61,7 @@ function Callback() {
                 <button
                     type="button"
                     onClick={() => router.replace("/")}
-                    className="rounded-md border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+                    className="border-ink bg-signal hover:bg-signal/90 focus-visible:ring-broadcast/35 border-2 px-4 py-2 text-sm font-bold text-white transition-colors focus-visible:ring-4 focus-visible:outline-none"
                 >
                     Back to DemocraTune
                 </button>
@@ -72,8 +74,16 @@ function Callback() {
 
 function Status({ children }: { children: React.ReactNode }) {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-slate-500 to-indigo-950 p-6 text-center text-white">
-            <div className="max-w-md">{children}</div>
+        <main className="paper-field text-ink relative flex min-h-screen flex-col items-center justify-center overflow-hidden p-6 text-center">
+            <div className="text-broadcast absolute right-[-5rem] bottom-[-5rem] h-72 w-80 opacity-20">
+                <TallyField />
+            </div>
+            <div className="relative max-w-md">
+                <BrandMark compact className="mb-8 text-4xl" />
+                <div className="font-display border-ink border-y-2 py-6 text-2xl font-bold">
+                    {children}
+                </div>
+            </div>
         </main>
     )
 }
