@@ -1,184 +1,266 @@
-import { Id, Doc } from "./_generated/dataModel"
+import { Doc, Id } from "./_generated/dataModel"
 import type { QueryCtx } from "./_generated/server"
+import { getUserRatings } from "./ratings"
+import { BASE_WEIGHT } from "./settings"
 
-export async function attachNicknames(ctx: any, songs: Doc<"queuedSongs">[]) {
-    return Promise.all(
-        songs.map(async (song) => {
-        if (!song.addedBy) {
-            return { ...song, addedByNickname: undefined }
-        }
-        const user = await ctx.db.get(song.addedBy as Id<"users">)
-        return { ...song, addedByNickname: user?.nickname }
-        })
-    )
+export type QueuedSong = Doc<"queuedSongs"> & {
+    addedByNickname: string | undefined
 }
 
-export async function fcfsQueue(ctx: QueryCtx, roomId: Id<"rooms">, numItems: number) {
+/** Key used to bucket songs by the user who added them. */
+const ANONYMOUS = "anon"
+
+export async function attachNicknames(
+    ctx: QueryCtx,
+    songs: Doc<"queuedSongs">[],
+): Promise<QueuedSong[]> {
+    const nicknames = new Map<string, string | undefined>()
+
+    for (const song of songs) {
+        if (!song.addedBy || nicknames.has(song.addedBy)) continue
+        const user = await ctx.db.get(song.addedBy)
+        nicknames.set(song.addedBy, user?.nickname)
+    }
+
+    return songs.map((song) => ({
+        ...song,
+        addedByNickname: song.addedBy ? nicknames.get(song.addedBy) : undefined,
+    }))
+}
+
+/**
+ * Every song waiting in a room, oldest first.
+ *
+ * The `by_room_type` index sorts by (room, type, _creationTime), and
+ * "addedByUser" sorts before "fallback", so user songs always come out ahead of
+ * the host's fallback playlist. The schedulers below rely on that ordering.
+ */
+async function collectQueue(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+): Promise<Doc<"queuedSongs">[]> {
     return await ctx.db
         .query("queuedSongs")
-        .withIndex("by_room_type", q => q.eq("room", roomId))
+        .withIndex("by_room_type", (q) => q.eq("room", roomId))
+        .order("asc")
+        .collect()
+}
+
+/** Splits a queue into per-user buckets plus the unowned fallback songs. */
+function bucketByUser(songs: Doc<"queuedSongs">[]): {
+    userQueues: Map<string, Doc<"queuedSongs">[]>
+    fallback: Doc<"queuedSongs">[]
+} {
+    const userQueues = new Map<string, Doc<"queuedSongs">[]>()
+    const fallback: Doc<"queuedSongs">[] = []
+
+    for (const song of songs) {
+        if (song.type === "fallback") {
+            fallback.push(song)
+            continue
+        }
+        const key = song.addedBy ?? ANONYMOUS
+        const bucket = userQueues.get(key)
+        if (bucket) bucket.push(song)
+        else userQueues.set(key, [song])
+    }
+
+    return { userQueues, fallback }
+}
+
+/**
+ * First come, first served: the queue in the order it was added.
+ */
+export async function fcfsQueue(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+    numItems: number,
+): Promise<Doc<"queuedSongs">[]> {
+    return await ctx.db
+        .query("queuedSongs")
+        .withIndex("by_room_type", (q) => q.eq("room", roomId))
         .order("asc")
         .take(numItems)
 }
 
-export async function roundRobinQueue(ctx: any, roomId: Id<"rooms">, numItems: number) {
-    const songs: Doc<"queuedSongs">[] = await ctx.db
-        .query("queuedSongs")
-        .withIndex("by_room_type", (q: any) => q.eq("room", roomId))
-        .order("asc")
-        .collect()
-
+/**
+ * Round robin: one song from each user in turn, so nobody can monopolise the
+ * room by queueing ten songs at once.
+ *
+ * Turn order starts after whoever added the song that is playing, so the
+ * rotation carries across songs instead of restarting each time.
+ */
+export async function roundRobinQueue(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+    numItems: number,
+): Promise<Doc<"queuedSongs">[]> {
+    const songs = await collectQueue(ctx, roomId)
     if (!songs.length) return []
 
+    const { userQueues, fallback } = bucketByUser(songs)
+    const userIds = [...userQueues.keys()].sort()
+
+    if (!userIds.length) return fallback.slice(0, numItems)
+
     const room = await ctx.db.get(roomId)
-    const currentUserId = room?.currentSong?.addedBy?.toString() || null
+    const currentUserId = room?.currentSong?.addedBy ?? null
 
-    // separate anon/fallback songs from user songs
-    const anonQueue: Doc<"queuedSongs">[] = []
-    const userQueues: Record<string, Doc<"queuedSongs">[]> = {}
-
-    songs.forEach((song) => {
-        const userId = song.addedBy?.toString() ?? "anon"
-        if (song.type === "fallback") {
-        anonQueue.push(song)
-        } else {
-        if (!userQueues[userId]) userQueues[userId] = []
-        userQueues[userId].push(song)
-        }
-    })
-
-    const userIds = Object.keys(userQueues).sort()
-
-    // determine starting index
+    // Resume the rotation just after the user who is playing now.
     let startIdx = 0
     if (currentUserId) {
         const idx = userIds.indexOf(currentUserId)
-        startIdx = idx >= 0 ? (idx + 1) % userIds.length : 0
+        if (idx >= 0) startIdx = (idx + 1) % userIds.length
     }
 
-    const orderedQueue: Doc<"queuedSongs">[] = []
-    let remaining = true
-    let count = 0
+    const ordered: Doc<"queuedSongs">[] = []
+    let exhausted = false
 
-    while (remaining && count < numItems) {
-        remaining = false
-        for (let i = 0; i < userIds.length; i++) {
-            const uid = userIds[(startIdx + i) % userIds.length]
-            const queue = userQueues[uid]
-            if (queue.length > 0) {
-                orderedQueue.push(queue.shift()!)
-                count++
-                if (count == numItems) break
-                remaining = true
+    while (ordered.length < numItems && !exhausted) {
+        exhausted = true
+        for (let i = 0; i < userIds.length && ordered.length < numItems; i++) {
+            const bucket = userQueues.get(
+                userIds[(startIdx + i) % userIds.length],
+            )!
+            const next = bucket.shift()
+            if (next) {
+                ordered.push(next)
+                exhausted = false
             }
         }
     }
 
-    // append fallback songs at the end if there is space
-    if (count < numItems)
-        orderedQueue.push(...anonQueue.slice(0, numItems - count))
+    // Fallback songs only fill space the users didn't.
+    if (ordered.length < numItems) {
+        ordered.push(...fallback.slice(0, numItems - ordered.length))
+    }
 
-    return attachNicknames(ctx, orderedQueue)
+    return ordered
 }
 
-export async function weightedQueue(ctx: any, roomId: Id<"rooms">, numItems: number) {
-    const songs: Doc<"queuedSongs">[] = await ctx.db
-        .query("queuedSongs")
-        .withIndex("by_room_type", (q: any) => q.eq("room", roomId))
-        .order("asc")
-        .collect()
-
+/**
+ * DemocraSchedule: round robin weighted by each user's voting record.
+ *
+ * Uses smooth weighted round robin (the algorithm nginx uses for upstreams).
+ * Each pass adds every user's weight to their credit, the user with the most
+ * credit plays next, and their credit drops by the total weight. Well-rated
+ * users get proportionally more turns while everyone still gets interleaved
+ * rather than one user playing a whole block.
+ *
+ * This is deliberately deterministic. The queue is a live query that re-runs on
+ * every room update, so a random ordering would reshuffle the displayed queue
+ * under the listeners' feet.
+ */
+export async function weightedQueue(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+    numItems: number,
+): Promise<Doc<"queuedSongs">[]> {
+    const songs = await collectQueue(ctx, roomId)
     if (!songs.length) return []
 
-    const anonQueue: Doc<"queuedSongs">[] = []
-    const userQueues: Record<string, Doc<"queuedSongs">[]> = {}
+    const { userQueues, fallback } = bucketByUser(songs)
+    const userIds = [...userQueues.keys()].sort()
 
-    songs.forEach((song) => {
-        const userId = song.addedBy?.toString() ?? "anon"
-        if (song.type === "fallback") {
-        anonQueue.push(song)
-        } else {
-        if (!userQueues[userId]) userQueues[userId] = []
-        userQueues[userId].push(song)
-        }
-    })
+    if (!userIds.length) return fallback.slice(0, numItems)
 
-    const userIds = Object.keys(userQueues)
-    if (!userIds.length) return attachNicknames(ctx, anonQueue)
-
-    // get user ratings
-    const userRatings: Record<string, number> = {}
-    for (const id of userIds) {
-        const user: Doc<"users"> = await ctx.db.get(id)
-        userRatings[id] = user?.ratingScore ?? 1
-    }
-
-    let totalWeight = Object.values(userRatings).reduce((a, b) => a + b, 0)
-
-    const weightedQueue: Doc<"queuedSongs">[] = []
-    let count = 0
-
-    // for determinism
-    var seedrandom = require('seedrandom');
-    var rng = seedrandom.xor128(roomId.toString())
-
-    // naive weighted round-robin
-    while (Object.values(userQueues).some(q => q.length > 0) && count < numItems) {
-        let r = rng() * totalWeight
-        for (const uid of userIds) {
-            if (r < userRatings[uid] && userQueues[uid].length > 0) {
-                weightedQueue.push(userQueues[uid].shift()!)
-                count++
-                if (!userQueues[uid].length) 
-                    totalWeight -= userRatings[uid]
-                break
-            }
-            r -= userRatings[uid]
-            if (count == numItems) break
-        }
-    }
-
-    // append fallback songs at the end
-    if (count < numItems)
-        weightedQueue.push(...anonQueue.slice(0, numItems - count))
-
-    return attachNicknames(ctx, weightedQueue)
-}
-
-export async function getQueueFCFS(ctx: QueryCtx, roomId: Id<"rooms">, numItems: number) {
-    const queue = await fcfsQueue(ctx, roomId, numItems)
-    return attachNicknames(ctx, queue)
-}
-
-export async function getQueueRoundRobin(ctx: QueryCtx, roomId: Id<"rooms">, numItems: number) {
-    const queue = await roundRobinQueue(ctx, roomId, numItems)
-    return attachNicknames(ctx, queue)
-}
-
-export async function getQueueWeighted(ctx: QueryCtx, roomId: Id<"rooms">, numItems: number) {
-    const queue = await weightedQueue(ctx, roomId, numItems)
-    return attachNicknames(ctx, queue)
-}
-
-export async function getNextSong(ctx: any, roomId: Id<"rooms">): Promise<Doc<"queuedSongs"> | null> {
     const room = await ctx.db.get(roomId)
-    if (!room) throw new Error("Room not found")
+    const numSongsToForget = room?.settings?.numSongsToForget ?? -1
 
-    // Default to FCFS
-    const scheduler = room.settings?.scheduler ?? "roundRobin"
+    // Anonymous songs have no owner to rate, so they sit at the base weight.
+    const ratedUserIds = userIds.filter(
+        (id): id is Id<"users"> => id !== ANONYMOUS,
+    )
+    const ratings = await getUserRatings(
+        ctx,
+        roomId,
+        ratedUserIds,
+        numSongsToForget,
+    )
 
-    const queue = await (async () => {
-        switch (scheduler) {
-            case "FCFS":
-                return fcfsQueue(ctx, roomId, 1)
-            case "roundRobin":
-                return roundRobinQueue(ctx, roomId, 1)
-            case "weighted":
-                return weightedQueue(ctx, roomId, 1)
-            default:
-                return fcfsQueue(ctx, roomId, 1)
+    const weights = new Map<string, number>(
+        userIds.map((id) => [id, ratings[id]?.weight ?? BASE_WEIGHT]),
+    )
+    const totalWeight = [...weights.values()].reduce((a, b) => a + b, 0)
+
+    // Push the user who is playing right now to the back of the first pass, so
+    // they don't immediately follow themselves.
+    const credit = new Map<string, number>(userIds.map((id) => [id, 0]))
+    const currentUserId = room?.currentSong?.addedBy
+    if (currentUserId && credit.has(currentUserId)) {
+        credit.set(currentUserId, -(weights.get(currentUserId) ?? BASE_WEIGHT))
+    }
+
+    const ordered: Doc<"queuedSongs">[] = []
+
+    while (ordered.length < numItems) {
+        let chosen: string | null = null
+        let best = -Infinity
+
+        for (const userId of userIds) {
+            if (!userQueues.get(userId)?.length) continue
+
+            const next = credit.get(userId)! + weights.get(userId)!
+            credit.set(userId, next)
+            if (next > best) {
+                best = next
+                chosen = userId
+            }
         }
-    })()
 
-    return queue.length ? queue[0] : null
+        // Every user is out of songs.
+        if (chosen === null) break
+
+        credit.set(chosen, credit.get(chosen)! - totalWeight)
+        ordered.push(userQueues.get(chosen)!.shift()!)
+    }
+
+    if (ordered.length < numItems) {
+        ordered.push(...fallback.slice(0, numItems - ordered.length))
+    }
+
+    return ordered
+}
+
+/**
+ * Runs the room's configured scheduler. FCFS is the fallback for rooms whose
+ * settings predate a scheduler being stored.
+ */
+export async function scheduleQueue(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+    numItems: number,
+): Promise<Doc<"queuedSongs">[]> {
+    if (numItems <= 0) return []
+
+    const room = await ctx.db.get(roomId)
+    const scheduler = room?.settings?.scheduler ?? "FCFS"
+
+    switch (scheduler) {
+        case "roundRobin":
+            return roundRobinQueue(ctx, roomId, numItems)
+        case "weighted":
+            return weightedQueue(ctx, roomId, numItems)
+        case "FCFS":
+        default:
+            return fcfsQueue(ctx, roomId, numItems)
+    }
+}
+
+/** The scheduled queue, enriched with the nicknames the UI displays. */
+export async function getScheduledQueue(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+    numItems: number,
+): Promise<QueuedSong[]> {
+    return attachNicknames(ctx, await scheduleQueue(ctx, roomId, numItems))
+}
+
+/** The single song the room should play next, or null if nothing is queued. */
+export async function getNextSong(
+    ctx: QueryCtx,
+    roomId: Id<"rooms">,
+): Promise<Doc<"queuedSongs"> | null> {
+    const queue = await scheduleQueue(ctx, roomId, 1)
+    return queue[0] ?? null
 }

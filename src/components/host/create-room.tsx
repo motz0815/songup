@@ -1,8 +1,12 @@
 "use client"
 
 import { api } from "@/convex/_generated/api"
+import {
+    DEFAULT_SKIP_THRESHOLD,
+    MAX_SKIP_THRESHOLD,
+    MIN_SKIP_THRESHOLD,
+} from "@/convex/settings"
 import { useAuthedMutation } from "@/lib/auth"
-import { PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import posthog from "posthog-js"
 import { useState } from "react"
@@ -19,69 +23,83 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { SubmitButton } from "../ui/submit-button"
 import { APIPlaylist, PlaylistPicker } from "./playlist-picker"
-
-type SchedulerOption = "FCFS" | "roundRobin" | "weighted"
+import { SchedulerOption, SchedulerPicker } from "./scheduler-picker"
 
 export function CreateRoom({ children }: { children?: React.ReactNode }) {
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
-    const [scheduler, setScheduler] = useState<SchedulerOption>("FCFS")
+    const [scheduler, setScheduler] = useState<SchedulerOption>("roundRobin")
     const [maxSongs, setMaxSongs] = useState(2)
     const [ratingsForget, setRatingsForget] = useState(false)
     const [ratingsForgetCount, setRatingsForgetCount] = useState(5)
+    const [skipPercent, setSkipPercent] = useState(
+        Math.round(DEFAULT_SKIP_THRESHOLD * 100),
+    )
     const [loading, setLoading] = useState(false)
 
     const router = useRouter()
 
-    // @ts-ignore 
+    // @ts-ignore
     const createRoom = useAuthedMutation(api.rooms.manage.createRoom)
-    // @ts-ignore 
+    // @ts-ignore
     const setRoomPlaylist = useAuthedMutation(api.rooms.setRoomPlaylist)
 
-    async function handleCreateRoom(formData: FormData) {
+    async function handleCreateRoom() {
         setLoading(true)
         try {
             const roomData = await createRoom({
                 maxSongsPerUser: maxSongs,
                 scheduler: scheduler,
-                numSongsToForget: (ratingsForget) ? ratingsForgetCount : -1,
+                numSongsToForget: ratingsForget ? ratingsForgetCount : -1,
+                skipThreshold: skipPercent / 100,
                 fallbackSongs: playlist
                     ? playlist.tracks.map((track) => ({
-                        videoId: track.videoId,
-                        title: track.title,
-                        artist: track.artists[0].name,
-                        duration: track.duration_seconds,
-                    }))
+                          videoId: track.videoId,
+                          title: track.title,
+                          artist: track.artists[0].name,
+                          duration: track.duration_seconds,
+                      }))
                     : undefined,
             })
 
-            const res = await fetch (
-                `/api/rooms/${roomData.roomId}/playlist`, 
-                {
-                    method: "PUT",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "ngrok-skip-browser-warning": "true", 
+            // The history playlist is a nice-to-have. If YouTube Music refuses
+            // to create one, the room should still open.
+            try {
+                const res = await fetch(
+                    `/api/rooms/${roomData.roomId}/playlist`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "ngrok-skip-browser-warning": "true",
+                        },
+                        body: JSON.stringify({}),
                     },
-                    body: JSON.stringify({ }),
+                )
+
+                if (res.ok) {
+                    const { playlistId } = await res.json()
+                    await setRoomPlaylist({
+                        playlistId: playlistId,
+                        roomId: roomData.roomId,
+                    })
+                } else {
+                    toast.warning(
+                        "Room created, but the history playlist couldn't be set up.",
+                    )
                 }
-            )
-        
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.detail || "Failed to create playlist");
-            } else {
-                const { playlistId } = await res.json()
-                await setRoomPlaylist({
-                    playlistId: playlistId,
-                    roomId: roomData.roomId,
-                })
+            } catch (playlistError) {
+                console.error(playlistError)
+                toast.warning(
+                    "Room created, but the history playlist couldn't be set up.",
+                )
             }
 
-            toast.success("Room created")
             posthog.capture("room_created", {
                 id: roomData.roomId,
                 code: roomData.code,
-                maxSongsPerUser: formData.get("maxSongsPerUser"),
+                maxSongsPerUser: maxSongs,
+                scheduler,
+                skipThreshold: skipPercent / 100,
                 fallbackPlaylist: playlist && {
                     id: playlist.id,
                     title: playlist.title,
@@ -90,10 +108,10 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                     trackCount: playlist.trackCount,
                 },
             })
-                
+
             router.push(`/host/${roomData.code}`)
         } catch (err: any) {
-            toast.error(err.message || "Failed to create room")
+            toast.error(err.message || "Couldn't create the room")
             console.error(err)
         } finally {
             setLoading(false)
@@ -103,84 +121,125 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>Create Room</Button>
+                {children ?? <Button>Create Room</Button>}
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-h-[85vh] overflow-y-auto">
                 <DialogHeader>
-                <DialogTitle>Create Room</DialogTitle>
+                    <DialogTitle>Create Room</DialogTitle>
                 </DialogHeader>
 
                 <form
                     action={handleCreateRoom}
-                    className="flex w-full flex-col gap-4"
+                    className="flex w-full flex-col gap-6"
                 >
-                {/* Scheduler select */}
-                <div className="flex flex-col gap-2">
-                    <Label htmlFor="scheduler">Scheduler</Label>
-                    <select
-                    id="scheduler"
-                    className="rounded border px-2 py-1"
-                    value={scheduler}
-                    onChange={e => setScheduler(e.target.value as SchedulerOption)}
-                    >
-                    <option value="FCFS">FCFS</option>
-                    <option value="roundRobin">Round Robin</option>
-                    <option value="weighted">DemocraTune</option>
-                    </select>
-                </div>
-
-                {/* Max songs / personal queue size */}
-                <div className="flex flex-col gap-2">
-                    <Label htmlFor="maxSongs">
-                    {scheduler === "FCFS" ? "Max songs per user" : "Max size of personal queue"}
-                    </Label>
-                    <Input
-                    id="maxSongs"
-                    type="number"
-                    min={1}
-                    value={maxSongs}
-                    onChange={e => setMaxSongs(Number(e.target.value))}
+                    <SchedulerPicker
+                        value={scheduler}
+                        onChange={setScheduler}
                     />
-                </div>
 
-                {/* Additional DemocraTune options */}
-                {scheduler === "weighted" && (
                     <div className="flex flex-col gap-2">
-                    <Label htmlFor="ratingsForget">Can ratings be forgotten?</Label>
-                    <input
-                        type="checkbox"
-                        id="ratingsForget"
-                        checked={ratingsForget}
-                        onChange={e => setRatingsForget(e.target.checked)}
-                    />
-
-                    {ratingsForget && (
-                        <div className="flex flex-col gap-2">
-                        <Label htmlFor="ratingsForgetCount">Number of songs after which ratings are forgotten</Label>
+                        <Label htmlFor="maxSongs">
+                            {scheduler === "FCFS"
+                                ? "Max songs per person"
+                                : "Max songs waiting per person"}
+                        </Label>
                         <Input
-                            id="ratingsForgetCount"
+                            id="maxSongs"
                             type="number"
                             min={1}
-                            value={ratingsForgetCount}
-                            onChange={e => setRatingsForgetCount(Number(e.target.value))}
+                            max={50}
+                            value={maxSongs}
+                            onChange={(e) =>
+                                setMaxSongs(Number(e.target.value))
+                            }
                         />
+                    </div>
+
+                    {scheduler === "weighted" && (
+                        <div className="flex flex-col gap-3 rounded-lg border border-input p-3">
+                            <label className="flex items-center gap-2 text-sm font-medium">
+                                <input
+                                    type="checkbox"
+                                    checked={ratingsForget}
+                                    onChange={(e) =>
+                                        setRatingsForget(e.target.checked)
+                                    }
+                                    className="size-4 accent-primary"
+                                />
+                                Let ratings fade
+                            </label>
+                            <p className="text-xs text-muted-foreground">
+                                {ratingsForget
+                                    ? `Only each person's last ${ratingsForgetCount} played songs count towards their rating.`
+                                    : "Every song a person has played counts towards their rating, all night."}
+                            </p>
+                            {ratingsForget && (
+                                <div className="flex flex-col gap-2">
+                                    <Label htmlFor="ratingsForgetCount">
+                                        Songs remembered
+                                    </Label>
+                                    <Input
+                                        id="ratingsForgetCount"
+                                        type="number"
+                                        min={1}
+                                        max={100}
+                                        value={ratingsForgetCount}
+                                        onChange={(e) =>
+                                            setRatingsForgetCount(
+                                                Number(e.target.value),
+                                            )
+                                        }
+                                    />
+                                </div>
+                            )}
                         </div>
                     )}
+
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="skipThreshold">
+                            Votes needed to skip a song
+                        </Label>
+                        <input
+                            id="skipThreshold"
+                            type="range"
+                            min={MIN_SKIP_THRESHOLD * 100}
+                            max={MAX_SKIP_THRESHOLD * 100}
+                            step={5}
+                            value={skipPercent}
+                            onChange={(e) =>
+                                setSkipPercent(Number(e.target.value))
+                            }
+                            className="w-full accent-primary"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                            <span className="font-medium tabular-nums">
+                                {skipPercent}%
+                            </span>{" "}
+                            of the people in the room. With 8 listening, that
+                            takes{" "}
+                            <span className="font-medium tabular-nums">
+                                {Math.max(1, Math.ceil(8 * (skipPercent / 100)))}
+                            </span>{" "}
+                            votes.
+                        </p>
                     </div>
-                )}
 
-                {/* Fallback playlist picker */}
-                <div className="flex flex-col gap-2">
-                    <Label htmlFor="fallbackPlaylist">Fallback playlist</Label>
-                    <PlaylistPicker
-                    id="fallbackPlaylist"
-                    value={playlist}
-                    onChange={setPlaylist}
-                    onLoadingChange={() => {}}
-                    />
-                </div>
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="fallbackPlaylist">
+                            Fallback playlist
+                        </Label>
+                        <p className="text-xs text-muted-foreground">
+                            Plays whenever nobody has queued anything.
+                        </p>
+                        <PlaylistPicker
+                            id="fallbackPlaylist"
+                            value={playlist}
+                            onChange={setPlaylist}
+                            onLoadingChange={() => {}}
+                        />
+                    </div>
 
-                <SubmitButton disabled={loading}>Create Room</SubmitButton>
+                    <SubmitButton disabled={loading}>Create Room</SubmitButton>
                 </form>
             </DialogContent>
         </Dialog>

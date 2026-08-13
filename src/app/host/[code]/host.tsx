@@ -1,22 +1,34 @@
 "use client"
 
 import { HostBackground } from "@/components/host/background"
+import { HostPlayer, PlaybackStatus } from "@/components/host/player"
 import { RoomQRCode } from "@/components/host/qr-code"
-import { Queue } from "@/components/host/queue"
+import { HOST_QUEUE_LENGTH, Queue } from "@/components/host/queue"
+import { Standings } from "@/components/host/standings"
 import { Fullscreen } from "@/components/ui/fullscreen"
 import { Progress } from "@/components/ui/progress"
+import { QuorumMeter } from "@/components/ui/quorum-meter"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
-import { Preloaded, useMutation, usePreloadedQuery } from "convex/react"
+import { formatDuration } from "@/lib/utils"
+import {
+    Preloaded,
+    useMutation,
+    usePreloadedQuery,
+    useQuery,
+} from "convex/react"
+import { SkipForwardIcon, ThumbsUpIcon } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
-import YouTube, { YouTubeProps } from "react-youtube"
+import { useCallback, useState } from "react"
+
+const SITE_NAME = "democratune.timkolesnichenko.me"
 
 export default function Host({
     roomId,
     preloadedRoom,
 }: {
     roomId: Id<"rooms">
+    // @ts-ignore
     preloadedRoom: Preloaded<typeof api.rooms.getRoomByCode>
 }) {
     /*
@@ -25,7 +37,11 @@ export default function Host({
 
     const room = usePreloadedQuery(preloadedRoom)
 
-    const currentSong = room?.currentSong
+    const currentSong = room?.currentSong ?? null
+
+    // Downvotes double as skip requests, so this one query drives both the
+    // rating readout and the skip meter.
+    const votes = useQuery(api.voting.getCurrentSongVotes, { roomId })
 
     /*
      * MUTATIONS
@@ -33,9 +49,14 @@ export default function Host({
 
     const popSong = useMutation(api.rooms.popSong).withOptimisticUpdate(
         (localStore, args) => {
-            const queue = localStore.getQuery(api.rooms.getQueue, {
+            // These arguments must match what <Queue> subscribes with, or the
+            // lookup misses and the screen waits for the server round trip.
+            const queueArgs = {
                 roomId: args.roomId,
-            })
+                numItems: HOST_QUEUE_LENGTH,
+            }
+
+            const queue = localStore.getQuery(api.rooms.getQueue, queueArgs)
             const nextSong = queue?.[0]
             if (nextSong && room) {
                 // Set the next song as the current song
@@ -53,7 +74,7 @@ export default function Host({
                 // Remove the next song from the queue
                 localStore.setQuery(
                     api.rooms.getQueue,
-                    { roomId: args.roomId },
+                    queueArgs,
                     queue.slice(1),
                 )
             }
@@ -64,109 +85,72 @@ export default function Host({
      * OTHER STATE
      */
 
-    const playerRef = useRef<YouTube>(null)
+    const [playback, setPlayback] = useState<PlaybackStatus>({
+        progress: 0,
+        elapsed: 0,
+        duration: 0,
+        error: null,
+    })
 
-    const [progress, setProgress] = useState(0)
+    const advance = useCallback(() => popSong({ roomId }), [popSong, roomId])
 
-    /*
-     * EFFECTS
-     */
+    const handleStatusChange = useCallback(
+        (status: PlaybackStatus) => setPlayback(status),
+        [],
+    )
 
-    // track the current song progress
-    useEffect(() => {
-        const intervalId = setInterval(async () => {
-            if (!currentSong) setProgress(0)
-            if (playerRef.current) {
-                const duration = await playerRef.current
-                    .getInternalPlayer()
-                    ?.getDuration()
-                const currentTime = await playerRef.current
-                    .getInternalPlayer()
-                    ?.getCurrentTime()
-                if (duration && currentTime) {
-                    setProgress(currentTime / duration)
-                }
-            }
-        }, 1000)
-
-        // Cleanup function to clear the interval when component unmounts
-        return () => clearInterval(intervalId)
-    }, [])
+    const isDemocraSchedule = room?.settings?.scheduler === "weighted"
 
     /*
-     * OPTIONS
+     * RENDER
      */
 
-    const opts: YouTubeProps["opts"] = {
-        width: "100%",
-        height: "100%",
-        playerVars: {
-            autoplay: 1,
-            // Disable cookies and tracking
-            enablejsapi: 0,
-            disablekb: 1,
-            fs: 0,
-            rel: 0,
-            modestbranding: 1,
-            controls: 1,
-        },
-        host: "https://www.youtube-nocookie.com",
-    }
-
-    const onPlayerStateChange: YouTubeProps["onStateChange"] = (event) => {
-        if (event.data === -1) {
-            event.target.playVideo()
-        }
-    }
-
+    // The player is always mounted so that YouTube keeps a warm iframe between
+    // songs; the join panel covers it whenever nothing is playing.
     return (
         <div className="relative min-h-screen w-full p-4 text-white lg:h-screen">
             <HostBackground videoId={currentSong?.videoId} />
             <main className="flex h-full w-full flex-col gap-4">
                 <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
                     <div className="flex w-full flex-col gap-4 lg:col-span-2 lg:row-span-2">
-                        <div className="aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-white/20 backdrop-blur-lg">
-                            {currentSong && (
-                                <YouTube
-                                    ref={playerRef}
-                                    className="z-10 aspect-video w-full"
-                                    videoId={currentSong.videoId ?? ""}
-                                    opts={opts}
-                                    onStateChange={onPlayerStateChange}
-                                    onEnd={() => {
-                                        // Pop song from queue
-                                        popSong({
-                                            roomId,
-                                        })
-                                    }}
-                                    onError={() => {
-                                        // Song probably isn't playable in embeds. To prevent SongUp from going silent, pop this song.
-                                        // TODO there shouldn't actually ever be non-embeddable songs in the queue
-                                        popSong({
-                                            roomId,
-                                        })
-                                    }}
-                                />
+                        <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black/50 shadow-2xl outline outline-white/20 backdrop-blur-lg">
+                            <HostPlayer
+                                song={currentSong}
+                                onAdvance={advance}
+                                onStatusChange={handleStatusChange}
+                                className={currentSong ? "" : "invisible"}
+                            />
+                            {!currentSong && (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center">
+                                    <h2 className="text-4xl font-bold text-balance xl:text-6xl">
+                                        {SITE_NAME}
+                                    </h2>
+                                    <p className="text-2xl xl:text-4xl">
+                                        Enter code{" "}
+                                        <span className="font-extrabold">
+                                            {room?.code}
+                                        </span>
+                                    </p>
+                                </div>
                             )}
-                            <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                                <h2 className="text-6xl font-bold">
-                                    songup.tv
-                                </h2>
-                                <p className="text-4xl">
-                                    Enter code{" "}
-                                    <span className="font-extrabold">
-                                        {room?.code}
-                                    </span>
-                                </p>
-                            </div>
                         </div>
                         <div className="flex w-full flex-col items-center gap-3">
-                            <Progress
-                                value={progress * 100}
-                                max={100}
-                                className="dark w-2/3"
-                                indicatorClassName="duration-1000 ease-linear"
-                            />
+                            <div className="flex w-2/3 items-center gap-3">
+                                <Progress
+                                    value={playback.progress * 100}
+                                    max={100}
+                                    className="dark grow"
+                                    indicatorClassName="duration-500 ease-linear"
+                                />
+                                <span className="w-24 shrink-0 text-right text-sm tabular-nums text-white/70">
+                                    {formatDuration(playback.elapsed)} /{" "}
+                                    {formatDuration(
+                                        playback.duration ||
+                                            currentSong?.duration ||
+                                            0,
+                                    )}
+                                </span>
+                            </div>
                             <div>
                                 <h2 className="text-center text-3xl font-bold text-shadow-md">
                                     {currentSong
@@ -181,26 +165,59 @@ export default function Host({
                                     </p>
                                 )}
                             </div>
+
+                            {/* Stays out of the way until the room starts
+                                turning on the song. */}
+                            <div className="flex h-9 items-center gap-4">
+                                {votes && votes.likes > 0 && (
+                                    <span className="flex items-center gap-1.5 text-sm text-emerald-300/90">
+                                        <ThumbsUpIcon className="size-4" />
+                                        <span className="tabular-nums">
+                                            {votes.likes}
+                                        </span>
+                                    </span>
+                                )}
+                                {votes && votes.dislikes > 0 && (
+                                    <QuorumMeter
+                                        votes={votes.dislikes}
+                                        required={votes.required}
+                                    />
+                                )}
+                                {currentSong && (
+                                    <button
+                                        type="button"
+                                        onClick={() => void advance()}
+                                        className="flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none motion-reduce:transition-none"
+                                    >
+                                        <SkipForwardIcon className="size-4" />
+                                        Skip
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <Queue roomId={roomId} />
-                    <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
-                        <h3 className="text-center text-2xl font-bold text-shadow-md">
-                            Scan to add songs...
-                        </h3>
-                        <RoomQRCode roomCode={room?.code ?? ""} />
-                        <p className="text-center text-lg text-white/80 text-shadow-sm">
-                            ...or visit{" "}
-                            <span className="font-bold">songup.tv</span> and
-                            enter code{" "}
-                            <span className="font-bold">{room?.code}</span>
-                        </p>
+
+                    <div className="flex min-h-0 w-full flex-col gap-4 lg:row-span-2">
+                        <Queue roomId={roomId} className="min-h-0 flex-1" />
+                        {isDemocraSchedule && <Standings roomId={roomId} />}
+                        <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
+                            <h3 className="text-center text-2xl font-bold text-shadow-md">
+                                Scan to add songs...
+                            </h3>
+                            <RoomQRCode roomCode={room?.code ?? ""} />
+                            <p className="text-center text-lg text-white/80 text-shadow-sm">
+                                ...or visit{" "}
+                                <span className="font-bold">{SITE_NAME}</span>{" "}
+                                and enter code{" "}
+                                <span className="font-bold">{room?.code}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <footer className="flex w-full items-center justify-between px-1">
                     <Link href="/host">
                         <h2 className="text-3xl font-bold text-white/80">
-                            SongUp
+                            DemocraTune
                             <span className="text-sm text-white/80">.tv</span>
                         </h2>
                     </Link>

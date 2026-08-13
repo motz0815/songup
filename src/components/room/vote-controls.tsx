@@ -1,0 +1,156 @@
+"use client"
+
+import { api } from "@/convex/_generated/api"
+import { Id } from "@/convex/_generated/dataModel"
+import { useAuthedMutation } from "@/lib/auth"
+import { cn } from "@/lib/utils"
+import { useQuery } from "convex/react"
+import { ThumbsDownIcon, ThumbsUpIcon } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
+import { QuorumMeter } from "../ui/quorum-meter"
+
+/**
+ * The room's verdict on the song that's playing.
+ *
+ * There is one control, not two: a downvote is both "I don't rate this" and "I
+ * want it gone". Enough of them and the song ends. Keeping those as separate
+ * buttons meant people cast one and forgot the other, and the room's actual
+ * opinion ended up split across two tallies that disagreed.
+ */
+export function VoteControls({
+    roomId,
+    videoId,
+}: {
+    roomId: Id<"rooms">
+    videoId: string
+}) {
+    const votes = useQuery(api.voting.getCurrentSongVotes, { roomId })
+    const vote = useAuthedMutation(api.voting.voteOnCurrentSong)
+
+    const [pending, setPending] = useState(false)
+
+    async function cast(value: 1 | -1) {
+        setPending(true)
+        try {
+            const result = await vote({ roomId, videoId, value })
+            if (result?.skipped) toast.success("The room voted it off")
+        } catch (error) {
+            toast.error(
+                error instanceof Error
+                    ? error.message
+                    : "Your vote didn't go through",
+            )
+        } finally {
+            setPending(false)
+        }
+    }
+
+    const canVote = votes?.canVote ?? false
+    const myVote = votes?.myVote ?? null
+    const dislikes = votes?.dislikes ?? 0
+    const required = votes?.required ?? 0
+
+    // One more downvote ends it. Worth saying out loud before someone taps.
+    const onTheBrink = required > 0 && dislikes === required - 1
+
+    return (
+        <div className="flex flex-col gap-3 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg">
+            <div className="flex items-center justify-between gap-3">
+                <div className="flex gap-2">
+                    <VoteButton
+                        icon={<ThumbsUpIcon className="size-4" />}
+                        count={votes?.likes ?? 0}
+                        active={myVote === 1}
+                        activeClassName="border-emerald-400/60 bg-emerald-400/20 text-emerald-200"
+                        ringClassName="focus-visible:ring-emerald-300/60"
+                        disabled={!canVote || pending}
+                        label={myVote === 1 ? "Take back your vote" : "Vote up"}
+                        onClick={() => cast(1)}
+                    />
+                    <VoteButton
+                        icon={<ThumbsDownIcon className="size-4" />}
+                        count={dislikes}
+                        active={myVote === -1}
+                        activeClassName="border-amber-300/60 bg-amber-300/20 text-amber-100"
+                        ringClassName="focus-visible:ring-amber-300/60"
+                        disabled={!canVote || pending}
+                        label={
+                            myVote === -1
+                                ? "Take back your vote"
+                                : onTheBrink
+                                  ? "Vote down, and skip the song"
+                                  : "Vote down"
+                        }
+                        onClick={() => cast(-1)}
+                    />
+                </div>
+
+                {votes && canVote && (
+                    <QuorumMeter votes={dislikes} required={required} />
+                )}
+            </div>
+
+            {votes && !canVote && (
+                <p className="text-xs text-white/60">
+                    You added this song, so the room decides its fate, not you.
+                </p>
+            )}
+
+            {canVote && (
+                <p
+                    className={cn(
+                        "text-xs transition-colors duration-300 motion-reduce:transition-none",
+                        onTheBrink ? "text-amber-200" : "text-white/60",
+                    )}
+                >
+                    {onTheBrink
+                        ? "One more vote down ends this song."
+                        : "Voting down also counts towards skipping."}
+                </p>
+            )}
+        </div>
+    )
+}
+
+function VoteButton({
+    icon,
+    count,
+    active,
+    activeClassName,
+    ringClassName,
+    disabled,
+    label,
+    onClick,
+}: {
+    icon: React.ReactNode
+    count: number
+    active: boolean
+    activeClassName: string
+    ringClassName: string
+    disabled: boolean
+    label: string
+    onClick: () => void
+}) {
+    return (
+        <button
+            type="button"
+            aria-label={label}
+            aria-pressed={active}
+            disabled={disabled}
+            onClick={onClick}
+            className={cn(
+                "flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors duration-200 motion-reduce:transition-none",
+                "disabled:pointer-events-none disabled:opacity-50",
+                "focus-visible:ring-2 focus-visible:outline-none",
+                ringClassName,
+                active
+                    ? activeClassName
+                    : "border-white/20 bg-white/5 hover:bg-white/15",
+            )}
+        >
+            {icon}
+            <span className="tabular-nums">{count}</span>
+        </button>
+    )
+}

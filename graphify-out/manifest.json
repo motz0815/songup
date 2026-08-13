@@ -1,0 +1,572 @@
+{
+  "/home/kolesniii/DemocraTune/package.json": {
+    "mtime": 1772702099.3602931,
+    "ast_hash": "35a7330ee63bb57a3a0d40552b1a45ca",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/next.config.ts": {
+    "mtime": 1786053963.9744794,
+    "ast_hash": "630932c75e779b412843dbc1d10b297a",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/convex.json": {
+    "mtime": 1786057972.1984303,
+    "ast_hash": "9bd055a78217f4928a7dde5c60853ce2",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/pem-jwk.js": {
+    "mtime": 1770206718.638422,
+    "ast_hash": "1d85a4f927f1c337c261a08421e91c1f",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/components.json": {
+    "mtime": 1763459351.8377068,
+    "ast_hash": "8dddb5be2055e6cd7c0175e11ee7d4f3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/eslint.config.mjs": {
+    "mtime": 1763459351.8377068,
+    "ast_hash": "0e9a8252841e979ec291f3e5ca38437c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/tsconfig.json": {
+    "mtime": 1763459351.8477185,
+    "ast_hash": "77cde76abc2f77404a39eb82c83f93f2",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/postcss.config.mjs": {
+    "mtime": 1763459351.8377068,
+    "ast_hash": "251ef3959aa235c95cf557b8f5da7c3c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/proxy.ts": {
+    "mtime": 1767015302.438792,
+    "ast_hash": "67996a7ded1d8a7c111e2c7d689af5e0",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/instrumentation-client.ts": {
+    "mtime": 1767020852.4360964,
+    "ast_hash": "c6209a458460114c8e71e3dae1fa0123",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/nicknames.ts": {
+    "mtime": 1763459351.8474176,
+    "ast_hash": "139028a6e3bb504b49fbb3abd53c3f96",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/functions.ts": {
+    "mtime": 1786057471.7540014,
+    "ast_hash": "d52b19d9a2fed2ebd20d6ce182216d2d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/http.ts": {
+    "mtime": 1763459351.8474176,
+    "ast_hash": "1d8b963c6fbb68aca07db080ecad3da7",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/schema.ts": {
+    "mtime": 1786057324.811643,
+    "ast_hash": "1d3f82f14ca61b1400fdddd6a72441c9",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/rooms.ts": {
+    "mtime": 1786057790.632899,
+    "ast_hash": "9d1c28732c4f8feb7148f9b2e36bc14b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/auth.ts": {
+    "mtime": 1772699537.7423234,
+    "ast_hash": "3bb466b1ba3157777771d45b6a620eed",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/convex.config.ts": {
+    "mtime": 1763459351.8474176,
+    "ast_hash": "7d92b624c1e778ce2861841a85668664",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/tsconfig.json": {
+    "mtime": 1763459351.8474176,
+    "ast_hash": "32faa5796e266e1fa77b2458e265bc65",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/crons.ts": {
+    "mtime": 1767045402.1114085,
+    "ast_hash": "1cdda11c6d7c28a215b6c8fe949f436c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/scheduling.ts": {
+    "mtime": 1786055422.3541267,
+    "ast_hash": "56a8fbe3f4d5a5cf727b62f8d3d2c49c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/auth.config.ts": {
+    "mtime": 1772699555.8632293,
+    "ast_hash": "d7c04e409a052aee61bab028c9fd3cfc",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/_generated/server.d.ts": {
+    "mtime": 1763459351.8474176,
+    "ast_hash": "a6d3e29e1cd98c6a0ebcf82d5074009e",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/_generated/server.js": {
+    "mtime": 1767205050.9903286,
+    "ast_hash": "cfc7a4ed084119abac0e51d79f525f4f",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/_generated/api.js": {
+    "mtime": 1763465031.0633476,
+    "ast_hash": "ea14005171d3e17b1b28a7139ad36d62",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/_generated/dataModel.d.ts": {
+    "mtime": 1767020874.6108654,
+    "ast_hash": "af87bff09394971f8debeb5b8e9f8a70",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/_generated/api.d.ts": {
+    "mtime": 1786057973.8534632,
+    "ast_hash": "a8bf9a2bb9f39a5f9d7327866faef266",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/rooms/manage.ts": {
+    "mtime": 1786055212.587575,
+    "ast_hash": "91fb79c59e4245c37f85acde2156fe8b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/background.tsx": {
+    "mtime": 1763459351.8444877,
+    "ast_hash": "97b8ccb3ded15090021cdeb25a062467",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/page.tsx": {
+    "mtime": 1772699496.602942,
+    "ast_hash": "880abd8fe023a9ffbe94ef682ac47a47",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/layout.tsx": {
+    "mtime": 1767048235.3937995,
+    "ast_hash": "f4632cab9f819b533ff688d0f415d9c1",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/sitemap.ts": {
+    "mtime": 1770218139.1093576,
+    "ast_hash": "531ceaff98689f1b9cc703d4f5fcde9a",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/robots.ts": {
+    "mtime": 1770218126.497327,
+    "ast_hash": "7571d6d533a94c33c9bd29e0188c9c4b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/discord/route.ts": {
+    "mtime": 1763459351.8445165,
+    "ast_hash": "c0a477363018cd0c532cb7cc46012646",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/room/not-found.tsx": {
+    "mtime": 1763459351.8467028,
+    "ast_hash": "223528ce97e0476ef96a0857f914dffe",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/room/route.ts": {
+    "mtime": 1763459351.8467028,
+    "ast_hash": "81c72ef11dcefb78a401d3ad5a85fa44",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/room/[code]/page.tsx": {
+    "mtime": 1767015302.437792,
+    "ast_hash": "5cdcaa68fd2fb3cb2110843ff4b44a06",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/room/[code]/room.tsx": {
+    "mtime": 1786057853.242096,
+    "ast_hash": "81b33aa8696b0a3e0b290493facf803b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/host/page.tsx": {
+    "mtime": 1767101836.641177,
+    "ast_hash": "b52047a330c858977904c381def35fe4",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/host/manage.tsx": {
+    "mtime": 1767015302.4367921,
+    "ast_hash": "68219d50d544044670381257a6163158",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/host/[code]/host.tsx": {
+    "mtime": 1786057502.7419229,
+    "ast_hash": "723885eac8cebc25c799bcdbf675c8dd",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/host/[code]/page.tsx": {
+    "mtime": 1767015302.4367921,
+    "ast_hash": "4b796f21aad1f35854268a0c000bfa54",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/lib/utils.ts": {
+    "mtime": 1786054878.9028325,
+    "ast_hash": "ac8cf193960710e196f0a24eeac8ef97",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/lib/auth.ts": {
+    "mtime": 1767102039.4302747,
+    "ast_hash": "76ad4de4576cbd775845940a23fc6237",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/image-with-fallback.tsx": {
+    "mtime": 1763459351.8468492,
+    "ast_hash": "40d4987c93f92377ea2b0495044a3637",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/convex-client-provider.tsx": {
+    "mtime": 1763486274.1941094,
+    "ast_hash": "4ade44171543dba4172ae21949f9bc31",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/providers.tsx": {
+    "mtime": 1763459351.8468492,
+    "ast_hash": "ba49093c04d4329d64c6eda45a6a8739",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/history.tsx": {
+    "mtime": 1786057848.7470093,
+    "ast_hash": "acf9823734f3c5a2c588dcc6790f1fd3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/add-song.tsx": {
+    "mtime": 1767057264.668789,
+    "ast_hash": "89dcd09e8566d78dc6e0c302613db22c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/search-song.tsx": {
+    "mtime": 1786054902.1991131,
+    "ast_hash": "7c4c75c1ea6d2bc0a326f783653ed24c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/current-song.tsx": {
+    "mtime": 1767619568.9064915,
+    "ast_hash": "fd1a5f5349881881840a08137ee3b8c3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/join-room.tsx": {
+    "mtime": 1763459351.8470278,
+    "ast_hash": "94ba1b21687d162e0e3ab8515c51c727",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/queue.tsx": {
+    "mtime": 1767619578.26438,
+    "ast_hash": "05b72d508e5f7f433d127218c537d06b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/playlist-picker.tsx": {
+    "mtime": 1770201352.2045922,
+    "ast_hash": "e94e5e200067e7cc01c40c7f25adae28",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/background.tsx": {
+    "mtime": 1767048671.889605,
+    "ast_hash": "e206d49b45bc08602bead6dcb0ba5cd7",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/qr-code.tsx": {
+    "mtime": 1763459351.8468492,
+    "ast_hash": "467796c3d4c31d3fd7c7ea36675a02f2",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/queue.tsx": {
+    "mtime": 1786055716.9612787,
+    "ast_hash": "ede8b3f4d0e37dbcbde39d9dc3702de2",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/create-room.tsx": {
+    "mtime": 1786055568.70606,
+    "ast_hash": "a6bebe07556909de231cf61b7be2b0f5",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/songs/song-card.tsx": {
+    "mtime": 1786057810.282272,
+    "ast_hash": "4d9bad8656e6affe4c108c3ac4e8ceff",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/scroll-area.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "360243727fcdcb4d509af4516aaa9d0d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/submit-button.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "ab50a88ac4e1a8aa89adb34f482e03cf",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/progress.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "af203316fce28fe09617d8bdb28839cd",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/dropdown-menu.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "206746311cb1b415624358d8a7b9fa63",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/separator.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "07b35dc35f811b26a1ee3982582ba9fb",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/collapsible.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "3280feca735918afc1e61fa59ba6e3f3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/card.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "d6023f573900b04a76288c4ce806d9cc",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/fullscreen.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "9fcceaedee8acb614664eb30023b9d7c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/sonner.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "96e50e4121f71062963b2e5cbac04bc7",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/label.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "92650ba4dfb38169d406bae0a7c115c9",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/dialog.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "48a74bc4e6b2a9609c91582cae95730f",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/input.tsx": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "ecac6d6023d4a408eec23798befa4b05",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/button.tsx": {
+    "mtime": 1763459351.8470278,
+    "ast_hash": "0e7899f107abc93f743e54754999eaea",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/auth/nickname-form.tsx": {
+    "mtime": 1767015302.437792,
+    "ast_hash": "01256718a05a517210607e0a292d1021",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/.vscode/settings.json": {
+    "mtime": 1772668107.9086952,
+    "ast_hash": "6d9dea5e2f4a8eae90dfa00aa7e8cdcd",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/api/search/index.py": {
+    "mtime": 1786055884.6207318,
+    "ast_hash": "2f2785bfc12a8192db58d05287beed6f",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/api/room/playlist.py": {
+    "mtime": 1772668478.607101,
+    "ast_hash": "844380a503200c9fef414b7acd4f6354",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/api/mood/categories.py": {
+    "mtime": 1772668413.556981,
+    "ast_hash": "fe5145510616d81e4b2a158a42dc5b1b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/api/mood/playlists.py": {
+    "mtime": 1772668421.0258813,
+    "ast_hash": "23b1788e495ee43994dc7de3030ea760",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/requirements.txt": {
+    "mtime": 1772668430.139759,
+    "ast_hash": "bcb7e9fc008c3ade7b703f1d76910395",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/README.md": {
+    "mtime": 1786058074.395488,
+    "ast_hash": "021bbe914bc507a60a6f1c6a5837735d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/startup.txt": {
+    "mtime": 1767612946.7931151,
+    "ast_hash": "3fbe3b9e4fb6c5707ff243c0b94b5760",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/README.md": {
+    "mtime": 1763459351.8471544,
+    "ast_hash": "0501b61195ac8e33671497941d759077",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/.github/FUNDING.yml": {
+    "mtime": 1763459351.836636,
+    "ast_hash": "21243799b6071265ee9bd05d88e7bf40",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/api/requirements.txt": {
+    "mtime": 1772668426.4378088,
+    "ast_hash": "a86342b33637c981dbfc4dda657a3f0b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/opengraph-image.png": {
+    "mtime": 1763459351.845561,
+    "ast_hash": "abf7afd04b9a6534cb340016e579e48a",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/vercel.svg": {
+    "mtime": 1763459351.843561,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/globe.svg": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/android-chrome-512x512.png": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "57823394f87fc0794a5196a205ffbe70",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/ytmusic.svg": {
+    "mtime": 1767615192.9617217,
+    "ast_hash": "5bb83e8cc54550ba5274f2e9ffa13884",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/apple-touch-icon.png": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "d33f37fda7f73fae90edcfed2708ed89",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/songup-host.png": {
+    "mtime": 1763459351.843561,
+    "ast_hash": "c71475b3e832ef7c44e4ada9d291d50d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/favicon-32x32.png": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "a6ce149846a21bb502a8047613a335a5",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/placeholder.svg": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "35707bd9960ba5281c72af927b79291f",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/android-chrome-192x192.png": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "829b37126e9a704a83c435ae09eb0265",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/file.svg": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/favicon-16x16.png": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "963b4d46872156b07174b58ba6e6f0ae",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/next.svg": {
+    "mtime": 1763459351.838561,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/public/window.svg": {
+    "mtime": 1763459351.843561,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/settings.ts": {
+    "mtime": 1786057331.5227716,
+    "ast_hash": "ad52ae08c39f551a313ee79157364483",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/playback.ts": {
+    "mtime": 1786057464.4548156,
+    "ast_hash": "61667934042b96c57fdc839f311e15d0",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/voting.ts": {
+    "mtime": 1786057360.7965753,
+    "ast_hash": "798bf96885e5db53b2fa2b585398864b",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/ratings.ts": {
+    "mtime": 1786055407.9427242,
+    "ast_hash": "789e2eaf033c8a5fd8a09b4a7efb16ef",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/your-standing.tsx": {
+    "mtime": 1786055435.8314948,
+    "ast_hash": "be8e4a9bd2dada5a7c34078ca488f56e",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/vote-controls.tsx": {
+    "mtime": 1786057490.8385842,
+    "ast_hash": "ebdbeb6ee827b06c1300b28e71a0d6a2",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/standings.tsx": {
+    "mtime": 1786055449.000848,
+    "ast_hash": "3a86b25bcb3a973819c01a273233948d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/player.tsx": {
+    "mtime": 1786055708.64409,
+    "ast_hash": "b9bc93189d49d27954e84bda629af673",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/host/scheduler-picker.tsx": {
+    "mtime": 1786055537.9561017,
+    "ast_hash": "8179d295d67a3c9fc6ca308e1dbcb4d1",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/ui/quorum-meter.tsx": {
+    "mtime": 1786055360.276959,
+    "ast_hash": "086899c95d29c81b721e8005edcd0316",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/tracks.ts": {
+    "mtime": 1786057914.6162913,
+    "ast_hash": "e4c987c5d28621c2b43c3be3a8e8798d",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/exports.ts": {
+    "mtime": 1786057688.3189993,
+    "ast_hash": "a4a40fae32cbfc61390cb3fe30dbdcd3",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/convex/fingerprint.ts": {
+    "mtime": 1786057948.1749532,
+    "ast_hash": "5417fc370eefe54a647cada08e46eb90",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/app/spotify/callback/page.tsx": {
+    "mtime": 1786057742.3719935,
+    "ast_hash": "b2896f42230453394f44bca6b4090f0a",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/lib/spotify.ts": {
+    "mtime": 1786058034.816686,
+    "ast_hash": "62c3797b740c8d2e3d7db57d2a814a19",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/room/export-playlist.tsx": {
+    "mtime": 1786057830.6659584,
+    "ast_hash": "7d51223fedc6eaf53cd5627bcf59bd2c",
+    "semantic_hash": ""
+  },
+  "/home/kolesniii/DemocraTune/src/components/songs/service-links.tsx": {
+    "mtime": 1786057802.3876765,
+    "ast_hash": "810698605612dc3ca377a30c36b8e1d1",
+    "semantic_hash": ""
+  }
+}

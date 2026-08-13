@@ -1,12 +1,17 @@
 "use client"
 
 import { NicknameForm } from "@/components/auth/nickname-form"
-import { ImageWithFallback } from "@/components/image-with-fallback"
 import { AddSong } from "@/components/room/add-song"
-import { Queue } from "@/components/room/queue"
 import { NowPlaying } from "@/components/room/current-song"
+import { ExportPlaylist } from "@/components/room/export-playlist"
+import { History } from "@/components/room/history"
+import { Queue } from "@/components/room/queue"
+import { VoteControls } from "@/components/room/vote-controls"
+import { YourStanding } from "@/components/room/your-standing"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
+import { HEARTBEAT_INTERVAL_MS } from "@/convex/settings"
+import { useAuthedMutation } from "@/lib/auth"
 import {
     Preloaded,
     useConvexAuth,
@@ -15,7 +20,7 @@ import {
 } from "convex/react"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { History } from "@/components/room/history"
+import { useEffect } from "react"
 
 export default function Room({
     roomId,
@@ -30,7 +35,7 @@ export default function Room({
      */
 
     const room = usePreloadedQuery(preloadedRoom)
-    const { isLoading } = useConvexAuth()
+    const { isLoading, isAuthenticated } = useConvexAuth()
 
     const currentSong = room?.currentSong
 
@@ -41,8 +46,38 @@ export default function Room({
     const nickname = useQuery(api.nicknames.getNickname)
 
     /*
-     * OTHER STATE
+     * PRESENCE
+     *
+     * The skip threshold is a share of the people actually in the room, so the
+     * page checks in while it's open. Without this every skip would need one
+     * vote, no matter how many people were listening.
      */
+
+    const heartbeat = useAuthedMutation(api.voting.heartbeat)
+
+    useEffect(() => {
+        if (!isAuthenticated) return
+
+        let cancelled = false
+        const checkIn = () => {
+            if (cancelled) return
+            heartbeat({ roomId }).catch(() => {
+                // A missed check-in only costs this listener a vote's worth of
+                // weight in the threshold, and the next one will fix it.
+            })
+        }
+
+        checkIn()
+        const intervalId = setInterval(checkIn, HEARTBEAT_INTERVAL_MS)
+
+        return () => {
+            cancelled = true
+            clearInterval(intervalId)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [roomId, isAuthenticated])
+
+    const isDemocraSchedule = room?.settings?.scheduler === "weighted"
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-500 to-indigo-950 text-white">
@@ -51,7 +86,7 @@ export default function Room({
                     <Link href="/">
                         <div className="flex items-center gap-2">
                             <ArrowLeft className="size-6" />
-                            <h1 className="text-xl font-bold">SongUp</h1>
+                            <h1 className="text-xl font-bold">DemocraTune</h1>
                         </div>
                     </Link>
                     <h2 className="text-xl">
@@ -62,7 +97,21 @@ export default function Room({
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Now Playing</h2>
                         <NowPlaying currentSong={currentSong ?? null} />
+                        {currentSong && nickname && (
+                            <VoteControls
+                                roomId={roomId}
+                                videoId={currentSong.videoId}
+                            />
+                        )}
                     </section>
+
+                    {isDemocraSchedule && nickname && (
+                        <section className="flex flex-col gap-2">
+                            <h2 className="text-xl font-bold">Your standing</h2>
+                            <YourStanding roomId={roomId} />
+                        </section>
+                    )}
+
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Your Queue</h2>
                         <Queue roomId={roomId} />
@@ -91,12 +140,6 @@ export default function Room({
                                                 songs at the moment.
                                             </p>
                                         )}
-                                        {/* <SearchSongDialog
-                                            addSong={addSong}
-                                            open={dialogOpen}
-                                            setOpen={setDialogOpen}
-                                            disableTrigger={songsLeftToAdd <= 0}
-                                        /> */}
                                         <AddSong
                                             roomId={roomId}
                                             disabled={
@@ -113,7 +156,14 @@ export default function Room({
 
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Song History</h2>
-                        < History roomId={roomId} playlistId={room?.playlistId}/>
+                        <History
+                            roomId={roomId}
+                            playlistId={room?.playlistId}
+                        />
+                        <ExportPlaylist
+                            roomId={roomId}
+                            roomCode={room?.code ?? ""}
+                        />
                     </section>
                 </main>
             </div>

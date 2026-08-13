@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { ImageWithFallback } from "../image-with-fallback"
+import { ServiceLinks } from "./service-links"
 
 export type SongView = {
     id: string,
@@ -10,6 +11,8 @@ export type SongView = {
     artist: string,
     duration: number,
     addedByNickname?: string,
+    /** Where else this song can be heard. Only history knows these. */
+    links?: Record<string, string>,
 }
 
 export function SongCard({
@@ -32,13 +35,14 @@ export function SongCard({
                 className="aspect-video h-20 rounded-lg border border-white/20 object-cover"
                 unoptimized
             />
-            <div className="w-full">
+            <div className="w-full min-w-0">
                 <h4 className="text-lg font-semibold text-shadow-md md:text-xl">
                     {song.title}
                 </h4>
                 <p className="text-sm text-gray-100 text-shadow-sm md:text-lg">
                     {song.artist}
                 </p>
+                <ServiceLinks links={song.links} className="mt-1.5" />
             </div>
             <div>
                 {song.addedByNickname && (

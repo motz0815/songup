@@ -43,6 +43,20 @@ triggers.register("rooms", async (ctx, change) => {
         ) {
             await ctx.db.delete(song._id)
         }
+        // Presence and votes are room-scoped too. Rooms are swept hourly by
+        // cron, so leaving these behind accumulates rows nothing can reach.
+        for await (const member of ctx.db
+            .query("roomMembers")
+            .withIndex("by_room", (q) => q.eq("room", change.id))
+        ) {
+            await ctx.db.delete(member._id)
+        }
+        for await (const vote of ctx.db
+            .query("songVotes")
+            .withIndex("by_room_video", (q) => q.eq("room", change.id))
+        ) {
+            await ctx.db.delete(vote._id)
+        }
     }
 })
 

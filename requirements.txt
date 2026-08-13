@@ -1,7 +1,3 @@
+fastapi==0.121.2
 ytmusicapi==1.11.1
-convex==0.7.0
-fastapi==0.128.0
-pydantic==2.12.5
-pydantic_core==2.41.5
-uvicorn==0.40.0
-dotenv==0.9.9
+python-dotenv==1.0.0

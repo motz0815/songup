@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: "/",
             disallow: ["/host/", "/room/"],
         },
-        sitemap: "https://songup.tv/sitemap.xml",
+        sitemap: "https://democratune.timkolesnichenko.me/sitemap.xml",
     }
 }

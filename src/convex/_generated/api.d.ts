@@ -10,12 +10,19 @@
 
 import type * as auth from "../auth.js";
 import type * as crons from "../crons.js";
+import type * as exports from "../exports.js";
+import type * as fingerprint from "../fingerprint.js";
 import type * as functions from "../functions.js";
 import type * as http from "../http.js";
 import type * as nicknames from "../nicknames.js";
+import type * as playback from "../playback.js";
+import type * as ratings from "../ratings.js";
 import type * as rooms from "../rooms.js";
 import type * as rooms_manage from "../rooms/manage.js";
 import type * as scheduling from "../scheduling.js";
+import type * as settings from "../settings.js";
+import type * as tracks from "../tracks.js";
+import type * as voting from "../voting.js";
 
 import type {
   ApiFromModules,
@@ -26,12 +33,19 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   crons: typeof crons;
+  exports: typeof exports;
+  fingerprint: typeof fingerprint;
   functions: typeof functions;
   http: typeof http;
   nicknames: typeof nicknames;
+  playback: typeof playback;
+  ratings: typeof ratings;
   rooms: typeof rooms;
   "rooms/manage": typeof rooms_manage;
   scheduling: typeof scheduling;
+  settings: typeof settings;
+  tracks: typeof tracks;
+  voting: typeof voting;
 }>;
 
 /**
