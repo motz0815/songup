@@ -14,7 +14,11 @@ export default defineConfig({
         coverage: {
             provider: "v8",
             reporter: ["text", "html", "lcov"],
-            include: ["src/lib/**/*.ts", "src/convex/fingerprint.ts", "src/convex/settings.ts"],
+            include: [
+                "src/lib/utils.ts",
+                "src/convex/fingerprint.ts",
+                "src/convex/settings.ts",
+            ],
         },
     },
 })
