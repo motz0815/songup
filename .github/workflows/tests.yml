@@ -14,11 +14,13 @@ jobs:
         timeout-minutes: 20
         container:
             image: mcr.microsoft.com/playwright:v1.62.0-noble
-            options: --user 1001
 
         steps:
             - name: Check out repository
               uses: actions/checkout@v6
+
+            - name: Install Bun prerequisites
+              run: apt-get update && apt-get install --yes --no-install-recommends unzip
 
             - name: Set up Bun
               uses: oven-sh/setup-bun@v2
