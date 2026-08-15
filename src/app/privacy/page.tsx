@@ -3,8 +3,20 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-    title: "Privacy Policy - DemocraTune",
+    title: "Privacy Policy",
     description: "What DemocraTune stores, for how long, and who else sees it.",
+    alternates: { canonical: "/privacy" },
+    openGraph: {
+        title: "Privacy Policy | DemocraTune",
+        description:
+            "What DemocraTune stores, for how long, and who else sees it.",
+        url: "/privacy",
+    },
+    twitter: {
+        title: "Privacy Policy | DemocraTune",
+        description:
+            "What DemocraTune stores, for how long, and who else sees it.",
+    },
 }
 
 export default function Privacy() {

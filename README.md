@@ -1,6 +1,8 @@
 # DemocraTune
 
-DemocraTune makes queuing songs from everyone easy and fair. 🎵
+[DemocraTune](https://democratune.timkolesnichenko.me/) makes queuing songs from everyone easy and fair. 🎵 It is created and maintained by [Tim Kolesnichenko](https://www.timkolesnichenko.me/).
+
+**[Try DemocraTune live](https://democratune.timkolesnichenko.me/)** · **[Tim's website](https://www.timkolesnichenko.me/)**
 
 ## 🎉 What is DemocraTune?
 
@@ -51,8 +53,7 @@ user-weighted fairness, and experimental features such as voting and karaoke mod
 
 - [X] **📜 Queue History**
   Ever liked a song but forgot what the song's name was? With queue history, you can see which songs have been played,
-  and never have to Shazam again! Really like the songs that have been played? Save the whole history to your own
-  YouTube playlist!
+  and never have to Shazam again.
 
 - [X] **📤 Take It Home**
   Heard something you liked? Every song in the history links out to wherever else it can be heard —

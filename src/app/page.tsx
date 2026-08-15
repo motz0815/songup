@@ -8,17 +8,83 @@ import Link from "next/link"
 import { FaGithub } from "react-icons/fa"
 
 export const metadata: Metadata = {
-    title: "DemocraTune - Open source shared music queue for parties",
+    title: {
+        absolute: "DemocraTune — Free shared music queue for parties",
+    },
+    alternates: { canonical: "/" },
 }
-
 export const viewport: Viewport = {
     themeColor: "#0c1519",
     colorScheme: "dark",
 }
 
 export default function Home() {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://democratune.timkolesnichenko.me/#website",
+                url: "https://democratune.timkolesnichenko.me/",
+                name: "DemocraTune",
+                description:
+                    "A free, open-source shared music queue for parties.",
+                inLanguage: "en-GB",
+                creator: {
+                    "@id": "https://www.timkolesnichenko.me/#person",
+                },
+            },
+            {
+                "@type": "WebApplication",
+                "@id": "https://democratune.timkolesnichenko.me/#application",
+                name: "DemocraTune",
+                url: "https://democratune.timkolesnichenko.me/",
+                description:
+                    "Create a shared party music queue where guests scan a QR code to request songs, vote, and take fair turns without accounts or downloads.",
+                applicationCategory: "MultimediaApplication",
+                operatingSystem: "Any",
+                browserRequirements: "Requires a modern web browser",
+                isAccessibleForFree: true,
+                offers: {
+                    "@type": "Offer",
+                    price: "0",
+                    priceCurrency: "GBP",
+                },
+                featureList: [
+                    "QR code and four-character room joining",
+                    "Shared song search and queue",
+                    "First-come-first-served, round-robin, and rating-weighted scheduling",
+                    "Song voting and group skips",
+                    "Fallback playlists",
+                    "Play history and Spotify playlist export",
+                ],
+                codeRepository: "https://github.com/KOLESNiii/DemocraTune",
+                license: "https://www.gnu.org/licenses/agpl-3.0.html",
+                creator: {
+                    "@id": "https://www.timkolesnichenko.me/#person",
+                },
+            },
+            {
+                "@type": "Person",
+                "@id": "https://www.timkolesnichenko.me/#person",
+                name: "Tim Kolesnichenko",
+                url: "https://www.timkolesnichenko.me/",
+                sameAs: ["https://github.com/KOLESNiii"],
+            },
+        ],
+    }
+
     return (
         <div className="bg-night text-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData).replace(
+                        /</g,
+                        "\\u003c",
+                    ),
+                }}
+            />
             <section className="relative isolate overflow-hidden px-5 py-6 sm:px-10 sm:py-8">
                 <LandingBackground />
                 <div className="halftone-field pointer-events-none absolute inset-0 -z-[5] [mask-image:linear-gradient(to_bottom,black,transparent_85%)] text-white/10" />
@@ -43,15 +109,16 @@ export default function Home() {
                         Democra<span className="text-signal">Tune</span>
                     </h1>
 
-                    <div className="mt-8 grid gap-8 border-t-2 border-white/70 pt-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+                    <div className="mt-7 grid gap-7 border-t-2 border-white/70 pt-6 sm:mt-8 sm:gap-8 sm:pt-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
                         <div>
                             <h2 className="font-display max-w-3xl text-4xl leading-[0.92] font-bold tracking-[-0.055em] text-balance sm:text-6xl">
-                                Everyone gets a turn on the aux.
+                                The shared party queue where everyone gets a
+                                turn.
                             </h2>
                             <p className="mt-4 max-w-xl text-lg text-white/75">
-                                One shared queue. Guests add songs from their
-                                phones, vote together, and take fair turns. No
-                                accounts or app downloads.
+                                Guests scan a QR code to request songs from
+                                their phones, vote together, and take fair
+                                turns. No accounts or app downloads.
                             </p>
                         </div>
 
@@ -65,7 +132,7 @@ export default function Home() {
                                         Host your own room
                                     </span>
                                     <span className="mt-2 block text-base text-white/80">
-                                        Start the shared queue.
+                                        Start a free room in seconds.
                                     </span>
                                 </span>
                                 <ArrowUpRight className="size-8 shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -82,7 +149,7 @@ export default function Home() {
                 </main>
             </section>
 
-            <main className="paper-field text-ink px-5 py-14 sm:px-10 sm:py-20">
+            <main className="paper-field text-ink px-5 py-12 sm:px-10 sm:py-20">
                 <section className="mx-auto max-w-7xl">
                     <div className="border-ink grid gap-5 border-b-2 pb-7 lg:grid-cols-[1fr_0.8fr] lg:items-end">
                         <h2 className="font-display text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
@@ -94,8 +161,8 @@ export default function Home() {
                         </p>
                     </div>
 
-                    <div className="mt-8 grid gap-8 xl:grid-cols-[0.72fr_1.28fr]">
-                        <div className="bg-night border-ink relative min-h-72 overflow-hidden border-2 text-white shadow-[8px_8px_0_0_#ff593d] xl:min-h-full">
+                    <div className="mt-7 grid gap-7 sm:mt-8 sm:gap-8 xl:grid-cols-[0.72fr_1.28fr]">
+                        <div className="bg-night border-ink relative min-h-64 overflow-hidden border-2 text-white shadow-[6px_6px_0_0_#ff593d] sm:min-h-72 sm:shadow-[8px_8px_0_0_#ff593d] xl:min-h-full">
                             <div className="halftone-field pointer-events-none absolute inset-0 text-white/10" />
                             <div className="text-broadcast pointer-events-none absolute inset-x-0 bottom-0 h-4/5 opacity-90">
                                 <TallyField />
@@ -105,7 +172,7 @@ export default function Home() {
                             </div>
                             <div className="from-night via-night/55 pointer-events-none absolute inset-0 bg-gradient-to-b to-transparent" />
 
-                            <div className="relative z-10 flex min-h-72 flex-col justify-between p-5 sm:p-7 xl:min-h-full">
+                            <div className="relative z-10 flex min-h-64 flex-col justify-between p-5 sm:min-h-72 sm:p-7 xl:min-h-full">
                                 <div>
                                     <h3 className="font-display text-3xl font-extrabold tracking-[-0.04em]">
                                         The room moves live.
@@ -131,16 +198,16 @@ export default function Home() {
 
                         <ul className="border-ink grid grid-cols-2 border-t-2">
                             <Capability
-                                title="QR and room-code joining"
-                                description="Guests join instantly from any phone. No account, invite list, or download."
+                                title="Guest requests by QR code"
+                                description="Join from any phone and request songs. No account, invite list, or download."
                             />
                             <Capability
                                 title="Dedicated host screen"
                                 description="A large-screen player shows what is playing, what is next, and how to join."
                             />
                             <Capability
-                                title="Shared song queue"
-                                description="Everyone can search and add tracks, with a configurable per-person queue limit."
+                                title="Collaborative party queue"
+                                description="Everyone can search and add tracks, with a queue limit for each guest."
                             />
                             <Capability
                                 title="Three fair schedulers"
@@ -236,7 +303,7 @@ function Capability({
             <h3 className="font-display text-base leading-tight font-extrabold tracking-[-0.03em] sm:text-xl">
                 {title}
             </h3>
-            <p className="text-ink/60 mt-1 hidden text-sm leading-relaxed sm:block">
+            <p className="text-ink/65 mt-1 text-xs leading-snug sm:text-sm sm:leading-relaxed">
                 {description}
             </p>
         </li>

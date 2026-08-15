@@ -9,6 +9,8 @@ export async function generateMetadata(props: {
     const params = await props.params
     return {
         title: "Room - " + params.code,
+        alternates: { canonical: `/room/${params.code}` },
+        robots: { index: false, follow: false, noarchive: true },
     }
 }
 

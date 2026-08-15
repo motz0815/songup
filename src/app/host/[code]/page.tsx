@@ -13,6 +13,8 @@ export async function generateMetadata({
 
     return {
         title: `Host - ${code}`,
+        alternates: { canonical: `/host/${code}` },
+        robots: { index: false, follow: false, noarchive: true },
     }
 }
 

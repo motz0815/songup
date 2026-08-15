@@ -3,9 +3,21 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-    title: "Terms of Service - DemocraTune",
+    title: "Terms of Service",
     description:
         "The terms for using DemocraTune, and the freedoms its licence gives you.",
+    alternates: { canonical: "/terms" },
+    openGraph: {
+        title: "Terms of Service | DemocraTune",
+        description:
+            "The terms for using DemocraTune, and the freedoms its licence gives you.",
+        url: "/terms",
+    },
+    twitter: {
+        title: "Terms of Service | DemocraTune",
+        description:
+            "The terms for using DemocraTune, and the freedoms its licence gives you.",
+    },
 }
 
 export default function Terms() {
