@@ -7,14 +7,16 @@ test.beforeEach(async ({ page }) => {
 test("presents the brand, purpose and primary room actions", async ({
     page,
 }) => {
-    await expect(page).toHaveTitle(/DemocraTune/)
+    await expect(page).toHaveTitle(
+        "DemocraTune — Free shared music queue for parties",
+    )
     await expect(
         page.getByRole("heading", { level: 1, name: "DemocraTune" }),
     ).toBeVisible()
     await expect(
         page.getByRole("heading", {
             level: 2,
-            name: "Everyone gets a turn on the aux.",
+            name: "The shared party queue where everyone gets a turn.",
         }),
     ).toBeVisible()
 
@@ -38,6 +40,12 @@ test("presents the brand, purpose and primary room actions", async ({
             level: 3,
             name: "Three fair schedulers",
         }),
+    ).toBeVisible()
+    await expect(
+        page.getByText(
+            "Join from any phone and request songs. No account, invite list, or download.",
+            { exact: true },
+        ),
     ).toBeVisible()
     await expect(
         page.getByRole("heading", {
