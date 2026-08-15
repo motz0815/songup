@@ -88,11 +88,11 @@ export function ExportPlaylist({
     }
 
     return (
-        <div className="flex flex-col gap-3 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg">
+        <div className="border-ink mt-4 flex flex-col gap-3 border-y-2 py-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                     <p className="font-medium">Save this night to Spotify</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-ink/55 text-xs">
                         {count === 0
                             ? "Nothing has played yet."
                             : `${count} song${count === 1 ? "" : "s"} · goes to a private playlist`}
@@ -104,10 +104,10 @@ export function ExportPlaylist({
                     onClick={send}
                     disabled={count === 0 || running}
                     className={cn(
-                        "flex items-center gap-2 rounded-md border border-emerald-400/40 bg-emerald-400/15 px-4 py-2 text-sm font-medium text-emerald-100",
-                        "transition-colors duration-200 hover:bg-emerald-400/25 motion-reduce:transition-none",
+                        "border-ink bg-vote-up flex items-center gap-2 rounded-none border-2 px-4 py-2 text-sm font-bold text-white",
+                        "hover:bg-vote-up/90 transition-colors duration-200 motion-reduce:transition-none",
                         "disabled:pointer-events-none disabled:opacity-50",
-                        "focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:outline-none",
+                        "focus-visible:ring-broadcast/35 focus-visible:ring-4 focus-visible:outline-none",
                     )}
                 >
                     {running && (
@@ -119,7 +119,7 @@ export function ExportPlaylist({
 
             {progress && (
                 <p
-                    className="text-xs text-white/70 tabular-nums"
+                    className="text-ink/60 text-xs tabular-nums"
                     role="status"
                     aria-live="polite"
                 >
@@ -128,14 +128,14 @@ export function ExportPlaylist({
             )}
 
             {result && (
-                <div className="flex flex-col gap-1 border-t border-white/15 pt-3 text-sm">
-                    <p className="flex items-center gap-2 text-emerald-200">
+                <div className="border-ink/20 flex flex-col gap-1 border-t pt-3 text-sm">
+                    <p className="text-vote-up flex items-center gap-2">
                         <CheckIcon className="size-4" />
                         <a
                             href={result.playlistUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="underline underline-offset-2 hover:text-emerald-100"
+                            className="underline underline-offset-2 hover:opacity-70"
                         >
                             {result.added} song
                             {result.added === 1 ? "" : "s"} added — open the
@@ -143,8 +143,8 @@ export function ExportPlaylist({
                         </a>
                     </p>
                     {result.missed.length > 0 && (
-                        <details className="text-xs text-white/60">
-                            <summary className="cursor-pointer hover:text-white/80">
+                        <details className="text-ink/55 text-xs">
+                            <summary className="hover:text-ink/80 cursor-pointer">
                                 {result.missed.length} couldn&apos;t be found on
                                 Spotify
                             </summary>

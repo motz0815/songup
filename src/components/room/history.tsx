@@ -32,17 +32,17 @@ export function History({
 
     return (
         <div className="flex flex-col gap-2">
-            <ScrollArea className="h-[320px] rounded-lg border border-white/20 bg-white/10 shadow-md backdrop-blur-lg">
-                <ul ref={animationParent} className="space-y-4 p-4">
+            <ScrollArea className="border-ink mt-3 h-[420px] border-y-2">
+                <ul ref={animationParent}>
                     {historySongs.length > 0 ? (
                         historySongs.map((song) => (
                             <li key={song.id}>
-                                <SongCard song={song} />
+                                <SongCard song={song} tone="light" />
                             </li>
                         ))
                     ) : (
-                        <p className="text-center text-white/70">
-                            No songs played yet.
+                        <p className="text-ink/50 py-6">
+                            History starts when the first track finishes.
                         </p>
                     )}
                 </ul>
@@ -55,7 +55,7 @@ export function History({
                     href={`https://music.youtube.com/playlist?list=${playlistId}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-lg bg-[#FF0033] px-4 py-2 font-medium text-white shadow-md transition-colors duration-200 hover:bg-[#E6002E] focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none motion-reduce:transition-none"
+                    className="border-ink focus-visible:ring-broadcast/35 flex items-center justify-center gap-2 border-2 bg-[#ff0033] px-4 py-3 font-bold text-white transition-colors duration-200 hover:bg-[#e6002e] focus-visible:ring-4 focus-visible:outline-none motion-reduce:transition-none"
                 >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img

@@ -49,8 +49,8 @@ export function SchedulerPicker({
                     <label
                         key={scheduler.value}
                         className={cn(
-                            "flex cursor-pointer gap-3 rounded-lg border p-3 transition-colors motion-reduce:transition-none",
-                            "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring",
+                            "flex cursor-pointer gap-3 border-2 p-3 transition-colors motion-reduce:transition-none",
+                            "has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-2",
                             selected
                                 ? "border-primary bg-primary/5"
                                 : "border-input hover:bg-accent",
@@ -62,13 +62,13 @@ export function SchedulerPicker({
                             value={scheduler.value}
                             checked={selected}
                             onChange={() => onChange(scheduler.value)}
-                            className="mt-1 size-4 shrink-0 accent-primary"
+                            className="accent-primary mt-1 size-4 shrink-0"
                         />
                         <span className="flex flex-col gap-0.5">
                             <span className="text-sm font-medium">
                                 {scheduler.name}
                             </span>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-muted-foreground text-xs">
                                 {scheduler.summary}
                             </span>
                         </span>

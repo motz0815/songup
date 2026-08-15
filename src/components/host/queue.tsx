@@ -5,9 +5,9 @@ import { Id } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useQuery } from "convex/react"
+import type { SongView } from "../songs/song-card"
 import { SongCard } from "../songs/song-card"
 import { ScrollArea } from "../ui/scroll-area"
-import type { SongView } from "../songs/song-card"
 
 /**
  * How far ahead the host screen shows. Exported because the optimistic update
@@ -23,12 +23,13 @@ export function Queue({
     roomId: Id<"rooms">
     className?: string
 }) {
-    const queue = useQuery(api.rooms.getQueue, {
-        roomId,
-        numItems: HOST_QUEUE_LENGTH,
-    }) ?? []
+    const queue =
+        useQuery(api.rooms.getQueue, {
+            roomId,
+            numItems: HOST_QUEUE_LENGTH,
+        }) ?? []
 
-    const queueSongs: SongView[] = queue.map(song => ({
+    const queueSongs: SongView[] = queue.map((song) => ({
         id: song._id,
         videoId: song.videoId,
         title: song.title,
@@ -40,13 +41,8 @@ export function Queue({
     const [animationParent] = useAutoAnimate()
 
     return (
-        <ScrollArea
-            className={cn(
-                "rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg",
-                className,
-            )}
-        >
-            <ul ref={animationParent} className="space-y-4">
+        <ScrollArea className={cn("py-3", className)}>
+            <ul ref={animationParent}>
                 {queueSongs.length > 0 ? (
                     queueSongs.map((song) => {
                         return (
@@ -56,8 +52,8 @@ export function Queue({
                         )
                     })
                 ) : (
-                    <p className="text-center text-lg">
-                        No songs in queue. Use the QR code to add some!
+                    <p className="py-6 text-white/50">
+                        Nothing queued yet. The next guest can change that.
                     </p>
                 )}
             </ul>

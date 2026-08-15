@@ -23,10 +23,12 @@ export function NicknameForm() {
                     minLength={3}
                     maxLength={16}
                     required
-                    placeholder="Enter nickname..."
-                    className="bg-background text-foreground"
+                    placeholder="Your nickname"
+                    className="border-ink bg-paper h-12 rounded-none border-2 text-base shadow-none"
                 />
-                <SubmitButton>Set nickname</SubmitButton>
+                <SubmitButton className="border-ink bg-signal hover:bg-signal/90 h-12 rounded-none border-2 font-bold text-white">
+                    Enter the room
+                </SubmitButton>
             </div>
         </form>
     )

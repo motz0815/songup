@@ -12,7 +12,7 @@ export default function Terms() {
     return (
         <LegalPage
             title="Terms of Service"
-            updated="7 August 2026"
+            updated="13 August 2026"
             summary={
                 <>
                     DemocraTune is free, open source and provided as-is. You can
@@ -28,7 +28,8 @@ export default function Terms() {
                     <span className="font-medium">
                         democratune.timkolesnichenko.me
                     </span>
-                    . Using it means accepting them.
+                    , operated by Tim Kolesnichenko. Using it means accepting
+                    them.
                 </p>
                 <p>
                     They cover the hosted service, not the software. The
@@ -43,10 +44,8 @@ export default function Terms() {
                     subscription and no paid tier.
                 </p>
                 <p>
-                    It is also provided <span className="font-medium">
-                        as-is
-                    </span>{" "}
-                    and{" "}
+                    It is also provided{" "}
+                    <span className="font-medium">as-is</span> and{" "}
                     <span className="font-medium">as-available</span>, with no
                     warranty of any kind. Rooms may break mid-party, songs may
                     fail to play, search may go down, and the whole service may
@@ -98,9 +97,9 @@ export default function Terms() {
 
             <Section title="The music is not ours">
                 <p>
-                    DemocraTune hosts no audio. Songs play through YouTube&apos;s
-                    embedded player, and searching uses YouTube Music. Your use
-                    of that playback is subject to{" "}
+                    DemocraTune hosts no audio. Songs play through
+                    YouTube&apos;s embedded player, and searching uses YouTube
+                    Music. Your use of that playback is subject to{" "}
                     <a
                         href="https://www.youtube.com/t/terms"
                         target="_blank"
@@ -203,13 +202,17 @@ export default function Terms() {
 
             <Section title="Governing law and contact">
                 <p>
-                    These terms are governed by the laws of{" "}
-                    <span className="font-medium">[jurisdiction]</span>.
+                    These terms are governed by the laws of England and Wales.
                 </p>
                 <p>
                     Questions go to{" "}
-                    <span className="font-medium">[contact email]</span> or to
-                    an issue on GitHub. See also the{" "}
+                    <a
+                        href="mailto:democratune@gmail.com"
+                        className="font-medium underline"
+                    >
+                        democratune@gmail.com
+                    </a>{" "}
+                    or to an issue on GitHub. See also the{" "}
                     <Link href="/privacy" className="underline">
                         Privacy Policy
                     </Link>

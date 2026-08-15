@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { ReactNode } from "react"
+import { BrandMark } from "../brand/brand-mark"
 
 /**
  * The shell both legal pages sit in.
@@ -22,36 +23,36 @@ export function LegalPage({
     children: ReactNode
 }) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-500 to-indigo-950 text-white">
-            <div className="mx-auto max-w-2xl px-4 py-8 md:py-12">
+        <div className="paper-field text-ink min-h-screen">
+            <div className="mx-auto max-w-3xl px-5 py-7 sm:px-8 md:py-12">
                 <header className="mb-8">
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"
+                        className="inline-flex items-center gap-3 transition-opacity hover:opacity-65"
                     >
                         <ArrowLeft className="size-5" />
-                        <span className="font-bold">DemocraTune</span>
+                        <BrandMark compact className="text-2xl" />
                     </Link>
                 </header>
 
-                <h1 className="text-3xl font-bold tracking-tight text-shadow-md sm:text-4xl">
+                <h1 className="font-display border-ink border-t-2 pt-8 text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
                     {title}
                 </h1>
-                <p className="mt-2 text-sm text-white/70">
+                <p className="font-code text-ink/50 mt-3 text-xs tracking-[0.14em] uppercase">
                     Last updated {updated}
                 </p>
 
-                <div className="mt-6 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
-                    <p className="text-sm leading-relaxed text-white/90">
+                <div className="border-ink mt-8 border-y-2 py-5">
+                    <p className="text-ink/75 text-lg leading-relaxed">
                         {summary}
                     </p>
                 </div>
 
-                <div className="mt-8 flex flex-col gap-8 leading-relaxed text-white/90">
+                <div className="text-ink/80 mt-10 flex flex-col gap-10 leading-relaxed">
                     {children}
                 </div>
 
-                <footer className="mt-12 border-t border-white/20 pt-6 text-sm text-white/70">
+                <footer className="border-ink text-ink/60 mt-14 border-t-2 pt-6 text-sm">
                     <div className="flex flex-wrap gap-x-4 gap-y-2">
                         <Link href="/privacy" className="underline">
                             Privacy
@@ -84,7 +85,9 @@ export function Section({
 }) {
     return (
         <section className="flex flex-col gap-3">
-            <h2 className="text-xl font-bold text-shadow-sm">{title}</h2>
+            <h2 className="font-display text-2xl font-extrabold tracking-[-0.035em]">
+                {title}
+            </h2>
             {children}
         </section>
     )
@@ -93,7 +96,7 @@ export function Section({
 /** Bulleted list with the spacing the rest of the page uses. */
 export function List({ items }: { items: ReactNode[] }) {
     return (
-        <ul className="flex list-disc flex-col gap-2 pl-5 marker:text-white/50">
+        <ul className="marker:text-signal flex list-disc flex-col gap-2 pl-5">
             {items.map((item, index) => (
                 <li key={index}>{item}</li>
             ))}

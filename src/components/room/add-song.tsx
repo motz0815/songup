@@ -20,9 +20,13 @@ import { SearchSong } from "./search-song"
 export function AddSong({
     disabled = false,
     roomId,
+    inline = false,
+    prominent = false,
 }: {
     disabled?: boolean
     roomId: Id<"rooms">
+    inline?: boolean
+    prominent?: boolean
 }) {
     const addSong = useMutation(api.rooms.addSong)
     const [open, setOpen] = useState(false)
@@ -53,16 +57,33 @@ export function AddSong({
         })
     }
 
+    if (inline) {
+        return (
+            <div className="border-ink border-y-2 py-5">
+                <SearchSong onSelect={handleSelect} disabled={disabled} />
+            </div>
+        )
+    }
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={disabled}>
-                    <PlusIcon /> Add Song
+                <Button
+                    disabled={disabled}
+                    className={
+                        prominent
+                            ? "border-ink bg-signal hover:bg-signal/90 h-12 rounded-none border-2 px-6 font-bold text-white"
+                            : "rounded-none font-bold"
+                    }
+                >
+                    <PlusIcon /> Add a song
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="paper-field border-ink rounded-none border-2 sm:max-w-xl">
                 <DialogHeader>
-                    <DialogTitle>Add Song</DialogTitle>
+                    <DialogTitle className="font-display text-3xl font-extrabold tracking-[-0.04em]">
+                        Add a song
+                    </DialogTitle>
                 </DialogHeader>
                 <SearchSong onSelect={handleSelect} />
             </DialogContent>

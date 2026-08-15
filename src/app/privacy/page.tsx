@@ -4,15 +4,14 @@ import Link from "next/link"
 
 export const metadata: Metadata = {
     title: "Privacy Policy - DemocraTune",
-    description:
-        "What DemocraTune stores, for how long, and who else sees it.",
+    description: "What DemocraTune stores, for how long, and who else sees it.",
 }
 
 export default function Privacy() {
     return (
         <LegalPage
             title="Privacy Policy"
-            updated="7 August 2026"
+            updated="13 August 2026"
             summary={
                 <>
                     DemocraTune has no accounts, so there is no name, email or
@@ -28,7 +27,8 @@ export default function Privacy() {
                     <span className="font-medium">
                         democratune.timkolesnichenko.me
                     </span>
-                    , operated by the maintainer of the project.
+                    . It is operated by Tim Kolesnichenko, who is the data
+                    controller for this instance.
                 </p>
                 <p>
                     DemocraTune is open source, and anyone is free to run their
@@ -202,6 +202,20 @@ export default function Privacy() {
                     able to work out which anonymous identifier was yours
                     without your help.
                 </p>
+                <p>
+                    If you are unhappy with how your personal data is handled,
+                    you can also complain to the UK Information
+                    Commissioner&apos;s Office through its{" "}
+                    <a
+                        href="https://ico.org.uk/make-a-complaint/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                    >
+                        complaints service
+                    </a>
+                    .
+                </p>
             </Section>
 
             <Section title="Changes">
@@ -222,10 +236,15 @@ export default function Privacy() {
 
             <Section title="Contact">
                 <p>
-                    Questions about any of this can go to{" "}
-                    <span className="font-medium">[contact email]</span>, or to
-                    an issue on the GitHub repository if you would rather ask in
-                    public.
+                    Privacy questions and data-protection requests can go to{" "}
+                    <a
+                        href="mailto:democratune@gmail.com"
+                        className="font-medium underline"
+                    >
+                        democratune@gmail.com
+                    </a>
+                    . General questions can also go to an issue on the GitHub
+                    repository if you would rather ask in public.
                 </p>
                 <p>
                     See also the{" "}

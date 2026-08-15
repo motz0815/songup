@@ -33,13 +33,18 @@ const MAX_CHIPS = 3
 export function ServiceLinks({
     links,
     className,
+    tone = "dark",
 }: {
     links?: Record<string, string>
     className?: string
+    tone?: "dark" | "light"
 }) {
     if (!links) return null
 
-    const named = NAMED_SERVICES.filter(([key]) => links[key]).slice(0, MAX_CHIPS)
+    const named = NAMED_SERVICES.filter(([key]) => links[key]).slice(
+        0,
+        MAX_CHIPS,
+    )
     const page = links[ODESLI_PAGE_KEY]
 
     if (named.length === 0) return null
@@ -47,9 +52,9 @@ export function ServiceLinks({
     return (
         <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
             {named.map(([key, label]) => (
-                <Chip key={key} href={links[key]} label={label} />
+                <Chip key={key} href={links[key]} label={label} tone={tone} />
             ))}
-            {page && <Chip href={page} label="More…" muted />}
+            {page && <Chip href={page} label="More…" muted tone={tone} />}
         </div>
     )
 }
@@ -58,10 +63,12 @@ function Chip({
     href,
     label,
     muted,
+    tone,
 }: {
     href: string
     label: string
     muted?: boolean
+    tone: "dark" | "light"
 }) {
     return (
         <a
@@ -69,11 +76,15 @@ function Chip({
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-                "rounded-full border px-2 py-0.5 text-xs whitespace-nowrap transition-colors duration-200 motion-reduce:transition-none",
-                "focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none",
-                muted
-                    ? "border-white/15 text-white/50 hover:border-white/30 hover:text-white/80"
-                    : "border-white/25 text-white/80 hover:border-white/50 hover:bg-white/10 hover:text-white",
+                "border px-2 py-0.5 text-xs whitespace-nowrap transition-colors duration-200 motion-reduce:transition-none",
+                "focus-visible:ring-broadcast/50 focus-visible:ring-2 focus-visible:outline-none",
+                tone === "dark"
+                    ? muted
+                        ? "border-white/15 text-white/50 hover:border-white/30 hover:text-white/80"
+                        : "border-white/25 text-white/80 hover:border-white/50 hover:bg-white/10 hover:text-white"
+                    : muted
+                      ? "border-ink/15 text-ink/45 hover:border-ink/35 hover:text-ink/75"
+                      : "border-ink/25 text-ink/70 hover:border-ink/60 hover:text-ink hover:bg-white/50",
             )}
         >
             {label}

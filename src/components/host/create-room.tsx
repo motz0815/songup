@@ -123,9 +123,11 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
             <DialogTrigger asChild>
                 {children ?? <Button>Create Room</Button>}
             </DialogTrigger>
-            <DialogContent className="max-h-[85vh] overflow-y-auto">
+            <DialogContent className="paper-field border-ink max-h-[85vh] overflow-y-auto rounded-none border-2 sm:max-w-xl">
                 <DialogHeader>
-                    <DialogTitle>Create Room</DialogTitle>
+                    <DialogTitle className="font-display text-4xl font-extrabold tracking-[-0.05em]">
+                        Create a room
+                    </DialogTitle>
                 </DialogHeader>
 
                 <form
@@ -156,7 +158,7 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                     </div>
 
                     {scheduler === "weighted" && (
-                        <div className="flex flex-col gap-3 rounded-lg border border-input p-3">
+                        <div className="border-ink flex flex-col gap-3 border-y-2 py-3">
                             <label className="flex items-center gap-2 text-sm font-medium">
                                 <input
                                     type="checkbox"
@@ -164,11 +166,11 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                                     onChange={(e) =>
                                         setRatingsForget(e.target.checked)
                                     }
-                                    className="size-4 accent-primary"
+                                    className="accent-primary size-4"
                                 />
                                 Let ratings fade
                             </label>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-muted-foreground text-xs">
                                 {ratingsForget
                                     ? `Only each person's last ${ratingsForgetCount} played songs count towards their rating.`
                                     : "Every song a person has played counts towards their rating, all night."}
@@ -209,16 +211,19 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                             onChange={(e) =>
                                 setSkipPercent(Number(e.target.value))
                             }
-                            className="w-full accent-primary"
+                            className="accent-primary w-full"
                         />
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-xs">
                             <span className="font-medium tabular-nums">
                                 {skipPercent}%
                             </span>{" "}
                             of the people in the room. With 8 listening, that
                             takes{" "}
                             <span className="font-medium tabular-nums">
-                                {Math.max(1, Math.ceil(8 * (skipPercent / 100)))}
+                                {Math.max(
+                                    1,
+                                    Math.ceil(8 * (skipPercent / 100)),
+                                )}
                             </span>{" "}
                             votes.
                         </p>
@@ -228,7 +233,7 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                         <Label htmlFor="fallbackPlaylist">
                             Fallback playlist
                         </Label>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-xs">
                             Plays whenever nobody has queued anything.
                         </p>
                         <PlaylistPicker
@@ -239,7 +244,12 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
                         />
                     </div>
 
-                    <SubmitButton disabled={loading}>Create Room</SubmitButton>
+                    <SubmitButton
+                        disabled={loading}
+                        className="border-ink bg-signal hover:bg-signal/90 h-12 rounded-none border-2 font-bold text-white"
+                    >
+                        Create room
+                    </SubmitButton>
                 </form>
             </DialogContent>
         </Dialog>

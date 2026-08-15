@@ -55,15 +55,15 @@ export function VoteControls({
     const onTheBrink = required > 0 && dislikes === required - 1
 
     return (
-        <div className="flex flex-col gap-3 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-lg">
+        <div className="border-ink mt-4 flex flex-col gap-3 border-b-2 pb-5">
             <div className="flex items-center justify-between gap-3">
                 <div className="flex gap-2">
                     <VoteButton
                         icon={<ThumbsUpIcon className="size-4" />}
                         count={votes?.likes ?? 0}
                         active={myVote === 1}
-                        activeClassName="border-emerald-400/60 bg-emerald-400/20 text-emerald-200"
-                        ringClassName="focus-visible:ring-emerald-300/60"
+                        activeClassName="border-vote-up bg-vote-up text-white"
+                        ringClassName="focus-visible:ring-vote-up/40"
                         disabled={!canVote || pending}
                         label={myVote === 1 ? "Take back your vote" : "Vote up"}
                         onClick={() => cast(1)}
@@ -72,8 +72,8 @@ export function VoteControls({
                         icon={<ThumbsDownIcon className="size-4" />}
                         count={dislikes}
                         active={myVote === -1}
-                        activeClassName="border-amber-300/60 bg-amber-300/20 text-amber-100"
-                        ringClassName="focus-visible:ring-amber-300/60"
+                        activeClassName="border-quorum bg-quorum text-ink"
+                        ringClassName="focus-visible:ring-quorum/45"
                         disabled={!canVote || pending}
                         label={
                             myVote === -1
@@ -87,12 +87,16 @@ export function VoteControls({
                 </div>
 
                 {votes && canVote && (
-                    <QuorumMeter votes={dislikes} required={required} />
+                    <QuorumMeter
+                        votes={dislikes}
+                        required={required}
+                        tone="light"
+                    />
                 )}
             </div>
 
             {votes && !canVote && (
-                <p className="text-xs text-white/60">
+                <p className="text-ink/55 text-xs">
                     You added this song, so the room decides its fate, not you.
                 </p>
             )}
@@ -101,7 +105,7 @@ export function VoteControls({
                 <p
                     className={cn(
                         "text-xs transition-colors duration-300 motion-reduce:transition-none",
-                        onTheBrink ? "text-amber-200" : "text-white/60",
+                        onTheBrink ? "text-amber-800" : "text-ink/55",
                     )}
                 >
                     {onTheBrink
@@ -140,13 +144,13 @@ function VoteButton({
             disabled={disabled}
             onClick={onClick}
             className={cn(
-                "flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors duration-200 motion-reduce:transition-none",
+                "flex items-center gap-2 rounded-none border-2 px-4 py-2 text-sm font-bold transition-colors duration-200 motion-reduce:transition-none",
                 "disabled:pointer-events-none disabled:opacity-50",
                 "focus-visible:ring-2 focus-visible:outline-none",
                 ringClassName,
                 active
                     ? activeClassName
-                    : "border-white/20 bg-white/5 hover:bg-white/15",
+                    : "border-ink bg-transparent hover:bg-white/50",
             )}
         >
             {icon}
