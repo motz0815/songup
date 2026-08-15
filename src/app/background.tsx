@@ -12,7 +12,7 @@ const GrainGradient = dynamic(
 
 export function LandingBackground() {
     return (
-        <div className="fixed inset-0 -z-10 overflow-hidden bg-black">
+        <div className="absolute inset-0 -z-10 overflow-hidden bg-black">
             <GrainGradient
                 style={{ height: "100%" }}
                 colorBack="hsl(0, 0%, 0%)"

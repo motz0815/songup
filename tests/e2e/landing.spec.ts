@@ -30,7 +30,19 @@ test("presents the brand, purpose and primary room actions", async ({
     await expect(
         page.getByRole("heading", {
             level: 2,
-            name: "Built for the whole night.",
+            name: "Everything the room can do.",
+        }),
+    ).toBeVisible()
+    await expect(
+        page.getByRole("heading", {
+            level: 3,
+            name: "Three fair schedulers",
+        }),
+    ).toBeVisible()
+    await expect(
+        page.getByRole("heading", {
+            level: 3,
+            name: "Spotify playlist export",
         }),
     ).toBeVisible()
     await expect(
@@ -46,14 +58,14 @@ test("presents the brand, purpose and primary room actions", async ({
 test("keeps an invalid room code on the landing page", async ({ page }) => {
     const roomCode = page.getByLabel("Enter a four-character room code")
     await roomCode.fill("ABC")
-    await page.getByRole("button", { name: /join the room/i }).click()
 
+    const isValid = await roomCode.evaluate((input: HTMLInputElement) => {
+        input.form?.requestSubmit()
+        return input.validity.valid
+    })
+
+    expect(isValid).toBe(false)
     await expect(page).toHaveURL(/\/$/)
-    expect(
-        await roomCode.evaluate(
-            (input: HTMLInputElement) => input.validity.valid,
-        ),
-    ).toBe(false)
 })
 
 test("normalises a valid room code and requests that room", async ({
