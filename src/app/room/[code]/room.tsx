@@ -141,7 +141,7 @@ export default function Room({
                 ) : (
                     <main className="py-10 sm:py-14">
                         <section>
-                            <SectionLabel>Now broadcasting</SectionLabel>
+                            <SectionLabel>Now playing</SectionLabel>
                             <NowPlaying currentSong={currentSong} />
                             <VoteControls
                                 roomId={roomId}

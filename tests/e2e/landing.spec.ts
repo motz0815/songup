@@ -14,7 +14,7 @@ test("presents the brand, purpose and primary room actions", async ({
     await expect(
         page.getByRole("heading", {
             level: 2,
-            name: "Never fight over the aux again.",
+            name: "Everyone gets a turn on the aux.",
         }),
     ).toBeVisible()
 
@@ -24,8 +24,18 @@ test("presents the brand, purpose and primary room actions", async ({
         page.getByRole("button", { name: /join the room/i }),
     ).toBeVisible()
     await expect(
-        page.getByRole("link", { name: /host your own room/i }),
+        page.getByRole("link", { name: /host your own room/i }).first(),
     ).toHaveAttribute("href", "/host")
+
+    await expect(
+        page.getByRole("heading", {
+            level: 2,
+            name: "Built for the whole night.",
+        }),
+    ).toBeVisible()
+    await expect(
+        page.getByRole("link", { name: "Created by Tim Kolesnichenko" }),
+    ).toHaveAttribute("href", "https://www.timkolesnichenko.me/")
 
     const hasHorizontalOverflow = await page.evaluate(
         () => document.documentElement.scrollWidth > window.innerWidth,

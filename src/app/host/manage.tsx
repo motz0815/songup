@@ -44,9 +44,8 @@ export default function ManageRooms({
                                 Start the room. Let them choose.
                             </h1>
                             <p className="text-ink/65 mt-6 max-w-xl text-lg sm:text-xl">
-                                Create a broadcast, put the four-character code
-                                on the big screen, and let the room build the
-                                queue together.
+                                Start a room, put its QR code on the big screen,
+                                and let everyone build the queue together.
                             </p>
                             <CreateRoom>
                                 <Button className="border-ink bg-signal hover:bg-signal/90 mt-9 h-14 rounded-none border-2 px-7 text-base font-bold text-white">
