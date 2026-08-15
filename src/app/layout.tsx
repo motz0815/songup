@@ -26,9 +26,9 @@ const plexMono = IBM_Plex_Mono({
 })
 
 const siteUrl = "https://democratune.timkolesnichenko.me"
-const siteTitle = "DemocraTune — Fair shared music queues for parties"
+const siteTitle = "DemocraTune — Free shared music queue for parties"
 const siteDescription =
-    "Create a free shared party music queue. Guests join by QR code, add songs, vote, and take fair turns — with no accounts or app downloads."
+    "Create a free shared music queue for parties. Guests scan a QR code to request songs, vote together, and take fair turns — no accounts or app downloads."
 
 export const metadata: Metadata = {
     metadataBase: new URL(siteUrl),

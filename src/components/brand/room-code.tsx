@@ -19,7 +19,7 @@ export function RoomCode({
                     <span
                         key={`${character}-${index}`}
                         aria-hidden="true"
-                        className="animate-rise-in inline-block border-b-[0.07em] border-current px-[0.04em] pb-[0.12em]"
+                        className="animate-rise-in relative inline-block px-[0.04em] pb-[0.18em] after:absolute after:inset-x-[0.04em] after:bottom-0 after:h-[0.055em] after:bg-current"
                         style={{ animationDelay: `${index * 70}ms` }}
                     >
                         {character}
