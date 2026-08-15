@@ -5,8 +5,9 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: ["/host/", "/room/"],
+            disallow: "/discord",
         },
+        host: "https://democratune.timkolesnichenko.me",
         sitemap: "https://democratune.timkolesnichenko.me/sitemap.xml",
     }
 }

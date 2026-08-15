@@ -6,6 +6,8 @@ import ManageRooms from "./manage"
 
 export const metadata: Metadata = {
     title: "Manage rooms",
+    alternates: { canonical: "/host" },
+    robots: { index: false, follow: false, noarchive: true },
 }
 
 export default async function ManageRoomsPage() {

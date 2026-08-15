@@ -1,6 +1,5 @@
 import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/sonner"
-import { getURL } from "@/lib/utils"
 import type { Metadata } from "next"
 import {
     Bricolage_Grotesque,
@@ -26,12 +25,59 @@ const plexMono = IBM_Plex_Mono({
     weight: ["500", "600", "700"],
 })
 
+const siteUrl = "https://democratune.timkolesnichenko.me"
+const siteTitle = "DemocraTune — Fair shared music queues for parties"
+const siteDescription =
+    "Create a free shared party music queue. Guests join by QR code, add songs, vote, and take fair turns — with no accounts or app downloads."
+
 export const metadata: Metadata = {
-    metadataBase: new URL(getURL()),
-    title: { default: "DemocraTune", template: "%s | DemocraTune" },
-    description:
-        "DemocraTune makes collaborative party music queueing easy. Open source, no login required. Get started - free.",
-    keywords: ["democratune", "party", "music", "queue", "open source"],
+    metadataBase: new URL(siteUrl),
+    applicationName: "DemocraTune",
+    title: { default: siteTitle, template: "%s | DemocraTune" },
+    description: siteDescription,
+    keywords: [
+        "collaborative music queue",
+        "party music queue",
+        "shared playlist",
+        "group music voting",
+        "fair song queue",
+        "open source music app",
+        "DemocraTune",
+    ],
+    authors: [
+        {
+            name: "Tim Kolesnichenko",
+            url: "https://www.timkolesnichenko.me/",
+        },
+    ],
+    creator: "Tim Kolesnichenko",
+    publisher: "Tim Kolesnichenko",
+    category: "music",
+    alternates: { canonical: "/" },
+    openGraph: {
+        type: "website",
+        locale: "en_GB",
+        url: "/",
+        siteName: "DemocraTune",
+        title: siteTitle,
+        description: siteDescription,
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: siteTitle,
+        description: siteDescription,
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+        },
+    },
 }
 
 export default function RootLayout({

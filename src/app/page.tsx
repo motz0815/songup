@@ -8,17 +8,85 @@ import Link from "next/link"
 import { FaGithub } from "react-icons/fa"
 
 export const metadata: Metadata = {
-    title: "DemocraTune - Open source shared music queue for parties",
+    title: {
+        absolute: "DemocraTune — Fair shared music queues for parties",
+    },
+    alternates: { canonical: "/" },
 }
-
 export const viewport: Viewport = {
     themeColor: "#0c1519",
     colorScheme: "dark",
 }
 
 export default function Home() {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://democratune.timkolesnichenko.me/#website",
+                url: "https://democratune.timkolesnichenko.me/",
+                name: "DemocraTune",
+                description:
+                    "A free, open-source shared music queue for parties.",
+                inLanguage: "en-GB",
+                creator: {
+                    "@id": "https://www.timkolesnichenko.me/#person",
+                },
+            },
+            {
+                "@type": "WebApplication",
+                "@id": "https://democratune.timkolesnichenko.me/#application",
+                name: "DemocraTune",
+                url: "https://democratune.timkolesnichenko.me/",
+                description:
+                    "Create a shared party music queue where guests join by QR code, add songs, vote, and take fair turns without accounts or downloads.",
+                applicationCategory: "MultimediaApplication",
+                operatingSystem: "Any",
+                browserRequirements: "Requires a modern web browser",
+                isAccessibleForFree: true,
+                offers: {
+                    "@type": "Offer",
+                    price: "0",
+                    priceCurrency: "GBP",
+                },
+                featureList: [
+                    "QR code and four-character room joining",
+                    "Shared song search and queue",
+                    "First-come-first-served, round-robin, and rating-weighted scheduling",
+                    "Song voting and group skips",
+                    "Fallback playlists",
+                    "Play history and Spotify playlist export",
+                ],
+                codeRepository:
+                    "https://github.com/KOLESNiii/DemocraTune",
+                license:
+                    "https://www.gnu.org/licenses/agpl-3.0.html",
+                creator: {
+                    "@id": "https://www.timkolesnichenko.me/#person",
+                },
+            },
+            {
+                "@type": "Person",
+                "@id": "https://www.timkolesnichenko.me/#person",
+                name: "Tim Kolesnichenko",
+                url: "https://www.timkolesnichenko.me/",
+                sameAs: ["https://github.com/KOLESNiii"],
+            },
+        ],
+    }
+
     return (
         <div className="bg-night text-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData).replace(
+                        /</g,
+                        "\\u003c",
+                    ),
+                }}
+            />
             <section className="relative isolate overflow-hidden px-5 py-6 sm:px-10 sm:py-8">
                 <LandingBackground />
                 <div className="halftone-field pointer-events-none absolute inset-0 -z-[5] [mask-image:linear-gradient(to_bottom,black,transparent_85%)] text-white/10" />
