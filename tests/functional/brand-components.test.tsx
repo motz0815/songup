@@ -15,6 +15,7 @@ describe("RoomCode", () => {
         expect(container.querySelectorAll("[aria-hidden='true']")).toHaveLength(
             4,
         )
+        expect(screen.queryByText("Tonight's room")).not.toBeInTheDocument()
     })
 })
 

@@ -40,10 +40,7 @@ export default function ManageRooms({
                 {!hasRooms ? (
                     <section className="grid min-h-[calc(100svh-7rem)] items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr]">
                         <div>
-                            <p className="font-code text-broadcast text-sm font-bold tracking-[0.18em] uppercase">
-                                Host control
-                            </p>
-                            <h1 className="font-display mt-4 max-w-4xl text-6xl leading-[0.85] font-extrabold tracking-[-0.07em] text-balance sm:text-8xl lg:text-9xl">
+                            <h1 className="font-display max-w-4xl text-5xl leading-[0.88] font-extrabold tracking-[-0.06em] text-balance sm:text-8xl sm:leading-[0.85] sm:tracking-[-0.07em] lg:text-9xl">
                                 Start the room. Let them choose.
                             </h1>
                             <p className="text-ink/65 mt-6 max-w-xl text-lg sm:text-xl">
@@ -58,7 +55,7 @@ export default function ManageRooms({
                                 </Button>
                             </CreateRoom>
                         </div>
-                        <div className="text-broadcast h-80 opacity-65 lg:h-[32rem]">
+                        <div className="text-broadcast hidden h-[32rem] opacity-65 lg:block">
                             <TallyField />
                         </div>
                     </section>
@@ -66,10 +63,7 @@ export default function ManageRooms({
                     <section className="py-14 sm:py-20">
                         <div className="mb-12 grid gap-4 sm:grid-cols-2 sm:items-end">
                             <div>
-                                <p className="font-code text-broadcast text-sm font-bold tracking-[0.18em] uppercase">
-                                    Host control
-                                </p>
-                                <h1 className="font-display mt-3 text-6xl leading-none font-extrabold tracking-[-0.065em] sm:text-8xl">
+                                <h1 className="font-display text-5xl leading-none font-extrabold tracking-[-0.055em] sm:text-8xl sm:tracking-[-0.065em]">
                                     Your rooms
                                 </h1>
                             </div>

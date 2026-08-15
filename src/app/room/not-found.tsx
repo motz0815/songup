@@ -21,9 +21,6 @@ export default function NotFound() {
                 </Link>
                 <div className="flex flex-1 items-center py-16">
                     <div className="w-full max-w-3xl">
-                        <p className="font-code text-signal mb-4 text-sm font-bold tracking-[0.18em] uppercase">
-                            No broadcast found
-                        </p>
                         <h1 className="font-display max-w-2xl text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] text-balance sm:text-7xl lg:text-8xl">
                             {attemptedCode
                                 ? `${attemptedCode.toUpperCase()} isn’t on air.`

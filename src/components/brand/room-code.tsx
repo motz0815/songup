@@ -10,10 +10,7 @@ export function RoomCode({
     label?: string
 }) {
     return (
-        <div className={cn("inline-flex flex-col gap-1", className)}>
-            <span className="font-code text-[0.62rem] font-semibold tracking-[0.24em] uppercase opacity-60">
-                {label}
-            </span>
+        <div className={cn("inline-flex flex-col", className)}>
             <span
                 className="font-code flex gap-[0.1em] text-[clamp(2.5rem,8vw,6rem)] leading-none font-bold tracking-[-0.08em]"
                 aria-label={`${label}: ${code}`}
@@ -22,7 +19,7 @@ export function RoomCode({
                     <span
                         key={`${character}-${index}`}
                         aria-hidden="true"
-                        className="animate-rise-in inline-block border-b-[0.08em] border-current px-[0.04em]"
+                        className="animate-rise-in inline-block border-b-[0.07em] border-current px-[0.04em] pb-[0.12em]"
                         style={{ animationDelay: `${index * 70}ms` }}
                     >
                         {character}

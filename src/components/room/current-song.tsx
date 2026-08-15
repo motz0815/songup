@@ -32,9 +32,6 @@ export function NowPlaying({ currentSong }: { currentSong: CurrentSongType }) {
                         unoptimized
                     />
                     <div className="pb-1">
-                        <p className="font-code text-broadcast mb-2 text-xs font-bold tracking-[0.16em] uppercase">
-                            Live now
-                        </p>
                         <h4 className="font-display text-3xl leading-none font-extrabold tracking-[-0.045em] sm:text-5xl">
                             {currentSong.title}
                         </h4>

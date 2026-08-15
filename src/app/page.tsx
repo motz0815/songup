@@ -56,10 +56,7 @@ export default function Home() {
                             </div>
                             <div className="w-full lg:justify-self-end">
                                 <JoinRoomForm variant="landing" />
-                                <div className="mt-4 flex items-center gap-4">
-                                    <span className="font-code text-xs tracking-[0.18em] text-white/50 uppercase">
-                                        or
-                                    </span>
+                                <div className="mt-4 flex items-center">
                                     <Button
                                         asChild
                                         variant="link"
@@ -88,10 +85,7 @@ export default function Home() {
                 <section className="paper-field px-5 py-24 sm:px-10 lg:py-32">
                     <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
                         <div>
-                            <p className="font-code text-broadcast text-xs font-bold tracking-[0.2em] uppercase">
-                                01 · Join
-                            </p>
-                            <h2 className="font-display mt-4 text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
+                            <h2 className="font-display text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
                                 Four characters. Everyone is in.
                             </h2>
                             <p className="text-ink/65 mt-6 max-w-xl text-lg">
@@ -112,10 +106,7 @@ export default function Home() {
                             <TallyField />
                         </div>
                         <div className="order-1 lg:order-2">
-                            <p className="font-code text-xs font-bold tracking-[0.2em] text-white/65 uppercase">
-                                02 · Decide
-                            </p>
-                            <h2 className="font-display mt-4 text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
+                            <h2 className="font-display text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
                                 The queue listens to the room.
                             </h2>
                             <p className="mt-6 max-w-xl text-lg text-white/75">
@@ -129,10 +120,7 @@ export default function Home() {
 
                 <section className="px-5 py-24 sm:px-10 lg:py-32">
                     <div className="mx-auto max-w-7xl">
-                        <p className="font-code text-signal text-xs font-bold tracking-[0.2em] uppercase">
-                            03 · Keep it
-                        </p>
-                        <div className="border-ink mt-4 grid gap-8 border-t-2 pt-6 lg:grid-cols-2">
+                        <div className="border-ink grid gap-8 border-t-2 pt-6 lg:grid-cols-2">
                             <h2 className="font-display text-5xl leading-[0.9] font-extrabold tracking-[-0.06em] sm:text-7xl">
                                 The night ends. The playlist doesn’t.
                             </h2>

@@ -75,10 +75,7 @@ export default function Room({
                 ) : !nickname ? (
                     <main className="grid min-h-[calc(100svh-7rem)] items-center gap-12 py-14 lg:grid-cols-[1.1fr_0.9fr]">
                         <section>
-                            <p className="font-code text-broadcast text-sm font-bold tracking-[0.18em] uppercase">
-                                You’re in
-                            </p>
-                            <h1 className="font-display mt-4 max-w-3xl text-6xl leading-[0.86] font-extrabold tracking-[-0.07em] text-balance sm:text-8xl">
+                            <h1 className="font-display max-w-3xl text-5xl leading-[0.88] font-extrabold tracking-[-0.06em] text-balance sm:text-8xl sm:leading-[0.86] sm:tracking-[-0.07em]">
                                 What should the room call you?
                             </h1>
                             <p className="text-ink/60 mt-6 max-w-xl text-lg">
@@ -96,10 +93,7 @@ export default function Room({
                 ) : !currentSong && !hasQueuedSong ? (
                     <main className="grid min-h-[calc(100svh-7rem)] items-center gap-12 py-14 lg:grid-cols-[1.05fr_0.95fr]">
                         <section>
-                            <p className="font-code text-signal text-sm font-bold tracking-[0.18em] uppercase">
-                                You’re early
-                            </p>
-                            <h1 className="font-display mt-4 max-w-3xl text-6xl leading-[0.86] font-extrabold tracking-[-0.07em] text-balance sm:text-8xl">
+                            <h1 className="font-display max-w-3xl text-5xl leading-[0.88] font-extrabold tracking-[-0.06em] text-balance sm:text-8xl sm:leading-[0.86] sm:tracking-[-0.07em]">
                                 Pick the first track.
                             </h1>
                             <p className="text-ink/60 mt-6 max-w-xl text-lg">
@@ -114,7 +108,7 @@ export default function Room({
                                 />
                             </div>
                         </section>
-                        <div className="text-signal h-72 opacity-35 lg:h-[30rem]">
+                        <div className="text-signal hidden h-[30rem] opacity-35 lg:block">
                             <TallyField />
                         </div>
                     </main>

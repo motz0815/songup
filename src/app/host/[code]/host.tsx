@@ -77,14 +77,14 @@ export default function Host({
     const isDemocraSchedule = room?.settings?.scheduler === "weighted"
 
     return (
-        <div className="bg-night relative min-h-screen overflow-hidden p-4 text-white lg:h-screen lg:p-5">
+        <div className="bg-night relative min-h-[100svh] overflow-x-hidden p-4 text-white lg:h-screen lg:overflow-hidden lg:p-5">
             <HostBackground videoId={currentSong?.videoId} />
 
-            <main className="relative z-10 h-full">
+            <main className="relative z-10 min-h-[calc(100svh-2rem)] lg:h-full lg:min-h-0">
                 <div
                     className={cn(
                         "grid h-full min-h-0 grid-cols-1 gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(22rem,0.78fr)]",
-                        !currentSong && "invisible",
+                        !currentSong && "hidden",
                     )}
                 >
                     <section className="flex min-h-0 flex-col">
@@ -116,10 +116,7 @@ export default function Host({
 
                             <div className="mt-5 grid gap-4 border-t border-white/25 pt-4 xl:grid-cols-[1fr_auto] xl:items-end">
                                 <div>
-                                    <p className="font-code text-signal text-xs font-bold tracking-[0.18em] uppercase">
-                                        Now broadcasting
-                                    </p>
-                                    <h1 className="font-display mt-2 line-clamp-2 text-4xl leading-[0.92] font-extrabold tracking-[-0.055em] text-balance xl:text-6xl">
+                                    <h1 className="font-display line-clamp-2 text-4xl leading-[0.92] font-extrabold tracking-[-0.055em] text-balance xl:text-6xl">
                                         {currentSong?.title}
                                     </h1>
                                     <p className="mt-2 text-lg text-white/65 xl:text-xl">
@@ -166,7 +163,7 @@ export default function Host({
                             <Link href="/host">
                                 <BrandMark compact className="text-2xl" />
                             </Link>
-                            <p className="font-code text-xs tracking-[0.16em] text-white/45 uppercase">
+                            <p className="font-code hidden text-xs tracking-[0.16em] text-white/45 uppercase lg:block">
                                 Press F for fullscreen
                             </p>
                         </footer>
@@ -205,24 +202,17 @@ export default function Host({
 
 function EmptyBroadcast({ code }: { code: string }) {
     return (
-        <section className="absolute inset-0 flex flex-col">
+        <section className="flex min-h-[calc(100svh-2rem)] flex-col lg:absolute lg:inset-0 lg:min-h-0">
             <header className="flex items-center justify-between border-b border-white/25 pb-4">
                 <BrandMark compact className="text-3xl xl:text-4xl" />
-                <span className="font-code flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-white/55 uppercase">
-                    <span className="bg-signal size-2 animate-pulse rounded-full motion-reduce:animate-none" />
-                    Ready to broadcast
-                </span>
             </header>
 
             <div className="grid min-h-0 flex-1 gap-10 py-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-center xl:gap-20">
                 <div>
-                    <p className="font-code text-signal text-sm font-bold tracking-[0.2em] uppercase">
-                        Join the room
-                    </p>
                     <RoomCode
                         code={code}
                         label="Enter this code"
-                        className="mt-5 [&>span:last-child]:text-[clamp(5rem,13vw,13rem)]"
+                        className="[&>span:last-child]:text-[clamp(5rem,13vw,13rem)]"
                     />
                     <p className="mt-8 max-w-3xl text-2xl leading-tight text-white/60 xl:text-4xl">
                         Visit <b className="text-white">{SITE_NAME}</b>, enter
@@ -234,9 +224,6 @@ function EmptyBroadcast({ code }: { code: string }) {
                     <div className="mx-auto aspect-square w-full max-w-sm border-[10px] border-white bg-white p-4 shadow-[16px_16px_0_0_#ff593d] lg:max-w-md">
                         <RoomQRCode roomCode={code} />
                     </div>
-                    <p className="font-code text-center text-xs font-bold tracking-[0.18em] text-white/55 uppercase">
-                        Point any phone camera here
-                    </p>
                 </div>
             </div>
 

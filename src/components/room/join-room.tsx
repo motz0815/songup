@@ -27,13 +27,7 @@ export function JoinRoomForm({
 
     return (
         <form action={handleJoinRoom} className={cn("w-full", className)}>
-            <Label
-                htmlFor="room-code"
-                className={cn(
-                    "font-code mb-2 block text-xs font-semibold tracking-[0.18em] uppercase",
-                    variant === "landing" ? "text-white/70" : "text-ink/60",
-                )}
-            >
+            <Label htmlFor="room-code" className="sr-only">
                 Enter a four-character room code
             </Label>
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -45,8 +39,8 @@ export function JoinRoomForm({
                     className={cn(
                         "font-code h-14 min-w-0 flex-1 rounded-none border-2 px-4 text-2xl font-bold tracking-[0.28em] uppercase shadow-none placeholder:opacity-35 sm:max-w-64",
                         variant === "landing"
-                            ? "border-white/55 bg-black/25 text-white focus-visible:border-white focus-visible:ring-white/30"
-                            : "border-ink bg-paper text-ink focus-visible:border-broadcast",
+                            ? "border-white/55 bg-black/25 text-white placeholder:text-white placeholder:opacity-50 focus-visible:border-white focus-visible:ring-white/30"
+                            : "border-ink bg-paper text-ink placeholder:text-ink/55 focus-visible:border-broadcast",
                     )}
                     required
                     minLength={4}
