@@ -1,10 +1,8 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 
 export function Fullscreen() {
-    const [isFullscreen, setIsFullscreen] = useState(false)
-
     const toggleFullscreen = useCallback(async () => {
         try {
             if (!document.fullscreenElement) {
@@ -18,10 +16,6 @@ export function Fullscreen() {
     }, [])
 
     useEffect(() => {
-        const handleFullscreenChange = () => {
-            setIsFullscreen(!!document.fullscreenElement)
-        }
-
         const handleKeyDown = (event: KeyboardEvent) => {
             if (
                 event.key.toLowerCase() === "f" &&
@@ -42,14 +36,9 @@ export function Fullscreen() {
             }
         }
 
-        document.addEventListener("fullscreenchange", handleFullscreenChange)
         document.addEventListener("keydown", handleKeyDown)
 
         return () => {
-            document.removeEventListener(
-                "fullscreenchange",
-                handleFullscreenChange,
-            )
             document.removeEventListener("keydown", handleKeyDown)
         }
     }, [toggleFullscreen])

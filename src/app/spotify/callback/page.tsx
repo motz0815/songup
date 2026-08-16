@@ -3,7 +3,7 @@
 import { BrandMark } from "@/components/brand/brand-mark"
 import { TallyField } from "@/components/brand/tally-field"
 import { completeAuthorization } from "@/lib/spotify"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
 
 /**
@@ -22,37 +22,33 @@ export default function SpotifyCallbackPage() {
 
 function Callback() {
     const router = useRouter()
-    const [error, setError] = useState<string | null>(null)
+    const searchParams = useSearchParams()
+    const [asyncError, setAsyncError] = useState<string | null>(null)
+    const denied = searchParams.get("error")
+    const code = searchParams.get("code")
+    const authorizationError = denied
+        ? denied === "access_denied"
+            ? "You didn't grant access, so nothing was exported."
+            : `Spotify returned an error: ${denied}`
+        : !code
+          ? "Spotify didn't send an authorization code."
+          : null
 
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search)
-
-        const denied = params.get("error")
-        if (denied) {
-            setError(
-                denied === "access_denied"
-                    ? "You didn't grant access, so nothing was exported."
-                    : `Spotify returned an error: ${denied}`,
-            )
-            return
-        }
-
-        const code = params.get("code")
-        if (!code) {
-            setError("Spotify didn't send an authorization code.")
-            return
-        }
+        if (authorizationError || !code) return
 
         completeAuthorization(code)
             .then((returnTo) => router.replace(returnTo))
             .catch((cause: unknown) =>
-                setError(
+                setAsyncError(
                     cause instanceof Error
                         ? cause.message
                         : "Couldn't finish connecting to Spotify.",
                 ),
             )
-    }, [router])
+    }, [authorizationError, code, router])
+
+    const error = authorizationError ?? asyncError
 
     if (error) {
         return (

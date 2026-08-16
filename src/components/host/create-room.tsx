@@ -38,9 +38,7 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
 
     const router = useRouter()
 
-    // @ts-ignore
     const createRoom = useAuthedMutation(api.rooms.manage.createRoom)
-    // @ts-ignore
     const setRoomPlaylist = useAuthedMutation(api.rooms.setRoomPlaylist)
 
     async function handleCreateRoom() {
@@ -110,8 +108,10 @@ export function CreateRoom({ children }: { children?: React.ReactNode }) {
             })
 
             router.push(`/host/${roomData.code}`)
-        } catch (err: any) {
-            toast.error(err.message || "Couldn't create the room")
+        } catch (err: unknown) {
+            toast.error(
+                err instanceof Error ? err.message : "Couldn't create the room",
+            )
             console.error(err)
         } finally {
             setLoading(false)

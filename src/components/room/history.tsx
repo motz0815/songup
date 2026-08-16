@@ -15,7 +15,6 @@ export function History({
     roomId: Id<"rooms">
     playlistId: string | undefined
 }) {
-    // @ts-ignore
     const history = useQuery(api.rooms.getSongHistory, { roomId }) ?? []
 
     const historySongs: SongView[] = history.map((song) => ({

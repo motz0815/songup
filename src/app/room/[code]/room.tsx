@@ -30,7 +30,6 @@ export default function Room({
     preloadedRoom,
 }: {
     roomId: Id<"rooms">
-    // @ts-ignore
     preloadedRoom: Preloaded<typeof api.rooms.getRoomByCode>
 }) {
     const room = usePreloadedQuery(preloadedRoom)

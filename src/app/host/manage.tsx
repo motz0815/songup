@@ -11,6 +11,7 @@ import { Preloaded, usePreloadedQuery } from "convex/react"
 import { formatDistance } from "date-fns"
 import { ArrowLeft, ArrowUpRight, PlusIcon, Radio } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
 
 export default function ManageRooms({
     preloadedRooms,
@@ -19,6 +20,7 @@ export default function ManageRooms({
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
     const hasRooms = Boolean(rooms?.length)
+    const [now] = useState(() => Date.now())
 
     return (
         <main className="paper-field relative min-h-screen overflow-hidden px-5 py-6 sm:px-10 sm:py-8">
@@ -75,8 +77,7 @@ export default function ManageRooms({
                         <div className="border-ink border-t-2">
                             {rooms?.map((room) => {
                                 const expiresSoon =
-                                    room.expiresAt - Date.now() <
-                                    6 * 60 * 60 * 1000
+                                    room.expiresAt - now < 6 * 60 * 60 * 1000
 
                                 return (
                                     <Link
@@ -101,7 +102,7 @@ export default function ManageRooms({
                                                 Expires{" "}
                                                 {formatDistance(
                                                     new Date(room.expiresAt),
-                                                    Date.now(),
+                                                    now,
                                                     { addSuffix: true },
                                                 )}
                                             </p>

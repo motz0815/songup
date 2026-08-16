@@ -68,7 +68,6 @@ export async function advanceRoom(
     }
 
     if (oldSong && room.playlistId) {
-        // @ts-ignore
         await ctx.scheduler.runAfter(0, internal.functions.addSongToPlaylist, {
             roomId,
             videoId: oldSong.videoId,

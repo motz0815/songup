@@ -1,16 +1,24 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 import QRCode from "react-qr-code"
 
-export function RoomQRCode({ roomCode }: { roomCode: string }) {
-    const [url, setUrl] = useState("")
+const subscribeToOrigin = () => () => {}
+const getBrowserOrigin = () => window.location.origin
+const getServerOrigin = () => ""
 
-    useEffect(() => {
+export function RoomQRCode({ roomCode }: { roomCode: string }) {
+    const origin = useSyncExternalStore(
+        subscribeToOrigin,
+        getBrowserOrigin,
+        getServerOrigin,
+    )
+    const url = (() => {
+        if (!origin) return ""
         const roomUrl = new URL(`/room/${roomCode}`, window.location.origin)
         roomUrl.searchParams.set("utm_source", "qr-code")
-        setUrl(roomUrl.toString())
-    }, [roomCode])
+        return roomUrl.toString()
+    })()
 
     return (
         <div className="h-full max-h-full bg-white p-2">

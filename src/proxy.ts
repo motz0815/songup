@@ -1,6 +1,6 @@
 import { convexAuthNextjsMiddleware } from "@convex-dev/auth/nextjs/server"
 
-export default convexAuthNextjsMiddleware((request, { convexAuth }) => {}, {
+export default convexAuthNextjsMiddleware(() => {}, {
     cookieConfig: {
         maxAge: 60 * 60 * 24 * 30, // 30 days cookie expiration
     },

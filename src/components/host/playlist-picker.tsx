@@ -75,19 +75,28 @@ export function PlaylistPicker({
     )
 
     const toggleExpansion = () => {
-        setIsExpanded(!isExpanded)
+        setIsExpanded((expanded) => !expanded)
+    }
+
+    function handleSelectMood(mood: Mood) {
+        setMoodPlaylists(null)
+        setSelectedMood(mood)
+    }
+
+    function handleBackToMoods() {
+        setMoodPlaylists(null)
+        setSelectedMood(null)
     }
 
     function handleSelectPlaylist(playlistId: string) {
         setOpen(false)
         setLoading(true)
-        fetch(`/api/get-playlist?playlistId=${playlistId}`,
-            {
-                headers: { 
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "true", 
-                },
-            })
+        fetch(`/api/get-playlist?playlistId=${playlistId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true",
+            },
+        })
             .then((res) => res.json())
             .then((data: APIPlaylist) => {
                 onChange(data)
@@ -105,7 +114,7 @@ export function PlaylistPicker({
         try {
             const url = new URL(playlistId)
             playlistId = url.searchParams.get("list") ?? playlistId
-        } catch (error) {
+        } catch {
             // Ignore
         }
 
@@ -115,13 +124,12 @@ export function PlaylistPicker({
     }
 
     useEffect(() => {
-        fetch("/api/get-mood-categories",
-            {
-                headers: { 
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "true", 
-                },
-            })
+        fetch("/api/get-mood-categories", {
+            headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true",
+            },
+        })
             .then((res) => res.json())
             .then((data: Mood[]) => {
                 setMoods(data)
@@ -129,28 +137,23 @@ export function PlaylistPicker({
     }, [])
 
     useEffect(() => {
-        if (selectedMood) {
-            fetch(
-                `/api/get-mood-playlists?mood_category=${selectedMood.params}`,
-            {
-                headers: { 
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "true", 
-                },
-            }
-            )
-                .then((res) => res.json())
-                .then((data: MoodPlaylist[]) => {
-                    setMoodPlaylists(data)
-                })
-        } else {
-            setMoodPlaylists(null)
-        }
+        if (!selectedMood) return
+
+        fetch(`/api/get-mood-playlists?mood_category=${selectedMood.params}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true",
+            },
+        })
+            .then((res) => res.json())
+            .then((data: MoodPlaylist[]) => {
+                setMoodPlaylists(data)
+            })
     }, [selectedMood])
 
     useEffect(() => {
         onLoadingChange(loading)
-    }, [loading])
+    }, [loading, onLoadingChange])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -173,7 +176,7 @@ export function PlaylistPicker({
                                     <Button
                                         variant="outline"
                                         size="icon"
-                                        onClick={() => setSelectedMood(null)}
+                                        onClick={handleBackToMoods}
                                     >
                                         <ArrowLeftIcon className="h-4 w-4" />
                                     </Button>
@@ -215,7 +218,7 @@ export function PlaylistPicker({
                                                         key={mood.params}
                                                         className="hover:bg-secondary flex items-center justify-between rounded-lg border p-3 shadow-sm transition-all hover:cursor-pointer"
                                                         onClick={() =>
-                                                            setSelectedMood(
+                                                            handleSelectMood(
                                                                 mood,
                                                             )
                                                         }

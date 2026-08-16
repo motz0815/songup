@@ -1,20 +1,20 @@
 /* eslint-disable no-restricted-imports */
 import {
+    internalAction,
     internalMutation as rawInternalMutation,
     mutation as rawMutation,
-    internalAction,
 } from "./_generated/server"
 /* eslint-enable no-restricted-imports */
-import { v } from "convex/values"
 import {
     customCtx,
     customMutation,
 } from "convex-helpers/server/customFunctions"
 import { Triggers } from "convex-helpers/server/triggers"
-import { DataModel } from "./_generated/dataModel"
+import { v } from "convex/values"
 import { internal } from "./_generated/api"
+import { DataModel } from "./_generated/dataModel"
 
-type AddSongData = { videoId: string, playlistId: string };
+type AddSongData = { videoId: string; playlistId: string }
 
 // start using Triggers, with table types from schema.ts
 const triggers = new Triggers<DataModel>()
@@ -25,7 +25,6 @@ triggers.register("rooms", async (ctx, change) => {
     if (change.operation === "delete") {
         console.log("Deleting leftovers from room")
         if (change.oldDoc.playlistId) {
-            // @ts-ignore 
             ctx.scheduler.runAfter(0, internal.functions.deleteRoomPlaylist, {
                 roomId: change.oldDoc._id,
                 playlistId: change.oldDoc.playlistId,
@@ -33,28 +32,24 @@ triggers.register("rooms", async (ctx, change) => {
         }
         for await (const song of ctx.db
             .query("queuedSongs")
-            .withIndex("by_room_type", (q) => q.eq("room", change.id))
-        ) {
+            .withIndex("by_room_type", (q) => q.eq("room", change.id))) {
             await ctx.db.delete(song._id)
         }
         for await (const song of ctx.db
             .query("history")
-            .withIndex("by_room", (q) => q.eq("room", change.id))
-        ) {
+            .withIndex("by_room", (q) => q.eq("room", change.id))) {
             await ctx.db.delete(song._id)
         }
         // Presence and votes are room-scoped too. Rooms are swept hourly by
         // cron, so leaving these behind accumulates rows nothing can reach.
         for await (const member of ctx.db
             .query("roomMembers")
-            .withIndex("by_room", (q) => q.eq("room", change.id))
-        ) {
+            .withIndex("by_room", (q) => q.eq("room", change.id))) {
             await ctx.db.delete(member._id)
         }
         for await (const vote of ctx.db
             .query("songVotes")
-            .withIndex("by_room_video", (q) => q.eq("room", change.id))
-        ) {
+            .withIndex("by_room_video", (q) => q.eq("room", change.id))) {
             await ctx.db.delete(vote._id)
         }
     }
@@ -69,7 +64,7 @@ export const internalMutation = customMutation(
 )
 
 export const addSongToPlaylist = internalAction({
-    args : {
+    args: {
         roomId: v.id("rooms"),
         videoId: v.optional(v.string()),
         playlistId: v.optional(v.string()),
@@ -77,45 +72,53 @@ export const addSongToPlaylist = internalAction({
     handler: async (_, args) => {
         // add to history playlist
         if (!args.videoId || !args.playlistId) return
-        const payload: AddSongData = { videoId: args.videoId, playlistId: args.playlistId };
+        const payload: AddSongData = {
+            videoId: args.videoId,
+            playlistId: args.playlistId,
+        }
         const res = await fetch(`/api/rooms/${args.roomId}/playlist`, {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
-                "ngrok-skip-browser-warning": "true",  
+                "ngrok-skip-browser-warning": "true",
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
         })
 
         if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.detail || "Failed to add song");
+            const errorData = await res.json()
+            throw new Error(errorData.detail || "Failed to add song")
         } else {
-            console.log(`Successfully added song to playlist ${args.playlistId}`)
+            console.log(
+                `Successfully added song to playlist ${args.playlistId}`,
+            )
         }
-    }
+    },
 })
 
 export const deleteRoomPlaylist = internalAction({
-    args : {
+    args: {
         roomId: v.id("rooms"),
-        playlistId: v.optional(v.string())
+        playlistId: v.optional(v.string()),
     },
     handler: async (_, args) => {
         if (!args.playlistId) return
         const payload = { playlistId: args.playlistId }
-        const res = await fetch(`/api/rooms/${args.roomId.toString()}/playlist`, {
-            method: "DELETE",
-            headers: { 
-                "Content-Type": "application/json",
-                "ngrok-skip-browser-warning": "true",  
+        const res = await fetch(
+            `/api/rooms/${args.roomId.toString()}/playlist`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true",
+                },
+                body: JSON.stringify(payload),
             },
-            body: JSON.stringify(payload)
-        })
+        )
 
         if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.detail || "Failed to delete playlist");
+            const errorData = await res.json()
+            throw new Error(errorData.detail || "Failed to delete playlist")
         }
-    }
+    },
 })
