@@ -54,6 +54,9 @@ export function LegalPage({
 
                 <footer className="border-ink text-ink/60 mt-14 border-t-2 pt-6 text-sm">
                     <div className="flex flex-wrap gap-x-4 gap-y-2">
+                        <Link href="/about" className="underline">
+                            About
+                        </Link>
                         <Link href="/privacy" className="underline">
                             Privacy
                         </Link>

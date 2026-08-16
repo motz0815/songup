@@ -93,15 +93,25 @@ export default function Home() {
                     <Link href="/" aria-label="DemocraTune home">
                         <BrandMark compact className="text-2xl sm:text-3xl" />
                     </Link>
-                    <Link
-                        href="https://github.com/KOLESNiii/DemocraTune/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-white/75 transition-colors hover:text-white"
-                    >
-                        <FaGithub className="size-5" />
-                        <span className="hidden sm:inline">Open source</span>
-                    </Link>
+                    <nav className="flex items-center gap-5 text-sm font-semibold text-white/75">
+                        <Link
+                            href="/about"
+                            className="transition-colors hover:text-white"
+                        >
+                            About
+                        </Link>
+                        <Link
+                            href="https://github.com/KOLESNiii/DemocraTune/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                        >
+                            <FaGithub className="size-5" />
+                            <span className="hidden sm:inline">
+                                Open source
+                            </span>
+                        </Link>
+                    </nav>
                 </header>
 
                 <main className="mx-auto w-full max-w-7xl pt-12 pb-14 sm:pt-16 sm:pb-20">
@@ -266,6 +276,9 @@ export default function Home() {
                         </p>
                     </div>
                     <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-white/70">
+                        <Link href="/about" className="hover:text-white">
+                            About
+                        </Link>
                         <Link href="/privacy" className="hover:text-white">
                             Privacy
                         </Link>

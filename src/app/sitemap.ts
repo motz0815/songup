@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
         },
         {
+            url: "https://democratune.timkolesnichenko.me/about",
+            lastModified: "2026-08-15",
+            changeFrequency: "monthly",
+            priority: 0.8,
+        },
+        {
             url: "https://democratune.timkolesnichenko.me/privacy",
             lastModified: "2026-08-13",
             changeFrequency: "yearly",
