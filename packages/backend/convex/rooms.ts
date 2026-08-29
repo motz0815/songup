@@ -165,6 +165,19 @@ export const addSong = mutation({
             throw new Error("User has reached the maximum number of songs")
         }
 
+        // Reject a song that is already playing or already in the queue.
+        // A duplicate would be popped twice and look like it vanished.
+        const queuedSongs = await ctx.db
+            .query("queuedSongs")
+            .withIndex("by_room_order_type", (q) => q.eq("room", args.roomId))
+            .collect()
+        if (
+            room.currentSong?.videoId === args.videoId ||
+            queuedSongs.some((song) => song.videoId === args.videoId)
+        ) {
+            throw new Error("Song is already in the room")
+        }
+
         // Decide whether this song should become the current song or to queue it
         if (!room.currentSong) {
             // room currently has no song playing, so this song should become the current song

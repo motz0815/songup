@@ -112,11 +112,21 @@ async function addFallbackSongs(
         throw new Error("Room not found")
     }
 
+    // Drop duplicate videoIds so the same track is not queued and popped twice.
+    const uniqueSongs = songs.filter(
+        (song, index) =>
+            songs.findIndex((other) => other.videoId === song.videoId) ===
+            index,
+    )
+
     // Deliberately don't add the fallback songs directly into the current song in the room object
     // to make users add songs themselves and see that they get added in front of fallback songs
     // Limit to 1000 songs for pro rooms (will never be reached in production, just for safety)
     // Limit to 50 songs for free rooms
-    for (const song of songs.slice(0, room.proStatus === "free" ? 50 : 1000)) {
+    for (const song of uniqueSongs.slice(
+        0,
+        room.proStatus === "free" ? 50 : 1000,
+    )) {
         await ctx.db.insert("queuedSongs", {
             room: roomId,
             type: "fallback",
