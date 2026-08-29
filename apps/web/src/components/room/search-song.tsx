@@ -3,8 +3,11 @@
 import { Input } from "@songup/ui/components/input"
 import { SubmitButton } from "@songup/ui/components/submit-button"
 import { PlusCircleIcon } from "lucide-react"
+import posthog from "posthog-js"
 import { useState } from "react"
 import { ImageWithFallback } from "../image-with-fallback"
+
+const SEARCH_TIMEOUT_MS = 10000
 
 export function SearchSong({
     onSelect,
@@ -27,15 +30,26 @@ export function SearchSong({
     const [error, setError] = useState<string | null>(null)
 
     async function handleSearch(formData: FormData) {
+        const query = formData.get("query") as string
+        posthog.capture("song_searched", { query })
         try {
-            const query = formData.get("query") as string
-            console.log("Query", query)
             setError(null)
-            const results: [] = await fetch(
+            const res = await fetch(
                 `/flask/search?query=${encodeURIComponent(query)}`,
-            ).then((res) => res.json())
-            console.log("Results", results)
-            setResults(results)
+                { signal: AbortSignal.timeout(SEARCH_TIMEOUT_MS) },
+            )
+            if (!res.ok) {
+                throw new Error(`Search failed with status ${res.status}`)
+            }
+            const data = await res.json()
+            // Guard against a malformed body so the render never reads a
+            // missing artists array.
+            setResults(
+                (Array.isArray(data) ? data : []).map((song) => ({
+                    ...song,
+                    artists: Array.isArray(song.artists) ? song.artists : [],
+                })),
+            )
         } catch (error) {
             setError("Failed to search for songs. Please try again.")
             console.error(error)

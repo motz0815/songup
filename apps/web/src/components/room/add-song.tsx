@@ -26,6 +26,13 @@ export function AddSong({
 }) {
     const addSong = useMutation(api.rooms.addSong)
     const [open, setOpen] = useState(false)
+    const [searchKey, setSearchKey] = useState(0)
+
+    function closeDialog() {
+        setOpen(false)
+        // Remount SearchSong so its results and error reset for the next open.
+        setSearchKey((key) => key + 1)
+    }
 
     async function handleSelect(song: {
         videoId: string
@@ -40,7 +47,6 @@ export function AddSong({
             artist: song.artist,
             duration: song.duration,
         })
-        setOpen(false)
         toast.success("Song added", {
             description: `${song.title} by ${song.artist}`,
         })
@@ -51,10 +57,16 @@ export function AddSong({
             songArtist: song.artist,
             songDuration: song.duration,
         })
+        // Close after the form-action transition ends. A close inside the
+        // transition leaves the Radix dialog trigger dead until a page reload.
+        setTimeout(closeDialog, 0)
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog
+            open={open}
+            onOpenChange={(next) => (next ? setOpen(true) : closeDialog())}
+        >
             <DialogTrigger asChild>
                 <Button disabled={disabled}>
                     <PlusIcon /> Add Song
@@ -64,7 +76,7 @@ export function AddSong({
                 <DialogHeader>
                     <DialogTitle>Add Song</DialogTitle>
                 </DialogHeader>
-                <SearchSong onSelect={handleSelect} />
+                <SearchSong key={searchKey} onSelect={handleSelect} />
             </DialogContent>
         </Dialog>
     )
