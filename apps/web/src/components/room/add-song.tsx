@@ -33,13 +33,20 @@ export function AddSong({
         artist: string
         duration: number
     }) {
-        await addSong({
-            roomId,
-            videoId: song.videoId,
-            title: song.title,
-            artist: song.artist,
-            duration: song.duration,
-        })
+        try {
+            await addSong({
+                roomId,
+                videoId: song.videoId,
+                title: song.title,
+                artist: song.artist,
+                duration: song.duration,
+            })
+        } catch {
+            toast.error("Couldn't add song", {
+                description: `${song.title} is already in the room.`,
+            })
+            return
+        }
         setOpen(false)
         toast.success("Song added", {
             description: `${song.title} by ${song.artist}`,

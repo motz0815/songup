@@ -10,8 +10,10 @@ import { Fullscreen } from "@songup/ui/components/fullscreen"
 import { Progress } from "@songup/ui/components/progress"
 import { Preloaded, useMutation, usePreloadedQuery } from "convex/react"
 import Link from "next/link"
+import posthog from "posthog-js"
 import { useEffect, useRef, useState } from "react"
 import YouTube, { YouTubeProps } from "react-youtube"
+import { toast } from "sonner"
 
 export default function Host({
     roomId,
@@ -69,6 +71,10 @@ export default function Host({
 
     const [progress, setProgress] = useState(0)
 
+    // The videoId we already retried once after an embed error.
+    // It stops one broken song from popping the whole queue in a row.
+    const retriedVideoId = useRef<string | null>(null)
+
     /*
      * EFFECTS
      */
@@ -120,6 +126,40 @@ export default function Host({
         }
     }
 
+    function capturePopped(reason: "ended" | "error") {
+        if (!currentSong) return
+        posthog.capture("song_popped", {
+            roomId,
+            reason,
+            videoId: currentSong.videoId,
+            title: currentSong.title,
+            artist: currentSong.artist,
+        })
+    }
+
+    const onPlayerEnd: YouTubeProps["onEnd"] = () => {
+        capturePopped("ended")
+        popSong({ roomId })
+    }
+
+    const onPlayerError: YouTubeProps["onError"] = (event) => {
+        if (!currentSong) return
+
+        // Retry the song once before giving up. Some embed errors are transient.
+        if (retriedVideoId.current !== currentSong.videoId) {
+            retriedVideoId.current = currentSong.videoId
+            event.target.loadVideoById(currentSong.videoId)
+            return
+        }
+
+        // Second failure: skip the song, tell the room why, and record it.
+        toast.error("Skipped a song", {
+            description: `${currentSong.artist} - ${currentSong.title} can't be played here.`,
+        })
+        capturePopped("error")
+        popSong({ roomId })
+    }
+
     return (
         <div className="relative min-h-screen w-full p-4 text-white lg:h-screen">
             <HostBackground videoId={currentSong?.videoId} />
@@ -134,19 +174,8 @@ export default function Host({
                                     videoId={currentSong.videoId ?? ""}
                                     opts={opts}
                                     onStateChange={onPlayerStateChange}
-                                    onEnd={() => {
-                                        // Pop song from queue
-                                        popSong({
-                                            roomId,
-                                        })
-                                    }}
-                                    onError={() => {
-                                        // Song probably isn't playable in embeds. To prevent SongUp from going silent, pop this song.
-                                        // TODO there shouldn't actually ever be non-embeddable songs in the queue
-                                        popSong({
-                                            roomId,
-                                        })
-                                    }}
+                                    onEnd={onPlayerEnd}
+                                    onError={onPlayerError}
                                 />
                             )}
                             <div className="flex h-full w-full flex-col items-center justify-center gap-2">
