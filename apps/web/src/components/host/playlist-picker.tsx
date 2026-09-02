@@ -16,11 +16,14 @@ import { SubmitButton } from "@songup/ui/components/submit-button"
 import { cn } from "@songup/ui/lib/utils"
 import { ArrowLeftIcon, ArrowRightIcon, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 import { ImageWithFallback } from "../image-with-fallback"
+
+const PLAYLIST_TIMEOUT_MS = 10000
 
 // Return type from the API
 export type APIPlaylist = {
-    author: {
+    author?: {
         name: string
     }
     description?: string
@@ -33,7 +36,7 @@ export type APIPlaylist = {
     tracks: {
         videoId: string
         title: string
-        artists: {
+        artists?: {
             name: string
         }[]
         duration_seconds: number
@@ -81,10 +84,23 @@ export function PlaylistPicker({
     function handleSelectPlaylist(playlistId: string) {
         setOpen(false)
         setLoading(true)
-        fetch(`/flask/get-playlist?playlistId=${playlistId}`)
-            .then((res) => res.json())
+        fetch(`/flask/get-playlist?playlistId=${playlistId}`, {
+            signal: AbortSignal.timeout(PLAYLIST_TIMEOUT_MS),
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(
+                        `Get playlist failed with status ${res.status}`,
+                    )
+                }
+                return res.json()
+            })
             .then((data: APIPlaylist) => {
                 onChange(data)
+            })
+            .catch((error) => {
+                toast.error("Failed to load playlist. Please try again.")
+                console.error(error)
             })
             .finally(() => {
                 setLoading(false)
@@ -289,7 +305,7 @@ function PlaylistCard({
                                     {playlist.title}
                                 </p>
                                 <p className="text-muted-foreground max-w-[200px] overflow-hidden text-sm text-ellipsis whitespace-nowrap">
-                                    {playlist.author.name}
+                                    {playlist.author?.name}
                                 </p>
                             </div>
                             <div className="flex gap-2 text-right">
