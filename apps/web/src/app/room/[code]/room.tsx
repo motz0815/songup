@@ -12,7 +12,6 @@ import { Button } from "@songup/ui/components/button"
 import { cn } from "@songup/ui/lib/utils"
 import {
     Preloaded,
-    useConvexAuth,
     useMutation,
     usePreloadedQuery,
     useQuery,
@@ -32,7 +31,6 @@ export default function Room({
      */
 
     const room = usePreloadedQuery(preloadedRoom)
-    const { isLoading } = useConvexAuth()
 
     const user = useQuery(api.auth.getCurrentUser)
 
@@ -44,10 +42,31 @@ export default function Room({
 
     const skipToNextSong = useMutation(api.rooms.controls.skipToNextSong)
 
-    const nickname = useQuery(api.nicknames.getNickname)
-
     const isHost = room?.host === user?._id
     const isPro = room?.proStatus === "active"
+
+    /*
+     * DERIVED STATE
+     */
+
+    // getCurrentUser is `null` when signed out, `undefined` while still
+    // loading, and the user document once loaded. Prompt for a nickname only
+    // when the viewer is known to have none; while loading, keep the button.
+    const needsNickname = user !== undefined && !user?.nickname
+
+    // songsLeftToAdd is `undefined` while loading, so leave the button enabled
+    // until we know the real quota and only disable it on an actual zero.
+    const quotaMessage =
+        isHost && isPro ? (
+            <p>You are the host of a pro room. You can add unlimited songs.</p>
+        ) : typeof songsLeftToAdd !== "number" ? null : songsLeftToAdd > 0 ? (
+            <p>
+                You can add up to{" "}
+                <span className="font-bold">{songsLeftToAdd}</span> more songs.
+            </p>
+        ) : (
+            <p>You can&apos;t add any more songs at the moment.</p>
+        )
 
     /*
      * OTHER STATE
@@ -130,51 +149,24 @@ export default function Room({
                         <h2 className="text-xl font-bold">Add songs</h2>
                         <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
                             <div className="flex flex-col gap-2">
-                                {isLoading && <p>Loading...</p>}
-                                {nickname ? (
+                                {needsNickname ? (
+                                    <NicknameForm />
+                                ) : (
                                     <>
-                                        <p>
-                                            Logged in as <b>{nickname}</b>
-                                        </p>
-                                        {isHost && isPro ? (
-                                            <p>
-                                                You are the host of a pro room.
-                                                You can add unlimited songs.
-                                            </p>
-                                        ) : (
+                                        {user?.nickname && (
                                             <>
-                                                {songsLeftToAdd ? (
-                                                    <p>
-                                                        You can add up to{" "}
-                                                        <span className="font-bold">
-                                                            {songsLeftToAdd}
-                                                        </span>{" "}
-                                                        more songs.
-                                                    </p>
-                                                ) : (
-                                                    <p>
-                                                        You can&apos;t add any
-                                                        more songs at the
-                                                        moment.
-                                                    </p>
-                                                )}
+                                                <p>
+                                                    Logged in as{" "}
+                                                    <b>{user.nickname}</b>
+                                                </p>
+                                                {quotaMessage}
                                             </>
                                         )}
-                                        {/* <SearchSongDialog
-                                            addSong={addSong}
-                                            open={dialogOpen}
-                                            setOpen={setDialogOpen}
-                                            disableTrigger={songsLeftToAdd <= 0}
-                                        /> */}
                                         <AddSong
                                             roomId={roomId}
-                                            disabled={
-                                                (songsLeftToAdd ?? 0) <= 0
-                                            }
+                                            disabled={songsLeftToAdd === 0}
                                         />
                                     </>
-                                ) : (
-                                    <>{!isLoading && <NicknameForm />}</>
                                 )}
                             </div>
                         </div>

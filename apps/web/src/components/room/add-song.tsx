@@ -1,5 +1,6 @@
 "use client"
 
+import { useAuthedMutation } from "@/lib/auth"
 import { api } from "@songup/backend/convex/_generated/api"
 import type { Id } from "@songup/backend/convex/_generated/dataModel"
 import { Button } from "@songup/ui/components/button"
@@ -10,7 +11,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@songup/ui/components/dialog"
-import { useMutation } from "convex/react"
 import { PlusIcon } from "lucide-react"
 import posthog from "posthog-js"
 import { useState } from "react"
@@ -24,7 +24,7 @@ export function AddSong({
     disabled?: boolean
     roomId: Id<"rooms">
 }) {
-    const addSong = useMutation(api.rooms.addSong)
+    const addSong = useAuthedMutation(api.rooms.addSong)
     const [open, setOpen] = useState(false)
 
     async function handleSelect(song: {
