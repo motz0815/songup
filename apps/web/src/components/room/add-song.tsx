@@ -11,6 +11,7 @@ import {
     DialogTrigger,
 } from "@songup/ui/components/dialog"
 import { useMutation } from "convex/react"
+import { ConvexError } from "convex/values"
 import { PlusIcon } from "lucide-react"
 import posthog from "posthog-js"
 import { useState } from "react"
@@ -33,13 +34,26 @@ export function AddSong({
         artist: string
         duration: number
     }) {
-        await addSong({
-            roomId,
-            videoId: song.videoId,
-            title: song.title,
-            artist: song.artist,
-            duration: song.duration,
-        })
+        try {
+            await addSong({
+                roomId,
+                videoId: song.videoId,
+                title: song.title,
+                artist: song.artist,
+                duration: song.duration,
+            })
+        } catch (error) {
+            const code = error instanceof ConvexError ? error.data : undefined
+            toast.error("Couldn't add song", {
+                description:
+                    code === "DUPLICATE_SONG"
+                        ? `${song.title} is already in the room.`
+                        : code === "SONG_LIMIT_REACHED"
+                          ? "You have reached the maximum number of songs. Wait for one of your songs to play before adding another."
+                          : "Something went wrong. Please try again.",
+            })
+            return
+        }
         setOpen(false)
         toast.success("Song added", {
             description: `${song.title} by ${song.artist}`,
