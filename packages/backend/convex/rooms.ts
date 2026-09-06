@@ -1,5 +1,5 @@
 import { getAuthUserId } from "@convex-dev/auth/server"
-import { v } from "convex/values"
+import { ConvexError, v } from "convex/values"
 import { Id } from "./_generated/dataModel"
 import { query } from "./_generated/server"
 import { mutation } from "./functions"
@@ -162,7 +162,7 @@ export const addSong = mutation({
                 room.host === (userId as Id<"users">)
             )
         ) {
-            throw new Error("User has reached the maximum number of songs")
+            throw new ConvexError("SONG_LIMIT_REACHED")
         }
 
         // Reject a song that is already playing or already in the queue.
@@ -175,7 +175,7 @@ export const addSong = mutation({
             room.currentSong?.videoId === args.videoId ||
             queuedSongs.some((song) => song.videoId === args.videoId)
         ) {
-            throw new Error("Song is already in the room")
+            throw new ConvexError("DUPLICATE_SONG")
         }
 
         // Decide whether this song should become the current song or to queue it

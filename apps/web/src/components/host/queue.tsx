@@ -19,7 +19,9 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
     return (
         <ScrollArea className="rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
             <ul ref={animationParent} className="space-y-4">
-                {queue && queue.length > 0 ? (
+                {queue === undefined ? (
+                    <li className="text-center text-lg">Loading queue...</li>
+                ) : queue.length > 0 ? (
                     queue.map((song, index) => {
                         const isTransition =
                             index > 0 &&
@@ -38,9 +40,9 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
                         )
                     })
                 ) : (
-                    <p className="text-center text-lg">
+                    <li className="text-center text-lg">
                         No songs in queue. Use the QR code to add some!
-                    </p>
+                    </li>
                 )}
             </ul>
         </ScrollArea>

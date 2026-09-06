@@ -71,9 +71,14 @@ export default function Host({
 
     const [progress, setProgress] = useState(0)
 
-    // The videoId we already retried once after an embed error.
-    // It stops one broken song from popping the whole queue in a row.
+    // Retry once per playback, and ignore repeated errors while skipping.
     const retriedVideoId = useRef<string | null>(null)
+    const skippingSong = useRef(false)
+
+    useEffect(() => {
+        retriedVideoId.current = null
+        skippingSong.current = false
+    }, [currentSong?.videoId])
 
     /*
      * EFFECTS
@@ -143,7 +148,7 @@ export default function Host({
     }
 
     const onPlayerError: YouTubeProps["onError"] = (event) => {
-        if (!currentSong) return
+        if (!currentSong || skippingSong.current) return
 
         // Retry the song once before giving up. Some embed errors are transient.
         if (retriedVideoId.current !== currentSong.videoId) {
@@ -153,11 +158,17 @@ export default function Host({
         }
 
         // Second failure: skip the song, tell the room why, and record it.
+        skippingSong.current = true
         toast.error("Skipped a song", {
             description: `${currentSong.artist} - ${currentSong.title} can't be played here.`,
         })
         capturePopped("error")
-        popSong({ roomId })
+        void popSong({ roomId }).catch(() => {
+            skippingSong.current = false
+            toast.error("Couldn't skip song", {
+                description: "Please try again.",
+            })
+        })
     }
 
     return (
