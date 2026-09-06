@@ -169,6 +169,7 @@ export default function Room({
                                         <AddSong
                                             roomId={roomId}
                                             disabled={
+                                                !(isHost && isPro) &&
                                                 (songsLeftToAdd ?? 0) <= 0
                                             }
                                         />
