@@ -75,30 +75,7 @@ export function SearchSong({
             <ul className="flex flex-col gap-2">
                 {results.map((song) => (
                     <li key={song.videoId}>
-                        <form
-                            action={handleSelectSong}
-                            className="flex items-center justify-between rounded-lg bg-gray-100 p-2"
-                        >
-                            <div className="flex items-center space-x-2">
-                                <ImageWithFallback
-                                    src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
-                                    alt={`${song.title}`}
-                                    width={40}
-                                    height={40}
-                                    className="rounded-sm object-cover"
-                                    unoptimized
-                                />
-                                <div className="text-left">
-                                    <p className="text-sm font-semibold">
-                                        {song.title}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                        {song.artists
-                                            .map((artist) => artist.name)
-                                            .join(", ")}
-                                    </p>
-                                </div>
-                            </div>
+                        <form action={handleSelectSong}>
                             <input
                                 type="hidden"
                                 name="videoId"
@@ -121,8 +98,31 @@ export function SearchSong({
                                 name="duration"
                                 value={song.duration_seconds}
                             />
-                            <SubmitButton size="icon">
-                                <PlusCircleIcon className="size-4" />
+                            <SubmitButton
+                                variant="ghost"
+                                className="flex h-auto w-full items-center justify-between gap-2 rounded-lg bg-gray-100 p-3 hover:cursor-pointer hover:bg-gray-200 active:bg-gray-200"
+                            >
+                                <span className="flex min-w-0 items-center gap-2">
+                                    <ImageWithFallback
+                                        src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
+                                        alt={`${song.title}`}
+                                        width={40}
+                                        height={40}
+                                        className="rounded-sm object-cover"
+                                        unoptimized
+                                    />
+                                    <span className="flex min-w-0 flex-col text-left">
+                                        <span className="truncate text-sm font-semibold">
+                                            {song.title}
+                                        </span>
+                                        <span className="truncate text-xs text-gray-500">
+                                            {song.artists
+                                                .map((artist) => artist.name)
+                                                .join(", ")}
+                                        </span>
+                                    </span>
+                                </span>
+                                <PlusCircleIcon className="size-5 shrink-0 text-gray-500" />
                             </SubmitButton>
                         </form>
                     </li>
