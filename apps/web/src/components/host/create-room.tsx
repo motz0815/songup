@@ -57,7 +57,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 ? playlist.tracks.map((track) => ({
                       videoId: track.videoId,
                       title: track.title,
-                      artist: track.artists[0].name,
+                      artist: track.artists?.[0]?.name ?? "",
                       duration: track.duration_seconds,
                   }))
                 : undefined,
@@ -71,7 +71,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 fallbackPlaylist: playlist && {
                     id: playlist.id,
                     title: playlist.title,
-                    author: playlist.author.name,
+                    author: playlist.author?.name,
                     description: playlist?.description,
                     trackCount: playlist.trackCount,
                 },
