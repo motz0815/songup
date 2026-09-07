@@ -37,6 +37,7 @@ const PRO_FEATURES = [
 ]
 
 export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
+    const [open, setOpen] = useState(false)
     const [playlist, setPlaylist] = useState<APIPlaylist | null>(null)
     const [loading, setLoading] = useState(false)
     const [roomTier, setRoomTier] = useState<"free" | "pro">("free")
@@ -92,13 +93,16 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 }
             } else {
                 toast.success("Room created")
+                // Close the dialog before navigating so its overlay and the
+                // submit spinner cannot stay on screen during the route change.
+                setOpen(false)
                 router.push(`/host/${data.code}`)
             }
         })
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 {children || (
                     <Button>
