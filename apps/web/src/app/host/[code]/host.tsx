@@ -24,6 +24,19 @@ const LOAD_TIMEOUT_MS = 20_000
 
 type PlaybackBlockedReason = "autoplay" | "player_not_loaded"
 
+const blockedPrompt = {
+    autoplay: {
+        message: "Your browser paused the music",
+        icon: <PlayIcon />,
+        label: "Tap to play",
+    },
+    player_not_loaded: {
+        message: "The player didn't load",
+        icon: <RotateCwIcon />,
+        label: "Reload",
+    },
+} satisfies Record<PlaybackBlockedReason, object>
+
 export default function Host({
     roomId,
     preloadedRoom,
@@ -84,33 +97,33 @@ export default function Host({
     const retriedVideoId = useRef<string | null>(null)
     const skippingSong = useRef(false)
 
-    // The player is rebuilt for each song, so track readiness per videoId.
-    const readyVideoId = useRef<string | null>(null)
-    const playingVideoId = useRef<string | null>(null)
-    // Songs in a row whose embed never loaded. Stop skipping after one, so a
-    // broken connection doesn't drain the whole queue.
-    const loadFailures = useRef(0)
-    const reportedBlock = useRef<string | null>(null)
+    // react-youtube rebuilds the player for each song, so these reset per song.
+    const playerReady = useRef(false)
+    const playerPlaying = useRef(false)
+    const reportedBlock = useRef(false)
+    // Stop skipping after one song whose embed never loaded, so a broken
+    // connection doesn't drain the whole queue.
+    const lastLoadFailed = useRef(false)
     const [blocked, setBlocked] = useState<{
         videoId: string
         reason: PlaybackBlockedReason
     } | null>(null)
 
-    useEffect(() => {
-        retriedVideoId.current = null
-        skippingSong.current = false
-    }, [currentSong?.videoId])
-
     // Watchdog: YouTube fires no event when autoplay is blocked or the embed
     // never loads, so check that each song actually starts.
     useEffect(() => {
+        retriedVideoId.current = null
+        skippingSong.current = false
+        playerReady.current = false
+        playerPlaying.current = false
+        reportedBlock.current = false
+
         const videoId = currentSong?.videoId
         if (!videoId) return
 
         const check = (final: boolean) => {
-            if (playingVideoId.current === videoId || skippingSong.current)
-                return
-            if (readyVideoId.current === videoId) {
+            if (playerPlaying.current || skippingSong.current) return
+            if (playerReady.current) {
                 showBlocked(videoId, "autoplay")
             } else if (final) {
                 onPlayerStalled(videoId)
@@ -172,9 +185,8 @@ export default function Host({
     }
 
     const onPlayerReady: YouTubeProps["onReady"] = () => {
-        if (!currentSong) return
-        readyVideoId.current = currentSong.videoId
-        loadFailures.current = 0
+        playerReady.current = true
+        lastLoadFailed.current = false
     }
 
     const onPlayerStateChange: YouTubeProps["onStateChange"] = (event) => {
@@ -184,15 +196,13 @@ export default function Host({
     }
 
     const onPlayerPlay: YouTubeProps["onPlay"] = () => {
-        if (!currentSong) return
-        playingVideoId.current = currentSong.videoId
+        playerPlaying.current = true
         setBlocked(null)
     }
 
     function showBlocked(videoId: string, reason: PlaybackBlockedReason) {
-        const key = `${videoId}:${reason}`
-        if (reportedBlock.current === key) return
-        reportedBlock.current = key
+        if (reportedBlock.current) return
+        reportedBlock.current = true
         setBlocked({ videoId, reason })
         posthog.capture("song_playback_blocked", { roomId, reason, videoId })
     }
@@ -205,11 +215,11 @@ export default function Host({
     }
 
     function onPlayerStalled(videoId: string) {
-        if (loadFailures.current > 0) {
+        if (lastLoadFailed.current) {
             showBlocked(videoId, "player_not_loaded")
             return
         }
-        loadFailures.current += 1
+        lastLoadFailed.current = true
         skipSong("stalled", "didn't load in time.")
     }
 
@@ -235,7 +245,7 @@ export default function Host({
         // The YouTube API script failed to load. No player exists, and every
         // song after this one will fail too, so ask the host to reload.
         if (!event?.target) {
-            loadFailures.current += 1
+            lastLoadFailed.current = true
             showBlocked(currentSong.videoId, "player_not_loaded")
             return
         }
@@ -289,36 +299,27 @@ export default function Host({
                             {blocked &&
                                 blocked.videoId === currentSong?.videoId && (
                                     <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-black/70 p-4 text-center">
-                                        {blocked.reason === "autoplay" ? (
-                                            <>
-                                                <p className="text-xl font-bold md:text-3xl">
-                                                    Your browser paused the
-                                                    music
-                                                </p>
-                                                <Button
-                                                    size="lg"
-                                                    onClick={onTapToPlay}
-                                                >
-                                                    <PlayIcon />
-                                                    Tap to play
-                                                </Button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p className="text-xl font-bold md:text-3xl">
-                                                    The player didn&apos;t load
-                                                </p>
-                                                <Button
-                                                    size="lg"
-                                                    onClick={() =>
-                                                        window.location.reload()
-                                                    }
-                                                >
-                                                    <RotateCwIcon />
-                                                    Reload
-                                                </Button>
-                                            </>
-                                        )}
+                                        <p className="text-xl font-bold md:text-3xl">
+                                            {
+                                                blockedPrompt[blocked.reason]
+                                                    .message
+                                            }
+                                        </p>
+                                        <Button
+                                            size="lg"
+                                            onClick={
+                                                blocked.reason === "autoplay"
+                                                    ? onTapToPlay
+                                                    : () =>
+                                                          window.location.reload()
+                                            }
+                                        >
+                                            {blockedPrompt[blocked.reason].icon}
+                                            {
+                                                blockedPrompt[blocked.reason]
+                                                    .label
+                                            }
+                                        </Button>
                                     </div>
                                 )}
                             <div className="flex h-full w-full flex-col items-center justify-center gap-2">
