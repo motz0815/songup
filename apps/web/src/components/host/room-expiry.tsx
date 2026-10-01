@@ -6,6 +6,7 @@ import {
     HoverCardTrigger,
 } from "@songup/ui/components/hover-card"
 import { formatDistance } from "date-fns"
+import { TriangleAlertIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export function RoomExpiry({
@@ -28,18 +29,17 @@ export function RoomExpiry({
         }
     }, [])
 
+    // If the room expires in less than 6 hours, warn the host
+    const expiresSoon = now !== null && expiresAt - now < 6 * 60 * 60 * 1000
+
     return (
         <HoverCard>
             <HoverCardTrigger>
-                Expires:{" "}
-                <span
-                    // If the room expires in less than 6 hours, make the text red
-                    className={
-                        now !== null && expiresAt - now < 6 * 60 * 60 * 1000
-                            ? "text-red-500"
-                            : ""
-                    }
-                >
+                {expiresSoon && (
+                    <TriangleAlertIcon className="mr-1 inline size-[1em] text-red-500" />
+                )}
+                {now !== null && now >= expiresAt ? "Expired" : "Expires"}:{" "}
+                <span className={expiresSoon ? "text-red-500" : ""}>
                     {now === null
                         ? "…"
                         : formatDistance(new Date(expiresAt), now, {

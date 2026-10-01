@@ -2,6 +2,7 @@
 
 import { NicknameForm } from "@/components/auth/nickname-form"
 import { ImageWithFallback } from "@/components/image-with-fallback"
+import { RoomExpired } from "@/components/room-expired"
 import { AddSong } from "@/components/room/add-song"
 import { ProUpsell } from "@/components/room/pro-upsell"
 import { Queue } from "@/components/room/queue"
@@ -54,6 +55,10 @@ export default function Room({
      */
 
     const [animationParent] = useAutoAnimate()
+
+    if (!room) {
+        return <RoomExpired surface="room" />
+    }
 
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-500 to-indigo-950 text-white">

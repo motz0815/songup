@@ -3,7 +3,9 @@
 import { HostBackground } from "@/components/host/background"
 import { RoomQRCode } from "@/components/host/qr-code"
 import { Queue } from "@/components/host/queue"
+import { RoomExpiry } from "@/components/host/room-expiry"
 import { UpgradeRoom } from "@/components/host/upgrade-room"
+import { RoomExpired } from "@/components/room-expired"
 import { api } from "@songup/backend/convex/_generated/api"
 import type { Id } from "@songup/backend/convex/_generated/dataModel"
 import { Fullscreen } from "@songup/ui/components/fullscreen"
@@ -171,6 +173,10 @@ export default function Host({
         })
     }
 
+    if (!room) {
+        return <RoomExpired surface="host" />
+    }
+
     return (
         <div className="relative min-h-screen w-full p-4 text-white lg:h-screen">
             <HostBackground videoId={currentSong?.videoId} />
@@ -261,9 +267,17 @@ export default function Host({
                             </UpgradeRoom>
                         )}
                     </div>
-                    <p className="text-3xl font-bold text-white/80">
-                        {room?.code}
-                    </p>
+                    <div className="flex items-baseline gap-4">
+                        <span className="text-xl font-bold text-white/80">
+                            <RoomExpiry
+                                createdAt={room._creationTime}
+                                expiresAt={room.expiresAt}
+                            />
+                        </span>
+                        <p className="text-3xl font-bold text-white/80">
+                            {room.code}
+                        </p>
+                    </div>
                 </footer>
             </main>
             {/* This is a hidden component that enables toggling fullscreen by hitting F */}
