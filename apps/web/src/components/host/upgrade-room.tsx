@@ -15,7 +15,7 @@ import {
 } from "@songup/ui/components/dialog"
 import { useAction, useQuery } from "convex/react"
 import { ArrowBigUpDashIcon, CheckIcon, SparklesIcon } from "lucide-react"
-import { redirect } from "next/navigation"
+import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -43,19 +43,24 @@ export function UpgradeRoom({
 
     async function handleRedirectToProCheckout(roomId: Id<"rooms">) {
         setLoading(true)
-        // If the user is not signed in, sign them in and redirect to the pay page
-        if (!user?._id || user.isAnonymous) {
-            await signIn("google", { redirectTo: `/pay?roomId=${roomId}` })
-            return
-        }
-        const checkout = await createCheckout({
-            priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
-            roomId,
-        })
-        if (checkout?.url) {
-            toast.success("Redirecting to checkout")
-            redirect(checkout.url)
-        } else {
+        try {
+            // If the user is not signed in, sign them in and redirect to the pay page
+            if (!user?._id || user.isAnonymous) {
+                await signIn("google", { redirectTo: `/pay?roomId=${roomId}` })
+                return
+            }
+            const checkout = await createCheckout({
+                priceId: process.env.NEXT_PUBLIC_STRIPE_ROOM_PRICE!,
+                roomId,
+            })
+            if (checkout?.url) {
+                toast.success("Redirecting to checkout")
+                window.location.assign(checkout.url)
+                return
+            }
+            toast.error("Something went wrong while redirecting to checkout")
+        } catch (error) {
+            posthog.captureException(error)
             toast.error("Something went wrong while redirecting to checkout")
         }
         setLoading(false)
