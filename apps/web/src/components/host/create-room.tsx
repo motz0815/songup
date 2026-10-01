@@ -16,7 +16,7 @@ import { Label } from "@songup/ui/components/label"
 import { SubmitButton } from "@songup/ui/components/submit-button"
 import { useAction, useQuery } from "convex/react"
 import { PlusIcon } from "lucide-react"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import posthog from "posthog-js"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -84,7 +84,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 })
                 if (checkout?.url) {
                     toast.success("Redirecting to checkout")
-                    redirect(checkout.url)
+                    window.location.assign(checkout.url)
                 } else {
                     toast.error(
                         "Something went wrong while redirecting to checkout",

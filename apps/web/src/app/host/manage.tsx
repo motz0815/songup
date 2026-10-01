@@ -27,13 +27,29 @@ import {
 import { Preloaded, usePreloadedQuery } from "convex/react"
 import { ArrowBigUpDashIcon, ArrowRightIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { toast } from "sonner"
 
 export default function ManageRooms({
     preloadedRooms,
+    checkoutResult,
 }: {
     preloadedRooms: Preloaded<typeof api.rooms.manage.listOwnRooms>
+    checkoutResult?: "success" | "canceled"
 }) {
     const rooms = usePreloadedQuery(preloadedRooms)
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!checkoutResult) return
+        if (checkoutResult === "success") {
+            toast.success("Payment successful! Your room is being upgraded.")
+        } else {
+            toast.info("Checkout canceled. Your room was not upgraded.")
+        }
+        router.replace("/host")
+    }, [checkoutResult, router])
 
     return (
         <div className="flex min-h-screen flex-col">
