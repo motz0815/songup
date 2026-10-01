@@ -31,6 +31,7 @@ export function RoomExpiry({
 
     // If the room expires in less than 6 hours, warn the host
     const expiresSoon = now !== null && expiresAt - now < 6 * 60 * 60 * 1000
+    const expired = now !== null && now >= expiresAt
 
     return (
         <HoverCard>
@@ -38,7 +39,7 @@ export function RoomExpiry({
                 {expiresSoon && (
                     <TriangleAlertIcon className="mr-1 inline size-[1em] text-red-500" />
                 )}
-                {now !== null && now >= expiresAt ? "Expired" : "Expires"}:{" "}
+                {expired ? "Expired" : "Expires"}:{" "}
                 <span className={expiresSoon ? "text-red-500" : ""}>
                     {now === null
                         ? "…"

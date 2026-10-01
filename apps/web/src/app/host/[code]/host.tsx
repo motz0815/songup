@@ -202,7 +202,7 @@ export default function Host({
                                 <p className="text-4xl">
                                     Enter code{" "}
                                     <span className="font-extrabold">
-                                        {room?.code}
+                                        {room.code}
                                     </span>
                                 </p>
                             </div>
@@ -235,12 +235,12 @@ export default function Host({
                         <h3 className="text-center text-2xl font-bold text-shadow-md">
                             Scan to add songs...
                         </h3>
-                        <RoomQRCode roomCode={room?.code ?? ""} />
+                        <RoomQRCode roomCode={room.code} />
                         <p className="text-center text-lg text-white/80 text-shadow-sm">
                             ...or visit{" "}
                             <span className="font-bold">songup.tv</span> and
                             enter code{" "}
-                            <span className="font-bold">{room?.code}</span>
+                            <span className="font-bold">{room.code}</span>
                         </p>
                     </div>
                 </div>
@@ -252,14 +252,14 @@ export default function Host({
                                 <span className="text-sm text-white/80">
                                     .tv
                                 </span>
-                                {room?.proStatus === "active" && (
+                                {room.proStatus === "active" && (
                                     <span className="ml-2 text-shadow-md">
                                         Pro
                                     </span>
                                 )}
                             </h2>
                         </Link>
-                        {room?.proStatus === "free" && (
+                        {room.proStatus === "free" && (
                             <UpgradeRoom roomId={roomId}>
                                 <span className="flex cursor-pointer items-baseline gap-2 text-xl font-bold text-white/80 hover:underline">
                                     Free

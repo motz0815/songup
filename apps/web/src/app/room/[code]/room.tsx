@@ -68,13 +68,13 @@ export default function Room({
                         <div className="flex items-center gap-2">
                             <ArrowLeft className="size-6" />
                             <h1 className="text-xl font-bold">
-                                SongUp {room?.proStatus === "active" && "Pro"}{" "}
+                                SongUp {room.proStatus === "active" && "Pro"}{" "}
                                 {isHost && isPro && "(Host)"}
                             </h1>
                         </div>
                     </Link>
                     <h2 className="text-xl">
-                        <span className="font-bold">{room?.code}</span>
+                        <span className="font-bold">{room.code}</span>
                     </h2>
                 </header>
                 <main className="flex flex-col gap-4" ref={animationParent}>

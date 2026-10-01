@@ -92,7 +92,6 @@ export const isHost = query({
             return false
         }
 
-        // The hourly cleanup deletes expired rooms, so a missing room is not an error.
         const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
             return null
