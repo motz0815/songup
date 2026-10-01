@@ -58,11 +58,10 @@ export function UpgradeRoom({
                 window.location.assign(checkout.url)
                 return
             }
-            toast.error("Something went wrong while redirecting to checkout")
         } catch (error) {
             posthog.captureException(error)
-            toast.error("Something went wrong while redirecting to checkout")
         }
+        toast.error("Something went wrong while redirecting to checkout")
         setLoading(false)
     }
 
