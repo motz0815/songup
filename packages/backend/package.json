@@ -22,19 +22,19 @@
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.3.7",
-        "eslint": "^9.39.5",
-        "eslint-config-next": "16.3.4",
+        "eslint": "^9.39.4",
+        "eslint-config-next": "16.4.3",
         "typescript": "^6.0.3"
     },
     "dependencies": {
         "@auth/core": "0.37.0",
-        "@convex-dev/auth": "^0.0.95",
-        "@convex-dev/crons": "^0.2.0",
-        "@convex-dev/stripe": "^0.1.6",
+        "@convex-dev/auth": "^0.0.96",
+        "@convex-dev/crons": "^0.2.3",
+        "@convex-dev/stripe": "^0.1.7",
         "@erquhart/convex-oss-stats": "^0.8.2",
-        "convex": "^1.45.0",
-        "convex-helpers": "^0.1.124",
-        "posthog-node": "^5.51.6",
+        "convex": "^1.48.0",
+        "convex-helpers": "^0.1.129",
+        "posthog-node": "^5.57.1",
         "stripe": "^20.5.0-alpha.4"
     }
 }
