@@ -10,20 +10,20 @@
         "check-types": "tsc --noEmit"
     },
     "dependencies": {
-        "next": "16.3.4",
+        "next": "16.4.3",
         "nextra": "^4.6.1",
         "nextra-theme-docs": "^4.6.1",
-        "react": "19.2.8",
-        "react-dom": "19.2.8"
+        "react": "19.3.1",
+        "react-dom": "19.3.1"
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.3.3",
-        "@types/node": "^22.20.1",
-        "@types/react": "19.2.15",
-        "@types/react-dom": "19.2.7",
+        "@types/node": "^22.20.5",
+        "@types/react": "19.2.14",
+        "@types/react-dom": "19.2.3",
         "babel-plugin-react-compiler": "1.0.0",
-        "eslint": "^9.39.5",
-        "eslint-config-next": "16.3.4",
+        "eslint": "^9.39.4",
+        "eslint-config-next": "16.4.3",
         "tailwindcss": "^4.3.3",
         "typescript": "^6.0.3"
     }
