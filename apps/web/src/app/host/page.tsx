@@ -8,7 +8,13 @@ export const metadata: Metadata = {
     title: "Manage rooms",
 }
 
-export default async function ManageRoomsPage() {
+export default async function ManageRoomsPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ success?: string; canceled?: string }>
+}) {
+    const { success, canceled } = await searchParams
+
     const preloadedRooms = await preloadQuery(
         api.rooms.manage.listOwnRooms,
         {},
@@ -17,5 +23,12 @@ export default async function ManageRoomsPage() {
         },
     )
 
-    return <ManageRooms preloadedRooms={preloadedRooms} />
+    return (
+        <ManageRooms
+            preloadedRooms={preloadedRooms}
+            checkoutResult={
+                success ? "success" : canceled ? "canceled" : undefined
+            }
+        />
+    )
 }
