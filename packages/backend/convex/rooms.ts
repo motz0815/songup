@@ -94,7 +94,7 @@ export const isHost = query({
 
         const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
-            throw new Error("Room not found")
+            return null
         }
 
         return room.host === (userId as Id<"users">)
@@ -106,9 +106,10 @@ export const getSongsLeftToAdd = query({
         roomId: v.id("rooms"),
     },
     handler: async (ctx, args) => {
+        // The hourly cleanup deletes expired rooms, so a missing room is not an error.
         const room = await ctx.db.get("rooms", args.roomId)
         if (!room) {
-            throw new Error("Room not found")
+            return null
         }
 
         const userId = await getAuthUserId(ctx)
