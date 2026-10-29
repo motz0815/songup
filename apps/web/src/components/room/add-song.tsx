@@ -43,11 +43,27 @@ export function AddSong({
                 duration: song.duration,
             })
         } catch (error) {
-            const code = error instanceof ConvexError ? error.data : undefined
+            const code =
+                error instanceof ConvexError &&
+                (error.data === "DUPLICATE_SONG" ||
+                    error.data === "SONG_LIMIT_REACHED")
+                    ? error.data
+                    : "unknown"
+            posthog.capture("song_add_failed", {
+                roomId,
+                songId: song.videoId,
+                errorCode: code,
+            })
+            if (code === "unknown") {
+                posthog.captureException(error, {
+                    roomId,
+                    songId: song.videoId,
+                })
+            }
             toast.error("Couldn't add song", {
                 description:
                     code === "DUPLICATE_SONG"
-                        ? `${song.title} is already in the room.`
+                        ? `${song.title} is already playing or in the queue.`
                         : code === "SONG_LIMIT_REACHED"
                           ? "You have reached the maximum number of songs. Wait for one of your songs to play before adding another."
                           : "Something went wrong. Please try again.",
