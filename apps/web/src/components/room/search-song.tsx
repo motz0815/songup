@@ -3,6 +3,7 @@
 import { Input } from "@songup/ui/components/input"
 import { SubmitButton } from "@songup/ui/components/submit-button"
 import { PlusCircleIcon } from "lucide-react"
+import posthog from "posthog-js"
 import { useState } from "react"
 import { ImageWithFallback } from "../image-with-fallback"
 
@@ -31,14 +32,22 @@ export function SearchSong({
             const query = formData.get("query") as string
             console.log("Query", query)
             setError(null)
-            const results: [] = await fetch(
+            const res = await fetch(
                 `/flask/search?query=${encodeURIComponent(query)}`,
-            ).then((res) => res.json())
+            )
+            if (!res.ok) {
+                throw new Error(`Search failed with status ${res.status}`)
+            }
+            const results = await res.json()
+            if (!Array.isArray(results)) {
+                throw new Error("Search returned an invalid response")
+            }
             console.log("Results", results)
             setResults(results)
         } catch (error) {
             setError("Failed to search for songs. Please try again.")
             console.error(error)
+            posthog.captureException(error)
         }
     }
 
