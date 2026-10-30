@@ -76,9 +76,12 @@ export default function Room({
                     <section className="flex flex-col gap-2">
                         <h2 className="text-xl font-bold">Now Playing</h2>
                         {currentSong ? (
-                            <div
+                            <a
+                                href={`https://www.youtube.com/watch?v=${currentSong.videoId}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={cn(
-                                    "flex items-center space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all",
+                                    "flex items-center space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:bg-white/25",
                                 )}
                             >
                                 <ImageWithFallback
@@ -97,7 +100,7 @@ export default function Room({
                                         {currentSong.artist}
                                     </p>
                                 </div>
-                            </div>
+                            </a>
                         ) : (
                             <div className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md">
                                 <p className="text-center">No song playing.</p>

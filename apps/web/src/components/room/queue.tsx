@@ -39,23 +39,30 @@ export function Queue({ roomId }: { roomId: Id<"rooms"> }) {
                 ) : queue.length > 0 ? (
                     queue.map((song, index) => (
                         <li key={song._id}>
-                            <div className="group relative flex items-center justify-between space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all">
-                                <ImageWithFallback
-                                    src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
-                                    width={128}
-                                    height={128}
-                                    alt={`${song.title}`}
-                                    className="aspect-video h-12 rounded-lg border border-white/20 object-cover md:h-20"
-                                    unoptimized
-                                />
-                                <div className="w-full">
-                                    <h4 className="text-md font-semibold text-shadow-md sm:text-lg md:text-xl">
-                                        {song.title}
-                                    </h4>
-                                    <p className="text-xs text-gray-100 text-shadow-sm sm:text-sm md:text-lg">
-                                        {song.artist}
-                                    </p>
-                                </div>
+                            <div className="group relative flex items-center justify-between space-x-4 rounded-lg border border-white/20 bg-white/10 p-3 shadow-md transition-all has-[a:active]:bg-white/25 has-[a:hover]:bg-white/20">
+                                <a
+                                    href={`https://www.youtube.com/watch?v=${song.videoId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex w-full min-w-0 items-center space-x-4 rounded-md focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+                                >
+                                    <ImageWithFallback
+                                        src={`https://i.ytimg.com/vi_webp/${song.videoId}/mqdefault.webp`}
+                                        width={128}
+                                        height={128}
+                                        alt={`${song.title}`}
+                                        className="aspect-video h-12 rounded-lg border border-white/20 object-cover md:h-20"
+                                        unoptimized
+                                    />
+                                    <div className="w-full">
+                                        <h4 className="text-md font-semibold text-shadow-md sm:text-lg md:text-xl">
+                                            {song.title}
+                                        </h4>
+                                        <p className="text-xs text-gray-100 text-shadow-sm sm:text-sm md:text-lg">
+                                            {song.artist}
+                                        </p>
+                                    </div>
+                                </a>
                                 {isHostAndPro && index !== 0 && (
                                     <Button
                                         variant="ghost"
