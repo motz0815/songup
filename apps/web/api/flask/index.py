@@ -4,14 +4,12 @@ from ytmusicapi import YTMusic
 app = Flask(__name__)
 
 # Upstream YouTube Music calls fail intermittently, so retry once before giving up
-def search_videos(query, attempts=2):
-    for attempt in range(attempts):
-        try:
-            return YTMusic().search(query, filter="videos")
-        except Exception:
-            if attempt == attempts - 1:
-                raise
-            app.logger.warning("YouTube Music search failed, retrying", exc_info=True)
+def search_videos(query):
+    try:
+        return YTMusic().search(query, filter="videos")
+    except Exception:
+        app.logger.warning("YouTube Music search failed, retrying", exc_info=True)
+        return YTMusic().search(query, filter="videos")
 
 @app.route("/flask/search", methods=["GET"])
 def search():
