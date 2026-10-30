@@ -3,16 +3,29 @@ from ytmusicapi import YTMusic
 
 app = Flask(__name__)
 
+# Upstream YouTube Music calls fail intermittently, so retry once before giving up
+def search_videos(query, attempts=2):
+    for attempt in range(attempts):
+        try:
+            return YTMusic().search(query, filter="videos")
+        except Exception:
+            if attempt == attempts - 1:
+                raise
+            app.logger.warning("YouTube Music search failed, retrying", exc_info=True)
+
 @app.route("/flask/search", methods=["GET"])
 def search():
     query = request.args.get("query")
     if not query:
         return jsonify({"error": "Query is required"}), 400
-    yt = YTMusic()
-    results = yt.search(query, filter="videos")
+    try:
+        results = search_videos(query)
+    except Exception:
+        app.logger.exception("YouTube Music search failed")
+        return jsonify({"error": "Search failed. Please try again."}), 502
 
     # Sort results so that official videos appear first, UGC videos last
-    results = sorted(results, key=lambda x: "UGC" in x.get("videoType", ""))
+    results = sorted(results, key=lambda x: "UGC" in (x.get("videoType") or ""))
 
     # Limit to 5 results
     results = results[:5]
